@@ -8,24 +8,51 @@
 
 #import "Rollbar.h"
 #import "RollbarNotifier.h"
+#import <CrashReporter/CrashReporter.h>
+
 
 @implementation Rollbar
 
 static RollbarNotifier *notifier = nil;
 
-void uncaught_exception(NSException *exception) {
-    if (notifier) {
-        [notifier uncaughtException:exception];
++ (void)enableCrashReporter {
+    NSError *error;
+    
+    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
+    
+    if ([crashReporter hasPendingCrashReport]) {
+        NSData *crashData = [crashReporter loadPendingCrashReportData];
+        PLCrashReport *report = [[PLCrashReport alloc] initWithData:crashData error:&error];
+        
+        if (error) {
+            NSLog(@"Could not load crash file: %@", [error localizedDescription]);
+        } else {
+            PLCrashReportTextFormat textFormat = PLCrashReportTextFormatiOS;
+            
+            NSString *crashReportText = [PLCrashReportTextFormatter stringValueForCrashReport:report withTextFormat:textFormat];
+            [notifier logCrashReport:crashReportText];
+        }
+        
+        [crashReporter purgePendingCrashReport];
+    }
+    
+    [crashReporter enableCrashReporterAndReturnError:&error];
+    if (error) {
+        NSLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
     }
 }
 
-+ (void)initWithAccessToken:(NSString *)accessToken environment:(NSString*)environment {
++ (void)initWithAccessToken:(NSString *)accessToken {
+    [self initWithAccessToken:accessToken configuration:nil];
+}
+
++ (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration {
     if (notifier) {
         NSLog(@"Rollbar has already been initialized.");
     } else {
-        notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken environment:environment];
+        notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken configuration:configuration];
         
-        NSSetUncaughtExceptionHandler(&uncaught_exception);
+        [self enableCrashReporter];
     }
 }
 
@@ -35,28 +62,12 @@ void uncaught_exception(NSException *exception) {
     [notifier log:level message:message exception:nil data:nil];
 }
 
-+ (void)logWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception {
-    [notifier log:level message:message exception:nil data:nil];
-}
-
 + (void)logWithLevel:(NSString*)level message:(NSString*)message data:(NSDictionary*)data {
     [notifier log:level message:message exception:nil data:data];
 }
 
-+ (void)logWithLevel:(NSString*)level exception:(NSException*)exception {
-    [notifier log:level message:nil exception:exception data:nil];
-}
-
-+ (void)logWithLevel:(NSString*)level exception:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:level message:nil exception:exception data:data];
-}
-
 + (void)logWithLevel:(NSString*)level data:(NSDictionary*)data {
     [notifier log:level message:nil exception:nil data:data];
-}
-
-+ (void)logWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:level message:message exception:exception data:data];
 }
 
 // Debug
@@ -65,28 +76,12 @@ void uncaught_exception(NSException *exception) {
     [notifier log:@"debug" message:message exception:nil data:nil];
 }
 
-+ (void)debugWithMessage:(NSString*)message exception:(NSException*)exception {
-    [notifier log:@"debug" message:message exception:nil data:nil];
-}
-
 + (void)debugWithMessage:(NSString*)message data:(NSDictionary*)data {
     [notifier log:@"debug" message:message exception:nil data:data];
 }
 
-+ (void)debugWithException:(NSException*)exception {
-    [notifier log:@"debug" message:nil exception:exception data:nil];
-}
-
-+ (void)debugWithException:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"debug" message:nil exception:exception data:data];
-}
-
 + (void)debugWithData:(NSDictionary*)data {
     [notifier log:@"debug" message:nil exception:nil data:data];
-}
-
-+ (void)debug:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"debug" message:message exception:exception data:data];
 }
 
 // Info
@@ -95,28 +90,12 @@ void uncaught_exception(NSException *exception) {
     [notifier log:@"info" message:message exception:nil data:nil];
 }
 
-+ (void)infoWithMessage:(NSString*)message exception:(NSException*)exception {
-    [notifier log:@"info" message:message exception:nil data:nil];
-}
-
 + (void)infoWithMessage:(NSString*)message data:(NSDictionary*)data {
     [notifier log:@"info" message:message exception:nil data:data];
 }
 
-+ (void)infoWithException:(NSException*)exception {
-    [notifier log:@"info" message:nil exception:exception data:nil];
-}
-
-+ (void)infoWithException:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"info" message:nil exception:exception data:data];
-}
-
 + (void)infoWithData:(NSDictionary*)data {
     [notifier log:@"info" message:nil exception:nil data:data];
-}
-
-+ (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"info" message:message exception:exception data:data];
 }
 
 // Warning
@@ -125,28 +104,12 @@ void uncaught_exception(NSException *exception) {
     [notifier log:@"warning" message:message exception:nil data:nil];
 }
 
-+ (void)warningWithMessage:(NSString*)message exception:(NSException*)exception {
-    [notifier log:@"warning" message:message exception:nil data:nil];
-}
-
 + (void)warningWithMessage:(NSString*)message data:(NSDictionary*)data {
     [notifier log:@"warning" message:message exception:nil data:data];
 }
 
-+ (void)warningWithException:(NSException*)exception {
-    [notifier log:@"warning" message:nil exception:exception data:nil];
-}
-
-+ (void)warningWithException:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"warning" message:nil exception:exception data:data];
-}
-
 + (void)warningWithData:(NSDictionary*)data {
     [notifier log:@"warning" message:nil exception:nil data:data];
-}
-
-+ (void)warning:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"warning" message:message exception:exception data:data];
 }
 
 // Error
@@ -155,28 +118,12 @@ void uncaught_exception(NSException *exception) {
     [notifier log:@"error" message:message exception:nil data:nil];
 }
 
-+ (void)errorWithMessage:(NSString*)message exception:(NSException*)exception {
-    [notifier log:@"error" message:message exception:nil data:nil];
-}
-
 + (void)errorWithMessage:(NSString*)message data:(NSDictionary*)data {
     [notifier log:@"error" message:message exception:nil data:data];
 }
 
-+ (void)errorWithException:(NSException*)exception {
-    [notifier log:@"error" message:nil exception:exception data:nil];
-}
-
-+ (void)errorWithException:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"error" message:nil exception:exception data:data];
-}
-
 + (void)errorWithData:(NSDictionary*)data {
     [notifier log:@"error" message:nil exception:nil data:data];
-}
-
-+ (void)error:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"error" message:message exception:exception data:data];
 }
 
 // Critical
@@ -185,28 +132,12 @@ void uncaught_exception(NSException *exception) {
     [notifier log:@"critical" message:message exception:nil data:nil];
 }
 
-+ (void)criticalWithMessage:(NSString*)message exception:(NSException*)exception {
-    [notifier log:@"critical" message:message exception:nil data:nil];
-}
-
 + (void)criticalWithMessage:(NSString*)message data:(NSDictionary*)data {
     [notifier log:@"critical" message:message exception:nil data:data];
 }
 
-+ (void)criticalWithException:(NSException*)exception {
-    [notifier log:@"critical" message:nil exception:exception data:nil];
-}
-
-+ (void)criticalWithException:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"critical" message:nil exception:exception data:data];
-}
-
 + (void)criticalWithData:(NSDictionary*)data {
     [notifier log:@"critical" message:nil exception:nil data:data];
-}
-
-+ (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
-    [notifier log:@"critical" message:message exception:exception data:data];
 }
 
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		963081C718DCDBCD00256154 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 963081C618DCDBCD00256154 /* CrashReporter.framework */; };
+		9630826518DCDDC000256154 /* RollbarConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 9630826418DCDDC000256154 /* RollbarConfiguration.m */; };
 		96D2220E18D8E40600933444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
 		96D2221318D8E40600933444 /* Rollbar.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; };
 		96D2221518D8E40600933444 /* Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2221418D8E40600933444 /* Rollbar.m */; };
@@ -43,6 +45,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		963081C618DCDBCD00256154 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
+		9630826318DCDDC000256154 /* RollbarConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarConfiguration.h; sourceTree = "<group>"; };
+		9630826418DCDDC000256154 /* RollbarConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarConfiguration.m; sourceTree = "<group>"; };
 		96D2220A18D8E40600933444 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D2220D18D8E40600933444 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96D2221118D8E40600933444 /* Rollbar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Rollbar-Prefix.pch"; sourceTree = "<group>"; };
@@ -64,6 +69,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D2223718D8E54600933444 /* UIKit.framework in Frameworks */,
+				963081C718DCDBCD00256154 /* CrashReporter.framework in Frameworks */,
 				96D2220E18D8E40600933444 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,9 +87,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		963075B118DCD69700256154 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				963081C618DCDBCD00256154 /* CrashReporter.framework */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
 		96D2220118D8E40600933444 = {
 			isa = PBXGroup;
 			children = (
+				963075B118DCD69700256154 /* Vendor */,
 				96D2220F18D8E40600933444 /* Rollbar */,
 				96D2222318D8E40600933444 /* RollbarTests */,
 				96D2220C18D8E40600933444 /* Frameworks */,
@@ -118,6 +133,8 @@
 				96D2221418D8E40600933444 /* Rollbar.m */,
 				96D2223318D8E51600933444 /* RollbarNotifier.h */,
 				96D2223418D8E51600933444 /* RollbarNotifier.m */,
+				9630826318DCDDC000256154 /* RollbarConfiguration.h */,
+				9630826418DCDDC000256154 /* RollbarConfiguration.m */,
 			);
 			path = Rollbar;
 			sourceTree = "<group>";
@@ -201,6 +218,25 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				English,
+				es,
+				fi,
+				French,
+				German,
+				pt,
+				ru,
+				da,
+				de,
+				fr,
+				it,
+				ja,
+				ko,
+				nl,
+				no,
+				pl,
+				sv,
+				zh_CN,
+				zh_TW,
 			);
 			mainGroup = 96D2220118D8E40600933444;
 			productRefGroup = 96D2220B18D8E40600933444 /* Products */;
@@ -230,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D2223518D8E51600933444 /* RollbarNotifier.m in Sources */,
+				9630826518DCDDC000256154 /* RollbarConfiguration.m in Sources */,
 				96D2221518D8E40600933444 /* Rollbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,9 +373,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/Rollbar.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Vendor",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rollbar/Rollbar-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
@@ -353,9 +396,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/Rollbar.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Vendor",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rollbar/Rollbar-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";

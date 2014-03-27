@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RollbarConfiguration.h"
 
 @interface RollbarNotifier : NSObject
 
-@property (atomic, copy) NSString *accessToken;
-@property (atomic, copy) NSString *environment;
-@property (atomic, copy) NSString *endpoint;
+@property (atomic, strong) RollbarConfiguration *configuration;
 
-- (id)initWithAccessToken:(NSString*)accessToken environment:(NSString*)environment;
+- (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration;
+
 - (void)uncaughtException:(NSException*)exception;
 
-- (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
+- (void)logCrashReport:(NSString*)crashReport;
 
-- (NSDictionary*)buildPayloadWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra;
+- (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
 
 @end
