@@ -17,5 +17,6 @@ static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
 @property (atomic, copy) NSString *accessToken;
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;
+@property (atomic, copy) NSString *crashLevel;
 
 @end

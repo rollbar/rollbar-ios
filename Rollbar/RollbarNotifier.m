@@ -34,12 +34,8 @@ static NSString *NOTIFIER_VERSION = @"0.0.1";
     return self;
 }
 
-- (void)uncaughtException:(NSException *)exception {
-    [self log:@"error" message:nil exception:exception data:nil];
-}
-
 - (void)logCrashReport:(NSString*)crashReport {
-    NSDictionary *payload = [self buildPayloadWithLevel:@"error" message:nil exception:nil extra:nil crashReport:crashReport];
+    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport];
     
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     

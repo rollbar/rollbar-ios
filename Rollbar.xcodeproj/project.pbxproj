@@ -6,9 +6,25 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		9691838518E4EC7300DE3699 /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 9691838618E4EC7300DE3699 /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				9691838B18E4EC9400DE3699 /* ShellScript */,
+			);
+			dependencies = (
+				96D75C2718E9F567002AA729 /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		963081C718DCDBCD00256154 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 963081C618DCDBCD00256154 /* CrashReporter.framework */; };
 		9630826518DCDDC000256154 /* RollbarConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 9630826418DCDDC000256154 /* RollbarConfiguration.m */; };
+		9691838318E4EB0400DE3699 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96D2220E18D8E40600933444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
 		96D2221318D8E40600933444 /* Rollbar.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; };
 		96D2221518D8E40600933444 /* Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2221418D8E40600933444 /* Rollbar.m */; };
@@ -19,10 +35,19 @@
 		96D2222A18D8E40600933444 /* RollbarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2222918D8E40600933444 /* RollbarTests.m */; };
 		96D2223518D8E51600933444 /* RollbarNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2223418D8E51600933444 /* RollbarNotifier.m */; };
 		96D2223718D8E54600933444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2223618D8E54600933444 /* UIKit.framework */; };
+		96D75C2A18EA04C6002AA729 /* RollbarConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 9630826318DCDDC000256154 /* RollbarConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96D75C2B18EA0528002AA729 /* RollbarConfiguration.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9630826318DCDDC000256154 /* RollbarConfiguration.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		96D2222018D8E40600933444 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96D2220218D8E40600933444 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96D2220918D8E40600933444;
+			remoteInfo = Rollbar;
+		};
+		96D75C2618E9F567002AA729 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96D2220218D8E40600933444 /* Project object */;
 			proxyType = 1;
@@ -38,6 +63,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				96D75C2B18EA0528002AA729 /* RollbarConfiguration.h in CopyFiles */,
 				96D2221318D8E40600933444 /* Rollbar.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,6 +193,18 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		9691838218E4EAEF00DE3699 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96D75C2A18EA04C6002AA729 /* RollbarConfiguration.h in Headers */,
+				9691838318E4EB0400DE3699 /* Rollbar.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		96D2220918D8E40600933444 /* Rollbar */ = {
 			isa = PBXNativeTarget;
@@ -175,6 +213,8 @@
 				96D2220618D8E40600933444 /* Sources */,
 				96D2220718D8E40600933444 /* Frameworks */,
 				96D2220818D8E40600933444 /* CopyFiles */,
+				9691838218E4EAEF00DE3699 /* Headers */,
+				9691838418E4EBC000DE3699 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -245,6 +285,7 @@
 			targets = (
 				96D2220918D8E40600933444 /* Rollbar */,
 				96D2221918D8E40600933444 /* RollbarTests */,
+				9691838518E4EC7300DE3699 /* Framework */,
 			);
 		};
 /* End PBXProject section */
@@ -259,6 +300,37 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9691838418E4EBC000DE3699 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# /bin/cp \"\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9691838B18E4EC9400DE3699 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=${PROJECT_NAME}\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\nDIST_DIR=\"${SRCROOT}/Dist/${SF_TARGET_NAME}\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nxcrun lipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\nrm -rf \"${DIST_DIR}\"\nmkdir -p \"${DIST_DIR}\"\n\ncp -R \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}\" \"${DIST_DIR}/\"\ncp -R \"${SRCROOT}/Vendor/CrashReporter.framework\" \"${DIST_DIR}/\"\n\ncd \"${SRCROOT}/Dist\"\nzip -yr \"${SF_TARGET_NAME}.zip\" \"${SF_TARGET_NAME}/\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		96D2220618D8E40600933444 /* Sources */ = {
@@ -287,6 +359,11 @@
 			target = 96D2220918D8E40600933444 /* Rollbar */;
 			targetProxy = 96D2222018D8E40600933444 /* PBXContainerItemProxy */;
 		};
+		96D75C2718E9F567002AA729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96D2220918D8E40600933444 /* Rollbar */;
+			targetProxy = 96D75C2618E9F567002AA729 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -301,6 +378,22 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9691838718E4EC7300DE3699 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
+			};
+			name = Debug;
+		};
+		9691838818E4EC7300DE3699 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
+			};
+			name = Release;
+		};
 		96D2222B18D8E40600933444 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -372,6 +465,7 @@
 		96D2222E18D8E40600933444 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/Rollbar.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -386,8 +480,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 				VALID_ARCHS = "arm64 armv7 armv7s i386";
 			};
 			name = Debug;
@@ -395,6 +490,8 @@
 		96D2222F18D8E40600933444 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/Rollbar.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -408,8 +505,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 				VALID_ARCHS = "arm64 armv7 armv7s i386";
 			};
 			name = Release;
@@ -453,6 +551,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9691838618E4EC7300DE3699 /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9691838718E4EC7300DE3699 /* Debug */,
+				9691838818E4EC7300DE3699 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		96D2220518D8E40600933444 /* Build configuration list for PBXProject "Rollbar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

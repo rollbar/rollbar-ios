@@ -23,6 +23,8 @@
         #else
         self.environment = @"unspecified";
         #endif
+        
+        self.crashLevel = @"error";
     }
     
     return self;
