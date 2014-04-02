@@ -150,8 +150,27 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
 
 ## Developing and building the library ##
 
-You can include the Rollbar project as a sub-project in your app, or link the Rollbar source files directly into your app.
+You can include the Rollbar project as a sub-project in your app, or link the Rollbar source files directly into your app. 
+To develop the library by linking the source files directly in your app:
 
+1. Fork this repo
+2. git clone your fork
+3. In Xcode, remove the Rollbar files from your project if they are currently there
+4. In Xcode, add the Rollbar/ files:
+    1. Right-click your project
+    2. Click "Add Files to <project name>"
+    3. Navigate to your rollbar-ios clone and select the Rollbar folder
+    4. Click "Add"
+5. In Xcode, add the PLCrashReporter framework:
+    1. Click your project
+    2. Click the General settings tab
+    3. Under "Linked Frameworks and Libraries", click the +
+    4. Click "Add Other..."
+    5. Navigate to your rollbar-ios clone, then Vendor/
+    6. Select CrashReporter.framework and click "Open"
+
+You should now be able to build your app with your local clone of rollbar-ios.
+    
 To build the Rollbar framework distribution files, open the Rollbar project and make sure the Distribution scheme is active by selecting _Editor_ -> _Scheme_ -> _Distribution_. Building the project with this scheme selected will create a `Dist/` directory containing the Rollbar framework with the proper fat binary.
 
 

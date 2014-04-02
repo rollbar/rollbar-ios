@@ -3,7 +3,7 @@
 //  Rollbar
 //
 //  Created by Sergei Bezborodko on 3/18/14.
-//  Copyright (c) 2014 Rollbar. All rights reserved.
+//  Copyright (c) 2014 Rollbar, Inc. All rights reserved.
 //
 
 #import "RollbarNotifier.h"
@@ -150,14 +150,14 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
     
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if (error) {
-            NSLog(@"Error %@; %@", error, [error localizedDescription]);
+            NSLog(@"[Rollbar] Error %@; %@", error, [error localizedDescription]);
         } else {
             NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
             if ([httpResponse statusCode] == 200) {
-                NSLog(@"Success");
+                NSLog(@"[Rollbar] Success");
             } else {
-                NSLog(@"There was a problem reporting to Rollbar");
-                NSLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                NSLog(@"[Rollbar] There was a problem reporting to Rollbar");
+                NSLog(@"[Rollbar] Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             }
         }
     }];
