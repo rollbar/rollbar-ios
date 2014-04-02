@@ -1,9 +1,9 @@
 # Rollbar for iOS
 
 <!-- RemoveNext -->
-Objective-C library for reporting exceptions, errors, and log messages to [Rollbar](https://rollbar.com).
+Objective-C library for crash reporting and logging with [Rollbar](https://rollbar.com).
 
-## Setup ##
+## Setup
 
 1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v0.0.1/Rollbar.zip)
 
@@ -13,46 +13,55 @@ Objective-C library for reporting exceptions, errors, and log messages to [Rollb
 
 4. In your Application delegate implementation file, add the following import statement:
 
-```objective-c
-#import <Rollbar/Rollbar.h>
-```
+    ```objective-c
+    #import <Rollbar/Rollbar.h>
+    ```
 
 5. Add the following to `application:didFinishLaunchingWithOptions:`:
 
-```objective-c
-[Rollbar initWithAccessToken:@"POST_CLIENT_ITEM_ACCESS_TOKEN"];
-```
+    ```objective-c
+    [Rollbar initWithAccessToken:@"POST_CLIENT_ITEM_ACCESS_TOKEN"];
+    ```
 
-<!-- RemoveNext -->
-Replace POST_CLIENT_ITEM_ACCESS_TOKEN with a client scope access token from your project in Rollbar
+    <!-- RemoveNext -->
+    Replace POST_CLIENT_ITEM_ACCESS_TOKEN with a client scope access token from your project in Rollbar.
 
+That's all you need to do to report crashes to Rollbar. To get symbolicated stack traces, follow the instructions in the "Symbolication" section below.
 
-## Usage ##
+## Usage
 
-Rollbar uses [PLCrashReporter](https://www.plcrashreporter.org/) to capture uncaught exceptions and fatal signals. Only one crash reporter can be active per app, so make sure to only use Rollbar for crash reporting, or at least have Rollbar be the the last crash reporter initialized in your app delegate.
+### Crash reporting
+
+Rollbar uses [PLCrashReporter](https://www.plcrashreporter.org/) to capture uncaught exceptions and fatal signals. Only one crash reporter can be active per app, so make sure to only use Rollbar for crash reporting (or at least have Rollbar be the the last crash reporter initialized in your app delegate).
 
 Crashes will be saved to disk when they occur, then reported to Rollbar the next time the app is launched.
 
-You can report messages by using one of the log methods:
+### Logging
+
+You can log arbitrary messages using the log methods:
 
 ```objective-c
+// Logs at level "info".
+// Variants at "debug", "info", "warning", "error", and "critical" all exist.
 [Rollbar infoWithMessage:@"Test message"];
 
+// Log a critical, with some additional key-value data
 [Rollbar criticalWithMessage:@"Unexcpected data from server" data:@{@"endpoint": endpoint,
                                                                     @"result": result}];
 
+// Or log at a named level
 [Rollbar logWithLevel:@"warning" message:@"Simple warning log message"];
 ```
 
 
-## Configuration ##
+## Configuration
 
 You can pass an optional `RollbarConfiguration` object to `initWithAccessToken:`:
 
 ```objective-c
 RollbarConfiguration *config = [RollbarConfiguration configuration];
-// set configuration options...
 config.crashLevel = @"critical";
+config.environment = @"production";
 
 [Rollbar initWithAccessToken:@"POST_CLIENT_ITEM_ACCESS_TOKEN" configuration:config];
 ```
@@ -60,21 +69,21 @@ config.crashLevel = @"critical";
 ### Configuration reference ###
 
   <dl>
-  <dt>environment</dt>
-  <dd>Environment that Rollbar items will be reported under
-
-Default: ```unspecified``` in release mode, ```development``` in debug mode
-  </dd>
-  <dt>endpoint</dt>
-  <dd>URL items are posted to
-
-Default: ```https://api.rollbar.com/api/1/items/```
-
-  </dd>
   <dt>crashLevel</dt>
   <dd>The level that crashes are reported as
 
 Default: ```error```
+  </dd>
+  
+  <dt>environment</dt>
+  <dd>Environment that Rollbar items will be reported under
+
+Default: ```unspecified``` in release mode, ```development``` in debug mode.
+  </dd>
+  <dt>endpoint</dt>
+  <dd>URL items are posted to.
+
+Default: ```https://api.rollbar.com/api/1/items/```
   </dd>
   </dl>
 
@@ -84,9 +93,11 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
 
 1. Click on your project and then select "Build Phases"
 
-2. Click the plus in the top left and select "New Run Script Build Phase"
+2. In the top menu bar, click "Editor" and then "Add Build Phase", then "Add Run Script Build Phase"
 
-3. Change the shell to `/usr/bin/python` and paste the following script into the box:
+3. Change the "Shell" to `/usr/bin/python`
+
+4. Paste the following script into the box, using "Paste and Preserve Formatting" (Edit -> Paste and Preserve Formatting):
 
 ```python
 import os
@@ -123,7 +134,8 @@ Note: make sure you replace POST_SERVER_ITEM_ACCESS_TOKEN with a server scope ac
 
 ## Help / Support
 
-If you run into any issues, please email us at `support@rollbar.com`
+If you run into any problems, please email us at `support@rollbar.com` or [file a bug report](https://github.com/rollbar/rollbar-ios/issues/new).
+
 
 
 ## Contributing
