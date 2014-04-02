@@ -14,9 +14,14 @@ static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
 
 + (RollbarConfiguration*)configuration;
 
+- (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
+
 @property (atomic, copy) NSString *accessToken;
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;
 @property (atomic, copy) NSString *crashLevel;
+@property (readonly, atomic, copy) NSString *personId;
+@property (readonly, atomic, copy) NSString *personUsername;
+@property (readonly, atomic, copy) NSString *personEmail;
 
 @end

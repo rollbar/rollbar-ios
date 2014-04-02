@@ -56,6 +56,10 @@ static RollbarNotifier *notifier = nil;
     }
 }
 
++ (RollbarConfiguration*)currentConfiguration {
+    return notifier.configuration;
+}
+
 // Log
 
 + (void)logWithLevel:(NSString*)level message:(NSString*)message {

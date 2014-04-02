@@ -50,6 +50,26 @@ static NSString *NOTIFIER_VERSION = @"0.0.1";
     [self sendPayload:jsonPayload];
 }
 
+- (NSDictionary*)buildPersonData {
+    NSMutableDictionary *personData = [NSMutableDictionary dictionary];
+    
+    if (self.configuration.personId) {
+        personData[@"id"] = self.configuration.personId;
+    }
+    if (self.configuration.personUsername) {
+        personData[@"username"] = self.configuration.personUsername;
+    }
+    if (self.configuration.personEmail) {
+        personData[@"email"] = self.configuration.personEmail;
+    }
+    
+    if ([[personData allKeys] count]) {
+        return personData;
+    }
+    
+    return nil;
+}
+
 - (NSDictionary*)buildClientData {
     NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]]
     ;
@@ -77,16 +97,21 @@ static NSString *NOTIFIER_VERSION = @"0.0.1";
     
     NSDictionary *body = [self buildPayloadBodyWithMessage:message exception:exception extra:extra crashReport:crashReport];
     
-    NSDictionary *data = [@{@"environment": self.configuration.environment,
-                           @"level": level,
-                           @"language": @"objective-c",
-                           @"framework": @"ios",
-                           @"platform": @"ios",
-                           @"uuid": [self generateUUID],
-                           @"client": clientData,
-                           @"notifier": notifierData,
-                           @"body": body} mutableCopy];
+    NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
+                                   @"level": level,
+                                   @"language": @"objective-c",
+                                   @"framework": @"ios",
+                                   @"platform": @"ios",
+                                   @"uuid": [self generateUUID],
+                                   @"client": clientData,
+                                   @"notifier": notifierData,
+                                   @"body": body} mutableCopy];
     
+    NSDictionary *personData = [self buildPersonData];
+    
+    if (personData) {
+        data[@"person"] = personData;
+    }
     
     return @{@"access_token": self.configuration.accessToken,
              @"data": @[data]};

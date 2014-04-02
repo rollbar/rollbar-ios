@@ -8,6 +8,14 @@
 
 #import "RollbarConfiguration.h"
 
+@interface RollbarConfiguration ()
+
+@property (nonatomic, copy) NSString* personId;
+@property (nonatomic, copy) NSString* personUsername;
+@property (nonatomic, copy) NSString* personEmail;
+
+@end
+
 @implementation RollbarConfiguration
 
 + (RollbarConfiguration*)configuration {
@@ -28,6 +36,12 @@
     }
     
     return self;
+}
+
+- (void)setPersonId:(NSString *)personId username:(NSString *)username email:(NSString *)email {
+    self.personId = personId;
+    self.personUsername = username;
+    self.personEmail = email;
 }
 
 @end

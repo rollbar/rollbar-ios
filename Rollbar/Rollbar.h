@@ -14,6 +14,8 @@
 + (void)initWithAccessToken:(NSString*)accessToken;
 + (void)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration;
 
++ (RollbarConfiguration*)currentConfiguration;
+
 + (void)logWithLevel:(NSString*)level message:(NSString*)message;
 + (void)logWithLevel:(NSString*)level message:(NSString*)message data:(NSDictionary*)data;
 + (void)logWithLevel:(NSString*)level data:(NSDictionary*)data;
