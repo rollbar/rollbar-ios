@@ -32,9 +32,9 @@ That's all you need to do to report crashes to Rollbar. To get symbolicated stac
 
 ### Crash reporting
 
-Rollbar uses [PLCrashReporter](https://www.plcrashreporter.org/) to capture uncaught exceptions and fatal signals. Only one crash reporter can be active per app, so make sure to only use Rollbar for crash reporting (or at least have Rollbar be the the last crash reporter initialized in your app delegate).
-
 Crashes will be saved to disk when they occur, then reported to Rollbar the next time the app is launched.
+
+Rollbar uses [PLCrashReporter](https://www.plcrashreporter.org/) to capture uncaught exceptions and fatal signals. Note that only one crash reporter can be active per app. If you initialize multiple crash reporters (i.e. Rollbar alongside other services), only the last one initialized will be active.
 
 ### Logging
 
