@@ -17,7 +17,7 @@
 
 @implementation RollbarNotifier
 
-static NSString *NOTIFIER_VERSION = @"0.0.1";
+static NSString *NOTIFIER_VERSION = @"0.0.2";
 
 - (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration {
     
