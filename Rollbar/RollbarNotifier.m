@@ -78,8 +78,12 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
     NSString *build = infoDictionary[(NSString*)kCFBundleVersionKey];
     NSString *bundleName = infoDictionary[(NSString *)kCFBundleNameKey];
     
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    
     NSMutableDictionary *iosData = [@{@"ios_version": [[UIDevice currentDevice] systemVersion],
-                                      @"device_name": [self getDeviceName],
+                                      @"device_code": deviceCode,
                                       @"code_version": build,
                                       @"version_name": bundleName} mutableCopy];
     
@@ -168,60 +172,6 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
     CFStringRef string = CFUUIDCreateString(NULL, uuid);
     CFRelease(uuid);
     return (__bridge NSString *)string;
-}
-
-// Adapted from http://stackoverflow.com/a/20062141/1138191
-- (NSString*)getDeviceName {
-    struct utsname systemInfo;
-    
-    uname(&systemInfo);
-    
-    NSString* code = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    
-    static NSDictionary* deviceNamesByCode = nil;
-    if (!deviceNamesByCode) {
-        deviceNamesByCode = @{@"i386": @"iOS Simulator",
-                              @"x86_64": @"iOS Simulator",
-                              @"iPod1,1": @"iPod Touch (Original)",
-                              @"iPod2,1": @"iPod Touch (Second Generation)",
-                              @"iPod3,1": @"iPod Touch (Third Generation)",
-                              @"iPod4,1": @"iPod Touch (Fourth Generation)",
-                              @"iPhone1,1": @"iPhone (Original)",
-                              @"iPhone1,2": @"iPhone (3G)",
-                              @"iPhone2,1": @"iPhone (3GS)",
-                              @"iPad1,1": @"iPad (Original)",
-                              @"iPad2,1": @"iPad 2",
-                              @"iPad3,1": @"iPad (3rd Generation)",
-                              @"iPhone3,1": @"iPhone 4",
-                              @"iPhone4,1": @"iPhone 4S",
-                              @"iPhone5,1": @"iPhone 5",
-                              @"iPhone5,2": @"iPhone 5",
-                              @"iPad3,4": @"iPad (4th Generation)",
-                              @"iPad2,5": @"iPad Mini",
-                              @"iPhone5,3": @"iPhone 5c",
-                              @"iPhone5,4": @"iPhone 5c",
-                              @"iPhone6,1": @"iPhone 5s",
-                              @"iPhone6,2": @"iPhone 5s",
-                              @"iPad4,1": @"iPad Air",
-                              @"iPad4,2": @"iPad Air",
-                              @"iPad4,4": @"iPad Mini",
-                              @"iPad4,5": @"iPad Mini"};
-    }
-    
-    NSString* deviceName = [deviceNamesByCode objectForKey:code];
-    if (!deviceName) {
-        if ([code rangeOfString:@"iPod"].location != NSNotFound) {
-            deviceName = @"iPod Touch";
-        } else if([code rangeOfString:@"iPad"].location != NSNotFound) {
-            deviceName = @"iPad";
-        } else if([code rangeOfString:@"iPhone"].location != NSNotFound){
-            deviceName = @"iPhone";
-        } else {
-            deviceName = code;
-        }
-    }
-    
-    return deviceName;
 }
         
 @end
