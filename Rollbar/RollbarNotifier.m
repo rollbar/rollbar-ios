@@ -11,17 +11,13 @@
 #include <sys/utsname.h>
 
 
-@interface RollbarNotifier()
-
-@end
+static NSString *NOTIFIER_VERSION = @"0.0.2";
 
 @implementation RollbarNotifier
 
-static NSString *NOTIFIER_VERSION = @"0.0.2";
-
-- (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration {
+- (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
     
-    if((self = [super init])) {
+    if ((self = [super init])) {
         if (configuration) {
             self.configuration = configuration;
         } else {
@@ -29,6 +25,10 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
         }
         
         self.configuration.accessToken = accessToken;
+        
+        if (isRoot) {
+            [self.configuration _setRoot];
+        }
     }
     
     return self;

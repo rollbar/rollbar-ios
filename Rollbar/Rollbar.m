@@ -30,7 +30,14 @@ static RollbarNotifier *notifier = nil;
             PLCrashReportTextFormat textFormat = PLCrashReportTextFormatiOS;
             
             NSString *crashReportText = [PLCrashReportTextFormatter stringValueForCrashReport:report withTextFormat:textFormat];
-            [notifier logCrashReport:crashReportText];
+            
+            // Grab the configuration saved to disk before the crash happened
+            RollbarConfiguration *config = [[RollbarConfiguration alloc] initWithLoadedConfiguration];
+            
+            // Create a temporary notifier using the above configuration and report the crash
+            RollbarNotifier *tempNotifier = [[RollbarNotifier alloc] initWithAccessToken:config.accessToken configuration:config isRoot:NO];
+            
+            [tempNotifier logCrashReport:crashReportText];
         }
         
         [crashReporter purgePendingCrashReport];
@@ -50,9 +57,11 @@ static RollbarNotifier *notifier = nil;
     if (notifier) {
         NSLog(@"Rollbar has already been initialized.");
     } else {
-        notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken configuration:configuration];
+        notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken configuration:configuration isRoot:YES];
         
         [self enableCrashReporter];
+        
+        [notifier.configuration save];
     }
 }
 

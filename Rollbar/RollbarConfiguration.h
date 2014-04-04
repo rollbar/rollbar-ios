@@ -8,11 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
-
-@interface RollbarConfiguration : NSObject
+@interface RollbarConfiguration : NSObject {
+    // Stores whether this configuration is the root level
+    // configuration used by the root level notifier
+    BOOL isRootConfiguration;
+}
 
 + (RollbarConfiguration*)configuration;
+
+- (id)initWithLoadedConfiguration;
+
+- (void)_setRoot;
+- (void)save;
 
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
 

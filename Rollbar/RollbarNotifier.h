@@ -13,7 +13,7 @@
 
 @property (atomic, strong) RollbarConfiguration *configuration;
 
-- (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration;
+- (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot;
 
 - (void)logCrashReport:(NSString*)crashReport;
 - (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
