@@ -88,7 +88,8 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
                                       @"version_name": bundleName} mutableCopy];
     
     NSDictionary *data = @{@"timestamp": timestamp,
-                           @"ios": iosData};
+                           @"ios": iosData,
+                           @"user_ip": @"$remote_ip"};
     
     return data;
 }
