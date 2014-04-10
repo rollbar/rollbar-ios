@@ -7,11 +7,24 @@
 //
 
 #import "RollbarNotifier.h"
+#import "RollbarThread.h"
+#import "DDFileReader.h"
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
 
 
 static NSString *NOTIFIER_VERSION = @"0.0.2";
+static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
+static NSString *STATE_FILE_NAME = @"rollbar.state";
+
+static NSUInteger MAX_RETRY_COUNT = 5;
+static NSUInteger MAX_BATCH_SIZE = 10;
+
+static NSString *queuedItemsFilePath = nil;
+static NSString *stateFilePath = nil;
+static NSMutableDictionary *queueState = nil;
+
+static RollbarThread *rollbarThread;
 
 @implementation RollbarNotifier
 
@@ -27,7 +40,28 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
         self.configuration.accessToken = accessToken;
         
         if (isRoot) {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            NSString *cachesDirectory = [paths objectAtIndex:0];
+            queuedItemsFilePath = [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
+            stateFilePath = [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
+            
+            if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
+                [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath contents:nil attributes:nil];
+            }
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
+                NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
+                NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData options:0 error:nil];
+                
+                queueState = [state mutableCopy];
+            } else {
+                queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
+                                @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
+            }
+            
             [self.configuration _setRoot];
+            rollbarThread = [[RollbarThread alloc] initWithNotifier:self];
+            [rollbarThread start];
         }
     }
     
@@ -37,17 +71,89 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
 - (void)logCrashReport:(NSString*)crashReport {
     NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport];
     
-    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-    
-    [self sendPayload:jsonPayload];
+    [self queuePayload:payload];
 }
 
 - (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
     NSDictionary *payload = [self buildPayloadWithLevel:level message:message exception:exception extra:data crashReport:nil];
     
-    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+    [self queuePayload:payload];
+}
+
+- (void)saveQueueState {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:nil];
+    [data writeToFile:stateFilePath atomically:YES];
+}
+
+// Iterate through the items file and send the items in batches.
+- (void)processSavedItems {
+    __block NSString *lastAccessToken = nil;
+    NSMutableArray *items = [NSMutableArray array];
+
+    NSUInteger startOffset = [queueState[@"offset"] unsignedIntegerValue];
     
-    [self sendPayload:jsonPayload];
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:queuedItemsFilePath];
+    [fileHandle seekToEndOfFile];
+    __block unsigned long long fileLength = [fileHandle offsetInFile];
+    [fileHandle closeFile];
+    
+    if (!fileLength) {
+        return;
+    }
+    
+    // Delete the queued item file if all items have been processed already
+    if (startOffset == fileLength) {
+        [@"" writeToFile:queuedItemsFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        
+        queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
+        queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
+        
+        [self saveQueueState];
+        
+        return;
+    }
+    
+    DDFileReader *reader = [[DDFileReader alloc] initWithFilePath:queuedItemsFilePath andOffset:startOffset];
+    [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
+        NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:[line dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        
+        NSString *accessToken = payload[@"access_token"];
+        
+        // If a different access token token is found in the queued items file,
+        // try sending the current batch before starting a new one
+        if ([items count] >= MAX_BATCH_SIZE || (lastAccessToken != nil && [accessToken compare:lastAccessToken] != NSOrderedSame)) {
+            BOOL shouldRetry = [self sendItems:items withAccessToken:lastAccessToken];
+            if (shouldRetry) {
+                // Return so that the current file offset will be retried
+                return;
+            }
+            
+            queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];
+            queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
+            [self saveQueueState];
+            
+            // The file has had items added since we started iterating through it,
+            // update the known file length to equal the next offset
+            if (nextOffset > fileLength) {
+                fileLength = nextOffset;
+            }
+            
+            [items removeAllObjects];
+        }
+        
+        [items addObject:payload[@"data"]];
+        
+        lastAccessToken = accessToken;
+    }];
+    
+    // The whole file has been read, send all of the pending items
+    if ([items count]) {
+        [self sendItems:items withAccessToken:lastAccessToken];
+        
+        queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:fileLength];
+        queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
+        [self saveQueueState];
+    }
 }
 
 - (NSDictionary*)buildPersonData {
@@ -119,7 +225,7 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
     }
     
     return @{@"access_token": self.configuration.accessToken,
-             @"data": @[data]};
+             @"data": data};
 }
 
 - (NSDictionary*)buildPayloadBodyWithCrashReport:(NSString*)crashReport {
@@ -144,7 +250,38 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
     }
 }
 
-- (void)sendPayload:(NSData*)payload {
+- (void)queuePayload:(NSDictionary*)payload {
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
+    [fileHandle seekToEndOfFile];
+    [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil]];
+    [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [fileHandle closeFile];
+}
+
+- (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken {
+    NSDictionary *newPayload = @{@"access_token": accessToken,
+                                 @"data": itemData};
+    
+    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil];
+    
+    [NSThread sleepForTimeInterval:2];
+    BOOL success = [self sendPayload:jsonPayload];
+    if (!success) {
+        NSUInteger retryCount = [queueState[@"retry_count"] unsignedIntegerValue];
+        
+        if (retryCount < MAX_RETRY_COUNT) {
+            queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:retryCount + 1];
+            [self saveQueueState];
+            
+            // Return so that the current batch will be retried next time
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (BOOL)sendPayload:(NSData*)payload {
     NSURL *url = [NSURL URLWithString:self.configuration.endpoint];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -153,26 +290,32 @@ static NSString *NOTIFIER_VERSION = @"0.0.2";
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if (error) {
-            NSLog(@"[Rollbar] Error %@; %@", error, [error localizedDescription]);
+    NSError *error;
+    NSHTTPURLResponse *response;
+    
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (error) {
+        NSLog(@"[Rollbar] Error %@; %@", error, [error localizedDescription]);
+    } else {
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        if ([httpResponse statusCode] == 200) {
+            NSLog(@"[Rollbar] Success");
+            return YES;
         } else {
-            NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-            if ([httpResponse statusCode] == 200) {
-                NSLog(@"[Rollbar] Success");
-            } else {
-                NSLog(@"[Rollbar] There was a problem reporting to Rollbar");
-                NSLog(@"[Rollbar] Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-            }
+            NSLog(@"[Rollbar] There was a problem reporting to Rollbar");
+            NSLog(@"[Rollbar] Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         }
-    }];
+    }
+    
+    return NO;
 }
 
 - (NSString*)generateUUID {
-    CFUUIDRef uuid = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, uuid);
+    CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+    NSString *string = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, uuid);
     CFRelease(uuid);
-    return (__bridge NSString *)string;
+    return string;
 }
         
 @end
