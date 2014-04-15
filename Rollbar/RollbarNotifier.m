@@ -13,7 +13,7 @@
 #include <sys/utsname.h>
 
 
-static NSString *NOTIFIER_VERSION = @"0.0.2";
+static NSString *NOTIFIER_VERSION = @"0.0.3";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
@@ -85,7 +85,6 @@ static RollbarThread *rollbarThread;
     [data writeToFile:stateFilePath atomically:YES];
 }
 
-// Iterate through the items file and send the items in batches.
 - (void)processSavedItems {
     __block NSString *lastAccessToken = nil;
     NSMutableArray *items = [NSMutableArray array];
@@ -101,36 +100,34 @@ static RollbarThread *rollbarThread;
         return;
     }
     
-    // Delete the queued item file if all items have been processed already
+    // Empty out the queued item file if all items have been processed already
     if (startOffset == fileLength) {
         [@"" writeToFile:queuedItemsFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         
         queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
         queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
-        
         [self saveQueueState];
         
         return;
     }
     
+    // Iterate through the items file and send the items in batches.
     DDFileReader *reader = [[DDFileReader alloc] initWithFilePath:queuedItemsFilePath andOffset:startOffset];
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
         NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:[line dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
         
         NSString *accessToken = payload[@"access_token"];
         
-        // If a different access token token is found in the queued items file,
+        // If the max batch size is reached as the file is being processed,
         // try sending the current batch before starting a new one
         if ([items count] >= MAX_BATCH_SIZE || (lastAccessToken != nil && [accessToken compare:lastAccessToken] != NSOrderedSame)) {
-            BOOL shouldRetry = [self sendItems:items withAccessToken:lastAccessToken];
-            if (shouldRetry) {
-                // Return so that the current file offset will be retried
+            BOOL shouldContinue = [self sendItems:items withAccessToken:lastAccessToken nextOffset:nextOffset];
+            
+            if (!shouldContinue) {
+                // Return so that the current file offset will be retried next time the
+                // file is processed
                 return;
             }
-            
-            queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];
-            queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
-            [self saveQueueState];
             
             // The file has had items added since we started iterating through it,
             // update the known file length to equal the next offset
@@ -148,11 +145,7 @@ static RollbarThread *rollbarThread;
     
     // The whole file has been read, send all of the pending items
     if ([items count]) {
-        [self sendItems:items withAccessToken:lastAccessToken];
-        
-        queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:fileLength];
-        queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
-        [self saveQueueState];
+        [self sendItems:items withAccessToken:lastAccessToken nextOffset:fileLength];
     }
 }
 
@@ -181,7 +174,8 @@ static RollbarThread *rollbarThread;
     ;
     NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
     
-    NSString *build = infoDictionary[(NSString*)kCFBundleVersionKey];
+    NSString *version = infoDictionary[(NSString*)kCFBundleVersionKey];
+    NSString *shortVersion = infoDictionary[@"CFBundleShortVersionString"];
     NSString *bundleName = infoDictionary[(NSString *)kCFBundleNameKey];
     
     struct utsname systemInfo;
@@ -190,8 +184,9 @@ static RollbarThread *rollbarThread;
     
     NSMutableDictionary *iosData = [@{@"ios_version": [[UIDevice currentDevice] systemVersion],
                                       @"device_code": deviceCode,
-                                      @"code_version": build,
-                                      @"version_name": bundleName} mutableCopy];
+                                      @"code_version": version,
+                                      @"short_version": shortVersion,
+                                      @"app_name": bundleName} mutableCopy];
     
     NSDictionary *data = @{@"timestamp": timestamp,
                            @"ios": iosData,
@@ -258,7 +253,7 @@ static RollbarThread *rollbarThread;
     [fileHandle closeFile];
 }
 
-- (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken {
+- (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken nextOffset:(NSUInteger)nextOffset {
     NSDictionary *newPayload = @{@"access_token": accessToken,
                                  @"data": itemData};
     
@@ -273,12 +268,16 @@ static RollbarThread *rollbarThread;
             queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:retryCount + 1];
             [self saveQueueState];
             
-            // Return so that the current batch will be retried next time
-            return YES;
+            // Return NO so that the current batch will be retried next time
+            return NO;
         }
     }
     
-    return NO;
+    queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];
+    queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
+    [self saveQueueState];
+    
+    return YES;
 }
 
 - (BOOL)sendPayload:(NSData*)payload {

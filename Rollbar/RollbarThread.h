@@ -15,4 +15,6 @@
 
 - (id)initWithNotifier:(RollbarNotifier*)aNotifier;
 
+@property(atomic) BOOL active;
+
 @end

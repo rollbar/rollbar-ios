@@ -13,6 +13,7 @@
 - (id)initWithNotifier:(RollbarNotifier *)aNotifier {
     if ((self = [super initWithTarget:self selector:@selector(run) object:nil])) {
         notifier = aNotifier;
+        self.active = YES;
     }
     
     return self;
@@ -26,15 +27,13 @@
 
 - (void)run {
     @autoreleasepool {
-        BOOL exit = NO;
-        
         NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
         
-        NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(checkItems) userInfo:nil repeats:YES];
+        NSTimer *timer = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(checkItems) userInfo:nil repeats:YES];
         
         [runLoop addTimer:timer forMode:NSDefaultRunLoopMode];
         
-        while (!exit) {
+        while (self.active) {
             [runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
     }
