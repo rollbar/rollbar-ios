@@ -182,11 +182,11 @@ static RollbarThread *rollbarThread;
     uname(&systemInfo);
     NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
     
-    NSMutableDictionary *iosData = [@{@"ios_version": [[UIDevice currentDevice] systemVersion],
-                                      @"device_code": deviceCode,
-                                      @"code_version": version,
-                                      @"short_version": shortVersion,
-                                      @"app_name": bundleName} mutableCopy];
+    NSDictionary *iosData = @{@"ios_version": [[UIDevice currentDevice] systemVersion],
+                              @"device_code": deviceCode,
+                              @"code_version": version,
+                              @"short_version": shortVersion,
+                              @"app_name": bundleName};
     
     NSDictionary *data = @{@"timestamp": timestamp,
                            @"ios": iosData,
