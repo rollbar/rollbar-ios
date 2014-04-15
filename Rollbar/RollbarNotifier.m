@@ -259,7 +259,6 @@ static RollbarThread *rollbarThread;
     
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil];
     
-    [NSThread sleepForTimeInterval:2];
     BOOL success = [self sendPayload:jsonPayload];
     if (!success) {
         NSUInteger retryCount = [queueState[@"retry_count"] unsignedIntegerValue];
