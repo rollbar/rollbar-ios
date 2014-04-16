@@ -1,6 +1,9 @@
-#import "DDFileReader.h"
+// Based off of DDFileReader from http://stackoverflow.com/a/8027618
 
-@implementation DDFileReader
+
+#import "RollbarFileReader.h"
+
+@implementation RollbarFileReader
 @synthesize lineDelimiter, chunkSize;
 
 + (NSRange)findData:(NSData *)dataToFind inData:(NSData*)data {
@@ -62,7 +65,7 @@
                 return nil;
             }
             
-            NSRange newLineRange = [DDFileReader findData:newLineData inData:chunk];
+            NSRange newLineRange = [RollbarFileReader findData:newLineData inData:chunk];
             if (newLineRange.location != NSNotFound) {
                 
                 //include the length so we can include the delimiter in the string

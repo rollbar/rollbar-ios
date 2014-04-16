@@ -1,4 +1,7 @@
-@interface DDFileReader : NSObject {
+// Based off of DDFileReader from http://stackoverflow.com/a/8027618
+
+
+@interface RollbarFileReader : NSObject {
     NSString * filePath;
     
     NSFileHandle * fileHandle;

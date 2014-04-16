@@ -8,7 +8,7 @@
 
 #import "RollbarNotifier.h"
 #import "RollbarThread.h"
-#import "DDFileReader.h"
+#import "RollbarFileReader.h"
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
 
@@ -112,7 +112,7 @@ static RollbarThread *rollbarThread;
     }
     
     // Iterate through the items file and send the items in batches.
-    DDFileReader *reader = [[DDFileReader alloc] initWithFilePath:queuedItemsFilePath andOffset:startOffset];
+    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath andOffset:startOffset];
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
         NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:[line dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
         
@@ -145,7 +145,7 @@ static RollbarThread *rollbarThread;
     
     // The whole file has been read, send all of the pending items
     if ([items count]) {
-        [self sendItems:items withAccessToken:lastAccessToken nextOffset:fileLength];
+        [self sendItems:items withAccessToken:lastAccessToken nextOffset:(NSUInteger)fileLength];
     }
 }
 
