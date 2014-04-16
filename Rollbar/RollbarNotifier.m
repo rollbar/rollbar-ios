@@ -13,7 +13,7 @@
 #include <sys/utsname.h>
 
 
-static NSString *NOTIFIER_VERSION = @"0.0.3";
+static NSString *NOTIFIER_VERSION = @"0.0.4";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
@@ -177,6 +177,7 @@ static RollbarThread *rollbarThread;
     NSString *version = infoDictionary[(NSString*)kCFBundleVersionKey];
     NSString *shortVersion = infoDictionary[@"CFBundleShortVersionString"];
     NSString *bundleName = infoDictionary[(NSString *)kCFBundleNameKey];
+    NSString *bundleIdentifier = infoDictionary[(NSString *)kCFBundleIdentifierKey];
     
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -186,6 +187,7 @@ static RollbarThread *rollbarThread;
                               @"device_code": deviceCode,
                               @"code_version": version,
                               @"short_version": shortVersion,
+                              @"bundle_identifier": bundleIdentifier,
                               @"app_name": bundleName};
     
     NSDictionary *data = @{@"timestamp": timestamp,

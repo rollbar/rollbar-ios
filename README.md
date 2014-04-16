@@ -5,7 +5,7 @@ Objective-C library for crash reporting and logging with [Rollbar](https://rollb
 
 ## Setup
 
-1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v0.0.3/Rollbar.zip).
+1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v0.0.4/Rollbar.zip).
 
 2. Extract the Rollbar directory in the zip file to your Xcode project directory.
 
