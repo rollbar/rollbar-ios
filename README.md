@@ -136,12 +136,13 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
           for f in files:
               zipf.write(os.path.join(root, f))
 
-  p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "%s"' % os.environ['PRODUCT_SETTINGS_PATH'],
+  p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % os.environ['PRODUCT_SETTINGS_PATH'],
                        stdout=subprocess.PIPE, shell=True)
   stdout, stderr = p.communicate()
-  version = stdout.strip()
+  version, identifier = stdout.split()
 
-  p = subprocess.Popen('curl -X POST https://api.rollbar.com/api/1/dsym -F access_token=%s -F version=%s -F dsym=@"%s"' % (ACCESS_TOKEN, version, zip_location), shell=True)
+  p = subprocess.Popen('curl -X POST https://api.rollbar.com/api/1/dsym -F access_token=%s -F version=%s -F bundle_identifier="%s" -F dsym=@"%s"' 
+                       % (ACCESS_TOKEN, version, identifier, zip_location), shell=True)
   p.communicate()
   ```
 
