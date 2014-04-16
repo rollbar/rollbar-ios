@@ -76,7 +76,7 @@ RollbarConfiguration *config = [Rollbar currentConfiguration];
 
 ### Configuration reference ###
 
-**Variables:**
+**Properties:**
 
   <dl>
   <dt>crashLevel</dt>
