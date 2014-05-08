@@ -9,11 +9,13 @@
 #import "RollbarNotifier.h"
 #import "RollbarThread.h"
 #import "RollbarFileReader.h"
+#import "RollbarReachability.h"
+#import "RollbarLogger.h"
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
 
 
-static NSString *NOTIFIER_VERSION = @"0.0.4";
+static NSString *NOTIFIER_VERSION = @"0.1.0";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
@@ -24,7 +26,9 @@ static NSString *queuedItemsFilePath = nil;
 static NSString *stateFilePath = nil;
 static NSMutableDictionary *queueState = nil;
 
-static RollbarThread *rollbarThread;
+static RollbarThread *rollbarThread = nil;
+static RollbarReachability *reachability = nil;
+static BOOL isNetworkReachable = YES;
 
 @implementation RollbarNotifier
 
@@ -40,6 +44,8 @@ static RollbarThread *rollbarThread;
         self.configuration.accessToken = accessToken;
         
         if (isRoot) {
+            [self.configuration _setRoot];
+            
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
             NSString *cachesDirectory = [paths objectAtIndex:0];
             queuedItemsFilePath = [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
@@ -59,9 +65,24 @@ static RollbarThread *rollbarThread;
                                 @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
             }
             
-            [self.configuration _setRoot];
+            // Deals with sending items that have been queued up
             rollbarThread = [[RollbarThread alloc] initWithNotifier:self];
             [rollbarThread start];
+            
+            // Listen for reachability status so that items are only sent when the internet is available
+            reachability = [RollbarReachability reachabilityForInternetConnection];
+            
+            isNetworkReachable = [reachability isReachable];
+            
+            reachability.reachableBlock = ^(RollbarReachability*reach) {
+                isNetworkReachable = YES;
+            };
+            
+            reachability.unreachableBlock = ^(RollbarReachability*reach) {
+                isNetworkReachable = NO;
+            };
+            
+            [reachability startNotifier];
         }
     }
     
@@ -86,6 +107,11 @@ static RollbarThread *rollbarThread;
 }
 
 - (void)processSavedItems {
+    if (!isNetworkReachable) {
+        // Don't attempt sending if the network is known to be not reachable
+        return;
+    }
+    
     __block NSString *lastAccessToken = nil;
     NSMutableArray *items = [NSMutableArray array];
 
@@ -296,15 +322,16 @@ static RollbarThread *rollbarThread;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if (error) {
-        NSLog(@"[Rollbar] Error %@; %@", error, [error localizedDescription]);
+        RollbarLog(@"There was an error reporting to Rollbar");
+        RollbarLog(@"Error: %@", [error localizedDescription]);
     } else {
         NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
         if ([httpResponse statusCode] == 200) {
-            NSLog(@"[Rollbar] Success");
+            RollbarLog(@"Success");
             return YES;
         } else {
-            NSLog(@"[Rollbar] There was a problem reporting to Rollbar");
-            NSLog(@"[Rollbar] Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            RollbarLog(@"There was a problem reporting to Rollbar");
+            RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         }
     }
     

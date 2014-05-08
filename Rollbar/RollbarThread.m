@@ -29,7 +29,7 @@
     @autoreleasepool {
         NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
         
-        NSTimer *timer = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(checkItems) userInfo:nil repeats:YES];
+        NSTimer *timer = [NSTimer timerWithTimeInterval:10 target:self selector:@selector(checkItems) userInfo:nil repeats:YES];
         
         [runLoop addTimer:timer forMode:NSDefaultRunLoopMode];
         

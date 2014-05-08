@@ -8,6 +8,7 @@
 
 #import "Rollbar.h"
 #import "RollbarNotifier.h"
+#import "RollbarLogger.h"
 #import <CrashReporter/CrashReporter.h>
 
 
@@ -25,7 +26,7 @@ static RollbarNotifier *notifier = nil;
         PLCrashReport *report = [[PLCrashReport alloc] initWithData:crashData error:&error];
         
         if (error) {
-            NSLog(@"Could not load crash file: %@", [error localizedDescription]);
+            RollbarLog(@"Could not load crash file: %@", [error localizedDescription]);
         } else {
             PLCrashReportTextFormat textFormat = PLCrashReportTextFormatiOS;
             
@@ -45,7 +46,7 @@ static RollbarNotifier *notifier = nil;
     
     [crashReporter enableCrashReporterAndReturnError:&error];
     if (error) {
-        NSLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
+        RollbarLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
     }
 }
 
@@ -55,7 +56,7 @@ static RollbarNotifier *notifier = nil;
 
 + (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration {
     if (notifier) {
-        NSLog(@"Rollbar has already been initialized.");
+        RollbarLog(@"Rollbar has already been initialized.");
     } else {
         notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken configuration:configuration isRoot:YES];
         

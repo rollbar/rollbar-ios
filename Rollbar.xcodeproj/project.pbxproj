@@ -27,6 +27,11 @@
 		966CD46E18F4E4C3005A8F2D /* RollbarThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 966CD46C18F4E4C3005A8F2D /* RollbarThread.h */; };
 		966CD46F18F4E4C3005A8F2D /* RollbarThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 966CD46D18F4E4C3005A8F2D /* RollbarThread.m */; };
 		9691838318E4EB0400DE3699 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96AB9E08191B10AE00F0168A /* RollbarReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 96AB9E06191B10AE00F0168A /* RollbarReachability.h */; };
+		96AB9E09191B10AE00F0168A /* RollbarReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E07191B10AE00F0168A /* RollbarReachability.m */; };
+		96AB9E10191B239700F0168A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96AB9E0F191B239700F0168A /* SystemConfiguration.framework */; };
+		96AB9E16191C0B4000F0168A /* RollbarLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 96AB9E14191C0B4000F0168A /* RollbarLogger.h */; };
+		96AB9E17191C0B4000F0168A /* RollbarLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E15191C0B4000F0168A /* RollbarLogger.m */; };
 		96D2220E18D8E40600933444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
 		96D2221318D8E40600933444 /* Rollbar.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; };
 		96D2221518D8E40600933444 /* Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2221418D8E40600933444 /* Rollbar.m */; };
@@ -80,6 +85,11 @@
 		9630826418DCDDC000256154 /* RollbarConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarConfiguration.m; sourceTree = "<group>"; };
 		966CD46C18F4E4C3005A8F2D /* RollbarThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarThread.h; sourceTree = "<group>"; };
 		966CD46D18F4E4C3005A8F2D /* RollbarThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarThread.m; sourceTree = "<group>"; };
+		96AB9E06191B10AE00F0168A /* RollbarReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarReachability.h; sourceTree = "<group>"; };
+		96AB9E07191B10AE00F0168A /* RollbarReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarReachability.m; sourceTree = "<group>"; };
+		96AB9E0F191B239700F0168A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		96AB9E14191C0B4000F0168A /* RollbarLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarLogger.h; sourceTree = "<group>"; };
+		96AB9E15191C0B4000F0168A /* RollbarLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarLogger.m; sourceTree = "<group>"; };
 		96D2220A18D8E40600933444 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		96D2220D18D8E40600933444 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96D2221118D8E40600933444 /* Rollbar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Rollbar-Prefix.pch"; sourceTree = "<group>"; };
@@ -102,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96AB9E10191B239700F0168A /* SystemConfiguration.framework in Frameworks */,
 				96D2223718D8E54600933444 /* UIKit.framework in Frameworks */,
 				963081C718DCDBCD00256154 /* CrashReporter.framework in Frameworks */,
 				96D2220E18D8E40600933444 /* Foundation.framework in Frameworks */,
@@ -152,6 +163,7 @@
 		96D2220C18D8E40600933444 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96AB9E0F191B239700F0168A /* SystemConfiguration.framework */,
 				96D2223618D8E54600933444 /* UIKit.framework */,
 				96D2220D18D8E40600933444 /* Foundation.framework */,
 				96D2221B18D8E40600933444 /* XCTest.framework */,
@@ -173,6 +185,10 @@
 				966CD46D18F4E4C3005A8F2D /* RollbarThread.m */,
 				96DBB58F18FDFED8007CFE13 /* RollbarFileReader.h */,
 				96DBB59018FDFED8007CFE13 /* RollbarFileReader.m */,
+				96AB9E06191B10AE00F0168A /* RollbarReachability.h */,
+				96AB9E07191B10AE00F0168A /* RollbarReachability.m */,
+				96AB9E14191C0B4000F0168A /* RollbarLogger.h */,
+				96AB9E15191C0B4000F0168A /* RollbarLogger.m */,
 			);
 			path = Rollbar;
 			sourceTree = "<group>";
@@ -210,6 +226,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96AB9E08191B10AE00F0168A /* RollbarReachability.h in Headers */,
+				96AB9E16191C0B4000F0168A /* RollbarLogger.h in Headers */,
 				966CD46E18F4E4C3005A8F2D /* RollbarThread.h in Headers */,
 				96D75C2A18EA04C6002AA729 /* RollbarConfiguration.h in Headers */,
 				96DBB59118FDFED8007CFE13 /* RollbarFileReader.h in Headers */,
@@ -351,11 +369,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96AB9E17191C0B4000F0168A /* RollbarLogger.m in Sources */,
 				966CD46F18F4E4C3005A8F2D /* RollbarThread.m in Sources */,
 				96DBB59218FDFED8007CFE13 /* RollbarFileReader.m in Sources */,
 				96D2223518D8E51600933444 /* RollbarNotifier.m in Sources */,
 				9630826518DCDDC000256154 /* RollbarConfiguration.m in Sources */,
 				96D2221518D8E40600933444 /* Rollbar.m in Sources */,
+				96AB9E09191B10AE00F0168A /* RollbarReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
