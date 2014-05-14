@@ -15,7 +15,7 @@
 #include <sys/utsname.h>
 
 
-static NSString *NOTIFIER_VERSION = @"0.1.0";
+static NSString *NOTIFIER_VERSION = @"0.1.1";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
@@ -142,6 +142,12 @@ static BOOL isNetworkReachable = YES;
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
         NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:[line dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
         
+        if (!payload) {
+            // Ignore this line if it isn't valid json and proceed to the next line
+            // TODO: report an internal error
+            return;
+        }
+        
         NSString *accessToken = payload[@"access_token"];
         
         // If the max batch size is reached as the file is being processed,
@@ -150,8 +156,9 @@ static BOOL isNetworkReachable = YES;
             BOOL shouldContinue = [self sendItems:items withAccessToken:lastAccessToken nextOffset:nextOffset];
             
             if (!shouldContinue) {
-                // Return so that the current file offset will be retried next time the
-                // file is processed
+                // Stop processing the file so that the current file offset will be
+                // retried next time the file is processed
+                *stop = YES;
                 return;
             }
             
