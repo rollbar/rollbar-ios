@@ -115,7 +115,7 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
 
 4. Paste the following script into the box, using "Paste and Preserve Formatting" (Edit -> Paste and Preserve Formatting):
 
-  ```python
+```python
   import os
   import subprocess
   import zipfile
@@ -144,7 +144,7 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
   p = subprocess.Popen('curl -X POST https://api.rollbar.com/api/1/dsym -F access_token=%s -F version=%s -F bundle_identifier="%s" -F dsym=@"%s"' 
                        % (ACCESS_TOKEN, version, identifier, zip_location), shell=True)
   p.communicate()
-  ```
+```
 
   Note: make sure you replace `POST_SERVER_ITEM_ACCESS_TOKEN` with a server scope access token from your project in Rollbar.
 
