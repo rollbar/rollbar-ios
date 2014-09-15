@@ -116,34 +116,34 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
 4. Paste the following script into the box, using "Paste and Preserve Formatting" (Edit -> Paste and Preserve Formatting):
 
 ```python
-  import os
-  import subprocess
-  import zipfile
+import os
+import subprocess
+import zipfile
 
-  if os.environ['DEBUG_INFORMATION_FORMAT'] != 'dwarf-with-dsym' or os.environ['EFFECTIVE_PLATFORM_NAME'] == '-iphonesimulator':
-      exit(0)
+if os.environ['DEBUG_INFORMATION_FORMAT'] != 'dwarf-with-dsym' or os.environ['EFFECTIVE_PLATFORM_NAME'] == '-iphonesimulator':
+    exit(0)
 
-  ACCESS_TOKEN = 'POST_SERVER_ITEM_ACCESS_TOKEN'
+ACCESS_TOKEN = 'POST_SERVER_ITEM_ACCESS_TOKEN'
 
-  dsym_file_path = os.path.join(os.environ['DWARF_DSYM_FOLDER_PATH'], os.environ['DWARF_DSYM_FILE_NAME'])
-  zip_location = '%s.zip' % (dsym_file_path)
+dsym_file_path = os.path.join(os.environ['DWARF_DSYM_FOLDER_PATH'], os.environ['DWARF_DSYM_FILE_NAME'])
+zip_location = '%s.zip' % (dsym_file_path)
 
-  os.chdir(os.environ['DWARF_DSYM_FOLDER_PATH'])
-  with zipfile.ZipFile(zip_location, 'w') as zipf:
-      for root, dirs, files in os.walk(os.environ['DWARF_DSYM_FILE_NAME']):
-          zipf.write(root)
+os.chdir(os.environ['DWARF_DSYM_FOLDER_PATH'])
+with zipfile.ZipFile(zip_location, 'w') as zipf:
+    for root, dirs, files in os.walk(os.environ['DWARF_DSYM_FILE_NAME']):
+        zipf.write(root)
 
-          for f in files:
-              zipf.write(os.path.join(root, f))
+        for f in files:
+            zipf.write(os.path.join(root, f))
 
-  p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % os.environ['PRODUCT_SETTINGS_PATH'],
-                       stdout=subprocess.PIPE, shell=True)
-  stdout, stderr = p.communicate()
-  version, identifier = stdout.split()
+p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % os.environ['PRODUCT_SETTINGS_PATH'],
+                     stdout=subprocess.PIPE, shell=True)
+stdout, stderr = p.communicate()
+version, identifier = stdout.split()
 
-  p = subprocess.Popen('curl -X POST https://api.rollbar.com/api/1/dsym -F access_token=%s -F version=%s -F bundle_identifier="%s" -F dsym=@"%s"' 
-                       % (ACCESS_TOKEN, version, identifier, zip_location), shell=True)
-  p.communicate()
+p = subprocess.Popen('curl -X POST https://api.rollbar.com/api/1/dsym -F access_token=%s -F version=%s -F bundle_identifier="%s" -F dsym=@"%s"' 
+                     % (ACCESS_TOKEN, version, identifier, zip_location), shell=True)
+p.communicate()
 ```
 
   Note: make sure you replace `POST_SERVER_ITEM_ACCESS_TOKEN` with a server scope access token from your project in Rollbar.
