@@ -77,7 +77,6 @@ RollbarConfiguration *config = [Rollbar currentConfiguration];
 ### Configuration reference ###
 
 **Properties:**
-
   <dl>
   <dt>crashLevel</dt>
   <dd>The level that crashes are reported as
@@ -95,9 +94,10 @@ Default: ```unspecified``` in release mode, ```development``` in debug mode.
 
 Default: ```https://api.rollbar.com/api/1/items/```
   </dd>
+  </dl>
 
 **Methods:**
-
+  <dl>
   <dt>`- setPersonId:username:email:`</dt>
   <dd>Sets person data. Each value can either be a `NSString` or `nil`
   </dd>
