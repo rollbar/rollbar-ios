@@ -13,18 +13,18 @@ Objective-C library for crash reporting and logging with [Rollbar](https://rollb
 
 4. In your Application delegate implementation file, add the following import statement:
 
-  ```objective-c
-  #import <Rollbar/Rollbar.h>
-  ```
+```objective-c
+#import <Rollbar/Rollbar.h>
+```
 
-5. Add the following to `application:didFinishLaunchingWithOptions:`:
+Then add the following to `application:didFinishLaunchingWithOptions:`:
 
-  ```objective-c
-  [Rollbar initWithAccessToken:@"POST_CLIENT_ITEM_ACCESS_TOKEN"];
-  ```
+```objective-c
+[Rollbar initWithAccessToken:@"POST_CLIENT_ITEM_ACCESS_TOKEN"];
+```
 
-  <!-- RemoveNext -->
-  Replace `POST_CLIENT_ITEM_ACCESS_TOKEN` with a client scope access token from your project in Rollbar
+<!-- RemoveNext -->
+Replace `POST_CLIENT_ITEM_ACCESS_TOKEN` with a client scope access token from your project in Rollbar
 
 That's all you need to do to report crashes to Rollbar. To get symbolicated stack traces, follow the instructions in the "Symbolication" section below.
 
