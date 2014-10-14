@@ -3,7 +3,19 @@
 <!-- RemoveNext -->
 Objective-C library for crash reporting and logging with [Rollbar](https://rollbar.com).
 
-## Setup
+## Install
+
+### With [Cocoapods](http://cocoapods.org/)
+
+In your Podfile:
+
+    pod "Rollbar", "~> 0.1.2"
+
+Make sure to declare your platform as `ios` at the top of your Podfile. E.g:
+
+    platform :ios, '7.0'
+
+### Without Cocoapods
 
 1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v0.1.2/Rollbar.zip).
 
@@ -11,7 +23,9 @@ Objective-C library for crash reporting and logging with [Rollbar](https://rollb
 
 3. In Xcode, select _File_ -> _Add Files to "[your project name]"_ and choose the Rollbar directory from step 2.
 
-4. In your Application delegate implementation file, add the following import statement:
+## Setup
+
+In your Application delegate implementation file, add the following import statement:
 
 ```objective-c
 #import <Rollbar/Rollbar.h>
