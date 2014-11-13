@@ -155,7 +155,7 @@ p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Pr
 stdout, stderr = p.communicate()
 version, identifier = stdout.split()
 
-p = subprocess.Popen('curl -X POST https://api.rollbar.com/api/1/dsym -F access_token=%s -F version=%s -F bundle_identifier="%s" -F dsym=@"%s"' 
+p = subprocess.Popen('curl -X POST "https://api.rollbar.com/api/1/dsym" -F access_token=%s -F version=%s -F bundle_identifier="%s" -F dsym=@"%s"' 
                      % (ACCESS_TOKEN, version, identifier, zip_location), shell=True)
 p.communicate()
 ```
