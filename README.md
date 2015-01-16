@@ -152,7 +152,7 @@ with zipfile.ZipFile(zip_location, 'w') as zipf:
 
 info_file_path = os.path.join(os.environ['INSTALL_DIR'], os.environ['INFOPLIST_PATH'])
 p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % info_file_path,
-stdout=subprocess.PIPE, shell=True)
+                     stdout=subprocess.PIPE, shell=True)
 
 stdout, stderr = p.communicate()
 version, identifier = stdout.split()
