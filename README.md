@@ -150,8 +150,10 @@ with zipfile.ZipFile(zip_location, 'w') as zipf:
         for f in files:
             zipf.write(os.path.join(root, f))
 
-p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % os.environ['PRODUCT_SETTINGS_PATH'],
+info_file_path = os.path.join(os.environ['INSTALL_DIR'], os.environ['INFOPLIST_PATH'])
+p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % info_file_path,
                      stdout=subprocess.PIPE, shell=True)
+
 stdout, stderr = p.communicate()
 version, identifier = stdout.split()
 
