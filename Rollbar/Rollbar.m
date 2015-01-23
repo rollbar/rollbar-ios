@@ -55,12 +55,19 @@ static RollbarNotifier *notifier = nil;
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration {
+    [self initWithAccessToken:accessToken configuration:configuration enableCrashReporter:YES];
+}
+
++ (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration
+        enableCrashReporter:(BOOL)enable {
     if (notifier) {
         RollbarLog(@"Rollbar has already been initialized.");
     } else {
         notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken configuration:configuration isRoot:YES];
-        
-        [self enableCrashReporter];
+
+        if (enable) {
+            [self enableCrashReporter];
+        }
         
         [notifier.configuration save];
     }
