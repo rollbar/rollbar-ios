@@ -236,6 +236,8 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *notifierData = @{@"name": @"rollbar-ios",
                                    @"version": NOTIFIER_VERSION};
     
+    NSDictionary *customData = self.configuration.customData;
+    
     NSDictionary *body = [self buildPayloadBodyWithMessage:message exception:exception extra:extra crashReport:crashReport];
     
     NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
@@ -246,6 +248,7 @@ static BOOL isNetworkReachable = YES;
                                    @"uuid": [self generateUUID],
                                    @"client": clientData,
                                    @"notifier": notifierData,
+                                   @"custom": customData,
                                    @"body": body} mutableCopy];
     
     NSDictionary *personData = [self buildPersonData];

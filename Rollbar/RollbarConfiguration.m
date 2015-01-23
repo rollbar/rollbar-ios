@@ -14,7 +14,9 @@ static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
 
 static NSString *configurationFilePath = nil;
 
-@interface RollbarConfiguration ()
+@interface RollbarConfiguration () {
+    NSMutableDictionary *customData;
+}
 
 @property (nonatomic, copy) NSString* personId;
 @property (nonatomic, copy) NSString* personUsername;
@@ -35,7 +37,8 @@ static NSString *configurationFilePath = nil;
         configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
     }
     
-    if((self = [super init])) {
+    if (self = [super init]) {
+        customData = [NSMutableDictionary dictionaryWithCapacity:10];
         self.endpoint = DEFAULT_ENDPOINT;
         
         #ifdef DEBUG
@@ -57,7 +60,7 @@ static NSString *configurationFilePath = nil;
     if (data) {
         NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         
-        for (NSString *propertyName in [self getProperties]) {
+        for (NSString *propertyName in config.allKeys) {
             id value = [config objectForKey:propertyName];
             [self setValue:value forKey:propertyName];
         }
@@ -72,6 +75,20 @@ static NSString *configurationFilePath = nil;
     self.personEmail = email;
     
     [self save];
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    if (value) {
+        customData[key] = value;
+    } else {
+        [customData removeObjectForKey:key];
+    }
+    
+    [self save];
+}
+
+- (id)valueForUndefinedKey:(NSString *)key {
+    return customData[key];
 }
 
 // Add a key value observer for all properties so that this object
@@ -126,7 +143,13 @@ static NSString *configurationFilePath = nil;
     
     free(properties);
     
+    [result addObjectsFromArray:customData.allKeys];
+    
     return result;
 }
 
+
+- (NSDictionary *)customData {
+    return [NSDictionary dictionaryWithDictionary:customData];
+}
 @end
