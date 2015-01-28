@@ -11,6 +11,8 @@
 
 @interface Rollbar : NSObject
 
++ (void)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration
+        enableCrashReporter:(BOOL)enable;
 + (void)initWithAccessToken:(NSString*)accessToken;
 + (void)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration;
 
