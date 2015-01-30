@@ -23,6 +23,8 @@
 
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
 
+- (NSDictionary *)customData;
+
 @property (atomic, copy) NSString *accessToken;
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;
