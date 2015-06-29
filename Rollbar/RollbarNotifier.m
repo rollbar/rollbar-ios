@@ -266,7 +266,8 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message extra:(NSDictionary*)extra {
-    NSMutableDictionary *result = [@{@"body": message} mutableCopy];
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    result[@"body"] = message ? message : @"";
     
     if (extra) {
         result[@"extra"] = extra;
