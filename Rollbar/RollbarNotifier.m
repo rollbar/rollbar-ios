@@ -15,7 +15,7 @@
 #include <sys/utsname.h>
 
 
-static NSString *NOTIFIER_VERSION = @"0.1.3";
+static NSString *NOTIFIER_VERSION = @"0.1.4";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 

@@ -1,5 +1,8 @@
 # Change Log
 
+**0.1.4**
+- Fix crash where a `nil` message was passed to `buildPayloadBodyWithMessage`, ([pr#15](https://github.com/rollbar/rollbar-ios/pull/15)).
+
 **0.1.3**
 - Optionally enable/disable uncaught exception reporting, ([pr#8](https://github.com/rollbar/rollbar-ios/pull/8)).
 - Added ability to send custom data along with errors/log messages, ([pr#9](https://github.com/rollbar/rollbar-ios/pull/9)).
