@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "Rollbar"
-  s.version      = "0.1.3"
+  s.version      = "0.1.4"
   s.summary      = "Objective-C library for crash reporting and logging with Rollbar."
 
   s.description  = <<-DESC
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v0.1.3" }
+  s.source       = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v0.1.4" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
