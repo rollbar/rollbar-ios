@@ -1,5 +1,8 @@
 # Change Log
 
+**0.1.5**
+- Fix compiler error when included in a Swift application, ([pr#16](https://github.com/rollbar/rollbar-ios/pull/16)).
+
 **0.1.4**
 - Fix crash where a `nil` message was passed to `buildPayloadBodyWithMessage`, ([pr#15](https://github.com/rollbar/rollbar-ios/pull/15)).
 

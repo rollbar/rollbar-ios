@@ -9,7 +9,7 @@ Objective-C library for crash reporting and logging with [Rollbar](https://rollb
 
 In your Podfile:
 
-    pod "Rollbar", "~> 0.1.4"
+    pod "Rollbar", "~> 0.1.5"
 
 Make sure to declare your platform as `ios` at the top of your Podfile. E.g:
 
