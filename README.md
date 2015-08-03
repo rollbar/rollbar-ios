@@ -17,7 +17,7 @@ Make sure to declare your platform as `ios` at the top of your Podfile. E.g:
 
 ### Without Cocoapods
 
-1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v0.1.4/Rollbar.zip).
+1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v0.1.5/Rollbar.zip).
 
 2. Extract the Rollbar directory in the zip file to your Xcode project directory.
 
