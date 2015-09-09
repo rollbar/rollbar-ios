@@ -18,7 +18,7 @@ dsym_file_path = os.path.join(os.environ['DWARF_DSYM_FOLDER_PATH'], os.environ['
 zip_location = '%s.zip' % (dsym_file_path)
 
 os.chdir(os.environ['DWARF_DSYM_FOLDER_PATH'])
-with zipfile.ZipFile(zip_location, 'w') as zipf:
+with zipfile.ZipFile(zip_location, 'w', zipfile.ZIP_DEFLATED) as zipf:
     for root, dirs, files in os.walk(os.environ['DWARF_DSYM_FILE_NAME']):
         zipf.write(root)
 
