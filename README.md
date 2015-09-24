@@ -48,6 +48,12 @@ Crashes will be saved to disk when they occur, then reported to Rollbar the next
 
 Rollbar uses [PLCrashReporter](https://www.plcrashreporter.org/) to capture uncaught exceptions and fatal signals. Note that only one crash reporter can be active per app. If you initialize multiple crash reporters (i.e. Rollbar alongside other services), only the last one initialized will be active.
 
+### Bitcode
+
+Bitcode is an intermediate representation of a compiled iOS/watchOS program.  Apps you upload to iTunes Connect that contain bitcode will be compiled and linked on the App Store. Including bitcode will allow Apple to re-optimize your app binary in the future without the need to submit a new version of your app to the store.
+
+PLCrashReporter does not yet support symbolicating apps built with bitcode. Until a version of PLCrashReporter is available that supports symbolication with bitcode enabled, you’ll need to disable bitcode in your project for Rollbar to be able to symbolicate your crash reports.
+
 ### Logging
 
 You can log arbitrary messages using the log methods:
@@ -150,7 +156,9 @@ with zipfile.ZipFile(zip_location, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for f in files:
             zipf.write(os.path.join(root, f))
 
+# You may need to change the following path to match your application settings and Xcode version
 info_file_path = os.path.join(os.environ['INSTALL_DIR'], os.environ['INFOPLIST_PATH'])
+
 p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % info_file_path,
                      stdout=subprocess.PIPE, shell=True)
 
@@ -163,6 +171,17 @@ p.communicate()
 ```
 
   Note: make sure you replace `POST_SERVER_ITEM_ACCESS_TOKEN` with a server scope access token from your project in Rollbar.
+
+  Note: This script will read your application version and idenfier information from the plist file found at ```info_file_path```. Depending
+  on your project settings and the version of Xcode you're using, this file may be in any of the following locations:
+
+  - $INSTALL_DIR/$INFOPLIST_PATH
+  - $BUILT_PRODUCTS_DIR/$INFOPLIST_PATH
+  - $SOURCE_ROUTE/$INFOPLIST_PATH
+  - $TARGET_BUILD_DIR/$INFOPLIST_PATH
+  - $CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH
+  - $INFOPLIST_FILE
+  - $PRODUCT_SETTINGS_PATH
 
 
 ## Developing and building the library ##
