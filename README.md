@@ -52,7 +52,7 @@ Rollbar uses [PLCrashReporter](https://www.plcrashreporter.org/) to capture unca
 
 Bitcode is an intermediate representation of a compiled iOS/watchOS program.  Apps you upload to iTunes Connect that contain bitcode will be compiled and linked on the App Store. Including bitcode will allow Apple to re-optimize your app binary in the future without the need to submit a new version of your app to the store.
 
-PLCrashReporter does not yet support symbolicating apps built with bitcode. Until a version of PLCrashReporter is available that supports symbolication with bitcode enabled, you’ll need to disable bitcode in your project for Rollbar to be able to symbolicate your crash reports.
+PLCrashReporter does not yet support symbolicating apps built with bitcode. Until a version of PLCrashReporter is available that supports symbolication with bitcode enabled, you'll need to disable bitcode in your project for Rollbar to be able to symbolicate your crash reports.
 
 ### Logging
 
