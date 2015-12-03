@@ -61,7 +61,7 @@ Importing with Swift requires the additional step of adding the following lines 
 #import <Rollbar/Rollbar.h>
 ```
 
-If you have no Bridging Header file, the easiest way to correctly configure it is to add an objective-c (`.m`) file. When you do so, XCode will prompt you to create a briding header file, and will configure your build environment to automatically include those headers in all your Swift files. After creating the Briging-Header file, you can delete the objective-c file.
+If you have no Bridging Header file, the easiest way to correctly configure it is to add an empty objective-c (`dummy.m` for instance) file. When you do so, XCode will prompt you to create a bridging header file, and will configure your build environment to automatically include those headers in all your Swift files. After creating the Bridging-Header file, you can delete the objective-c file.
 
 Note: You do *not* need to import Rollbar if you're using Swift.
 
@@ -78,7 +78,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 }
 ```
 
-See the last four commits in https://github.com/Crisfole/SwiftWeather for a demo of how to integrate Rollbar into an existing Swift project.
+See the [these commits](https://github.com/Crisfole/SwiftWeather/compare/18580ce...e7d80e1) for a demo of how to integrate Rollbar into an existing Swift project.
 
 ### Bitcode
 
