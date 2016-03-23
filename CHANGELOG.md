@@ -1,5 +1,8 @@
 # Change Log
 
+**0.1.6**
+- Handle localized bundle names, ([pr#24](https://github.com/rollbar/rollbar-ios/pull/24)).
+
 **0.1.5**
 - Fix compiler error when included in a Swift application, ([pr#16](https://github.com/rollbar/rollbar-ios/pull/16)).
 
