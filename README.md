@@ -15,6 +15,8 @@ Make sure to declare your platform as `ios` at the top of your Podfile. E.g:
 
     platform :ios, '7.0'
 
+Be sure to remember to `pod install` after changing your Podfile!
+
 ### Without Cocoapods
 
 1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v0.1.6/Rollbar.zip).
@@ -22,6 +24,8 @@ Make sure to declare your platform as `ios` at the top of your Podfile. E.g:
 2. Extract the Rollbar directory in the zip file to your Xcode project directory.
 
 3. In Xcode, select _File_ -> _Add Files to "[your project name]"_ and choose the Rollbar directory from step 2.
+
+Note: if step three doesn't work you can also extract the Rollbar directory anywhere, and drag the `.framework` files into XCode, allowing XCode to correctly configure the Frameworks.
 
 ## Setup
 
@@ -47,6 +51,34 @@ That's all you need to do to report crashes to Rollbar. To get symbolicated stac
 Crashes will be saved to disk when they occur, then reported to Rollbar the next time the app is launched.
 
 Rollbar uses [PLCrashReporter](https://www.plcrashreporter.org/) to capture uncaught exceptions and fatal signals. Note that only one crash reporter can be active per app. If you initialize multiple crash reporters (i.e. Rollbar alongside other services), only the last one initialized will be active.
+
+### Swift
+
+Importing with Swift requires the additional step of adding the following lines to your Bridging-Header file:
+
+```c
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <Rollbar/Rollbar.h>
+```
+
+If you have no Bridging Header file, the easiest way to correctly configure it is to add an empty objective-c (`dummy.m` for instance) file. When you do so, XCode will prompt you to create a bridging header file, and will configure your build environment to automatically include those headers in all your Swift files. After creating the Bridging-Header file, you can delete the objective-c file.
+
+Note: You do *not* need to import Rollbar if you're using Swift.
+
+The initialization uses Swift syntax:
+
+```swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    let config: RollbarConfiguration = RollbarConfiguration()
+    config.environment = "production"
+
+    Rollbar.initWithAccessToken("YOUR ACCESS TOKEN", configuration: config)
+
+    return true
+}
+```
+
+See the [these commits](https://github.com/Crisfole/SwiftWeather/compare/18580ce...e7d80e1) for a demo of how to integrate Rollbar into an existing Swift project.
 
 ### Bitcode
 
