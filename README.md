@@ -96,13 +96,12 @@ You can log arbitrary messages using the log methods:
 [Rollbar infoWithMessage:@"Test message"];
 
 // Log a critical, with some additional key-value data
-[Rollbar criticalWithMessage:@"Unexcpected data from server" data:@{@"endpoint": endpoint,
+[Rollbar criticalWithMessage:@"Unexpected data from server" data:@{@"endpoint": endpoint,
                                                                     @"result": result}];
 
 // Or log at a named level
 [Rollbar logWithLevel:@"warning" message:@"Simple warning log message"];
 ```
-
 
 ## Configuration
 
@@ -135,7 +134,7 @@ RollbarConfiguration *config = [Rollbar currentConfiguration];
 
 Default: ```error```
   </dd>
-  
+
   <dt>environment</dt>
   <dd>Environment that Rollbar items will be reported under
 
@@ -165,60 +164,13 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
 
 3. Change the "Shell" to `/usr/bin/python`
 
-4. Paste the following script into the box, using "Paste and Preserve Formatting" (Edit -> Paste and Preserve Formatting):
-
-```python
-import os
-import subprocess
-import zipfile
-
-if os.environ['DEBUG_INFORMATION_FORMAT'] != 'dwarf-with-dsym' or os.environ['EFFECTIVE_PLATFORM_NAME'] == '-iphonesimulator':
-    exit(0)
-
-ACCESS_TOKEN = 'POST_SERVER_ITEM_ACCESS_TOKEN'
-
-dsym_file_path = os.path.join(os.environ['DWARF_DSYM_FOLDER_PATH'], os.environ['DWARF_DSYM_FILE_NAME'])
-zip_location = '%s.zip' % (dsym_file_path)
-
-os.chdir(os.environ['DWARF_DSYM_FOLDER_PATH'])
-with zipfile.ZipFile(zip_location, 'w', zipfile.ZIP_DEFLATED) as zipf:
-    for root, dirs, files in os.walk(os.environ['DWARF_DSYM_FILE_NAME']):
-        zipf.write(root)
-
-        for f in files:
-            zipf.write(os.path.join(root, f))
-
-# You may need to change the following path to match your application settings and Xcode version
-info_file_path = os.path.join(os.environ['INSTALL_DIR'], os.environ['INFOPLIST_PATH'])
-
-p = subprocess.Popen('/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" -c "Print :CFBundleIdentifier" "%s"' % info_file_path,
-                     stdout=subprocess.PIPE, shell=True)
-
-stdout, stderr = p.communicate()
-version, identifier = stdout.split()
-
-p = subprocess.Popen('curl -X POST "https://api.rollbar.com/api/1/dsym" -F access_token=%s -F version=%s -F bundle_identifier="%s" -F dsym=@"%s"' 
-                     % (ACCESS_TOKEN, version, identifier, zip_location), shell=True)
-p.communicate()
-```
+4. Paste the contents of the [upload_dsym.py](upload_dsym.py) script into the box, using "Paste and Preserve Formatting" (Edit -> Paste and Preserve Formatting)
 
   Note: make sure you replace `POST_SERVER_ITEM_ACCESS_TOKEN` with a server scope access token from your project in Rollbar.
 
-  Note: This script will read your application version and idenfier information from the plist file found at ```info_file_path```. Depending
-  on your project settings and the version of Xcode you're using, this file may be in any of the following locations:
-
-  - $INSTALL_DIR/$INFOPLIST_PATH
-  - $BUILT_PRODUCTS_DIR/$INFOPLIST_PATH
-  - $SOURCE_ROUTE/$INFOPLIST_PATH
-  - $TARGET_BUILD_DIR/$INFOPLIST_PATH
-  - $CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH
-  - $INFOPLIST_FILE
-  - $PRODUCT_SETTINGS_PATH
-
-
 ## Developing and building the library ##
 
-You can include the Rollbar project as a sub-project in your app, or link the Rollbar source files directly into your app. 
+You can include the Rollbar project as a sub-project in your app, or link the Rollbar source files directly into your app.
 To develop the library by linking the source files directly in your app:
 
 1. Fork this repo
@@ -238,9 +190,8 @@ To develop the library by linking the source files directly in your app:
     6. Select CrashReporter.framework and click "Open"
 
 You should now be able to build your app with your local clone of rollbar-ios.
-    
-To build the Rollbar framework distribution files, open the Rollbar project and make sure the Distribution scheme is active by selecting _Editor_ -> _Scheme_ -> _Distribution_. Building the project with this scheme selected will create a `Dist/` directory containing the Rollbar framework with the proper fat binary.
 
+To build the Rollbar framework distribution files, open the Rollbar project and make sure the Distribution scheme is active by selecting _Editor_ -> _Scheme_ -> _Distribution_. Building the project with this scheme selected will create a `Dist/` directory containing the Rollbar framework with the proper fat binary.
 
 ## Contributing
 
@@ -249,7 +200,6 @@ To build the Rollbar framework distribution files, open the Rollbar project and 
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
 
 ## Help / Support
 
