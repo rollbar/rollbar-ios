@@ -1,5 +1,12 @@
 # Change Log
 
+**0.2.0**
+- Changes to better support bitcode in apps, ([pr#29](https://github.com/rollbar/rollbar-ios/pull/29)).
+  - Add a version of PLCrashReporter compiled with bitcode support and a Rollbar prefix
+  - Add bitcode support to rollbar-ios
+- Update dSYM upload script, ([pr#30](https://github.com/rollbar/rollbar-ios/pull/30))
+- Add framework target for Carthage compatibility, ([pr#25](https://github.com/rollbar/rollbar-ios/pull/25))
+
 **0.1.6**
 - Handle localized bundle names, ([pr#24](https://github.com/rollbar/rollbar-ios/pull/24)).
 
@@ -37,4 +44,3 @@
 **0.0.1**
 - Initial release.
 - First version that reports all crashes and allows reporting arbitrary log messages.
-
