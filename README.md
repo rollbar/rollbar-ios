@@ -31,13 +31,13 @@ Note: if step three doesn't work you can also extract the Rollbar directory anyw
 
 In your Application delegate implementation file, add the following import statement:
 
-```objective-c
+```objc
 #import <Rollbar/Rollbar.h>
 ```
 
 Then add the following to `application:didFinishLaunchingWithOptions:`:
 
-```objective-c
+```objc
 [Rollbar initWithAccessToken:@"POST_CLIENT_ITEM_ACCESS_TOKEN"];
 ```
 
@@ -90,7 +90,7 @@ PLCrashReporter does not yet support symbolicating apps built with bitcode. Unti
 
 You can log arbitrary messages using the log methods:
 
-```objective-c
+```objc
 // Logs at level "info".
 // Variants at "debug", "info", "warning", "error", and "critical" all exist.
 [Rollbar infoWithMessage:@"Test message"];
@@ -107,7 +107,7 @@ You can log arbitrary messages using the log methods:
 
 You can pass an optional `RollbarConfiguration` object to `initWithAccessToken:`:
 
-```objective-c
+```objc
 RollbarConfiguration *config = [RollbarConfiguration configuration];
 config.crashLevel = @"critical";
 config.environment = @"production";
@@ -117,7 +117,7 @@ config.environment = @"production";
 
 You can also configure the notifier after initialization by getting the active configuration object and modifying it:
 
-```objective-c
+```objc
 RollbarConfiguration *config = [Rollbar currentConfiguration];
 [config setPersonId:@"123" username:@"username" email:@"test@test.com"];
 
