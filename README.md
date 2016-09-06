@@ -164,7 +164,7 @@ To automatically send .dSYM files to Rollbar whenever your app is built in relea
 
 3. Change the "Shell" to `/usr/bin/python`
 
-4. Paste the contents of the [upload_dsym.py](upload_dsym.py) script into the box, using "Paste and Preserve Formatting" (Edit -> Paste and Preserve Formatting)
+4. Paste the contents of the [upload_dsym.py](https://raw.githubusercontent.com/rollbar/rollbar-ios/master/upload_dsym.py) script into the box, using "Paste and Preserve Formatting" (Edit -> Paste and Preserve Formatting)
 
   Note: make sure you replace `POST_SERVER_ITEM_ACCESS_TOKEN` with a server scope access token from your project in Rollbar.
 
