@@ -20,6 +20,8 @@
 
 + (void)logWithLevel:(NSString*)level message:(NSString*)message;
 + (void)logWithLevel:(NSString*)level message:(NSString*)message data:(NSDictionary*)data;
++ (void)logWithLevel:(NSString*)level message:(NSString*)message data:(NSDictionary*)data context:(NSString*)context;
+
 + (void)logWithLevel:(NSString*)level data:(NSDictionary*)data;
 
 + (void)debugWithMessage:(NSString*)message;

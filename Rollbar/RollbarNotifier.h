@@ -18,7 +18,7 @@
 - (void)processSavedItems;
 
 - (void)logCrashReport:(NSString*)crashReport;
-- (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
+- (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
 
 /**
  Sends an item batch in a blocking manner.
