@@ -8,10 +8,10 @@ FOUNDATION_EXPORT const unsigned char RollbarFrameworkVersionString[];
 
 @import CrashReporter;
 
-#import <Rollbar/Rollbar.h>
-#import <Rollbar/RollbarNotifier.h>
-#import <Rollbar/RollbarConfiguration.h>
-#import <Rollbar/RollbarThread.h>
-#import <Rollbar/RollbarFileReader.h>
-#import <Rollbar/RollbarReachability.h>
-#import <Rollbar/RollbarLogger.h>
+#import <RollbarFramework/Rollbar.h>
+#import <RollbarFramework/RollbarNotifier.h>
+#import <RollbarFramework/RollbarConfiguration.h>
+#import <RollbarFramework/RollbarThread.h>
+#import <RollbarFramework/RollbarFileReader.h>
+#import <RollbarFramework/RollbarReachability.h>
+#import <RollbarFramework/RollbarLogger.h>
