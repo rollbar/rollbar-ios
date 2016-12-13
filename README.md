@@ -82,9 +82,15 @@ See the [these commits](https://github.com/Crisfole/SwiftWeather/compare/18580ce
 
 ### Bitcode
 
-Bitcode is an intermediate representation of a compiled iOS/watchOS program.  Apps you upload to iTunes Connect that contain bitcode will be compiled and linked on the App Store. Including bitcode will allow Apple to re-optimize your app binary in the future without the need to submit a new version of your app to the store.
+Bitcode is an intermediate representation of a compiled iOS/watchOS program.  Apps you upload to iTunes Connect that contain bitcode will be compiled and linked on the App Store. Including Bitcode will allow Apple to re-optimize your app binary in the future without the need to submit a new version of your app to the store.
 
-PLCrashReporter does not yet support symbolicating apps built with bitcode. Until a version of PLCrashReporter is available that supports symbolication with bitcode enabled, you'll need to disable bitcode in your project for Rollbar to be able to symbolicate your crash reports.
+Apple will generate new dSYMs for Bitcode enabled builds that have been released to the iTunes store or submitted to TestFlight. You’ll need to download the new dSYMs from Xcode and then upload them to Rollbar so that crashes can be symbolicated.
+
+dSYMs for Bitcode enabled apps can be downloaded from Xcode’s Organizer. Select the desired Archive of your app and click the “Download dSYMs…” button. If you’re unable to download your dSYM from Xcode’s Organizer, you'll have to get it from iTunes Connect.
+
+In iTunes Connect, select “My Apps” on the page header and “Activity” on the top navigation tab bar. Select the build you want to download the dSYMs for and click on “Download dSYM” under "Includes Symbols".
+
+Finally, upload the dSYM to Rollbar via your project's dSYM settings page.
 
 ### Logging
 
