@@ -90,13 +90,13 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)logCrashReport:(NSString*)crashReport {
-    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport];
+    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport context:nil];
     
     [self queuePayload:payload];
 }
 
-- (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
-    NSDictionary *payload = [self buildPayloadWithLevel:level message:message exception:exception extra:data crashReport:nil];
+- (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*) context {
+    NSDictionary *payload = [self buildPayloadWithLevel:level message:message exception:exception extra:data crashReport:nil context:context];
     
     [self queuePayload:payload];
 }
@@ -230,7 +230,7 @@ static BOOL isNetworkReachable = YES;
     return data;
 }
 
-- (NSDictionary*)buildPayloadWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport {
+- (NSDictionary*)buildPayloadWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport context:(NSString*)context {
     
     NSDictionary *clientData = [self buildClientData];
     NSDictionary *notifierData = @{@"name": @"rollbar-ios",
@@ -255,6 +255,10 @@ static BOOL isNetworkReachable = YES;
     
     if (personData) {
         data[@"person"] = personData;
+    }
+
+    if (context) {
+        data[@"context"] = context;
     }
     
     return @{@"access_token": self.configuration.accessToken,

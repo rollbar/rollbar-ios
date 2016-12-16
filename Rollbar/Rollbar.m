@@ -80,85 +80,89 @@ static RollbarNotifier *notifier = nil;
 // Log
 
 + (void)logWithLevel:(NSString*)level message:(NSString*)message {
-    [notifier log:level message:message exception:nil data:nil];
+    [notifier log:level message:message exception:nil data:nil context:nil];
 }
 
 + (void)logWithLevel:(NSString*)level message:(NSString*)message data:(NSDictionary*)data {
-    [notifier log:level message:message exception:nil data:data];
+    [notifier log:level message:message exception:nil data:data context:nil];
+}
+
++ (void)logWithLevel:(NSString*)level message:(NSString*)message data:(NSDictionary*)data context:(NSString*)context {
+    [notifier log:level message:message exception:nil data:data context:context];
 }
 
 + (void)logWithLevel:(NSString*)level data:(NSDictionary*)data {
-    [notifier log:level message:nil exception:nil data:data];
+    [notifier log:level message:nil exception:nil data:data context:nil];
 }
 
 // Debug
 
 + (void)debugWithMessage:(NSString*)message {
-    [notifier log:@"debug" message:message exception:nil data:nil];
+    [notifier log:@"debug" message:message exception:nil data:nil context:nil];
 }
 
 + (void)debugWithMessage:(NSString*)message data:(NSDictionary*)data {
-    [notifier log:@"debug" message:message exception:nil data:data];
+    [notifier log:@"debug" message:message exception:nil data:data context:nil];
 }
 
 + (void)debugWithData:(NSDictionary*)data {
-    [notifier log:@"debug" message:nil exception:nil data:data];
+    [notifier log:@"debug" message:nil exception:nil data:data context:nil];
 }
 
 // Info
 
 + (void)infoWithMessage:(NSString*)message {
-    [notifier log:@"info" message:message exception:nil data:nil];
+    [notifier log:@"info" message:message exception:nil data:nil context:nil];
 }
 
 + (void)infoWithMessage:(NSString*)message data:(NSDictionary*)data {
-    [notifier log:@"info" message:message exception:nil data:data];
+    [notifier log:@"info" message:message exception:nil data:data context:nil];
 }
 
 + (void)infoWithData:(NSDictionary*)data {
-    [notifier log:@"info" message:nil exception:nil data:data];
+    [notifier log:@"info" message:nil exception:nil data:data context:nil];
 }
 
 // Warning
 
 + (void)warningWithMessage:(NSString*)message {
-    [notifier log:@"warning" message:message exception:nil data:nil];
+    [notifier log:@"warning" message:message exception:nil data:nil context:nil];
 }
 
 + (void)warningWithMessage:(NSString*)message data:(NSDictionary*)data {
-    [notifier log:@"warning" message:message exception:nil data:data];
+    [notifier log:@"warning" message:message exception:nil data:data context:nil];
 }
 
 + (void)warningWithData:(NSDictionary*)data {
-    [notifier log:@"warning" message:nil exception:nil data:data];
+    [notifier log:@"warning" message:nil exception:nil data:data context:nil];
 }
 
 // Error
 
 + (void)errorWithMessage:(NSString*)message {
-    [notifier log:@"error" message:message exception:nil data:nil];
+    [notifier log:@"error" message:message exception:nil data:nil context:nil];
 }
 
 + (void)errorWithMessage:(NSString*)message data:(NSDictionary*)data {
-    [notifier log:@"error" message:message exception:nil data:data];
+    [notifier log:@"error" message:message exception:nil data:data context:nil];
 }
 
 + (void)errorWithData:(NSDictionary*)data {
-    [notifier log:@"error" message:nil exception:nil data:data];
+    [notifier log:@"error" message:nil exception:nil data:data context:nil];
 }
 
 // Critical
 
 + (void)criticalWithMessage:(NSString*)message {
-    [notifier log:@"critical" message:message exception:nil data:nil];
+    [notifier log:@"critical" message:message exception:nil data:nil context:nil];
 }
 
 + (void)criticalWithMessage:(NSString*)message data:(NSDictionary*)data {
-    [notifier log:@"critical" message:message exception:nil data:data];
+    [notifier log:@"critical" message:message exception:nil data:data context:nil];
 }
 
 + (void)criticalWithData:(NSDictionary*)data {
-    [notifier log:@"critical" message:nil exception:nil data:data];
+    [notifier log:@"critical" message:nil exception:nil data:data context:nil];
 }
 
 @end
