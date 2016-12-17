@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "RollbarConfiguration.h"
+
+//! Project version number for Rollbar.
+FOUNDATION_EXPORT double RollbarVersionNumber;
+
+//! Project version string for Rollbar.
+FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <Rollbar/PublicHeader.h>
 
 @interface Rollbar : NSObject
 
