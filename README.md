@@ -72,7 +72,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     let config: RollbarConfiguration = RollbarConfiguration()
     config.environment = "production"
 
-    Rollbar.initWithAccessToken("YOUR ACCESS TOKEN", configuration: config)
+    Rollbar.initWithAccessToken("POST_CLIENT_ITEM_ACCESS_TOKEN", configuration: config)
 
     return true
 }
