@@ -25,12 +25,12 @@
 
 - (NSDictionary *)customData;
 
-@property (atomic, copy) NSString *accessToken;
-@property (atomic, copy) NSString *environment;
-@property (atomic, copy) NSString *endpoint;
-@property (atomic, copy) NSString *crashLevel;
-@property (readonly, atomic, copy) NSString *personId;
-@property (readonly, atomic, copy) NSString *personUsername;
-@property (readonly, atomic, copy) NSString *personEmail;
+@property (nonatomic, copy) NSString *accessToken;
+@property (nonatomic, copy) NSString *environment;
+@property (nonatomic, copy) NSString *endpoint;
+@property (nonatomic, copy) NSString *crashLevel;
+@property (readonly, nonatomic, copy) NSString *personId;
+@property (readonly, nonatomic, copy) NSString *personUsername;
+@property (readonly, nonatomic, copy) NSString *personEmail;
 
 @end
