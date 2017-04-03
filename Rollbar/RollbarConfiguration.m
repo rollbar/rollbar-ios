@@ -18,9 +18,9 @@ static NSString *configurationFilePath = nil;
     NSMutableDictionary *customData;
 }
 
-@property (nonatomic, copy) NSString* personId;
-@property (nonatomic, copy) NSString* personUsername;
-@property (nonatomic, copy) NSString* personEmail;
+@property (nonatomic, copy) NSString *personId;
+@property (nonatomic, copy) NSString *personUsername;
+@property (nonatomic, copy) NSString *personEmail;
 
 @end
 
