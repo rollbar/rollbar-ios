@@ -70,11 +70,13 @@ static NSString *configurationFilePath = nil;
 }
 
 - (void)setPersonId:(NSString *)personId username:(NSString *)username email:(NSString *)email {
-    self.personId = personId;
-    self.personUsername = username;
-    self.personEmail = email;
-    
-    [self save];
+    @synchronized (_personId) {
+        self.personId = personId;
+        self.personUsername = username;
+        self.personEmail = email;
+
+        [self save];
+    }
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
@@ -148,8 +150,26 @@ static NSString *configurationFilePath = nil;
     return result;
 }
 
-
 - (NSDictionary *)customData {
     return [NSDictionary dictionaryWithDictionary:customData];
 }
+
+- (NSString *)personId {
+    @synchronized (_personId) {
+        return _personId;
+    }
+}
+
+- (NSString *)personUsername {
+    @synchronized (_personUsername) {
+        return _personUsername;
+    }
+}
+
+- (NSString *)personEmail {
+    @synchronized (_personEmail) {
+        return _personEmail;
+    }
+}
+
 @end
