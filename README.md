@@ -63,7 +63,11 @@ Importing with Swift requires the additional step of adding the following lines 
 
 If you have no Bridging Header file, the easiest way to correctly configure it is to add an empty objective-c (`dummy.m` for instance) file. When you do so, XCode will prompt you to create a bridging header file, and will configure your build environment to automatically include those headers in all your Swift files. After creating the Bridging-Header file, you can delete the objective-c file.
 
-Note: You do *not* need to import Rollbar if you're using Swift.
+Import `Rollbar` in your `AppDelegate` class file:
+
+```swift
+import Rollbar
+```
 
 The initialization uses Swift syntax:
 
