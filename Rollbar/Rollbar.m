@@ -91,8 +91,16 @@ static RollbarNotifier *notifier = nil;
     [notifier log:level message:message exception:nil data:data context:context];
 }
 
++ (void)logWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [notifier log:level message:message exception:exception data:data context:context];
+}
+
 + (void)logWithLevel:(NSString*)level data:(NSDictionary*)data {
     [notifier log:level message:nil exception:nil data:data context:nil];
+}
+
++ (void)logWithLevel:(NSString*)level exception:(NSException*)exception {
+    [notifier log:level message:nil exception:exception data:nil context:nil];
 }
 
 // Debug
@@ -107,6 +115,10 @@ static RollbarNotifier *notifier = nil;
 
 + (void)debugWithData:(NSDictionary*)data {
     [notifier log:@"debug" message:nil exception:nil data:data context:nil];
+}
+
++ (void)debugWithException:(NSException*)exception {
+    [notifier log:@"debug" message:nil exception:exception data:nil context:nil];
 }
 
 // Info
@@ -147,8 +159,16 @@ static RollbarNotifier *notifier = nil;
     [notifier log:@"error" message:message exception:nil data:data context:nil];
 }
 
++ (void)errorWithMessage:(NSString*)message exception:(NSException*)exception {
+    [notifier log:@"error" message:message exception:exception data:nil context:nil];
+}
+
 + (void)errorWithData:(NSDictionary*)data {
     [notifier log:@"error" message:nil exception:nil data:data context:nil];
+}
+
++ (void)errorWithException:(NSException*)exception {
+    [notifier log:@"error" message:nil exception:exception data:nil context:nil];
 }
 
 // Critical
@@ -161,8 +181,16 @@ static RollbarNotifier *notifier = nil;
     [notifier log:@"critical" message:message exception:nil data:data context:nil];
 }
 
++ (void)criticalWithMessage:(NSString*)message exception:(NSException*)exception {
+    [notifier log:@"critical" message:message exception:exception data:nil context:nil];
+}
+
 + (void)criticalWithData:(NSDictionary*)data {
     [notifier log:@"critical" message:nil exception:nil data:data context:nil];
+}
+
++ (void)criticalWithException:(NSException*)exception {
+    [notifier log:@"critical" message:nil exception:exception data:nil context:nil];
 }
 
 @end
