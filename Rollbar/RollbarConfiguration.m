@@ -77,6 +77,11 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (void)setPayloadModificationSelector:(SEL)selector andObject:(id)object {
+    self.payloadModificationSelector = selector;
+    self.payloadModificationObject = object;
+}
+
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if (value) {
         customData[key] = value;

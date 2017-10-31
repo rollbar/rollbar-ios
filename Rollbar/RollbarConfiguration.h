@@ -22,6 +22,7 @@
 - (void)save;
 
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
+- (void)setPayloadModificationSelector:(SEL)selector andObject:(id) object;
 
 - (NSDictionary *)customData;
 
@@ -29,8 +30,10 @@
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;
 @property (atomic, copy) NSString *crashLevel;
-@property (readonly, atomic, copy) NSString *personId;
-@property (readonly, atomic, copy) NSString *personUsername;
-@property (readonly, atomic, copy) NSString *personEmail;
+@property (readonly, nonatomic, copy) NSString *personId;
+@property (readonly, nonatomic, copy) NSString *personUsername;
+@property (readonly, nonatomic, copy) NSString *personEmail;
+@property (nonatomic, assign) SEL payloadModificationSelector;
+@property (nonatomic, retain) id payloadModificationObject;
 
 @end
