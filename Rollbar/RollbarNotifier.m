@@ -256,6 +256,11 @@ static BOOL isNetworkReachable = YES;
         self.configuration.payloadModification(data);
     }
     
+    // Add client/server linking ID
+    if (self.configuration.requestId) {
+        [data setObject:self.configuration.requestId forKey:@"requestId"];
+    }
+    
     NSDictionary *personData = [self buildPersonData];
     
     if (personData) {

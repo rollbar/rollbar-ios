@@ -23,6 +23,7 @@
 
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
 - (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock;
+- (void)setRequestId:(NSString*)requestId;
 
 - (NSDictionary *)customData;
 
@@ -34,5 +35,6 @@
 @property (readonly, nonatomic, copy) NSString *personUsername;
 @property (readonly, nonatomic, copy) NSString *personEmail;
 @property (nonatomic, copy) void (^payloadModification)(NSDictionary *payload);
+@property (nonatomic, copy) NSString *requestId; // Optional, used to link request between client/server
 
 @end
