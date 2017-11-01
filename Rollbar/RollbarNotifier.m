@@ -252,12 +252,8 @@ static BOOL isNetworkReachable = YES;
                                    @"body": body} mutableCopy];
     
     // Run data through custom payload modification method if available
-    if (self.configuration.payloadModificationObject) {
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[self.configuration.payloadModificationObject methodSignatureForSelector:self.configuration.payloadModificationSelector]];
-        [invocation setSelector:self.configuration.payloadModificationSelector];
-        [invocation setTarget:self.configuration.payloadModificationObject];
-        [invocation setArgument:&(data) atIndex:2];
-        [invocation invoke];
+    if (self.configuration.payloadModification) {
+        self.configuration.payloadModification(data);
     }
     
     NSDictionary *personData = [self buildPersonData];
@@ -340,10 +336,9 @@ static BOOL isNetworkReachable = YES;
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
     
-    NSError *error;
-    NSHTTPURLResponse *response;
-    
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+//    NSError *error;
+//    NSHTTPURLResponse *response;
+//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     dispatch_semaphore_t sem = dispatch_semaphore_create(0);
     
