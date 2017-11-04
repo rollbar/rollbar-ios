@@ -8,6 +8,7 @@
 
 #import "RollbarConfiguration.h"
 #import "objc/runtime.h"
+#import "RollbarUtil.h"
 
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
@@ -116,6 +117,7 @@ static NSString *configurationFilePath = nil;
             }
         }
         
+        config = [RollbarUtil jsonSafePayloadFromDictionary:config];
         NSData *configJson = [NSJSONSerialization dataWithJSONObject:config options:0 error:nil];
         [configJson writeToFile:configurationFilePath atomically:YES];
     }

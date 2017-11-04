@@ -13,6 +13,7 @@
 #import "RollbarLogger.h"
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
+#import "RollbarUtil.h"
 
 
 static NSString *NOTIFIER_VERSION = @"0.2.0";
@@ -102,6 +103,7 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)saveQueueState {
+    queueState = [RollbarUtil jsonSafePayloadFromDictionary:queueState];
     NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:nil];
     [data writeToFile:stateFilePath atomically:YES];
 }
@@ -291,6 +293,7 @@ static BOOL isNetworkReachable = YES;
 - (void)queuePayload:(NSDictionary*)payload {
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
+    payload = [RollbarUtil jsonSafePayloadFromDictionary:payload];
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil]];
     [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandle closeFile];
@@ -300,6 +303,7 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *newPayload = @{@"access_token": accessToken,
                                  @"data": itemData};
     
+    newPayload = [RollbarUtil jsonSafePayloadFromDictionary:newPayload];
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil];
     
     BOOL success = [self sendPayload:jsonPayload];
