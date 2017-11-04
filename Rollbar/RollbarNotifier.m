@@ -30,6 +30,8 @@ static RollbarThread *rollbarThread = nil;
 static RollbarReachability *reachability = nil;
 static BOOL isNetworkReachable = YES;
 
+#define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+
 @implementation RollbarNotifier
 
 - (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
@@ -340,34 +342,43 @@ static BOOL isNetworkReachable = YES;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
-    
-//    NSError *error;
-//    NSHTTPURLResponse *response;
-//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
-    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-    
+
     __block BOOL result = NO;
-    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error) {
-            RollbarLog(@"There was an error reporting to Rollbar");
-            RollbarLog(@"Error: %@", [error localizedDescription]);
-        } else {
-            NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-            if ([httpResponse statusCode] == 200) {
-                RollbarLog(@"Success");
-                result = YES;
-            } else {
-                RollbarLog(@"There was a problem reporting to Rollbar");
-                RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-            }
-        }
-        dispatch_semaphore_signal(sem);
-    }];
-    [dataTask resume];
-    dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, 5*NSEC_PER_SEC));
+    if (IS_IOS7_OR_HIGHER) {
+        // This requires iOS 7.0+
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            result = [self checkPayloadResponse:response error:error data:data];
+            dispatch_semaphore_signal(sem);
+        }];
+        [dataTask resume];
+        dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, 5*NSEC_PER_SEC));
+    } else {
+        // Using method sendSynchronousRequest, deprecated since iOS 9.0
+        NSError *error;
+        NSHTTPURLResponse *response;
+        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        result = [self checkPayloadResponse:response error:error data:data];
+    }
     
     return result;
+}
+
+- (BOOL)checkPayloadResponse:(NSURLResponse*)response error:(NSError*)error data:(NSData*)data {
+    if (error) {
+        RollbarLog(@"There was an error reporting to Rollbar");
+        RollbarLog(@"Error: %@", [error localizedDescription]);
+    } else {
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+        if ([httpResponse statusCode] == 200) {
+            RollbarLog(@"Success");
+            return YES;
+        } else {
+            RollbarLog(@"There was a problem reporting to Rollbar");
+            RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+        }
+    }
+    return NO;
 }
 
 - (NSString*)generateUUID {
