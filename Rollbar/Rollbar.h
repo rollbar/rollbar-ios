@@ -10,11 +10,11 @@
 #import "RollbarConfiguration.h"
 
 typedef enum {
-    RollbarInfo=0,
-    RollbarDebug=1,
-    RollbarWarning=2,
-    RollbarCritical=3,
-    RollbarError=4
+    RollbarInfo,
+    RollbarDebug,
+    RollbarWarning,
+    RollbarCritical,
+    RollbarError
 } RollbarLevel;
 
 @interface Rollbar : NSObject
