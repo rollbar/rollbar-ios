@@ -26,7 +26,7 @@ typedef enum {
 
 + (RollbarConfiguration*)currentConfiguration;
 
-+ (NSString*)stringWithLevel:(RollbarLevel)level;
++ (NSString*)stringFromLevel:(RollbarLevel)level;
 
 // Old logging methods, for backward compatibility
 

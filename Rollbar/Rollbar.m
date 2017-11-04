@@ -80,7 +80,7 @@ static RollbarNotifier *notifier = nil;
 /**
  * Translates RollbarLevel to string. Default is "info".
  */
-+ (NSString*)stringWithLevel:(RollbarLevel)level {
++ (NSString*)stringFromLevel:(RollbarLevel)level {
     switch (level) {
         case RollbarDebug:
             return @"debug";
@@ -114,7 +114,7 @@ static RollbarNotifier *notifier = nil;
 }
 
 + (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
-    [notifier log:[Rollbar stringWithLevel:level] message:message exception:exception data:data context:context];
+    [notifier log:[Rollbar stringFromLevel:level] message:message exception:exception data:data context:context];
 }
 
 // Debug
