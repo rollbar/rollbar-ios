@@ -362,6 +362,7 @@ static BOOL isNetworkReachable = YES;
                 RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             }
         }
+        dispatch_semaphore_signal(sem);
     }];
     [dataTask resume];
     dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, 5*NSEC_PER_SEC));
