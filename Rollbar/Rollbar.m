@@ -51,11 +51,11 @@ static RollbarNotifier *notifier = nil;
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken {
-    [self initWithAccessToken:accessToken configuration:nil];
+    [Rollbar initWithAccessToken:accessToken configuration:nil];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration {
-    [self initWithAccessToken:accessToken configuration:configuration enableCrashReporter:YES];
+    [Rollbar initWithAccessToken:accessToken configuration:configuration enableCrashReporter:YES];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration
@@ -66,7 +66,7 @@ static RollbarNotifier *notifier = nil;
         notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken configuration:configuration isRoot:YES];
 
         if (enable) {
-            [self enableCrashReporter];
+            [Rollbar enableCrashReporter];
         }
         
         [notifier.configuration save];
@@ -76,6 +76,146 @@ static RollbarNotifier *notifier = nil;
 + (RollbarConfiguration*)currentConfiguration {
     return notifier.configuration;
 }
+
+/**
+ * Translates RollbarLevel to string. Default is "info".
+ */
++ (NSString*)stringWithLevel:(RollbarLevel)level {
+    switch (level) {
+        case RollbarDebug:
+            return @"debug";
+        case RollbarWarning:
+            return @"warning";
+        case RollbarCritical:
+            return @"critical";
+        case RollbarError:
+            return @"error";
+        default:
+            return @"info";
+    }
+}
+
+/*******************************************************
+ * New logging methods
+ *******************************************************/
+
+// Log
+
++ (void)log:(RollbarLevel)level message:(NSString*)message {
+    [Rollbar log:level message:message exception:nil];
+}
+
++ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception {
+    [Rollbar log:level message:message exception:exception data:nil];
+}
+
++ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar log:level message:message exception:exception data:data context:nil];
+}
+
++ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [notifier log:[Rollbar stringWithLevel:level] message:message exception:exception data:data context:context];
+}
+
+// Debug
+
++ (void)debug:(NSString*)message {
+    [Rollbar debug:message exception:nil];
+}
+
++ (void)debug:(NSString*)message exception:(NSException*)exception {
+    [Rollbar debug:message exception:exception data:nil];
+}
+
++ (void)debug:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar debug:message exception:exception data:data context:nil];
+}
+
++ (void)debug:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarDebug message:message exception:exception data:data context:context];
+}
+
+
+// Info
+
++ (void)info:(NSString*)message {
+    [Rollbar info:message exception:nil];
+}
+
++ (void)info:(NSString*)message exception:(NSException*)exception {
+    [Rollbar info:message exception:exception data:nil];
+}
+
++ (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar info:message exception:exception data:data context:nil];
+}
+
++ (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarDebug message:message exception:exception data:data context:context];
+}
+
+
+// Warning
+
++ (void)warning:(NSString*)message {
+    [Rollbar info:message exception:nil];
+}
+
++ (void)warning:(NSString*)message exception:(NSException*)exception {
+    [Rollbar info:message exception:exception data:nil];
+}
+
++ (void)warning:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar info:message exception:exception data:data context:nil];
+}
+
++ (void)warning:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarWarning message:message exception:exception data:data context:context];
+}
+
+
+// Error
+
++ (void)error:(NSString*)message {
+    [Rollbar error:message exception:nil];
+}
+
++ (void)error:(NSString*)message exception:(NSException*)exception {
+    [Rollbar error:message exception:exception data:nil];
+}
+
++ (void)error:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar error:message exception:exception data:data context:nil];
+}
+
++ (void)error:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarError message:message exception:exception data:data context:context];
+}
+
+
+// Critical
+
++ (void)critical:(NSString*)message {
+    [Rollbar critical:message exception:nil];
+}
+
++ (void)critical:(NSString*)message exception:(NSException*)exception {
+    [Rollbar critical:message exception:exception data:nil];
+}
+
++ (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar critical:message exception:exception data:data context:nil];
+}
+
++ (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarCritical message:message exception:exception data:data context:context];
+}
+
+
+/******************************************************
+ * Old logging methods
+ ******************************************************/
+
 
 // Log
 
@@ -91,16 +231,8 @@ static RollbarNotifier *notifier = nil;
     [notifier log:level message:message exception:nil data:data context:context];
 }
 
-+ (void)logWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
-    [notifier log:level message:message exception:exception data:data context:context];
-}
-
 + (void)logWithLevel:(NSString*)level data:(NSDictionary*)data {
     [notifier log:level message:nil exception:nil data:data context:nil];
-}
-
-+ (void)logWithLevel:(NSString*)level exception:(NSException*)exception {
-    [notifier log:level message:nil exception:exception data:nil context:nil];
 }
 
 // Debug
@@ -115,10 +247,6 @@ static RollbarNotifier *notifier = nil;
 
 + (void)debugWithData:(NSDictionary*)data {
     [notifier log:@"debug" message:nil exception:nil data:data context:nil];
-}
-
-+ (void)debugWithException:(NSException*)exception {
-    [notifier log:@"debug" message:nil exception:exception data:nil context:nil];
 }
 
 // Info
@@ -159,16 +287,8 @@ static RollbarNotifier *notifier = nil;
     [notifier log:@"error" message:message exception:nil data:data context:nil];
 }
 
-+ (void)errorWithMessage:(NSString*)message exception:(NSException*)exception {
-    [notifier log:@"error" message:message exception:exception data:nil context:nil];
-}
-
 + (void)errorWithData:(NSDictionary*)data {
     [notifier log:@"error" message:nil exception:nil data:data context:nil];
-}
-
-+ (void)errorWithException:(NSException*)exception {
-    [notifier log:@"error" message:nil exception:exception data:nil context:nil];
 }
 
 // Critical
@@ -181,16 +301,8 @@ static RollbarNotifier *notifier = nil;
     [notifier log:@"critical" message:message exception:nil data:data context:nil];
 }
 
-+ (void)criticalWithMessage:(NSString*)message exception:(NSException*)exception {
-    [notifier log:@"critical" message:message exception:exception data:nil context:nil];
-}
-
 + (void)criticalWithData:(NSDictionary*)data {
     [notifier log:@"critical" message:nil exception:nil data:data context:nil];
-}
-
-+ (void)criticalWithException:(NSException*)exception {
-    [notifier log:@"critical" message:nil exception:exception data:nil context:nil];
 }
 
 @end
