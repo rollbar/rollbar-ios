@@ -28,6 +28,8 @@ typedef enum {
 
 + (NSString*)stringFromLevel:(RollbarLevel)level;
 
++ (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot;
+
 // Old logging methods, for backward compatibility
 
 + (void)logWithLevel:(NSString*)level message:(NSString*)message;

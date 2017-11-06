@@ -77,6 +77,10 @@ static RollbarNotifier *notifier = nil;
     return notifier.configuration;
 }
 
++ (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
+    [notifier updateConfiguration:configuration isRoot:isRoot];
+}
+
 /**
  * Translates RollbarLevel to string. Default is "info".
  */
