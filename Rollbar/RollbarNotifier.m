@@ -37,7 +37,7 @@ static BOOL isNetworkReachable = YES;
 - (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
     
     if ((self = [super init])) {
-        [self updateConfiguration:configuration isRoot:isRoot];
+        [self updateAccessToken:accessToken configuration:configuration isRoot:isRoot];
 
         if (isRoot) {
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
