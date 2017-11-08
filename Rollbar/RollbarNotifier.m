@@ -37,17 +37,9 @@ static BOOL isNetworkReachable = YES;
 - (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
     
     if ((self = [super init])) {
-        if (configuration) {
-            self.configuration = configuration;
-        } else {
-            self.configuration = [RollbarConfiguration configuration];
-        }
-        
-        self.configuration.accessToken = accessToken;
-        
+        [self updateAccessToken:accessToken configuration:configuration isRoot:isRoot];
+
         if (isRoot) {
-            [self.configuration _setRoot];
-            
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
             NSString *cachesDirectory = [paths objectAtIndex:0];
             queuedItemsFilePath = [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
@@ -387,5 +379,33 @@ static BOOL isNetworkReachable = YES;
     CFRelease(uuid);
     return string;
 }
-        
+
+#pragma mark - Update configuration methods
+
+- (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+    if (configuration) {
+        self.configuration = configuration;
+    } else {
+        self.configuration = [RollbarConfiguration configuration];
+    }
+
+    [self updateAccessToken:accessToken];
+
+    if (isRoot) {
+        [self.configuration _setRoot];
+    }
+}
+
+- (void)updateConfiguration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+    NSString *currentAccessToken = self.configuration.accessToken;
+    [self updateAccessToken:currentAccessToken configuration:configuration isRoot:isRoot];
+}
+
+- (void)updateAccessToken:(NSString*)accessToken {
+    self.configuration.accessToken = accessToken;
+}
+
+#pragma mark -
+
+
 @end
