@@ -70,6 +70,9 @@
 		B54736791FB3C8E6007F99D7 /* RollbarFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DBB59018FDFED8007CFE13 /* RollbarFileReader.m */; };
 		B547367A1FB3C8E6007F99D7 /* RollbarReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E07191B10AE00F0168A /* RollbarReachability.m */; };
 		B547367B1FB3C8E6007F99D7 /* RollbarLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E15191C0B4000F0168A /* RollbarLogger.m */; };
+		B547368A1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; };
+		B547368B1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
+		B547368C1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +135,8 @@
 		96D2223618D8E54600933444 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		96DBB58F18FDFED8007CFE13 /* RollbarFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarFileReader.h; sourceTree = "<group>"; };
 		96DBB59018FDFED8007CFE13 /* RollbarFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarFileReader.m; sourceTree = "<group>"; };
+		B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+Rollbar.h"; sourceTree = "<group>"; };
+		B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+Rollbar.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +241,8 @@
 				96AB9E07191B10AE00F0168A /* RollbarReachability.m */,
 				96AB9E14191C0B4000F0168A /* RollbarLogger.h */,
 				96AB9E15191C0B4000F0168A /* RollbarLogger.m */,
+				B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */,
+				B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */,
 			);
 			path = Rollbar;
 			sourceTree = "<group>";
@@ -293,6 +300,7 @@
 				966CD46E18F4E4C3005A8F2D /* RollbarThread.h in Headers */,
 				96D75C2A18EA04C6002AA729 /* RollbarConfiguration.h in Headers */,
 				96DBB59118FDFED8007CFE13 /* RollbarFileReader.h in Headers */,
+				B547368A1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h in Headers */,
 				9691838318E4EB0400DE3699 /* Rollbar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,6 +486,7 @@
 			files = (
 				96AB9E17191C0B4000F0168A /* RollbarLogger.m in Sources */,
 				966CD46F18F4E4C3005A8F2D /* RollbarThread.m in Sources */,
+				B547368B1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */,
 				96DBB59218FDFED8007CFE13 /* RollbarFileReader.m in Sources */,
 				96D2223518D8E51600933444 /* RollbarNotifier.m in Sources */,
 				9630826518DCDDC000256154 /* RollbarConfiguration.m in Sources */,
@@ -497,6 +506,7 @@
 				B54736761FB3C8E6007F99D7 /* RollbarNotifier.m in Sources */,
 				B547367A1FB3C8E6007F99D7 /* RollbarReachability.m in Sources */,
 				B54736781FB3C8E6007F99D7 /* RollbarThread.m in Sources */,
+				B547368C1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */,
 				B54736771FB3C8E6007F99D7 /* RollbarConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
