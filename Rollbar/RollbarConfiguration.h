@@ -22,6 +22,8 @@
 - (void)save;
 
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
+- (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock;
+- (void)setRequestId:(NSString*)requestId;
 
 - (NSDictionary *)customData;
 
@@ -29,8 +31,10 @@
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;
 @property (atomic, copy) NSString *crashLevel;
-@property (readonly, atomic, copy) NSString *personId;
-@property (readonly, atomic, copy) NSString *personUsername;
-@property (readonly, atomic, copy) NSString *personEmail;
+@property (readonly, nonatomic, copy) NSString *personId;
+@property (readonly, nonatomic, copy) NSString *personUsername;
+@property (readonly, nonatomic, copy) NSString *personEmail;
+@property (nonatomic, copy) void (^payloadModification)(NSDictionary *payload);
+@property (nonatomic, copy) NSString *requestId; // Optional, used to link request between client/server
 
 @end

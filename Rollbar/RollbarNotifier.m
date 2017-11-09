@@ -30,22 +30,16 @@ static RollbarThread *rollbarThread = nil;
 static RollbarReachability *reachability = nil;
 static BOOL isNetworkReachable = YES;
 
+#define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+
 @implementation RollbarNotifier
 
 - (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
     
     if ((self = [super init])) {
-        if (configuration) {
-            self.configuration = configuration;
-        } else {
-            self.configuration = [RollbarConfiguration configuration];
-        }
-        
-        self.configuration.accessToken = accessToken;
-        
+        [self updateAccessToken:accessToken configuration:configuration isRoot:isRoot];
+
         if (isRoot) {
-            [self.configuration _setRoot];
-            
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
             NSString *cachesDirectory = [paths objectAtIndex:0];
             queuedItemsFilePath = [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
@@ -251,6 +245,16 @@ static BOOL isNetworkReachable = YES;
                                    @"custom": customData,
                                    @"body": body} mutableCopy];
     
+    // Run data through custom payload modification method if available
+    if (self.configuration.payloadModification) {
+        self.configuration.payloadModification(data);
+    }
+    
+    // Add client/server linking ID
+    if (self.configuration.requestId) {
+        [data setObject:self.configuration.requestId forKey:@"requestId"];
+    }
+    
     NSDictionary *personData = [self buildPersonData];
     
     if (personData) {
@@ -330,12 +334,29 @@ static BOOL isNetworkReachable = YES;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
+
+    __block BOOL result = NO;
+    if (IS_IOS7_OR_HIGHER) {
+        // This requires iOS 7.0+
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            result = [self checkPayloadResponse:response error:error data:data];
+            dispatch_semaphore_signal(sem);
+        }];
+        [dataTask resume];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    } else {
+        // Using method sendSynchronousRequest, deprecated since iOS 9.0
+        NSError *error;
+        NSHTTPURLResponse *response;
+        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        result = [self checkPayloadResponse:response error:error data:data];
+    }
     
-    NSError *error;
-    NSHTTPURLResponse *response;
-    
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
+    return result;
+}
+
+- (BOOL)checkPayloadResponse:(NSURLResponse*)response error:(NSError*)error data:(NSData*)data {
     if (error) {
         RollbarLog(@"There was an error reporting to Rollbar");
         RollbarLog(@"Error: %@", [error localizedDescription]);
@@ -349,7 +370,6 @@ static BOOL isNetworkReachable = YES;
             RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         }
     }
-    
     return NO;
 }
 
@@ -359,5 +379,33 @@ static BOOL isNetworkReachable = YES;
     CFRelease(uuid);
     return string;
 }
-        
+
+#pragma mark - Update configuration methods
+
+- (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+    if (configuration) {
+        self.configuration = configuration;
+    } else {
+        self.configuration = [RollbarConfiguration configuration];
+    }
+
+    [self updateAccessToken:accessToken];
+
+    if (isRoot) {
+        [self.configuration _setRoot];
+    }
+}
+
+- (void)updateConfiguration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+    NSString *currentAccessToken = self.configuration.accessToken;
+    [self updateAccessToken:currentAccessToken configuration:configuration isRoot:isRoot];
+}
+
+- (void)updateAccessToken:(NSString*)accessToken {
+    self.configuration.accessToken = accessToken;
+}
+
+#pragma mark -
+
+
 @end

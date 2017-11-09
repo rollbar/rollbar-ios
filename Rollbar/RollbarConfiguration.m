@@ -77,6 +77,14 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock {
+    self.payloadModification = payloadModificationBlock;
+}
+
+- (void)setRequestId:(NSString*)requestId {
+    self.requestId = requestId;
+}
+
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if (value) {
         customData[key] = value;
