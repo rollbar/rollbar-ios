@@ -82,8 +82,8 @@ static NSString *configurationFilePath = nil;
 }
 
 - (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion {
-    self.serverHost = host ? [host stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] : host;
-    self.serverRoot = root;
+    self.serverHost = host;
+    self.serverRoot = root ? [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] : root;
     self.serverBranch = branch;
     self.serverCodeVersion = codeVersion;
 
