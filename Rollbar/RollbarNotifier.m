@@ -344,7 +344,7 @@ static BOOL isNetworkReachable = YES;
             dispatch_semaphore_signal(sem);
         }];
         [dataTask resume];
-        dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, DISPATCH_TIME_FOREVER));
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     } else {
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
         NSError *error;
