@@ -196,6 +196,51 @@ static BOOL isNetworkReachable = YES;
     return nil;
 }
 
+- (NSDictionary*)buildOptionalData {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+
+    // Add client/server linking ID
+    if (self.configuration.requestId) {
+        [data setObject:self.configuration.requestId forKey:@"requestId"];
+    }
+
+    // Add server data
+    NSDictionary *serverData = [self buildServerData];
+
+    if (serverData) {
+        [data setObject:serverData forKey:@"server"];
+    }
+
+    if ([[data allKeys] count]) {
+        return data;
+    }
+
+    return nil;
+}
+
+- (NSDictionary*)buildServerData {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+
+    if (self.configuration.serverHost) {
+        data[@"host"] = self.configuration.serverHost;
+    }
+    if (self.configuration.serverRoot) {
+        data[@"root"] = self.configuration.serverRoot;
+    }
+    if (self.configuration.serverBranch) {
+        data[@"branch"] = self.configuration.serverBranch;
+    }
+    if (self.configuration.serverCodeVersion) {
+        data[@"code_version"] = self.configuration.serverCodeVersion;
+    }
+
+    if ([[data allKeys] count]) {
+        return data;
+    }
+
+    return nil;
+}
+
 - (NSDictionary*)buildClientData {
     NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]]
     ;
@@ -212,10 +257,10 @@ static BOOL isNetworkReachable = YES;
     
     NSDictionary *iosData = @{@"ios_version": [[UIDevice currentDevice] systemVersion],
                               @"device_code": deviceCode,
-                              @"code_version": version,
-                              @"short_version": shortVersion,
-                              @"bundle_identifier": bundleIdentifier,
-                              @"app_name": bundleName};
+                              @"code_version": version ? version : @"",
+                              @"short_version": shortVersion ? shortVersion : @"",
+                              @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+                              @"app_name": bundleName ? bundleName : @""};
     
     NSDictionary *data = @{@"timestamp": timestamp,
                            @"ios": iosData,
@@ -245,26 +290,27 @@ static BOOL isNetworkReachable = YES;
                                    @"custom": customData,
                                    @"body": body} mutableCopy];
     
-    // Run data through custom payload modification method if available
-    if (self.configuration.payloadModification) {
-        self.configuration.payloadModification(data);
-    }
-    
-    // Add client/server linking ID
-    if (self.configuration.requestId) {
-        [data setObject:self.configuration.requestId forKey:@"requestId"];
-    }
-    
     NSDictionary *personData = [self buildPersonData];
     
     if (personData) {
         data[@"person"] = personData;
     }
 
+    NSDictionary *optionalData = [self buildOptionalData];
+
+    if (optionalData) {
+        [data addEntriesFromDictionary:optionalData];
+    }
+
     if (context) {
         data[@"context"] = context;
     }
     
+    // Run data through custom payload modification method if available
+    if (self.configuration.payloadModification) {
+        self.configuration.payloadModification(data);
+    }
+
     return @{@"access_token": self.configuration.accessToken,
              @"data": data};
 }
@@ -344,7 +390,7 @@ static BOOL isNetworkReachable = YES;
             dispatch_semaphore_signal(sem);
         }];
         [dataTask resume];
-        dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, DISPATCH_TIME_FOREVER));
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     } else {
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
         NSError *error;

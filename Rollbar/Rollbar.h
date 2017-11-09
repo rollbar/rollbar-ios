@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RollbarConfiguration.h"
+#import "RollbarNotifier.h"
 
 typedef enum {
     RollbarInfo,
@@ -25,6 +26,7 @@ typedef enum {
 + (void)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration;
 
 + (RollbarConfiguration*)currentConfiguration;
++ (RollbarNotifier*)currentNotifier;
 
 + (NSString*)stringFromLevel:(RollbarLevel)level;
 

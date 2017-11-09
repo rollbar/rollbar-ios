@@ -7,7 +7,6 @@
 //
 
 #import "Rollbar.h"
-#import "RollbarNotifier.h"
 #import "RollbarLogger.h"
 #import <CrashReporter/CrashReporter.h>
 
@@ -75,6 +74,10 @@ static RollbarNotifier *notifier = nil;
 
 + (RollbarConfiguration*)currentConfiguration {
     return notifier.configuration;
+}
+
++ (RollbarNotifier*)currentNotifier {
+    return notifier;
 }
 
 + (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
