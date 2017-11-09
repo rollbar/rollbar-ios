@@ -62,6 +62,14 @@
 		96D75C2B18EA0528002AA729 /* RollbarConfiguration.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9630826318DCDDC000256154 /* RollbarConfiguration.h */; };
 		96DBB59118FDFED8007CFE13 /* RollbarFileReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 96DBB58F18FDFED8007CFE13 /* RollbarFileReader.h */; };
 		96DBB59218FDFED8007CFE13 /* RollbarFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DBB59018FDFED8007CFE13 /* RollbarFileReader.m */; };
+		B54736741FB3C8DC007F99D7 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 963081C618DCDBCD00256154 /* CrashReporter.framework */; };
+		B54736751FB3C8E6007F99D7 /* Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2221418D8E40600933444 /* Rollbar.m */; };
+		B54736761FB3C8E6007F99D7 /* RollbarNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2223418D8E51600933444 /* RollbarNotifier.m */; };
+		B54736771FB3C8E6007F99D7 /* RollbarConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 9630826418DCDDC000256154 /* RollbarConfiguration.m */; };
+		B54736781FB3C8E6007F99D7 /* RollbarThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 966CD46D18F4E4C3005A8F2D /* RollbarThread.m */; };
+		B54736791FB3C8E6007F99D7 /* RollbarFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DBB59018FDFED8007CFE13 /* RollbarFileReader.m */; };
+		B547367A1FB3C8E6007F99D7 /* RollbarReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E07191B10AE00F0168A /* RollbarReachability.m */; };
+		B547367B1FB3C8E6007F99D7 /* RollbarLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E15191C0B4000F0168A /* RollbarLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +161,7 @@
 				96D2222218D8E40600933444 /* libRollbar.a in Frameworks */,
 				96D2221C18D8E40600933444 /* XCTest.framework in Frameworks */,
 				96D2221D18D8E40600933444 /* Foundation.framework in Frameworks */,
+				B54736741FB3C8DC007F99D7 /* CrashReporter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,7 +490,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B547367B1FB3C8E6007F99D7 /* RollbarLogger.m in Sources */,
+				B54736751FB3C8E6007F99D7 /* Rollbar.m in Sources */,
+				B54736791FB3C8E6007F99D7 /* RollbarFileReader.m in Sources */,
 				96D2222A18D8E40600933444 /* RollbarTests.m in Sources */,
+				B54736761FB3C8E6007F99D7 /* RollbarNotifier.m in Sources */,
+				B547367A1FB3C8E6007F99D7 /* RollbarReachability.m in Sources */,
+				B54736781FB3C8E6007F99D7 /* RollbarThread.m in Sources */,
+				B54736771FB3C8E6007F99D7 /* RollbarConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,7 +644,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -661,7 +677,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -724,6 +740,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rollbar/Rollbar-Prefix.pch";
@@ -744,6 +761,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rollbar/Rollbar-Prefix.pch";

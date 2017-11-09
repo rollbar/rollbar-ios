@@ -18,9 +18,13 @@ static NSString *configurationFilePath = nil;
     NSMutableDictionary *customData;
 }
 
-@property (nonatomic, copy) NSString* personId;
-@property (nonatomic, copy) NSString* personUsername;
-@property (nonatomic, copy) NSString* personEmail;
+@property (atomic, copy) NSString* personId;
+@property (atomic, copy) NSString* personUsername;
+@property (atomic, copy) NSString* personEmail;
+@property (atomic, copy) NSString *serverHost;
+@property (atomic, copy) NSString *serverRoot;
+@property (atomic, copy) NSString *serverBranch;
+@property (atomic, copy) NSString *serverCodeVersion;
 
 @end
 
@@ -73,16 +77,21 @@ static NSString *configurationFilePath = nil;
     self.personId = personId;
     self.personUsername = username;
     self.personEmail = email;
-    
+
+    [self save];
+}
+
+- (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion {
+    self.serverHost = host;
+    self.serverRoot = root ? [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] : root;
+    self.serverBranch = branch;
+    self.serverCodeVersion = codeVersion;
+
     [self save];
 }
 
 - (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock {
     self.payloadModification = payloadModificationBlock;
-}
-
-- (void)setRequestId:(NSString*)requestId {
-    self.requestId = requestId;
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
