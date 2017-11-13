@@ -8,45 +8,22 @@
 
 #import "Rollbar.h"
 #import "RollbarLogger.h"
-#import <CrashReporter/CrashReporter.h>
-
+#import "RollbarKSCrashInstallation.h"
 
 @implementation Rollbar
 
 static RollbarNotifier *notifier = nil;
 
 + (void)enableCrashReporter {
-    NSError *error;
-    
-    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
-    
-    if ([crashReporter hasPendingCrashReport]) {
-        NSData *crashData = [crashReporter loadPendingCrashReportData];
-        PLCrashReport *report = [[PLCrashReport alloc] initWithData:crashData error:&error];
-        
+    RollbarKSCrashInstallation *installation = [RollbarKSCrashInstallation sharedInstance];
+    [installation install];
+    [installation sendAllReportsWithCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error) {
-            RollbarLog(@"Could not load crash file: %@", [error localizedDescription]);
-        } else {
-            PLCrashReportTextFormat textFormat = PLCrashReportTextFormatiOS;
-            
-            NSString *crashReportText = [PLCrashReportTextFormatter stringValueForCrashReport:report withTextFormat:textFormat];
-            
-            // Grab the configuration saved to disk before the crash happened
-            RollbarConfiguration *config = [[RollbarConfiguration alloc] initWithLoadedConfiguration];
-            
-            // Create a temporary notifier using the above configuration and report the crash
-            RollbarNotifier *tempNotifier = [[RollbarNotifier alloc] initWithAccessToken:config.accessToken configuration:config isRoot:NO];
-            
-            [tempNotifier logCrashReport:crashReportText];
+            RollbarLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
+        } else if (completed) {
+            [notifier processSavedItems];
         }
-        
-        [crashReporter purgePendingCrashReport];
-    }
-    
-    [crashReporter enableCrashReporterAndReturnError:&error];
-    if (error) {
-        RollbarLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
-    }
+    }];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken {
