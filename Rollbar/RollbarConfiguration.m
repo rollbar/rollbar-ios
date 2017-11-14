@@ -95,6 +95,10 @@ static NSString *configurationFilePath = nil;
     self.payloadModification = payloadModificationBlock;
 }
 
+- (void)setCheckIgnoreBlock:(void (^)(NSDictionary *))checkIgnoreBlock {
+    self.checkIgnore = checkIgnoreBlock;
+}
+
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if (value) {
         customData[key] = value;
