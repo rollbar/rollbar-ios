@@ -84,16 +84,27 @@ static BOOL isNetworkReachable = YES;
     return self;
 }
 
+- (BOOL)checkIgnore:(NSDictionary*)data {
+    if (self.configuration.checkIgnore) {
+        return self.configuration.checkIgnore(data);
+    }
+    return true;
+}
+
 - (void)logCrashReport:(NSString*)crashReport {
     NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport context:nil];
-    
-    [self queuePayload:payload];
+
+    if ([self checkIgnore:payload]) {
+        [self queuePayload:payload];
+    }
 }
 
 - (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*) context {
     NSDictionary *payload = [self buildPayloadWithLevel:level message:message exception:exception extra:data crashReport:nil context:context];
     
-    [self queuePayload:payload];
+    if ([self checkIgnore:payload]) {
+        [self queuePayload:payload];
+    }
 }
 
 - (void)saveQueueState {

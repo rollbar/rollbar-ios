@@ -95,7 +95,7 @@ static NSString *configurationFilePath = nil;
     self.payloadModification = payloadModificationBlock;
 }
 
-- (void)setCheckIgnoreBlock:(void (^)(NSDictionary *))checkIgnoreBlock {
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary *))checkIgnoreBlock {
     self.checkIgnore = checkIgnoreBlock;
 }
 

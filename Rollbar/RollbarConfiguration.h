@@ -24,7 +24,7 @@
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
 - (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
 - (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock;
-- (void)setCheckIgnoreBlock:(void (^)(NSDictionary*))checkIgnoreBlock;
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
 - (void)setRequestId:(NSString*)requestId;
 
 - (NSDictionary *)customData;
@@ -36,8 +36,12 @@
 @property (readonly, atomic, copy) NSString *personId;
 @property (readonly, atomic, copy) NSString *personUsername;
 @property (readonly, atomic, copy) NSString *personEmail;
+
+// Modify payload
 @property (atomic, copy) void (^payloadModification)(NSDictionary *payload);
-@property (atomic, copy) void (^checkIgnore)(NSDictionary *payload);
+
+// Decides whether or not to send payload. Returns true to send, false
+@property (atomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
 
 /*** Optional ***/
 
