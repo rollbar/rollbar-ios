@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RollbarKSCrashInstallation.h"
 #import "RollbarConfiguration.h"
 #import "RollbarNotifier.h"
 
