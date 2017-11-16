@@ -84,25 +84,16 @@ static BOOL isNetworkReachable = YES;
     return self;
 }
 
-- (BOOL)checkIgnore:(NSDictionary*)data {
-    if (self.configuration.checkIgnore) {
-        return self.configuration.checkIgnore(data);
-    }
-    return true;
-}
-
 - (void)logCrashReport:(NSString*)crashReport {
     NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport context:nil];
-
-    if ([self checkIgnore:payload]) {
+    if (payload) {
         [self queuePayload:payload];
     }
 }
 
 - (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*) context {
     NSDictionary *payload = [self buildPayloadWithLevel:level message:message exception:exception extra:data crashReport:nil context:context];
-    
-    if ([self checkIgnore:payload]) {
+    if (payload) {
         [self queuePayload:payload];
     }
 }
@@ -317,10 +308,12 @@ static BOOL isNetworkReachable = YES;
     if (context) {
         data[@"context"] = context;
     }
-    
-    // Run data through custom payload modification method if available
-    if (self.configuration.payloadModification) {
-        self.configuration.payloadModification(data);
+
+    // Transform payload, if necessary
+    [self modifyPayload:data];
+    [self scrubPayload:data];
+    if ([self shouldIgnorePayload:data]) {
+        return nil;
     }
 
     return @{@"access_token": self.configuration.accessToken,
@@ -438,6 +431,46 @@ static BOOL isNetworkReachable = YES;
     return string;
 }
 
+#pragma mark - Payload transformations
+
+// Run data through custom payload modification method if available
+- (void)modifyPayload:(NSMutableDictionary *)data {
+    if (self.configuration.payloadModification) {
+        self.configuration.payloadModification(data);
+    }
+}
+
+// Determine if this payload should be ignored
+- (BOOL)shouldIgnorePayload:(NSDictionary*)data {
+    BOOL shouldIgnore = false;
+
+    if (self.configuration.checkIgnore) {
+        @try {
+            shouldIgnore = self.configuration.checkIgnore(data);
+        } @catch(NSException *e) {
+            RollbarLog(@"checkIgnore error: %@", e.reason);
+
+            // Remove checkIgnore to prevent future exceptions
+            [self.configuration setCheckIgnore:nil];
+        }
+    }
+
+    return shouldIgnore;
+}
+
+// Scrub specified fields from payload
+- (void)scrubPayload:(NSMutableDictionary*)data {
+    if (self.configuration.scrubFields.count == 0) {
+        return;
+    }
+
+    for (NSString *key in self.configuration.scrubFields.allKeys) {
+        if ([data valueForKeyPath:key]) {
+            [data setValue:@"*****" forKeyPath:key];
+        }
+    }
+}
+
 #pragma mark - Update configuration methods
 
 - (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
@@ -462,8 +495,5 @@ static BOOL isNetworkReachable = YES;
 - (void)updateAccessToken:(NSString*)accessToken {
     self.configuration.accessToken = accessToken;
 }
-
-#pragma mark -
-
 
 @end
