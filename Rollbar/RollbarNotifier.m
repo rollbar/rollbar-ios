@@ -14,6 +14,7 @@
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
+#import <KSCrash/KSCrash.h>
 
 
 static NSString *NOTIFIER_VERSION = @"0.2.0";
@@ -331,9 +332,43 @@ static BOOL isNetworkReachable = YES;
     return @{@"message": result};
 }
 
+- (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception {
+    NSDictionary *exceptionInfo = @{@"class": NSStringFromClass([exception class]), @"message": exception.reason, @"description": exception.description};
+    NSMutableArray *frames = [NSMutableArray array];
+    for (NSString *line in exception.callStackSymbols) {
+        NSMutableArray *components =  [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
+        [components removeObject:@""];
+        [components removeObjectAtIndex:0];
+        if (components.count >= 4) {
+            NSString *method = [self methodNameFromStackTrace:components];
+            NSString *filename = [components componentsJoinedByString:@" "];
+            [frames addObject:@{@"library": components[0], @"filename": filename, @"address": components[1], @"lineno": components[components.count-1], @"method": method}];
+        }
+    }
+    
+    return @{@"trace": @{@"frames": frames, @"exception": exceptionInfo}};
+}
+
+- (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
+    int start = false;
+    NSString *buf;
+    for (NSString *component in stackTraceComponents) {
+        if (!start && [component hasPrefix:@"0x"]) {
+            start = true;
+        } else if (start && [component isEqualToString:@"+"]) {
+            break;
+        } else if (start) {
+            buf = buf ? [NSString stringWithFormat:@"%@ %@", buf, component] : component;
+        }
+    }
+    return buf ? buf : @"Unknown";
+}
+
 - (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport {
     if (crashReport) {
         return [self buildPayloadBodyWithCrashReport:crashReport];
+    } else if (exception) {
+        return [self buildPayloadBodyWithException:exception];
     } else {
         return [self buildPayloadBodyWithMessage:message extra:extra];
     }
