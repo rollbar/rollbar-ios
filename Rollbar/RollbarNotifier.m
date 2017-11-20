@@ -16,6 +16,7 @@
 #import "NSJSONSerialization+Rollbar.h"
 #import <KSCrash/KSCrash.h>
 
+#define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
 static NSString *NOTIFIER_VERSION = @"0.2.0";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
@@ -387,8 +388,13 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken nextOffset:(NSUInteger)nextOffset {
-    NSDictionary *newPayload = @{@"access_token": accessToken,
-                                 @"data": itemData};
+    NSMutableArray *payloadItems = [NSMutableArray array];
+    for (NSDictionary *item in itemData) {
+        NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
+        [self truncatePayloadIfNecessary:newItem];
+        [payloadItems addObject:newItem];
+    }
+    NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken, @"data": payloadItems}];
     
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil safe:true];
     
@@ -464,6 +470,83 @@ static BOOL isNetworkReachable = YES;
     NSString *string = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, uuid);
     CFRelease(uuid);
     return string;
+}
+
+#pragma mark - Payload truncate
+
+- (void)createMutablePayloadWithData:(NSMutableDictionary *)data forPath:(NSString *)path {
+    NSArray *pathComponents = [path componentsSeparatedByString:@"."];
+    NSString *currentPath = @"";
+
+    for (int i=0; i<pathComponents.count; i++) {
+        NSString *part = pathComponents[i];
+        currentPath = i == 0 ? part : [NSString stringWithFormat:@"%@.%@", currentPath, part];
+        id val = [data valueForKeyPath:currentPath];
+        if (!val) return;
+        if ([val isKindOfClass:[NSArray class]]) {
+            NSMutableArray *newVal = [NSMutableArray arrayWithArray:val];
+            [data setValue:newVal forKeyPath:currentPath];
+        } else if ([val isKindOfClass:[NSDictionary class]]) {
+            NSMutableDictionary *newVal = [NSMutableDictionary dictionaryWithDictionary:val];
+            [data setValue:newVal forKeyPath:currentPath];
+        }
+    }
+}
+
+- (void)truncatePayloadIfNecessary:(NSMutableDictionary *)data {
+    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil safe:true];
+    NSInteger dataSize = jsonPayload.length * 0.001;
+    BOOL createdMutable = false;
+
+    while (dataSize > MAX_PAYLOAD_SIZE) {
+        NSArray *messageExtraCrashThreads = [data valueForKeyPath:@"body.message.extra.crash.threads"];
+        NSArray *traceFrames = [data valueForKeyPath:@"body.trace.frames"];
+        BOOL reduced = false;
+        
+        if (messageExtraCrashThreads) {
+            if (messageExtraCrashThreads.count > 2) {
+                if (!createdMutable) {
+                    // Make sure we can modify the data
+                    [self createMutablePayloadWithData:data forPath:@"body.message.extra.crash.threads"];
+                    createdMutable = true;
+                }
+
+                NSMutableArray *newArray = [NSMutableArray arrayWithArray:messageExtraCrashThreads];
+                NSInteger removeCnt = newArray.count * 0.25;
+                NSInteger begin = newArray.count - removeCnt;
+                if (removeCnt > 0) {
+                    [newArray removeObjectsInRange:NSMakeRange(begin, removeCnt)];
+                    [data setValue:newArray forKeyPath:@"body.message.extra.crash.threads"];
+                    reduced = true;
+                }
+            }
+        } else if (traceFrames) {
+            if (traceFrames.count > 2) {
+                if (!createdMutable) {
+                    // Make sure we can modify the data
+                    [self createMutablePayloadWithData:data forPath:@"body.trace.frames"];
+                    createdMutable = true;
+                }
+
+                NSMutableArray *newArray = [NSMutableArray arrayWithArray:traceFrames];
+                NSInteger removeCnt = newArray.count * 0.25;
+                NSInteger begin = newArray.count - removeCnt;
+                if (removeCnt > 0) {
+                    [newArray removeObjectsInRange:NSMakeRange(begin, removeCnt)];
+                    [data setValue:newArray forKeyPath:@"body.trace.frames"];
+                    reduced = true;
+                }
+            }
+        }
+        
+        if (!reduced) {
+            break;
+        }
+        
+        // Recalculate
+        jsonPayload = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil safe:true];
+        dataSize = jsonPayload.length * 0.001;
+    }
 }
 
 #pragma mark - Payload transformations
