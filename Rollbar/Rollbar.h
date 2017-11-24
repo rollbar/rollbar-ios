@@ -18,6 +18,17 @@ typedef enum {
     RollbarError
 } RollbarLevel;
 
+typedef enum {
+    RollbarTelemetryLog,
+    RollbarTelemetryDom,
+    RollbarTelemetryError,
+    RollbarTelemetryNavigation,
+    RollbarTelemetryNetwork,
+    RollbarTelemetryConnectivity,
+    RollbarTelemetryManual
+} RollbarTelemetryType;
+
+
 @interface Rollbar : NSObject
 
 + (void)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration
@@ -29,6 +40,7 @@ typedef enum {
 + (RollbarNotifier*)currentNotifier;
 
 + (NSString*)stringFromLevel:(RollbarLevel)level;
++ (NSString*)stringFromTelemetryType:(RollbarTelemetryType)type;
 
 + (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot;
 
