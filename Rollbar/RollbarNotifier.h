@@ -36,4 +36,9 @@
  */
 - (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken nextOffset:(NSUInteger)nextOffset;
 
+// Update configuration methods
+- (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot;
+- (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot;
+- (void)updateAccessToken:(NSString*)accessToken;
+
 @end

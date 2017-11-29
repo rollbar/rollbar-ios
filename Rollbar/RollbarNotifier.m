@@ -13,6 +13,8 @@
 #import "RollbarLogger.h"
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
+#import "NSJSONSerialization+Rollbar.h"
+#import <KSCrash/KSCrash.h>
 
 
 static NSString *NOTIFIER_VERSION = @"0.2.0";
@@ -30,22 +32,16 @@ static RollbarThread *rollbarThread = nil;
 static RollbarReachability *reachability = nil;
 static BOOL isNetworkReachable = YES;
 
+#define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+
 @implementation RollbarNotifier
 
 - (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
     
     if ((self = [super init])) {
-        if (configuration) {
-            self.configuration = configuration;
-        } else {
-            self.configuration = [RollbarConfiguration configuration];
-        }
-        
-        self.configuration.accessToken = accessToken;
-        
+        [self updateAccessToken:accessToken configuration:configuration isRoot:isRoot];
+
         if (isRoot) {
-            [self.configuration _setRoot];
-            
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
             NSString *cachesDirectory = [paths objectAtIndex:0];
             queuedItemsFilePath = [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
@@ -102,7 +98,7 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)saveQueueState {
-    NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:nil];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:nil safe:true];
     [data writeToFile:stateFilePath atomically:YES];
 }
 
@@ -202,6 +198,51 @@ static BOOL isNetworkReachable = YES;
     return nil;
 }
 
+- (NSDictionary*)buildOptionalData {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+
+    // Add client/server linking ID
+    if (self.configuration.requestId) {
+        [data setObject:self.configuration.requestId forKey:@"requestId"];
+    }
+
+    // Add server data
+    NSDictionary *serverData = [self buildServerData];
+
+    if (serverData) {
+        [data setObject:serverData forKey:@"server"];
+    }
+
+    if ([[data allKeys] count]) {
+        return data;
+    }
+
+    return nil;
+}
+
+- (NSDictionary*)buildServerData {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+
+    if (self.configuration.serverHost) {
+        data[@"host"] = self.configuration.serverHost;
+    }
+    if (self.configuration.serverRoot) {
+        data[@"root"] = self.configuration.serverRoot;
+    }
+    if (self.configuration.serverBranch) {
+        data[@"branch"] = self.configuration.serverBranch;
+    }
+    if (self.configuration.serverCodeVersion) {
+        data[@"code_version"] = self.configuration.serverCodeVersion;
+    }
+
+    if ([[data allKeys] count]) {
+        return data;
+    }
+
+    return nil;
+}
+
 - (NSDictionary*)buildClientData {
     NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]]
     ;
@@ -218,10 +259,10 @@ static BOOL isNetworkReachable = YES;
     
     NSDictionary *iosData = @{@"ios_version": [[UIDevice currentDevice] systemVersion],
                               @"device_code": deviceCode,
-                              @"code_version": version,
-                              @"short_version": shortVersion,
-                              @"bundle_identifier": bundleIdentifier,
-                              @"app_name": bundleName};
+                              @"code_version": version ? version : @"",
+                              @"short_version": shortVersion ? shortVersion : @"",
+                              @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+                              @"app_name": bundleName ? bundleName : @""};
     
     NSDictionary *data = @{@"timestamp": timestamp,
                            @"ios": iosData,
@@ -257,10 +298,21 @@ static BOOL isNetworkReachable = YES;
         data[@"person"] = personData;
     }
 
+    NSDictionary *optionalData = [self buildOptionalData];
+
+    if (optionalData) {
+        [data addEntriesFromDictionary:optionalData];
+    }
+
     if (context) {
         data[@"context"] = context;
     }
     
+    // Run data through custom payload modification method if available
+    if (self.configuration.payloadModification) {
+        self.configuration.payloadModification(data);
+    }
+
     return @{@"access_token": self.configuration.accessToken,
              @"data": data};
 }
@@ -280,9 +332,43 @@ static BOOL isNetworkReachable = YES;
     return @{@"message": result};
 }
 
+- (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception {
+    NSDictionary *exceptionInfo = @{@"class": NSStringFromClass([exception class]), @"message": exception.reason, @"description": exception.description};
+    NSMutableArray *frames = [NSMutableArray array];
+    for (NSString *line in exception.callStackSymbols) {
+        NSMutableArray *components =  [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
+        [components removeObject:@""];
+        [components removeObjectAtIndex:0];
+        if (components.count >= 4) {
+            NSString *method = [self methodNameFromStackTrace:components];
+            NSString *filename = [components componentsJoinedByString:@" "];
+            [frames addObject:@{@"library": components[0], @"filename": filename, @"address": components[1], @"lineno": components[components.count-1], @"method": method}];
+        }
+    }
+    
+    return @{@"trace": @{@"frames": frames, @"exception": exceptionInfo}};
+}
+
+- (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
+    int start = false;
+    NSString *buf;
+    for (NSString *component in stackTraceComponents) {
+        if (!start && [component hasPrefix:@"0x"]) {
+            start = true;
+        } else if (start && [component isEqualToString:@"+"]) {
+            break;
+        } else if (start) {
+            buf = buf ? [NSString stringWithFormat:@"%@ %@", buf, component] : component;
+        }
+    }
+    return buf ? buf : @"Unknown";
+}
+
 - (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport {
     if (crashReport) {
         return [self buildPayloadBodyWithCrashReport:crashReport];
+    } else if (exception) {
+        return [self buildPayloadBodyWithException:exception];
     } else {
         return [self buildPayloadBodyWithMessage:message extra:extra];
     }
@@ -291,7 +377,7 @@ static BOOL isNetworkReachable = YES;
 - (void)queuePayload:(NSDictionary*)payload {
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
-    [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil]];
+    [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil safe:true]];
     [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandle closeFile];
 }
@@ -300,7 +386,7 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *newPayload = @{@"access_token": accessToken,
                                  @"data": itemData};
     
-    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil];
+    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil safe:true];
     
     BOOL success = [self sendPayload:jsonPayload];
     if (!success) {
@@ -330,12 +416,29 @@ static BOOL isNetworkReachable = YES;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
+
+    __block BOOL result = NO;
+    if (IS_IOS7_OR_HIGHER) {
+        // This requires iOS 7.0+
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            result = [self checkPayloadResponse:response error:error data:data];
+            dispatch_semaphore_signal(sem);
+        }];
+        [dataTask resume];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    } else {
+        // Using method sendSynchronousRequest, deprecated since iOS 9.0
+        NSError *error;
+        NSHTTPURLResponse *response;
+        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        result = [self checkPayloadResponse:response error:error data:data];
+    }
     
-    NSError *error;
-    NSHTTPURLResponse *response;
-    
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
+    return result;
+}
+
+- (BOOL)checkPayloadResponse:(NSURLResponse*)response error:(NSError*)error data:(NSData*)data {
     if (error) {
         RollbarLog(@"There was an error reporting to Rollbar");
         RollbarLog(@"Error: %@", [error localizedDescription]);
@@ -349,7 +452,6 @@ static BOOL isNetworkReachable = YES;
             RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         }
     }
-    
     return NO;
 }
 
@@ -359,5 +461,33 @@ static BOOL isNetworkReachable = YES;
     CFRelease(uuid);
     return string;
 }
-        
+
+#pragma mark - Update configuration methods
+
+- (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+    if (configuration) {
+        self.configuration = configuration;
+    } else {
+        self.configuration = [RollbarConfiguration configuration];
+    }
+
+    [self updateAccessToken:accessToken];
+
+    if (isRoot) {
+        [self.configuration _setRoot];
+    }
+}
+
+- (void)updateConfiguration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+    NSString *currentAccessToken = self.configuration.accessToken;
+    [self updateAccessToken:currentAccessToken configuration:configuration isRoot:isRoot];
+}
+
+- (void)updateAccessToken:(NSString*)accessToken {
+    self.configuration.accessToken = accessToken;
+}
+
+#pragma mark -
+
+
 @end

@@ -8,6 +8,7 @@
 
 #import "RollbarConfiguration.h"
 #import "objc/runtime.h"
+#import "NSJSONSerialization+Rollbar.h"
 
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
@@ -18,9 +19,13 @@ static NSString *configurationFilePath = nil;
     NSMutableDictionary *customData;
 }
 
-@property (nonatomic, copy) NSString* personId;
-@property (nonatomic, copy) NSString* personUsername;
-@property (nonatomic, copy) NSString* personEmail;
+@property (atomic, copy) NSString* personId;
+@property (atomic, copy) NSString* personUsername;
+@property (atomic, copy) NSString* personEmail;
+@property (atomic, copy) NSString *serverHost;
+@property (atomic, copy) NSString *serverRoot;
+@property (atomic, copy) NSString *serverBranch;
+@property (atomic, copy) NSString *serverCodeVersion;
 
 @end
 
@@ -73,8 +78,21 @@ static NSString *configurationFilePath = nil;
     self.personId = personId;
     self.personUsername = username;
     self.personEmail = email;
-    
+
     [self save];
+}
+
+- (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion {
+    self.serverHost = host;
+    self.serverRoot = root ? [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] : root;
+    self.serverBranch = branch;
+    self.serverCodeVersion = codeVersion;
+
+    [self save];
+}
+
+- (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock {
+    self.payloadModification = payloadModificationBlock;
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
@@ -115,8 +133,8 @@ static NSString *configurationFilePath = nil;
                 [config setObject:value forKey:propertyName];
             }
         }
-        
-        NSData *configJson = [NSJSONSerialization dataWithJSONObject:config options:0 error:nil];
+
+        NSData *configJson = [NSJSONSerialization dataWithJSONObject:config options:0 error:nil safe:true];
         [configJson writeToFile:configurationFilePath atomically:YES];
     }
 }

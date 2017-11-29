@@ -22,6 +22,9 @@
 - (void)save;
 
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
+- (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
+- (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock;
+- (void)setRequestId:(NSString*)requestId;
 
 - (NSDictionary *)customData;
 
@@ -32,5 +35,17 @@
 @property (readonly, atomic, copy) NSString *personId;
 @property (readonly, atomic, copy) NSString *personUsername;
 @property (readonly, atomic, copy) NSString *personEmail;
+@property (atomic, copy) void (^payloadModification)(NSDictionary *payload);
+
+/*** Optional ***/
+
+// ID to link request between client/server
+@property (atomic, copy) NSString *requestId;
+
+// Data about the server
+@property (readonly, atomic, copy) NSString *serverHost;
+@property (readonly, atomic, copy) NSString *serverRoot;
+@property (readonly, atomic, copy) NSString *serverBranch;
+@property (readonly, atomic, copy) NSString *serverCodeVersion;
 
 @end

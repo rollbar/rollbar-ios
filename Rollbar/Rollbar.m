@@ -7,55 +7,31 @@
 //
 
 #import "Rollbar.h"
-#import "RollbarNotifier.h"
 #import "RollbarLogger.h"
-#import <CrashReporter/CrashReporter.h>
-
+#import "RollbarKSCrashInstallation.h"
 
 @implementation Rollbar
 
 static RollbarNotifier *notifier = nil;
 
 + (void)enableCrashReporter {
-    NSError *error;
-    
-    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
-    
-    if ([crashReporter hasPendingCrashReport]) {
-        NSData *crashData = [crashReporter loadPendingCrashReportData];
-        PLCrashReport *report = [[PLCrashReport alloc] initWithData:crashData error:&error];
-        
+    RollbarKSCrashInstallation *installation = [RollbarKSCrashInstallation sharedInstance];
+    [installation install];
+    [installation sendAllReportsWithCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error) {
-            RollbarLog(@"Could not load crash file: %@", [error localizedDescription]);
-        } else {
-            PLCrashReportTextFormat textFormat = PLCrashReportTextFormatiOS;
-            
-            NSString *crashReportText = [PLCrashReportTextFormatter stringValueForCrashReport:report withTextFormat:textFormat];
-            
-            // Grab the configuration saved to disk before the crash happened
-            RollbarConfiguration *config = [[RollbarConfiguration alloc] initWithLoadedConfiguration];
-            
-            // Create a temporary notifier using the above configuration and report the crash
-            RollbarNotifier *tempNotifier = [[RollbarNotifier alloc] initWithAccessToken:config.accessToken configuration:config isRoot:NO];
-            
-            [tempNotifier logCrashReport:crashReportText];
+            RollbarLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
+        } else if (completed) {
+            [notifier processSavedItems];
         }
-        
-        [crashReporter purgePendingCrashReport];
-    }
-    
-    [crashReporter enableCrashReporterAndReturnError:&error];
-    if (error) {
-        RollbarLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
-    }
+    }];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken {
-    [self initWithAccessToken:accessToken configuration:nil];
+    [Rollbar initWithAccessToken:accessToken configuration:nil];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration {
-    [self initWithAccessToken:accessToken configuration:configuration enableCrashReporter:YES];
+    [Rollbar initWithAccessToken:accessToken configuration:configuration enableCrashReporter:YES];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration
@@ -66,7 +42,7 @@ static RollbarNotifier *notifier = nil;
         notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken configuration:configuration isRoot:YES];
 
         if (enable) {
-            [self enableCrashReporter];
+            [Rollbar enableCrashReporter];
         }
         
         [notifier.configuration save];
@@ -76,6 +52,154 @@ static RollbarNotifier *notifier = nil;
 + (RollbarConfiguration*)currentConfiguration {
     return notifier.configuration;
 }
+
++ (RollbarNotifier*)currentNotifier {
+    return notifier;
+}
+
++ (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
+    [notifier updateConfiguration:configuration isRoot:isRoot];
+}
+
+/**
+ * Translates RollbarLevel to string. Default is "info".
+ */
++ (NSString*)stringFromLevel:(RollbarLevel)level {
+    switch (level) {
+        case RollbarDebug:
+            return @"debug";
+        case RollbarWarning:
+            return @"warning";
+        case RollbarCritical:
+            return @"critical";
+        case RollbarError:
+            return @"error";
+        default:
+            return @"info";
+    }
+}
+
+/*******************************************************
+ * New logging methods
+ *******************************************************/
+
+// Log
+
++ (void)log:(RollbarLevel)level message:(NSString*)message {
+    [Rollbar log:level message:message exception:nil];
+}
+
++ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception {
+    [Rollbar log:level message:message exception:exception data:nil];
+}
+
++ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar log:level message:message exception:exception data:data context:nil];
+}
+
++ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [notifier log:[Rollbar stringFromLevel:level] message:message exception:exception data:data context:context];
+}
+
+// Debug
+
++ (void)debug:(NSString*)message {
+    [Rollbar debug:message exception:nil];
+}
+
++ (void)debug:(NSString*)message exception:(NSException*)exception {
+    [Rollbar debug:message exception:exception data:nil];
+}
+
++ (void)debug:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar debug:message exception:exception data:data context:nil];
+}
+
++ (void)debug:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarDebug message:message exception:exception data:data context:context];
+}
+
+
+// Info
+
++ (void)info:(NSString*)message {
+    [Rollbar info:message exception:nil];
+}
+
++ (void)info:(NSString*)message exception:(NSException*)exception {
+    [Rollbar info:message exception:exception data:nil];
+}
+
++ (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar info:message exception:exception data:data context:nil];
+}
+
++ (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarDebug message:message exception:exception data:data context:context];
+}
+
+
+// Warning
+
++ (void)warning:(NSString*)message {
+    [Rollbar info:message exception:nil];
+}
+
++ (void)warning:(NSString*)message exception:(NSException*)exception {
+    [Rollbar info:message exception:exception data:nil];
+}
+
++ (void)warning:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar info:message exception:exception data:data context:nil];
+}
+
++ (void)warning:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarWarning message:message exception:exception data:data context:context];
+}
+
+
+// Error
+
++ (void)error:(NSString*)message {
+    [Rollbar error:message exception:nil];
+}
+
++ (void)error:(NSString*)message exception:(NSException*)exception {
+    [Rollbar error:message exception:exception data:nil];
+}
+
++ (void)error:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar error:message exception:exception data:data context:nil];
+}
+
++ (void)error:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarError message:message exception:exception data:data context:context];
+}
+
+
+// Critical
+
++ (void)critical:(NSString*)message {
+    [Rollbar critical:message exception:nil];
+}
+
++ (void)critical:(NSString*)message exception:(NSException*)exception {
+    [Rollbar critical:message exception:exception data:nil];
+}
+
++ (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data {
+    [Rollbar critical:message exception:exception data:data context:nil];
+}
+
++ (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
+    [Rollbar log:RollbarCritical message:message exception:exception data:data context:context];
+}
+
+
+/******************************************************
+ * Old logging methods
+ ******************************************************/
+
 
 // Log
 
