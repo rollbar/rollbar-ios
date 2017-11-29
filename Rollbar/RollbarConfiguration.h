@@ -21,6 +21,7 @@
 - (void)_setRoot;
 - (void)save;
 
+- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData;
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
 - (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
@@ -28,9 +29,12 @@
 - (void)addScrubField:(NSString *)field;
 - (void)removeScrubField:(NSString *)field;
 - (void)setRequestId:(NSString*)requestId;
+- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
+- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
 
 - (NSDictionary *)customData;
 
+@property (readonly, atomic) BOOL shouldCaptureConnectivity;
 @property (atomic, copy) NSString *accessToken;
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;

@@ -7,6 +7,12 @@
 //
 
 #import "RollbarTelemetry.h"
+#import "NSJSONSerialization+Rollbar.h"
+
+#define DEFAULT_DATA_LIMIT 10
+#define TELEMETRY_FILE_NAME @"rollbar.telemetry"
+
+static BOOL captureLog = false;
 
 @implementation RollbarTelemetry
 
@@ -23,8 +29,10 @@
 + (void)NSLogReplacement:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
-    NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
-    [[RollbarTelemetry sharedInstance] recordLogEventForLevel:RollbarDebug message:message];
+    if (captureLog) {
+        NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        [[RollbarTelemetry sharedInstance] recordLogEventForLevel:RollbarDebug message:message extraData:nil];
+    }
     NSLogv(format, args);
     va_end(args);
 }
@@ -32,28 +40,57 @@
 #pragma mark -
 
 - (id)init {
-    id obj = [super init];
-    if (obj) {
-        telemetryData = [NSMutableArray array];
+    self = [super init];
+    if (self) {
+        dataArray = [NSMutableArray array];
+        limit = DEFAULT_DATA_LIMIT;
+        
+        // Create cache file
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *cachesDirectory = [paths objectAtIndex:0];
+        dataFilePath = [cachesDirectory stringByAppendingPathComponent:TELEMETRY_FILE_NAME];
+        
+        [self loadTelemetryData];
     }
-    return obj;
+    return self;
+}
+
+#pragma mark -
+
+/**
+ * Sets whether or not to use replacement log.
+ */
+- (void)setCaptureLog:(BOOL)shouldCapture {
+    captureLog = shouldCapture;
+}
+
+/**
+ * Sets max number of telemetry events to capture.
+ */
+- (void)setDataLimit:(NSInteger)dataLimit {
+    limit = dataLimit;
+    [self truncateDataArray];
+}
+
+- (void)truncateDataArray {
+    if (limit > 0 && dataArray.count > limit) {
+        [dataArray removeObjectsInRange:NSMakeRange(0, dataArray.count - limit)];
+    }
 }
 
 #pragma mark -
 
 - (void)recordEventForLevel:(RollbarLevel)level type:(RollbarTelemetryType)type data:(NSDictionary *)data {
-    NSTimeInterval timestamp = NSDate.date.timeIntervalSince1970 * 1000;
-    NSString *telemetryLvl = [Rollbar stringFromLevel:level];
-    NSString *telemetryType = [Rollbar stringFromTelemetryType:type];
-    NSDictionary *info = @{@"level": telemetryLvl, @"type": telemetryType, @"source": @"client", @"timestamp_ms": [NSNumber numberWithDouble:timestamp], @"body": data };
-    [telemetryData addObject:info];
+    NSTimeInterval timestamp = NSDate.date.timeIntervalSince1970 * 1000.0;
+    NSString *telemetryLvl = RollbarStringFromLevel(level);
+    NSString *telemetryType = RollbarStringFromTelemetryType(type);
+    NSDictionary *info = @{@"level": telemetryLvl, @"type": telemetryType, @"source": @"client", @"timestamp_ms": [NSString stringWithFormat:@"%.0f", round(timestamp)], @"body": data };
+    [dataArray addObject:info];
+    [self truncateDataArray];
+    [self saveTelemetryData];
 }
 
 #pragma mark -
-
-- (void)recordDomEventForLevel:(RollbarLevel)level element:(NSString *)element {
-    [self recordDomEventForLevel:level element:element extraData:nil];
-}
 
 - (void)recordDomEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
@@ -67,10 +104,6 @@
 }
 
 #pragma mark -
-
-- (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode {
-    [self recordNetworkEventForLevel:level method:method url:url statusCode:statusCode extraData:nil];
-}
 
 - (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode extraData:(NSDictionary *)extraData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
@@ -87,10 +120,6 @@
 
 #pragma mark -
 
-- (void)recordConnectivityEventForLevel:(RollbarLevel)level status:(NSString *)status {
-    [self recordConnectivityEventForLevel:level status:status extraData:nil];
-}
-
 - (void)recordConnectivityEventForLevel:(RollbarLevel)level status:(NSString *)status extraData:(NSDictionary *)extraData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
@@ -104,14 +133,6 @@
 
 #pragma mark -
 
-- (void)recordErrorEventForLevel:(RollbarLevel)level message:(NSString *)message {
-    [self recordErrorEventForLevel:level message:message extraData:nil];
-}
-
-- (void)recordErrorEventForLevel:(RollbarLevel)level exception:(NSException *)exception {
-    [self recordErrorEventForLevel:level message:exception.reason extraData:@{@"description": exception.description, @"class": NSStringFromClass(exception.class)}];
-}
-
 - (void)recordErrorEventForLevel:(RollbarLevel)level message:(NSString *)message extraData:(NSDictionary *)extraData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
@@ -124,10 +145,6 @@
 }
 
 #pragma mark -
-
-- (void)recordNavigationEventForLevel:(RollbarLevel)level from:(NSString *)from to:(NSString *)to {
-    [self recordNavigationEventForLevel:level from:from to:to extraData:nil];
-}
 
 - (void)recordNavigationEventForLevel:(RollbarLevel)level from:(NSString *)from to:(NSString *)to extraData:(NSDictionary *)extraData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
@@ -154,10 +171,6 @@
 
 #pragma mark -
 
-- (void)recordLogEventForLevel:(RollbarLevel)level message:(NSString *)message {
-    [self recordLogEventForLevel:level message:message extraData:nil];
-}
-
 - (void)recordLogEventForLevel:(RollbarLevel)level message:(NSString *)message extraData:(NSDictionary *)extraData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
@@ -167,6 +180,34 @@
     [data setObject:message forKey:@"message"];
 
     [self recordEventForLevel:level type:RollbarTelemetryLog data:data];
+}
+
+#pragma mark -
+
+- (NSArray *)getAllData {
+    return [NSArray arrayWithArray:dataArray];
+}
+
+- (void)clearAllData {
+    [dataArray removeAllObjects];
+    [self saveTelemetryData];
+}
+
+#pragma mark - Data storage
+
+- (void)saveTelemetryData {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil safe:true];
+    [data writeToFile:dataFilePath atomically:true];
+}
+
+- (void)loadTelemetryData {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:dataFilePath]) {
+        NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
+        if (data) {
+            NSArray *telemetryDataList = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            dataArray = [telemetryDataList mutableCopy];
+        }
+    }
 }
 
 @end
