@@ -568,7 +568,7 @@ static BOOL isNetworkReachable = YES;
         return;
     }
 
-    for (NSString *key in self.configuration.scrubFields.allKeys) {
+    for (NSString *key in self.configuration.scrubFields) {
         if ([data valueForKeyPath:key]) {
             [data setValue:@"*****" forKeyPath:key];
         }
