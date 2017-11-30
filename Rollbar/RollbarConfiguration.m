@@ -9,6 +9,7 @@
 #import "RollbarConfiguration.h"
 #import "objc/runtime.h"
 #import "NSJSONSerialization+Rollbar.h"
+#import "RollbarTelemetry.h"
 
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
@@ -27,6 +28,7 @@ static NSString *configurationFilePath = nil;
 @property (atomic, copy) NSString *serverBranch;
 @property (atomic, copy) NSString *serverCodeVersion;
 @property (atomic, copy) NSMutableSet *scrubFields;
+@property (atomic) BOOL shouldCaptureConnectivity;
 
 @end
 
@@ -56,6 +58,7 @@ static NSString *configurationFilePath = nil;
         self.crashLevel = @"error";
 
         self.scrubFields = [NSMutableSet new];
+        [self setCaptureLogAsTelemetryData:false];
     }
 
     return self;
@@ -75,6 +78,10 @@ static NSString *configurationFilePath = nil;
     }
     
     return self;
+}
+
+- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData {
+    [[RollbarTelemetry sharedInstance] setDataLimit:maximumTelemetryData];
 }
 
 - (void)setPersonId:(NSString *)personId username:(NSString *)username email:(NSString *)email {
@@ -108,6 +115,14 @@ static NSString *configurationFilePath = nil;
 
 - (void)removeScrubField:(NSString *)field {
     [self.scrubFields removeObject:field];
+}
+
+- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog {
+    [[RollbarTelemetry sharedInstance] setCaptureLog:captureLog];
+}
+
+- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity {
+    self.shouldCaptureConnectivity = captureConnectivity;
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {

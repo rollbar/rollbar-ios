@@ -36,6 +36,7 @@ static RollbarNotifier *notifier = nil;
 
 + (void)initWithAccessToken:(NSString *)accessToken configuration:(RollbarConfiguration*)configuration
         enableCrashReporter:(BOOL)enable {
+    [RollbarTelemetry sharedInstance]; // Load saved data, if any
     if (notifier) {
         RollbarLog(@"Rollbar has already been initialized.");
     } else {
@@ -61,27 +62,7 @@ static RollbarNotifier *notifier = nil;
     [notifier updateConfiguration:configuration isRoot:isRoot];
 }
 
-/**
- * Translates RollbarLevel to string. Default is "info".
- */
-+ (NSString*)stringFromLevel:(RollbarLevel)level {
-    switch (level) {
-        case RollbarDebug:
-            return @"debug";
-        case RollbarWarning:
-            return @"warning";
-        case RollbarCritical:
-            return @"critical";
-        case RollbarError:
-            return @"error";
-        default:
-            return @"info";
-    }
-}
-
-/*******************************************************
- * New logging methods
- *******************************************************/
+#pragma mark - New logging methods
 
 // Log
 
@@ -98,7 +79,7 @@ static RollbarNotifier *notifier = nil;
 }
 
 + (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
-    [notifier log:[Rollbar stringFromLevel:level] message:message exception:exception data:data context:context];
+    [notifier log:RollbarStringFromLevel(level) message:message exception:exception data:data context:context];
 }
 
 // Debug
@@ -195,11 +176,7 @@ static RollbarNotifier *notifier = nil;
     [Rollbar log:RollbarCritical message:message exception:exception data:data context:context];
 }
 
-
-/******************************************************
- * Old logging methods
- ******************************************************/
-
+#pragma mark - Deprecated logging methods
 
 // Log
 
@@ -287,6 +264,78 @@ static RollbarNotifier *notifier = nil;
 
 + (void)criticalWithData:(NSDictionary*)data {
     [notifier log:@"critical" message:nil exception:nil data:data context:nil];
+}
+
+#pragma mark - Telemetry logging methods
+
+#pragma mark - Dom
+
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element {
+    [self recordViewEventForLevel:level element:element extraData:nil];
+}
+
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordViewEventForLevel:level element:element extraData:extraData];
+}
+
+#pragma mark - Network
+
++ (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode {
+    [self recordNetworkEventForLevel:level method:method url:url statusCode:statusCode extraData:nil];
+}
+
++ (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode extraData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordNetworkEventForLevel:level method:method url:url statusCode:statusCode extraData:extraData];
+}
+
+#pragma mark - Connectivity
+
++ (void)recordConnectivityEventForLevel:(RollbarLevel)level status:(NSString *)status {
+    [self recordConnectivityEventForLevel:level status:status extraData:nil];
+}
+
++ (void)recordConnectivityEventForLevel:(RollbarLevel)level status:(NSString *)status extraData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:level status:status extraData:extraData];
+}
+
+#pragma mark - Error
+
++ (void)recordErrorEventForLevel:(RollbarLevel)level message:(NSString *)message {
+    [self recordErrorEventForLevel:level message:message extraData:nil];
+}
+
++ (void)recordErrorEventForLevel:(RollbarLevel)level exception:(NSException *)exception {
+    [self recordErrorEventForLevel:level message:exception.reason extraData:@{@"description": exception.description, @"class": NSStringFromClass(exception.class)}];
+}
+
++ (void)recordErrorEventForLevel:(RollbarLevel)level message:(NSString *)message extraData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordErrorEventForLevel:level message:message extraData:extraData];
+}
+
+#pragma mark - Navigation
+
++ (void)recordNavigationEventForLevel:(RollbarLevel)level from:(NSString *)from to:(NSString *)to {
+    [self recordNavigationEventForLevel:level from:from to:to extraData:nil];
+}
+
++ (void)recordNavigationEventForLevel:(RollbarLevel)level from:(NSString *)from to:(NSString *)to extraData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordNavigationEventForLevel:level from:from to:to extraData:extraData];
+}
+
+#pragma mark - Manual
+
++ (void)recordManualEventForLevel:(RollbarLevel)level withData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordManualEventForLevel:level withData:extraData];
+}
+
+#pragma mark - Log
+
++ (void)recordLogEventForLevel:(RollbarLevel)level message:(NSString *)message {
+    [self recordLogEventForLevel:level message:message extraData:nil];
+}
+
++ (void)recordLogEventForLevel:(RollbarLevel)level message:(NSString *)message extraData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordLogEventForLevel:level message:message extraData:extraData];
 }
 
 @end

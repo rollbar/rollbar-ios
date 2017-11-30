@@ -15,6 +15,7 @@
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
 #import <KSCrash/KSCrash.h>
+#import "RollbarTelemetry.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
@@ -72,10 +73,12 @@ static BOOL isNetworkReachable = YES;
             isNetworkReachable = [reachability isReachable];
             
             reachability.reachableBlock = ^(RollbarReachability*reach) {
+                [self captureTelemetryDataForNetwork:true];
                 isNetworkReachable = YES;
             };
             
             reachability.unreachableBlock = ^(RollbarReachability*reach) {
+                [self captureTelemetryDataForNetwork:false];
                 isNetworkReachable = NO;
             };
             
@@ -370,13 +373,24 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport {
+    NSDictionary *payloadBody;
     if (crashReport) {
-        return [self buildPayloadBodyWithCrashReport:crashReport];
+        payloadBody = [self buildPayloadBodyWithCrashReport:crashReport];
     } else if (exception) {
-        return [self buildPayloadBodyWithException:exception];
+        payloadBody = [self buildPayloadBodyWithException:exception];
     } else {
-        return [self buildPayloadBodyWithMessage:message extra:extra];
+        payloadBody = [self buildPayloadBodyWithMessage:message extra:extra];
     }
+    
+    NSArray *telemetryData = [[RollbarTelemetry sharedInstance] getAllData];
+    if (payloadBody && telemetryData.count > 0) {
+        NSMutableDictionary *newPayloadBody = nil;
+        newPayloadBody = [NSMutableDictionary dictionaryWithDictionary:payloadBody];
+        [newPayloadBody setObject:telemetryData forKey:@"telemetry"];
+        return newPayloadBody;
+    }
+    
+    return payloadBody;
 }
 
 - (void)queuePayload:(NSDictionary*)payload {
@@ -385,6 +399,7 @@ static BOOL isNetworkReachable = YES;
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil safe:true]];
     [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandle closeFile];
+    [[RollbarTelemetry sharedInstance] clearAllData];
 }
 
 - (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken nextOffset:(NSUInteger)nextOffset {
@@ -596,6 +611,23 @@ static BOOL isNetworkReachable = YES;
 
 - (void)updateAccessToken:(NSString*)accessToken {
     self.configuration.accessToken = accessToken;
+}
+
+#pragma mark - Network telemetry data
+
+- (void)captureTelemetryDataForNetwork:(BOOL)reachable {
+    if (self.configuration.shouldCaptureConnectivity && isNetworkReachable != reachable) {
+        NSString *status = reachable ? @"Connected" : @"Disconnected";
+        NSString *networkType = @"Unknown";
+        NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+        if (networkStatus == ReachableViaWiFi) {
+            networkType = @"WiFi";
+        }
+        else if (networkStatus == ReachableViaWWAN) {
+            networkType = @"Cellular";
+        }
+        [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:RollbarWarning status:status extraData:@{@"network": networkType}];
+    }
 }
 
 @end

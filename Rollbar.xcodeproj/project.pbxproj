@@ -69,6 +69,11 @@
 		B547368A1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; };
 		B547368B1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
 		B547368C1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
+		B57C558C1FC4F06C00103A8B /* RollbarTelemetry.h in Headers */ = {isa = PBXBuildFile; fileRef = B57C558A1FC4F06C00103A8B /* RollbarTelemetry.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B57C558D1FC4F06C00103A8B /* RollbarTelemetry.h in Headers */ = {isa = PBXBuildFile; fileRef = B57C558A1FC4F06C00103A8B /* RollbarTelemetry.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B57C558E1FC4F06C00103A8B /* RollbarTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C558B1FC4F06C00103A8B /* RollbarTelemetry.m */; };
+		B57C558F1FC4F06C00103A8B /* RollbarTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C558B1FC4F06C00103A8B /* RollbarTelemetry.m */; };
+		B57C55901FC4F06C00103A8B /* RollbarTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C558B1FC4F06C00103A8B /* RollbarTelemetry.m */; };
 		B591857F1FB7AB460072324B /* RollbarKSCrashInstallation.h in Headers */ = {isa = PBXBuildFile; fileRef = B5D397161FB5492F000544DC /* RollbarKSCrashInstallation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B59185801FB7AB460072324B /* RollbarKSCrashReportSink.h in Headers */ = {isa = PBXBuildFile; fileRef = B5D3971B1FB549D7000544DC /* RollbarKSCrashReportSink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B59185811FB7AB5C0072324B /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -82,6 +87,16 @@
 		B5D3971D1FB549D7000544DC /* RollbarKSCrashReportSink.h in Headers */ = {isa = PBXBuildFile; fileRef = B5D3971B1FB549D7000544DC /* RollbarKSCrashReportSink.h */; };
 		B5D3971E1FB549D7000544DC /* RollbarKSCrashReportSink.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D3971C1FB549D7000544DC /* RollbarKSCrashReportSink.m */; };
 		B5D3971F1FB549D7000544DC /* RollbarKSCrashReportSink.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D3971C1FB549D7000544DC /* RollbarKSCrashReportSink.m */; };
+		B5EDEA791FCA66DD00830C78 /* RollbarTelemetryType.h in Headers */ = {isa = PBXBuildFile; fileRef = B5EDEA771FCA66DD00830C78 /* RollbarTelemetryType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B5EDEA7A1FCA66DD00830C78 /* RollbarTelemetryType.h in Headers */ = {isa = PBXBuildFile; fileRef = B5EDEA771FCA66DD00830C78 /* RollbarTelemetryType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B5EDEA7B1FCA66DD00830C78 /* RollbarTelemetryType.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EDEA781FCA66DD00830C78 /* RollbarTelemetryType.m */; };
+		B5EDEA7C1FCA66DD00830C78 /* RollbarTelemetryType.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EDEA781FCA66DD00830C78 /* RollbarTelemetryType.m */; };
+		B5EDEA7D1FCA66DD00830C78 /* RollbarTelemetryType.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EDEA781FCA66DD00830C78 /* RollbarTelemetryType.m */; };
+		B5EDEA801FCA679900830C78 /* RollbarLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = B5EDEA7E1FCA679900830C78 /* RollbarLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B5EDEA811FCA679900830C78 /* RollbarLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = B5EDEA7E1FCA679900830C78 /* RollbarLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B5EDEA821FCA679900830C78 /* RollbarLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EDEA7F1FCA679900830C78 /* RollbarLevel.m */; };
+		B5EDEA831FCA679900830C78 /* RollbarLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EDEA7F1FCA679900830C78 /* RollbarLevel.m */; };
+		B5EDEA841FCA679900830C78 /* RollbarLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EDEA7F1FCA679900830C78 /* RollbarLevel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +160,8 @@
 		96DBB59018FDFED8007CFE13 /* RollbarFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarFileReader.m; sourceTree = "<group>"; };
 		B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+Rollbar.h"; sourceTree = "<group>"; };
 		B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+Rollbar.m"; sourceTree = "<group>"; };
+		B57C558A1FC4F06C00103A8B /* RollbarTelemetry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarTelemetry.h; sourceTree = "<group>"; };
+		B57C558B1FC4F06C00103A8B /* RollbarTelemetry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarTelemetry.m; sourceTree = "<group>"; };
 		B59185821FB7AB9A0072324B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		B59185841FB7ABA50072324B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		B59185861FB7ABAD0072324B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -153,6 +170,10 @@
 		B5D397171FB5492F000544DC /* RollbarKSCrashInstallation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarKSCrashInstallation.m; sourceTree = "<group>"; };
 		B5D3971B1FB549D7000544DC /* RollbarKSCrashReportSink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarKSCrashReportSink.h; sourceTree = "<group>"; };
 		B5D3971C1FB549D7000544DC /* RollbarKSCrashReportSink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarKSCrashReportSink.m; sourceTree = "<group>"; };
+		B5EDEA771FCA66DD00830C78 /* RollbarTelemetryType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarTelemetryType.h; sourceTree = "<group>"; };
+		B5EDEA781FCA66DD00830C78 /* RollbarTelemetryType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarTelemetryType.m; sourceTree = "<group>"; };
+		B5EDEA7E1FCA679900830C78 /* RollbarLevel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLevel.h; sourceTree = "<group>"; };
+		B5EDEA7F1FCA679900830C78 /* RollbarLevel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLevel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +284,12 @@
 				B5D397171FB5492F000544DC /* RollbarKSCrashInstallation.m */,
 				B5D3971B1FB549D7000544DC /* RollbarKSCrashReportSink.h */,
 				B5D3971C1FB549D7000544DC /* RollbarKSCrashReportSink.m */,
+				B57C558A1FC4F06C00103A8B /* RollbarTelemetry.h */,
+				B57C558B1FC4F06C00103A8B /* RollbarTelemetry.m */,
+				B5EDEA771FCA66DD00830C78 /* RollbarTelemetryType.h */,
+				B5EDEA781FCA66DD00830C78 /* RollbarTelemetryType.m */,
+				B5EDEA7E1FCA679900830C78 /* RollbarLevel.h */,
+				B5EDEA7F1FCA679900830C78 /* RollbarLevel.m */,
 			);
 			path = Rollbar;
 			sourceTree = "<group>";
@@ -300,12 +327,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5EDEA7A1FCA66DD00830C78 /* RollbarTelemetryType.h in Headers */,
 				B59185811FB7AB5C0072324B /* NSJSONSerialization+Rollbar.h in Headers */,
+				B57C558D1FC4F06C00103A8B /* RollbarTelemetry.h in Headers */,
 				B59185801FB7AB460072324B /* RollbarKSCrashReportSink.h in Headers */,
 				343AB4551CC9AAE600962943 /* RollbarFramework.h in Headers */,
 				343AB4641CC9AAF400962943 /* RollbarReachability.h in Headers */,
 				343AB45A1CC9AAF400962943 /* Rollbar.h in Headers */,
 				343AB4661CC9AAF400962943 /* RollbarLogger.h in Headers */,
+				B5EDEA811FCA679900830C78 /* RollbarLevel.h in Headers */,
 				343AB45E1CC9AAF400962943 /* RollbarConfiguration.h in Headers */,
 				B591857F1FB7AB460072324B /* RollbarKSCrashInstallation.h in Headers */,
 				343AB4601CC9AAF400962943 /* RollbarThread.h in Headers */,
@@ -321,9 +351,12 @@
 				96AB9E08191B10AE00F0168A /* RollbarReachability.h in Headers */,
 				96AB9E16191C0B4000F0168A /* RollbarLogger.h in Headers */,
 				966CD46E18F4E4C3005A8F2D /* RollbarThread.h in Headers */,
+				B57C558C1FC4F06C00103A8B /* RollbarTelemetry.h in Headers */,
 				96D75C2A18EA04C6002AA729 /* RollbarConfiguration.h in Headers */,
+				B5EDEA801FCA679900830C78 /* RollbarLevel.h in Headers */,
 				96DBB59118FDFED8007CFE13 /* RollbarFileReader.h in Headers */,
 				B5D397181FB5492F000544DC /* RollbarKSCrashInstallation.h in Headers */,
+				B5EDEA791FCA66DD00830C78 /* RollbarTelemetryType.h in Headers */,
 				B5D3971D1FB549D7000544DC /* RollbarKSCrashReportSink.h in Headers */,
 				B547368A1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h in Headers */,
 				9691838318E4EB0400DE3699 /* Rollbar.h in Headers */,
@@ -499,11 +532,14 @@
 				343AB4671CC9AAF400962943 /* RollbarLogger.m in Sources */,
 				343AB4611CC9AAF400962943 /* RollbarThread.m in Sources */,
 				B591859E1FB906E70072324B /* NSJSONSerialization+Rollbar.m in Sources */,
+				B5EDEA841FCA679900830C78 /* RollbarLevel.m in Sources */,
 				343AB4631CC9AAF400962943 /* RollbarFileReader.m in Sources */,
 				B59185A01FB906E80072324B /* RollbarKSCrashReportSink.m in Sources */,
 				343AB45D1CC9AAF400962943 /* RollbarNotifier.m in Sources */,
 				343AB45F1CC9AAF400962943 /* RollbarConfiguration.m in Sources */,
 				343AB45B1CC9AAF400962943 /* Rollbar.m in Sources */,
+				B57C55901FC4F06C00103A8B /* RollbarTelemetry.m in Sources */,
+				B5EDEA7D1FCA66DD00830C78 /* RollbarTelemetryType.m in Sources */,
 				343AB4651CC9AAF400962943 /* RollbarReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,11 +552,14 @@
 				966CD46F18F4E4C3005A8F2D /* RollbarThread.m in Sources */,
 				B547368B1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */,
 				96DBB59218FDFED8007CFE13 /* RollbarFileReader.m in Sources */,
+				B5EDEA821FCA679900830C78 /* RollbarLevel.m in Sources */,
 				96D2223518D8E51600933444 /* RollbarNotifier.m in Sources */,
 				B5D3971E1FB549D7000544DC /* RollbarKSCrashReportSink.m in Sources */,
 				9630826518DCDDC000256154 /* RollbarConfiguration.m in Sources */,
 				B5D397191FB5492F000544DC /* RollbarKSCrashInstallation.m in Sources */,
 				96D2221518D8E40600933444 /* Rollbar.m in Sources */,
+				B57C558E1FC4F06C00103A8B /* RollbarTelemetry.m in Sources */,
+				B5EDEA7B1FCA66DD00830C78 /* RollbarTelemetryType.m in Sources */,
 				96AB9E09191B10AE00F0168A /* RollbarReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,12 +570,15 @@
 			files = (
 				B547367B1FB3C8E6007F99D7 /* RollbarLogger.m in Sources */,
 				B5D3971F1FB549D7000544DC /* RollbarKSCrashReportSink.m in Sources */,
+				B57C558F1FC4F06C00103A8B /* RollbarTelemetry.m in Sources */,
+				B5EDEA831FCA679900830C78 /* RollbarLevel.m in Sources */,
 				B54736751FB3C8E6007F99D7 /* Rollbar.m in Sources */,
 				B54736791FB3C8E6007F99D7 /* RollbarFileReader.m in Sources */,
 				96D2222A18D8E40600933444 /* RollbarTests.m in Sources */,
 				B54736761FB3C8E6007F99D7 /* RollbarNotifier.m in Sources */,
 				B547367A1FB3C8E6007F99D7 /* RollbarReachability.m in Sources */,
 				B5D3971A1FB5492F000544DC /* RollbarKSCrashInstallation.m in Sources */,
+				B5EDEA7C1FCA66DD00830C78 /* RollbarTelemetryType.m in Sources */,
 				B54736781FB3C8E6007F99D7 /* RollbarThread.m in Sources */,
 				B547368C1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */,
 				B54736771FB3C8E6007F99D7 /* RollbarConfiguration.m in Sources */,
