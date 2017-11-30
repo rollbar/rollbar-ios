@@ -270,12 +270,12 @@ static RollbarNotifier *notifier = nil;
 
 #pragma mark - Dom
 
-+ (void)recordDomEventForLevel:(RollbarLevel)level element:(NSString *)element {
-    [self recordDomEventForLevel:level element:element extraData:nil];
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element {
+    [self recordViewEventForLevel:level element:element extraData:nil];
 }
 
-+ (void)recordDomEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData {
-    [[RollbarTelemetry sharedInstance] recordDomEventForLevel:level element:element extraData:extraData];
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData {
+    [[RollbarTelemetry sharedInstance] recordViewEventForLevel:level element:element extraData:extraData];
 }
 
 #pragma mark - Network

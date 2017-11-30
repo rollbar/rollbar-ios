@@ -92,7 +92,7 @@ static BOOL captureLog = false;
 
 #pragma mark -
 
-- (void)recordDomEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData {
+- (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
         [data addEntriesFromDictionary:extraData];

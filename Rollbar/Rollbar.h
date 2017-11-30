@@ -86,8 +86,8 @@
 
 // Telemetry logging
 
-+ (void)recordDomEventForLevel:(RollbarLevel)level element:(NSString *)element;
-+ (void)recordDomEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData;
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element;
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData;
 + (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode;
 + (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode extraData:(NSDictionary *)extraData;
 + (void)recordConnectivityEventForLevel:(RollbarLevel)level status:(NSString *)status;
