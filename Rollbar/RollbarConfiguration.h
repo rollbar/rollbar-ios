@@ -46,11 +46,11 @@
 // Modify payload
 @property (atomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
 
-// Decides whether or not to send payload. Returns true to send, false
+// Decides whether or not to send payload. Returns true to ignore, false to send
 @property (atomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
 
 // Fields to scrub from the payload
-@property (readonly, atomic, copy) NSMutableDictionary *scrubFields;
+@property (readonly, atomic, copy) NSMutableSet *scrubFields;
 
 /*** Optional ***/
 

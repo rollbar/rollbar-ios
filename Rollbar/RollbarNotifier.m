@@ -524,15 +524,13 @@ static BOOL isNetworkReachable = YES;
     NSInteger sizeDiff = dataSize - jsonPayload.length * 0.001;
 
     double sizePerItem = sizeDiff / (double)array.count;
-    if (dataSize > MAX_PAYLOAD_SIZE) {
-        if (dataSize - sizeDiff + (sizePerItem * 2) >= MAX_PAYLOAD_SIZE) {
-            // Not enough to truncate, will do the best we can
-        } else {
-            // Cut the number of items necessary from the middle
-            NSInteger truncateCnt = (dataSize - MAX_PAYLOAD_SIZE) / sizePerItem;
-            NSInteger start = array.count / 2 - truncateCnt / 2;
-            [array removeObjectsInRange:NSMakeRange(start, truncateCnt)];
-        }
+    if (dataSize - sizeDiff + (sizePerItem * 2) >= MAX_PAYLOAD_SIZE) {
+        // Not enough to truncate, will do the best we can
+    } else {
+        // Cut the number of items necessary from the middle
+        NSInteger truncateCnt = (dataSize - MAX_PAYLOAD_SIZE) / sizePerItem;
+        NSInteger start = array.count / 2 - truncateCnt / 2;
+        [array removeObjectsInRange:NSMakeRange(start, truncateCnt)];
     }
 
     [data setValue:array forKeyPath:keypath];
@@ -583,7 +581,7 @@ static BOOL isNetworkReachable = YES;
         return;
     }
 
-    for (NSString *key in self.configuration.scrubFields.allKeys) {
+    for (NSString *key in self.configuration.scrubFields) {
         if ([data valueForKeyPath:key]) {
             [data setValue:@"*****" forKeyPath:key];
         }
