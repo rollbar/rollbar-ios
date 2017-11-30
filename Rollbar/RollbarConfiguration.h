@@ -23,7 +23,10 @@
 
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
 - (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
-- (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock;
+- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
+- (void)addScrubField:(NSString *)field;
+- (void)removeScrubField:(NSString *)field;
 - (void)setRequestId:(NSString*)requestId;
 
 - (NSDictionary *)customData;
@@ -35,7 +38,15 @@
 @property (readonly, atomic, copy) NSString *personId;
 @property (readonly, atomic, copy) NSString *personUsername;
 @property (readonly, atomic, copy) NSString *personEmail;
-@property (atomic, copy) void (^payloadModification)(NSDictionary *payload);
+
+// Modify payload
+@property (atomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
+
+// Decides whether or not to send payload. Returns true to ignore, false to send
+@property (atomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
+
+// Fields to scrub from the payload
+@property (readonly, atomic, copy) NSMutableSet *scrubFields;
 
 /*** Optional ***/
 

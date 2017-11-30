@@ -26,6 +26,7 @@ static NSString *configurationFilePath = nil;
 @property (atomic, copy) NSString *serverRoot;
 @property (atomic, copy) NSString *serverBranch;
 @property (atomic, copy) NSString *serverCodeVersion;
+@property (atomic, copy) NSMutableSet *scrubFields;
 
 @end
 
@@ -53,6 +54,8 @@ static NSString *configurationFilePath = nil;
         #endif
         
         self.crashLevel = @"error";
+
+        self.scrubFields = [NSMutableSet new];
     }
 
     return self;
@@ -91,8 +94,20 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
-- (void)setPayloadModificationBlock:(void (^)(NSDictionary*))payloadModificationBlock {
+- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock {
     self.payloadModification = payloadModificationBlock;
+}
+
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary *))checkIgnoreBlock {
+    self.checkIgnore = checkIgnoreBlock;
+}
+
+- (void)addScrubField:(NSString *)field {
+    [self.scrubFields addObject:field];
+}
+
+- (void)removeScrubField:(NSString *)field {
+    [self.scrubFields removeObject:field];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
