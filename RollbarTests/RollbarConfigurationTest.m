@@ -7,6 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "Rollbar.h"
+#import "RollbarTestUtil.h"
 
 @interface RollbarConfigurationTest : XCTestCase
 
@@ -16,24 +18,57 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    RollbarClearLogFile();
+    [Rollbar initWithAccessToken:@""];
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testCheckIgnore {
+    [Rollbar debug:@"Don't ignore this"];
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
+
+    Rollbar.currentConfiguration.checkIgnore = ^BOOL(NSDictionary *payload) {
+        return true;
+    };
+    [Rollbar debug:@"Ignore this"];
+    logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testMaximumTelemetryData {
+    int testCount = 10;
+    int max = 5;
+    for (int i=0; i<testCount; i++) {
+        [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
+    }
+    [Rollbar.currentConfiguration setMaximumTelemetryData:max];
+    [Rollbar debug:@"Test"];
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    NSDictionary *item = logItems[0];
+    NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
+    XCTAssertTrue(telemetryData.count == max, @"Telemetry item count is %lu, should be %lu", telemetryData.count, (long)max);
+}
+
+- (void)testServerData {
+    NSString *host = @"testHost";
+    NSString *root = @"testRoot";
+    NSString *branch = @"testBranch";
+    NSString *codeVersion = @"testCodeVersion";
+    [Rollbar.currentConfiguration setServerHost:host root:root branch:branch codeVersion:codeVersion];
+    [Rollbar debug:@"test"];
+
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    NSDictionary *item = logItems[0];
+    NSDictionary *server = item[@"server"];
+
+    XCTAssertTrue([host isEqualToString:server[@"host"]], @"host is %@, should be %@", server[@"host"], host);
+    XCTAssertTrue([root isEqualToString:server[@"root"]], @"root is %@, should be %@", server[@"root"], root);
+    XCTAssertTrue([branch isEqualToString:server[@"branch"]], @"branch is %@, should be %@", server[@"branch"], branch);
+    XCTAssertTrue([codeVersion isEqualToString:server[@"code_version"]], @"code_version is %@, should be %@", server[@"code_version"], codeVersion);
 }
 
 @end

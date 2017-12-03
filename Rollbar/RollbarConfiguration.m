@@ -200,4 +200,5 @@ static NSString *configurationFilePath = nil;
 - (NSDictionary *)customData {
     return [NSDictionary dictionaryWithDictionary:customData];
 }
+
 @end
