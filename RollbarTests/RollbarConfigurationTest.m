@@ -31,9 +31,9 @@
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 
-    Rollbar.currentConfiguration.checkIgnore = ^BOOL(NSDictionary *payload) {
+    [Rollbar.currentConfiguration setCheckIgnore:^BOOL(NSDictionary *payload) {
         return true;
-    };
+    }];
     [Rollbar debug:@"Ignore this"];
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
@@ -69,6 +69,22 @@
     XCTAssertTrue([root isEqualToString:server[@"root"]], @"root is %@, should be %@", server[@"root"], root);
     XCTAssertTrue([branch isEqualToString:server[@"branch"]], @"branch is %@, should be %@", server[@"branch"], branch);
     XCTAssertTrue([codeVersion isEqualToString:server[@"code_version"]], @"code_version is %@, should be %@", server[@"code_version"], codeVersion);
+}
+
+- (void)testPayloadModification {
+    NSString *newMsg = @"Modified message";
+    [Rollbar.currentConfiguration setPayloadModification:^(NSMutableDictionary *payload) {
+        [payload setValue:newMsg forKeyPath:@"body.message.body"];
+        [payload setValue:newMsg forKeyPath:@"body.message.body2"];
+    }];
+    [Rollbar debug:@"test"];
+
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    NSString *msg1 = [logItems[0] valueForKeyPath:@"body.message.body"];
+    NSString *msg2 = [logItems[0] valueForKeyPath:@"body.message.body2"];
+
+    XCTAssertTrue([msg1 isEqualToString:newMsg], @"body.message.body is %@, should be %@", msg1, newMsg);
+    XCTAssertTrue([msg1 isEqualToString:newMsg], @"body.message.body2 is %@, should be %@", msg2, newMsg);
 }
 
 @end
