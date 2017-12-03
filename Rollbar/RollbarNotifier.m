@@ -359,7 +359,7 @@ static BOOL isNetworkReachable = YES;
 
 - (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception message:(NSString*)message {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    result[@"body"] = [NSString stringWithFormat:@"%@\n\n%@\n\n%@", message, exception.reason, [exception.callStackSymbols componentsJoinedByString:@"\n"]];
+    result[@"body"] = [NSString stringWithFormat:@"%@\r\r%@\r\r%@", message, exception.reason, [exception.callStackSymbols componentsJoinedByString:@"\n"]];
 
     return @{@"message": result};
 }

@@ -116,7 +116,7 @@ static RollbarNotifier *notifier = nil;
 }
 
 + (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context {
-    [Rollbar log:RollbarDebug message:message exception:exception data:data context:context];
+    [Rollbar log:RollbarInfo message:message exception:exception data:data context:context];
 }
 
 
