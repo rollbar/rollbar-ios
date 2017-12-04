@@ -19,10 +19,13 @@
 - (void)setUp {
     [super setUp];
     RollbarClearLogFile();
-    [Rollbar initWithAccessToken:@""];
+    if (!Rollbar.currentConfiguration) {
+        [Rollbar initWithAccessToken:@""];
+    }
 }
 
 - (void)tearDown {
+    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
     [super tearDown];
 }
 

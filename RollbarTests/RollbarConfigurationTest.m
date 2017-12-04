@@ -19,24 +19,14 @@
 - (void)setUp {
     [super setUp];
     RollbarClearLogFile();
-    [Rollbar initWithAccessToken:@""];
+    if (!Rollbar.currentConfiguration) {
+        [Rollbar initWithAccessToken:@""];
+    }
 }
 
 - (void)tearDown {
+    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
     [super tearDown];
-}
-
-- (void)testCheckIgnore {
-    [Rollbar debug:@"Don't ignore this"];
-    NSArray *logItems = RollbarReadLogItemFromFile();
-    XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
-
-    [Rollbar.currentConfiguration setCheckIgnore:^BOOL(NSDictionary *payload) {
-        return true;
-    }];
-    [Rollbar debug:@"Ignore this"];
-    logItems = RollbarReadLogItemFromFile();
-    XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 }
 
 - (void)testMaximumTelemetryData {
@@ -51,6 +41,19 @@
     NSDictionary *item = logItems[0];
     NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
     XCTAssertTrue(telemetryData.count == max, @"Telemetry item count is %lu, should be %lu", telemetryData.count, (long)max);
+}
+
+- (void)testCheckIgnore {
+    [Rollbar debug:@"Don't ignore this"];
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
+
+    [Rollbar.currentConfiguration setCheckIgnore:^BOOL(NSDictionary *payload) {
+        return true;
+    }];
+    [Rollbar debug:@"Ignore this"];
+    logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 }
 
 - (void)testServerData {
@@ -85,6 +88,35 @@
 
     XCTAssertTrue([msg1 isEqualToString:newMsg], @"body.message.body is %@, should be %@", msg1, newMsg);
     XCTAssertTrue([msg1 isEqualToString:newMsg], @"body.message.body2 is %@, should be %@", msg2, newMsg);
+}
+
+- (void)testScrubField {
+    NSString *scrubedContent = @"*****";
+    NSArray *keys = @[@"client.ios.app_name", @"client.ios.ios_version", @"body.message.body"];
+
+    for (NSString *key in keys) {
+        [Rollbar.currentConfiguration addScrubField:key];
+    }
+    [Rollbar debug:@"test"];
+
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    for (NSString *key in keys) {
+        NSString *content = [logItems[0] valueForKeyPath:key];
+        XCTAssertTrue([content isEqualToString:scrubedContent], @"%@ is %@, should be %@", key, content, scrubedContent);
+    }
+}
+
+- (void)testLogTelemetryAutoCapture {
+    NSString *logMsg = @"log-message-testing";
+    [[RollbarTelemetry sharedInstance] clearAllData];
+    [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:true];
+    NSLog(logMsg);
+
+    [Rollbar debug:@"test"];
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    NSArray *telemetryData = [logItems[0] valueForKeyPath:@"body.telemetry"];
+    NSString *telemetryMsg = [telemetryData[0] valueForKeyPath:@"body.message"];
+    XCTAssertTrue([logMsg isEqualToString:telemetryMsg], @"body.telemetry[0].body.message is %@, should be %@", telemetryMsg, logMsg);
 }
 
 @end

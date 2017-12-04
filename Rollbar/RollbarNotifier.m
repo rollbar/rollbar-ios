@@ -592,6 +592,7 @@ static BOOL isNetworkReachable = YES;
 
     for (NSString *key in self.configuration.scrubFields) {
         if ([data valueForKeyPath:key]) {
+            [self createMutablePayloadWithData:data forPath:key];
             [data setValue:@"*****" forKeyPath:key];
         }
     }
