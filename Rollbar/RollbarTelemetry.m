@@ -103,7 +103,7 @@ static BOOL captureLog = false;
 
     [data setObject:element forKey:@"element"];
 
-    [self recordEventForLevel:level type:RollbarTelemetryDom data:data];
+    [self recordEventForLevel:level type:RollbarTelemetryView data:data];
 }
 
 #pragma mark -

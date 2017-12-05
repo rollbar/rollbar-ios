@@ -13,7 +13,7 @@
  */
 NSString* RollbarStringFromTelemetryType(RollbarTelemetryType type) {
     switch (type) {
-        case RollbarTelemetryDom:
+        case RollbarTelemetryView:
             return @"dom";
         case RollbarTelemetryLog:
             return @"log";
