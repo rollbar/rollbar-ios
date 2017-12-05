@@ -70,7 +70,8 @@
 		B547368A1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; };
 		B547368B1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
 		B547368C1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
-		B572132F1FD3A1EB00E3B21C /* RollbarConfigurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTest.m */; };
+		B54D68541FD66E0A00735B8D /* RollbarTelemetryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B54D68531FD66E0A00735B8D /* RollbarTelemetryTests.m */; };
+		B572132F1FD3A1EB00E3B21C /* RollbarConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTests.m */; };
 		B57C558C1FC4F06C00103A8B /* RollbarTelemetry.h in Headers */ = {isa = PBXBuildFile; fileRef = B57C558A1FC4F06C00103A8B /* RollbarTelemetry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B57C558D1FC4F06C00103A8B /* RollbarTelemetry.h in Headers */ = {isa = PBXBuildFile; fileRef = B57C558A1FC4F06C00103A8B /* RollbarTelemetry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B57C558E1FC4F06C00103A8B /* RollbarTelemetry.m in Sources */ = {isa = PBXBuildFile; fileRef = B57C558B1FC4F06C00103A8B /* RollbarTelemetry.m */; };
@@ -164,7 +165,8 @@
 		B51C568C1FD14E5300E21661 /* RollbarTestUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarTestUtil.m; sourceTree = "<group>"; };
 		B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+Rollbar.h"; sourceTree = "<group>"; };
 		B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+Rollbar.m"; sourceTree = "<group>"; };
-		B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarConfigurationTest.m; sourceTree = "<group>"; };
+		B54D68531FD66E0A00735B8D /* RollbarTelemetryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarTelemetryTests.m; sourceTree = "<group>"; };
+		B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarConfigurationTests.m; sourceTree = "<group>"; };
 		B57C558A1FC4F06C00103A8B /* RollbarTelemetry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarTelemetry.h; sourceTree = "<group>"; };
 		B57C558B1FC4F06C00103A8B /* RollbarTelemetry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarTelemetry.m; sourceTree = "<group>"; };
 		B59185821FB7AB9A0072324B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -314,7 +316,8 @@
 				B51C56861FD10FBF00E21661 /* RollbarTests.m */,
 				B51C568B1FD14E5300E21661 /* RollbarTestUtil.h */,
 				B51C568C1FD14E5300E21661 /* RollbarTestUtil.m */,
-				B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTest.m */,
+				B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTests.m */,
+				B54D68531FD66E0A00735B8D /* RollbarTelemetryTests.m */,
 			);
 			path = RollbarTests;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 			files = (
 				B51C56871FD10FBF00E21661 /* RollbarTests.m in Sources */,
 				B547367B1FB3C8E6007F99D7 /* RollbarLogger.m in Sources */,
+				B54D68541FD66E0A00735B8D /* RollbarTelemetryTests.m in Sources */,
 				B5D3971F1FB549D7000544DC /* RollbarKSCrashReportSink.m in Sources */,
 				B57C558F1FC4F06C00103A8B /* RollbarTelemetry.m in Sources */,
 				B5EDEA831FCA679900830C78 /* RollbarLevel.m in Sources */,
@@ -587,7 +591,7 @@
 				B547367A1FB3C8E6007F99D7 /* RollbarReachability.m in Sources */,
 				B51C568D1FD14E5300E21661 /* RollbarTestUtil.m in Sources */,
 				B5D3971A1FB5492F000544DC /* RollbarKSCrashInstallation.m in Sources */,
-				B572132F1FD3A1EB00E3B21C /* RollbarConfigurationTest.m in Sources */,
+				B572132F1FD3A1EB00E3B21C /* RollbarConfigurationTests.m in Sources */,
 				B5EDEA7C1FCA66DD00830C78 /* RollbarTelemetryType.m in Sources */,
 				B54736781FB3C8E6007F99D7 /* RollbarThread.m in Sources */,
 				B547368C1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m in Sources */,

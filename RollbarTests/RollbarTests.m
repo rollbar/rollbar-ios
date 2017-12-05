@@ -78,19 +78,4 @@
     }
 }
 
-- (void)testTelemetryData {
-    int testCount = 10;
-    for (int i=0; i<testCount; i++) {
-        [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
-    }
-    [Rollbar debug:@"Test"];
-    NSArray *logItems = RollbarReadLogItemFromFile();
-    XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
-
-    NSDictionary *item = logItems[0];
-    NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
-    XCTAssertTrue(telemetryData.count == testCount, @"Telemetry item count should be %lu", (long)testCount);
-}
-
-
 @end

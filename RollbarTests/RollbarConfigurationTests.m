@@ -10,11 +10,11 @@
 #import "Rollbar.h"
 #import "RollbarTestUtil.h"
 
-@interface RollbarConfigurationTest : XCTestCase
+@interface RollbarConfigurationTests : XCTestCase
 
 @end
 
-@implementation RollbarConfigurationTest
+@implementation RollbarConfigurationTests
 
 - (void)setUp {
     [super setUp];
