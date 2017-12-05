@@ -10,7 +10,7 @@
 
 typedef enum {
     RollbarTelemetryLog,
-    RollbarTelemetryDom,
+    RollbarTelemetryView,
     RollbarTelemetryError,
     RollbarTelemetryNavigation,
     RollbarTelemetryNetwork,

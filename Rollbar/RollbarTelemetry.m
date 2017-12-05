@@ -27,13 +27,16 @@ static BOOL captureLog = false;
 }
 
 + (void)NSLogReplacement:(NSString *)format, ... {
-    va_list args;
+    va_list args, argsCopy;
     va_start(args, format);
     if (captureLog) {
+        va_copy (argsCopy, args);
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
         [[RollbarTelemetry sharedInstance] recordLogEventForLevel:RollbarDebug message:message extraData:nil];
+        NSLogv(format, argsCopy);
+    } else {
+        NSLogv(format, args);
     }
-    NSLogv(format, args);
     va_end(args);
 }
 
@@ -100,7 +103,7 @@ static BOOL captureLog = false;
 
     [data setObject:element forKey:@"element"];
 
-    [self recordEventForLevel:level type:RollbarTelemetryDom data:data];
+    [self recordEventForLevel:level type:RollbarTelemetryView data:data];
 }
 
 #pragma mark -

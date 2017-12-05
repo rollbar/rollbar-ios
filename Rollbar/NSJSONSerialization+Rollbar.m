@@ -48,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
             [safeData setObject:[[self class] safeDataFromJSONObject:[obj userInfo]] forKey:key];
         } else if ([obj isKindOfClass:[NSHTTPURLResponse class]]) {
             [safeData setObject:[obj allHeaderFields] forKey:key];
+        } else if ([obj isKindOfClass:[NSSet class]]) {
+            [safeData setObject:[[obj allObjects] componentsJoinedByString:@","] forKey:key];
         } else if ([obj isKindOfClass:[NSData class]]) {
             NSError* error = nil;
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:obj options:kNilOptions error:&error];

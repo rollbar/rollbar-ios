@@ -27,7 +27,7 @@ static NSString *configurationFilePath = nil;
 @property (atomic, copy) NSString *serverRoot;
 @property (atomic, copy) NSString *serverBranch;
 @property (atomic, copy) NSString *serverCodeVersion;
-@property (atomic, copy) NSMutableSet *scrubFields;
+//@property (atomic, retain) NSMutableSet *scrubFields;
 @property (atomic) BOOL shouldCaptureConnectivity;
 
 @end
@@ -56,8 +56,8 @@ static NSString *configurationFilePath = nil;
         #endif
         
         self.crashLevel = @"error";
-
         self.scrubFields = [NSMutableSet new];
+
         [self setCaptureLogAsTelemetryData:false];
     }
 
@@ -200,4 +200,5 @@ static NSString *configurationFilePath = nil;
 - (NSDictionary *)customData {
     return [NSDictionary dictionaryWithDictionary:customData];
 }
+
 @end

@@ -357,6 +357,13 @@ static BOOL isNetworkReachable = YES;
     return @{@"trace": @{@"frames": frames, @"exception": exceptionInfo}};
 }
 
+- (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception message:(NSString*)message {
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    result[@"body"] = [NSString stringWithFormat:@"%@\r\r%@\r\r%@", message, exception.reason, [exception.callStackSymbols componentsJoinedByString:@"\n"]];
+
+    return @{@"message": result};
+}
+
 - (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
     int start = false;
     NSString *buf;
@@ -376,6 +383,8 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *payloadBody;
     if (crashReport) {
         payloadBody = [self buildPayloadBodyWithCrashReport:crashReport];
+    } else if (exception && message && message.length > 0) {
+        payloadBody = [self buildPayloadBodyWithException:exception message:message];
     } else if (exception) {
         payloadBody = [self buildPayloadBodyWithException:exception];
     } else {
@@ -583,6 +592,7 @@ static BOOL isNetworkReachable = YES;
 
     for (NSString *key in self.configuration.scrubFields) {
         if ([data valueForKeyPath:key]) {
+            [self createMutablePayloadWithData:data forPath:key];
             [data setValue:@"*****" forKeyPath:key];
         }
     }
