@@ -14,7 +14,7 @@
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
-#import <KSCrash/KSCrash.h>
+#import "KSCrash.h"
 #import "RollbarTelemetry.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
