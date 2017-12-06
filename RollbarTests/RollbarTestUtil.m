@@ -27,7 +27,6 @@ void RollbarClearLogFile() {
     
     if (fileExists) {
         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-        NSLog(@"Hello");
         if (!success) NSLog(@"Error: %@", [error localizedDescription]);
         [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
     }

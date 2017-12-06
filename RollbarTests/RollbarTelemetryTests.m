@@ -66,7 +66,6 @@
             XCTAssertTrue([body[@"data"] isEqualToString:@"content"]);
         }
     }
-    NSLog(@"%@", telemetryData);
 }
 
 @end
