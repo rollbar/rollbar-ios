@@ -27,7 +27,6 @@ static NSString *configurationFilePath = nil;
 @property (atomic, copy) NSString *serverRoot;
 @property (atomic, copy) NSString *serverBranch;
 @property (atomic, copy) NSString *serverCodeVersion;
-//@property (atomic, retain) NSMutableSet *scrubFields;
 @property (atomic) BOOL shouldCaptureConnectivity;
 
 @end
