@@ -1,5 +1,16 @@
 # Rollbar iOS SDK Documentation
 
+## Compile
+
+To compile, you need to pull the KSCrash submodule:
+
+```
+git submodule init
+git submodule update
+```
+
+<br />
+<br />
 
 ## Usage
 
@@ -13,6 +24,8 @@
 }];
 ```
 
+<br />
+<br />
 
 ## Classes
 
