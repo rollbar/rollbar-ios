@@ -8,7 +8,7 @@
 
 #import "RollbarKSCrashInstallation.h"
 #import "RollbarKSCrashReportSink.h"
-#import <KSCrash/KSCrashInstallation+Private.h>
+#import "KSCrashInstallation+Private.h"
 
 @implementation RollbarKSCrashInstallation
 

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <KSCrash/KSCrash.h>
+#import "KSCrash.h"
 
 @interface RollbarKSCrashReportSink : NSObject <KSCrashReportFilter>
 

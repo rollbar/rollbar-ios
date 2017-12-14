@@ -9,14 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "RollbarConfiguration.h"
 #import "RollbarNotifier.h"
-
-typedef enum {
-    RollbarInfo,
-    RollbarDebug,
-    RollbarWarning,
-    RollbarCritical,
-    RollbarError
-} RollbarLevel;
+#import "RollbarTelemetry.h"
+#import "RollbarLevel.h"
+#import "RollbarTelemetryType.h"
 
 @interface Rollbar : NSObject
 
@@ -27,8 +22,6 @@ typedef enum {
 
 + (RollbarConfiguration*)currentConfiguration;
 + (RollbarNotifier*)currentNotifier;
-
-+ (NSString*)stringFromLevel:(RollbarLevel)level;
 
 + (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot;
 
@@ -90,5 +83,20 @@ typedef enum {
 + (void)critical:(NSString*)message exception:(NSException*)exception;
 + (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
 + (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
+
+// Telemetry logging
+
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element;
++ (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element extraData:(NSDictionary *)extraData;
++ (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode;
++ (void)recordNetworkEventForLevel:(RollbarLevel)level method:(NSString *)method url:(NSString *)url statusCode:(NSString *)statusCode extraData:(NSDictionary *)extraData;
++ (void)recordConnectivityEventForLevel:(RollbarLevel)level status:(NSString *)status;
++ (void)recordConnectivityEventForLevel:(RollbarLevel)level status:(NSString *)status extraData:(NSDictionary *)extraData;
++ (void)recordErrorEventForLevel:(RollbarLevel)level message:(NSString *)message;
++ (void)recordErrorEventForLevel:(RollbarLevel)level exception:(NSException *)exception;
++ (void)recordErrorEventForLevel:(RollbarLevel)level message:(NSString *)message extraData:(NSDictionary *)extraData;
++ (void)recordNavigationEventForLevel:(RollbarLevel)level from:(NSString *)from to:(NSString *)to;
++ (void)recordNavigationEventForLevel:(RollbarLevel)level from:(NSString *)from to:(NSString *)to extraData:(NSDictionary *)extraData;
++ (void)recordManualEventForLevel:(RollbarLevel)level withData:(NSDictionary *)extraData;
 
 @end

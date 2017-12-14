@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <KSCrash/KSCrash.h>
-#import <KSCrash/KSCrashInstallation.h>
+#import "KSCrash.h"
+#import "KSCrashInstallation.h"
 
 @interface RollbarKSCrashInstallation : KSCrashInstallation
 

@@ -14,8 +14,10 @@
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
-#import <KSCrash/KSCrash.h>
+#import "KSCrash.h"
+#import "RollbarTelemetry.h"
 
+#define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
 static NSString *NOTIFIER_VERSION = @"0.2.0";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
@@ -71,10 +73,12 @@ static BOOL isNetworkReachable = YES;
             isNetworkReachable = [reachability isReachable];
             
             reachability.reachableBlock = ^(RollbarReachability*reach) {
+                [self captureTelemetryDataForNetwork:true];
                 isNetworkReachable = YES;
             };
             
             reachability.unreachableBlock = ^(RollbarReachability*reach) {
+                [self captureTelemetryDataForNetwork:false];
                 isNetworkReachable = NO;
             };
             
@@ -87,14 +91,16 @@ static BOOL isNetworkReachable = YES;
 
 - (void)logCrashReport:(NSString*)crashReport {
     NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport context:nil];
-    
-    [self queuePayload:payload];
+    if (payload) {
+        [self queuePayload:payload];
+    }
 }
 
 - (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*) context {
     NSDictionary *payload = [self buildPayloadWithLevel:level message:message exception:exception extra:data crashReport:nil context:context];
-    
-    [self queuePayload:payload];
+    if (payload) {
+        [self queuePayload:payload];
+    }
 }
 
 - (void)saveQueueState {
@@ -307,10 +313,12 @@ static BOOL isNetworkReachable = YES;
     if (context) {
         data[@"context"] = context;
     }
-    
-    // Run data through custom payload modification method if available
-    if (self.configuration.payloadModification) {
-        self.configuration.payloadModification(data);
+
+    // Transform payload, if necessary
+    [self modifyPayload:data];
+    [self scrubPayload:data];
+    if ([self shouldIgnorePayload:data]) {
+        return nil;
     }
 
     return @{@"access_token": self.configuration.accessToken,
@@ -349,6 +357,13 @@ static BOOL isNetworkReachable = YES;
     return @{@"trace": @{@"frames": frames, @"exception": exceptionInfo}};
 }
 
+- (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception message:(NSString*)message {
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    result[@"body"] = [NSString stringWithFormat:@"%@\r\r%@\r\r%@", message, exception.reason, [exception.callStackSymbols componentsJoinedByString:@"\n"]];
+
+    return @{@"message": result};
+}
+
 - (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
     int start = false;
     NSString *buf;
@@ -365,13 +380,26 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport {
+    NSDictionary *payloadBody;
     if (crashReport) {
-        return [self buildPayloadBodyWithCrashReport:crashReport];
+        payloadBody = [self buildPayloadBodyWithCrashReport:crashReport];
+    } else if (exception && message && message.length > 0) {
+        payloadBody = [self buildPayloadBodyWithException:exception message:message];
     } else if (exception) {
-        return [self buildPayloadBodyWithException:exception];
+        payloadBody = [self buildPayloadBodyWithException:exception];
     } else {
-        return [self buildPayloadBodyWithMessage:message extra:extra];
+        payloadBody = [self buildPayloadBodyWithMessage:message extra:extra];
     }
+    
+    NSArray *telemetryData = [[RollbarTelemetry sharedInstance] getAllData];
+    if (payloadBody && telemetryData.count > 0) {
+        NSMutableDictionary *newPayloadBody = nil;
+        newPayloadBody = [NSMutableDictionary dictionaryWithDictionary:payloadBody];
+        [newPayloadBody setObject:telemetryData forKey:@"telemetry"];
+        return newPayloadBody;
+    }
+    
+    return payloadBody;
 }
 
 - (void)queuePayload:(NSDictionary*)payload {
@@ -380,11 +408,17 @@ static BOOL isNetworkReachable = YES;
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil safe:true]];
     [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandle closeFile];
+    [[RollbarTelemetry sharedInstance] clearAllData];
 }
 
 - (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken nextOffset:(NSUInteger)nextOffset {
-    NSDictionary *newPayload = @{@"access_token": accessToken,
-                                 @"data": itemData};
+    NSMutableArray *payloadItems = [NSMutableArray array];
+    for (NSDictionary *item in itemData) {
+        NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
+        [self truncatePayloadIfNecessary:newItem];
+        [payloadItems addObject:newItem];
+    }
+    NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken, @"data": payloadItems}];
     
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil safe:true];
     
@@ -462,6 +496,108 @@ static BOOL isNetworkReachable = YES;
     return string;
 }
 
+#pragma mark - Payload truncate
+
+- (void)createMutablePayloadWithData:(NSMutableDictionary *)data forPath:(NSString *)path {
+    NSArray *pathComponents = [path componentsSeparatedByString:@"."];
+    NSString *currentPath = @"";
+
+    for (int i=0; i<pathComponents.count; i++) {
+        NSString *part = pathComponents[i];
+        currentPath = i == 0 ? part : [NSString stringWithFormat:@"%@.%@", currentPath, part];
+        id val = [data valueForKeyPath:currentPath];
+        if (!val) return;
+        if ([val isKindOfClass:[NSArray class]] && ![val isKindOfClass:[NSMutableArray class]]) {
+            NSMutableArray *newVal = [NSMutableArray arrayWithArray:val];
+            [data setValue:newVal forKeyPath:currentPath];
+        } else if ([val isKindOfClass:[NSDictionary class]] && ![val isKindOfClass:[NSMutableDictionary class]]) {
+            NSMutableDictionary *newVal = [NSMutableDictionary dictionaryWithDictionary:val];
+            [data setValue:newVal forKeyPath:currentPath];
+        }
+    }
+}
+
+- (void)truncatePayload:(NSMutableDictionary *)data forKeyPath:(NSString *)keypath {
+    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil safe:true];
+    NSInteger dataSize = jsonPayload.length * 0.001;
+
+    if (dataSize <= MAX_PAYLOAD_SIZE) {
+        return;
+    }
+
+    [self createMutablePayloadWithData:data forPath:keypath];
+    NSMutableArray *array = [data valueForKeyPath:keypath];
+    [data setValue:@[] forKeyPath:keypath];
+
+    jsonPayload = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil safe:true];
+    NSInteger sizeDiff = dataSize - jsonPayload.length * 0.001;
+
+    double sizePerItem = sizeDiff / (double)array.count;
+    if (dataSize - sizeDiff + (sizePerItem * 2) >= MAX_PAYLOAD_SIZE) {
+        // Not enough to truncate, will do the best we can
+    } else {
+        // Cut the number of items necessary from the middle
+        NSInteger truncateCnt = (dataSize - MAX_PAYLOAD_SIZE) / sizePerItem;
+        NSInteger start = array.count / 2 - truncateCnt / 2;
+        [array removeObjectsInRange:NSMakeRange(start, truncateCnt)];
+    }
+
+    [data setValue:array forKeyPath:keypath];
+}
+
+- (void)truncatePayloadIfNecessary:(NSMutableDictionary *)data {
+    NSArray *keyPaths = @[@"body.message.extra.crash.threads", @"body.trace.frames"];
+
+    for (NSString *keyPath in keyPaths) {
+        NSArray *obj = [data valueForKeyPath:keyPath];
+        if (obj) {
+            [self truncatePayload:data forKeyPath:keyPath];
+            break;
+        }
+    }
+}
+
+#pragma mark - Payload transformations
+
+// Run data through custom payload modification method if available
+- (void)modifyPayload:(NSMutableDictionary *)data {
+    if (self.configuration.payloadModification) {
+        self.configuration.payloadModification(data);
+    }
+}
+
+// Determine if this payload should be ignored
+- (BOOL)shouldIgnorePayload:(NSDictionary*)data {
+    BOOL shouldIgnore = false;
+
+    if (self.configuration.checkIgnore) {
+        @try {
+            shouldIgnore = self.configuration.checkIgnore(data);
+        } @catch(NSException *e) {
+            RollbarLog(@"checkIgnore error: %@", e.reason);
+
+            // Remove checkIgnore to prevent future exceptions
+            [self.configuration setCheckIgnore:nil];
+        }
+    }
+
+    return shouldIgnore;
+}
+
+// Scrub specified fields from payload
+- (void)scrubPayload:(NSMutableDictionary*)data {
+    if (self.configuration.scrubFields.count == 0) {
+        return;
+    }
+
+    for (NSString *key in self.configuration.scrubFields) {
+        if ([data valueForKeyPath:key]) {
+            [self createMutablePayloadWithData:data forPath:key];
+            [data setValue:@"*****" forKeyPath:key];
+        }
+    }
+}
+
 #pragma mark - Update configuration methods
 
 - (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
@@ -487,7 +623,21 @@ static BOOL isNetworkReachable = YES;
     self.configuration.accessToken = accessToken;
 }
 
-#pragma mark -
+#pragma mark - Network telemetry data
 
+- (void)captureTelemetryDataForNetwork:(BOOL)reachable {
+    if (self.configuration.shouldCaptureConnectivity && isNetworkReachable != reachable) {
+        NSString *status = reachable ? @"Connected" : @"Disconnected";
+        NSString *networkType = @"Unknown";
+        NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+        if (networkStatus == ReachableViaWiFi) {
+            networkType = @"WiFi";
+        }
+        else if (networkStatus == ReachableViaWWAN) {
+            networkType = @"Cellular";
+        }
+        [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:RollbarWarning status:status extraData:@{@"network": networkType}];
+    }
+}
 
 @end
