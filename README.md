@@ -1,7 +1,7 @@
 # ALPHA RELEASE
 
 This library is currently under heavy development, however it should be usable and therefore please
-[file an issue][https://github.com/rollbar/rollbar-ios/issues] if you have any problems working with
+[file an issue](https://github.com/rollbar/rollbar-ios/issues) if you have any problems working with
 this library.
 
 # Rollbar for iOS
@@ -25,7 +25,7 @@ Be sure to remember to `pod install` after changing your Podfile!
 
 ### Without Cocoapods
 
-1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha1/Rollbar.zip).
+1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha2/Rollbar.zip).
 
 2. Extract the Rollbar directory in the zip file to your Xcode project directory.
 
