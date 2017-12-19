@@ -13,6 +13,10 @@ Objective-C library for crash reporting and logging with [Rollbar](https://rollb
 
 ### With [Cocoapods](http://cocoapods.org/)
 
+*NOTE:* The installation via Cocoapods may currently not work due to an incompatiability with C++
+libraries and Cocoapods. This is being resolved, but in the meantime installation via the
+downloadable Framework below should be the way forward.
+
 In your Podfile:
 
     pod "Rollbar", "~> 1.0.0-alpha"
