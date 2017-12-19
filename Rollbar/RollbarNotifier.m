@@ -19,7 +19,7 @@
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
-static NSString *NOTIFIER_VERSION = @"0.2.0";
+static NSString *NOTIFIER_VERSION = @"1.0.0-alpha2";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
