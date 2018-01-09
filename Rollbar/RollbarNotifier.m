@@ -19,7 +19,6 @@
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
-static NSString *NOTIFIER_VERSION = @"1.0.0-alpha2";
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
@@ -280,8 +279,8 @@ static BOOL isNetworkReachable = YES;
 - (NSDictionary*)buildPayloadWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport context:(NSString*)context {
     
     NSDictionary *clientData = [self buildClientData];
-    NSDictionary *notifierData = @{@"name": @"rollbar-ios",
-                                   @"version": NOTIFIER_VERSION};
+    NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
+                                   @"version": self.configuration.notifierVersion};
     
     NSDictionary *customData = self.configuration.customData;
     
@@ -290,7 +289,7 @@ static BOOL isNetworkReachable = YES;
     NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
                                    @"level": level,
                                    @"language": @"objective-c",
-                                   @"framework": @"ios",
+                                   @"framework": self.configuration.framework,
                                    @"platform": @"ios",
                                    @"uuid": [self generateUUID],
                                    @"client": clientData,
