@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Rollbar"
-  s.version      = "1.0.0-alpha2"
+  s.version      = "1.0.0-alpha3"
   s.summary      = "Objective-C library for crash reporting and logging with Rollbar."
   s.description  = <<-DESC
     Find, fix, and resolve errors with Rollbar.
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.author             = { "Rollbar" => "support@rollbar.com" }
   s.social_media_url   = "http://twitter.com/rollbar"
   s.platform           = :ios, "7.0"
-  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.0.0-alpha2" }
+  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.0.0-alpha3" }
   s.source_files       = "Rollbar/*.{h,m}",
     "KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}"
 
