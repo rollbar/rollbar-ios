@@ -25,7 +25,7 @@
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
 - (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
 - (void)setNotifierName:(NSString *)name version:(NSString *)version;
-- (void)setFramework:(NSString *)framework;
+- (void)setCodeFramework:(NSString *)framework;
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
 - (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
 - (void)addScrubField:(NSString *)field;

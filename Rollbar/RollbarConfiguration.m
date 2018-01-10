@@ -12,7 +12,7 @@
 #import "RollbarTelemetry.h"
 
 static NSString *NOTIFIER_NAME = @"rollbar-ios";
-static NSString *NOTIFIER_VERSION = @"1.0.0-alpha3";
+static NSString *NOTIFIER_VERSION = @"1.0.0-alpha4";
 static NSString *FRAMEWORK = @"ios";
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
@@ -116,7 +116,7 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
-- (void)setFramework:(NSString *)framework {
+- (void)setCodeFramework:(NSString *)framework {
     self.framework = framework ? framework : FRAMEWORK;
     [self save];
 }
