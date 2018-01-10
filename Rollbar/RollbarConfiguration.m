@@ -11,6 +11,9 @@
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarTelemetry.h"
 
+static NSString *NOTIFIER_NAME = @"rollbar-ios";
+static NSString *NOTIFIER_VERSION = @"1.0.0-alpha2";
+static NSString *FRAMEWORK = @"ios";
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
 
@@ -20,13 +23,16 @@ static NSString *configurationFilePath = nil;
     NSMutableDictionary *customData;
 }
 
-@property (atomic, copy) NSString* personId;
-@property (atomic, copy) NSString* personUsername;
-@property (atomic, copy) NSString* personEmail;
+@property (atomic, copy) NSString *personId;
+@property (atomic, copy) NSString *personUsername;
+@property (atomic, copy) NSString *personEmail;
 @property (atomic, copy) NSString *serverHost;
 @property (atomic, copy) NSString *serverRoot;
 @property (atomic, copy) NSString *serverBranch;
 @property (atomic, copy) NSString *serverCodeVersion;
+@property (atomic, copy) NSString *notifierName;
+@property (atomic, copy) NSString *notifierVersion;
+@property (atomic, copy) NSString *framework;
 @property (atomic) BOOL shouldCaptureConnectivity;
 
 @end
@@ -56,6 +62,10 @@ static NSString *configurationFilePath = nil;
         
         self.crashLevel = @"error";
         self.scrubFields = [NSMutableSet new];
+
+        self.notifierName = NOTIFIER_NAME;
+        self.notifierVersion = NOTIFIER_VERSION;
+        self.framework = FRAMEWORK;
 
         [self setCaptureLogAsTelemetryData:false];
     }
@@ -97,6 +107,17 @@ static NSString *configurationFilePath = nil;
     self.serverBranch = branch;
     self.serverCodeVersion = codeVersion;
 
+    [self save];
+}
+
+- (void)setNotifierName:(NSString *)name version:(NSString *)version {
+    self.notifierName = name ? name : NOTIFIER_NAME;
+    self.notifierVersion = version ? version : NOTIFIER_VERSION;
+    [self save];
+}
+
+- (void)setFramework:(NSString *)framework {
+    self.framework = framework ? framework : FRAMEWORK;
     [self save];
 }
 
