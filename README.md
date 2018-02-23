@@ -29,13 +29,18 @@ Be sure to remember to `pod install` after changing your Podfile!
 
 ### Without Cocoapods
 
-1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha5/Rollbar.zip).
+1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha6/Rollbar.zip).
 
 2. Extract the Rollbar directory in the zip file to your Xcode project directory.
 
 3. In Xcode, select _File_ -> _Add Files to "[your project name]"_ and choose the Rollbar directory from step 2.
 
-Note: if step three doesn't work you can also extract the Rollbar directory anywhere, and drag the `.framework` files into XCode, allowing XCode to correctly configure the Frameworks.
+   Note: if step three doesn't work you can also extract the Rollbar directory anywhere, and drag the `.framework` files into XCode, allowing XCode to correctly configure the Frameworks.
+
+4. Add the libc++ library to your link binary with libraries build phase
+
+5. Ensure that `-ObjC` is in your "Other Linker Flags" setting. Note that the `-all_load` flag is
+   not recommended but would also work for this purpose if you already have that set.
 
 ## Setup
 
