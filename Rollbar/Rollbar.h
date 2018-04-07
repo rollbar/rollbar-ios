@@ -84,6 +84,8 @@
 + (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
 + (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
 
++ (void)logCrashReport:(NSString*)crashReport;
+
 // Telemetry logging
 
 + (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element;

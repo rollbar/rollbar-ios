@@ -266,6 +266,12 @@ static RollbarNotifier *notifier = nil;
     [notifier log:@"critical" message:nil exception:nil data:data context:nil];
 }
 
+// Crash Report
+
++ (void)logCrashReport:(NSString*)crashReport {
+    [notifier logCrashReport:crashReport];
+}
+
 #pragma mark - Telemetry logging methods
 
 #pragma mark - Dom

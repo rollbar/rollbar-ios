@@ -27,7 +27,8 @@
 }
 
 - (id<KSCrashReportFilter>)sink {
-    return [[RollbarKSCrashReportSink alloc] init];
+    RollbarKSCrashReportSink *sink = [[RollbarKSCrashReportSink alloc] init];
+    return [sink defaultFilterSet];
 }
 
 - (void)sendAllReports {
