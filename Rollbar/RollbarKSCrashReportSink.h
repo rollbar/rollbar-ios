@@ -11,4 +11,6 @@
 
 @interface RollbarKSCrashReportSink : NSObject <KSCrashReportFilter>
 
+- (id<KSCrashReportFilter>)defaultFilterSet;
+
 @end
