@@ -38,7 +38,7 @@ static BOOL isNetworkReachable = YES;
 @implementation RollbarNotifier
 
 - (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
-    
+
     if ((self = [super init])) {
         [self updateAccessToken:accessToken configuration:configuration isRoot:isRoot];
 
@@ -47,44 +47,48 @@ static BOOL isNetworkReachable = YES;
             NSString *cachesDirectory = [paths objectAtIndex:0];
             queuedItemsFilePath = [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
             stateFilePath = [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
-            
+
             if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
                 [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath contents:nil attributes:nil];
             }
-            
+
             if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
                 NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
-                NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData options:0 error:nil];
-                
-                queueState = [state mutableCopy];
-            } else {
+                if (stateData) {
+                    NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData options:0 error:nil];
+                    queueState = [state mutableCopy];
+                } else {
+                  RollbarLog(@"There was an error restoring saved queue state");
+                }
+            }
+            if (!queueState) {
                 queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
                                 @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
             }
-            
+
             // Deals with sending items that have been queued up
             rollbarThread = [[RollbarThread alloc] initWithNotifier:self];
             [rollbarThread start];
-            
+
             // Listen for reachability status so that items are only sent when the internet is available
             reachability = [RollbarReachability reachabilityForInternetConnection];
-            
+
             isNetworkReachable = [reachability isReachable];
-            
+
             reachability.reachableBlock = ^(RollbarReachability*reach) {
                 [self captureTelemetryDataForNetwork:true];
                 isNetworkReachable = YES;
             };
-            
+
             reachability.unreachableBlock = ^(RollbarReachability*reach) {
                 [self captureTelemetryDataForNetwork:false];
                 isNetworkReachable = NO;
             };
-            
+
             [reachability startNotifier];
         }
     }
-    
+
     return self;
 }
 
@@ -112,71 +116,76 @@ static BOOL isNetworkReachable = YES;
         // Don't attempt sending if the network is known to be not reachable
         return;
     }
-    
+
     __block NSString *lastAccessToken = nil;
     NSMutableArray *items = [NSMutableArray array];
 
     NSUInteger startOffset = [queueState[@"offset"] unsignedIntegerValue];
-    
+
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
     __block unsigned long long fileLength = [fileHandle offsetInFile];
     [fileHandle closeFile];
-    
+
     if (!fileLength) {
         return;
     }
-    
+
     // Empty out the queued item file if all items have been processed already
     if (startOffset == fileLength) {
         [@"" writeToFile:queuedItemsFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-        
+
         queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
         queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
         [self saveQueueState];
-        
+
         return;
     }
-    
+
     // Iterate through the items file and send the items in batches.
     RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath andOffset:startOffset];
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
-        NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:[line dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-        
-        if (!payload) {
-            // Ignore this line if it isn't valid json and proceed to the next line
-            // TODO: report an internal error
+        NSData *lineData = [line dataUsingEncoding:NSUTF8StringEncoding];
+        if (!lineData) {
+            // All we can do is ignore this line
+            RollbarLog(@"Error converting file line to NSData");
             return;
         }
-        
+        NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:lineData options:0 error:nil];
+
+        if (!payload) {
+            // Ignore this line if it isn't valid json and proceed to the next line
+            RollbarLog(@"Error restoring data from file to JSON");
+            return;
+        }
+
         NSString *accessToken = payload[@"access_token"];
-        
+
         // If the max batch size is reached as the file is being processed,
         // try sending the current batch before starting a new one
         if ([items count] >= MAX_BATCH_SIZE || (lastAccessToken != nil && [accessToken compare:lastAccessToken] != NSOrderedSame)) {
             BOOL shouldContinue = [self sendItems:items withAccessToken:lastAccessToken nextOffset:nextOffset];
-            
+
             if (!shouldContinue) {
                 // Stop processing the file so that the current file offset will be
                 // retried next time the file is processed
                 *stop = YES;
                 return;
             }
-            
+
             // The file has had items added since we started iterating through it,
             // update the known file length to equal the next offset
             if (nextOffset > fileLength) {
                 fileLength = nextOffset;
             }
-            
+
             [items removeAllObjects];
         }
-        
         [items addObject:payload[@"data"]];
-        
+
         lastAccessToken = accessToken;
     }];
-    
+
     // The whole file has been read, send all of the pending items
     if ([items count]) {
         [self sendItems:items withAccessToken:lastAccessToken nextOffset:(NSUInteger)fileLength];
