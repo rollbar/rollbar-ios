@@ -208,7 +208,9 @@ static BOOL captureLog = false;
         NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
         if (data) {
             NSArray *telemetryDataList = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            dataArray = [telemetryDataList mutableCopy];
+            if (telemetryDataList) {
+                dataArray = [telemetryDataList mutableCopy];
+            }
         }
     }
 }

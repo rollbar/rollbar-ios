@@ -491,7 +491,9 @@ static BOOL isNetworkReachable = YES;
             return YES;
         } else {
             RollbarLog(@"There was a problem reporting to Rollbar");
-            RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (data) {
+                RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            }
         }
     }
     return NO;
