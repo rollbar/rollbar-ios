@@ -81,7 +81,7 @@ static NSString *configurationFilePath = nil;
         NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 
         if (!config) {
-          return self;
+            return self;
         }
 
         for (NSString *propertyName in config.allKeys) {

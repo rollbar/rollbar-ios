@@ -58,7 +58,7 @@ static BOOL isNetworkReachable = YES;
                     NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData options:0 error:nil];
                     queueState = [state mutableCopy];
                 } else {
-                  RollbarLog(@"There was an error restoring saved queue state");
+                    RollbarLog(@"There was an error restoring saved queue state");
                 }
             }
             if (!queueState) {
