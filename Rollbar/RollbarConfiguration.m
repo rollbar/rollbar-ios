@@ -49,17 +49,17 @@ static NSString *configurationFilePath = nil;
         NSString *cachesDirectory = [paths objectAtIndex:0];
         configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
     }
-    
+
     if (self = [super init]) {
         customData = [NSMutableDictionary dictionaryWithCapacity:10];
         self.endpoint = DEFAULT_ENDPOINT;
-        
+
         #ifdef DEBUG
         self.environment = @"development";
         #else
         self.environment = @"unspecified";
         #endif
-        
+
         self.crashLevel = @"error";
         self.scrubFields = [NSMutableSet new];
 
@@ -75,17 +75,21 @@ static NSString *configurationFilePath = nil;
 
 - (id)initWithLoadedConfiguration {
     self = [self init];
-    
+
     NSData *data = [NSData dataWithContentsOfFile:configurationFilePath];
     if (data) {
         NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        
+
+        if (!config) {
+            return self;
+        }
+
         for (NSString *propertyName in config.allKeys) {
             id value = [config objectForKey:propertyName];
             [self setValue:value forKey:propertyName];
         }
     }
-    
+
     return self;
 }
 
