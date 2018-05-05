@@ -277,12 +277,19 @@ static BOOL isNetworkReachable = YES;
                               @"short_version": shortVersion ? shortVersion : @"",
                               @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
                               @"app_name": bundleName ? bundleName : @""};
-    
-    NSDictionary *data = @{@"timestamp": timestamp,
-                           @"ios": iosData,
-                           @"user_ip": @"$remote_ip"};
-    
-    return data;
+
+    if (self.configuration.captureIp == CaptureIpFull) {
+        return @{@"timestamp": timestamp,
+                 @"ios": iosData,
+                 @"user_ip": @"$remote_ip"};
+    } else if (self.configuration.captureIp == CaptureIpAnonymize) {
+        return @{@"timestamp": timestamp,
+                 @"ios": iosData,
+                 @"user_ip": @"$remote_ip_anonymize"};
+    } else {
+        return @{@"timestamp": timestamp,
+                 @"ios": iosData};
+    }
 }
 
 - (NSDictionary*)buildPayloadWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport context:(NSString*)context {
