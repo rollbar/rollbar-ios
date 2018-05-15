@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, CaptureIpType) {
+    CaptureIpFull,
+    CaptureIpAnonymize,
+    CaptureIpNone
+};
+
 @interface RollbarConfiguration : NSObject {
     // Stores whether this configuration is the root level
     // configuration used by the root level notifier
@@ -33,6 +39,7 @@
 - (void)setRequestId:(NSString*)requestId;
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
+- (void)setCaptureIp:(CaptureIpType)captureIp;
 
 - (NSDictionary *)customData;
 
@@ -58,6 +65,8 @@
 
 // ID to link request between client/server
 @property (atomic, copy) NSString *requestId;
+
+@property (readonly, atomic) CaptureIpType captureIp;
 
 // Data about the server
 @property (readonly, atomic, copy) NSString *serverHost;

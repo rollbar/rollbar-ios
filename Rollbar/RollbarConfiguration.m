@@ -34,6 +34,7 @@ static NSString *configurationFilePath = nil;
 @property (atomic, copy) NSString *notifierVersion;
 @property (atomic, copy) NSString *framework;
 @property (atomic) BOOL shouldCaptureConnectivity;
+@property (atomic) CaptureIpType captureIp;
 
 @end
 
@@ -66,6 +67,7 @@ static NSString *configurationFilePath = nil;
         self.notifierName = NOTIFIER_NAME;
         self.notifierVersion = NOTIFIER_VERSION;
         self.framework = FRAMEWORK;
+        self.captureIp = CaptureIpFull;
 
         [self setCaptureLogAsTelemetryData:false];
     }
@@ -147,6 +149,10 @@ static NSString *configurationFilePath = nil;
 
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity {
     self.shouldCaptureConnectivity = captureConnectivity;
+}
+
+- (void)setCaptureIp:(CaptureIpType)captureIp {
+    self.captureIp = captureIp;
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
