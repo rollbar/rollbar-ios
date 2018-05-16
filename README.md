@@ -504,6 +504,28 @@ RollbarConfiguration *config = [Rollbar currentConfiguration];
 
 ### Configuration reference ###
 
+**CaptureIp specifies the level of IP information to gather about the client along with items.**
+
+```objc
+typedef NS_ENUM(NSUInteger, CaptureIpType) {
+    CaptureIpFull,
+    CaptureIpAnonymize,
+    CaptureIpNone
+};
+
+- (void)setCaptureIp:(CaptureIpType)captureIp;
+```
+
+*Example*
+```objc
+[Rollbar.currentConfiguration setCaptureIp:CaptureIpAnonymize];
+```
+
+`CaptureIpFull` is the default behaviour which attempts to capture the IP address on the backend
+based on the IP address of the client used to POST the item. `CaptureIpAnonymize` will attempt to
+capture the IP address and semi-anonymize it by masking it the least significant bits.
+`CaptureIpNone` will turn off attempts to capture the IP address.
+
 
 **Sets the maximum number of telemetry data entry to keep. Default is 10.**
 
