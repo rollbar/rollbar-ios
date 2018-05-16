@@ -1,5 +1,17 @@
 # Change Log
 
+**1.0.0-alpha9**
+- Introduce the `CaptureIp` configuration setting. `CaptureIp` specifies the level of IP information
+  to gather about the client along with items. This uses the enum `CaptureIpType` with the levels:
+  `CaptureIpFull`, `CaptureIpAnonymize`, and `CaptureIpNone`.
+
+  `CaptureIpFull` is the default behaviour which attempts to capture the IP address on the backend
+  based on the IP address of the client used to POST the item.
+  `CaptureIpAnonymize` will attempt to capture the IP address and semi-anonymize it by masking it
+  the least significant bits.
+  `CaptureIpNone` will turn off attempts to capture the IP address.
+
+
 **0.2.0**
 - Changes to better support bitcode in apps, ([pr#29](https://github.com/rollbar/rollbar-ios/pull/29)).
   - Add a version of PLCrashReporter compiled with bitcode support and a Rollbar prefix
