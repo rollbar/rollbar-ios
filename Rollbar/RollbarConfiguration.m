@@ -12,7 +12,7 @@
 #import "RollbarTelemetry.h"
 
 static NSString *NOTIFIER_NAME = @"rollbar-ios";
-static NSString *NOTIFIER_VERSION = @"1.0.0-alpha9";
+static NSString *NOTIFIER_VERSION = @"1.0.0-alpha10";
 static NSString *FRAMEWORK = @"ios";
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
@@ -151,7 +151,7 @@ static NSString *configurationFilePath = nil;
     self.shouldCaptureConnectivity = captureConnectivity;
 }
 
-- (void)setCaptureIp:(CaptureIpType)captureIp {
+- (void)setCaptureIpType:(CaptureIpType)captureIp {
     self.captureIp = captureIp;
 }
 

@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 - (void)setRequestId:(NSString*)requestId;
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
-- (void)setCaptureIp:(CaptureIpType)captureIp;
+- (void)setCaptureIpType:(CaptureIpType)captureIp;
 
 - (NSDictionary *)customData;
 

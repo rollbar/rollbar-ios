@@ -1,5 +1,8 @@
 # Change Log
 
+**1.0.0-alpha10**
+- Change `setCaptureIp:` to `setCaptureIpType:`
+
 **1.0.0-alpha9**
 - Introduce the `CaptureIp` configuration setting. `CaptureIp` specifies the level of IP information
   to gather about the client along with items. This uses the enum `CaptureIpType` with the levels:

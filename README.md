@@ -29,7 +29,7 @@ Be sure to remember to `pod install` after changing your Podfile!
 
 ### Without Cocoapods
 
-1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha9/Rollbar.zip).
+1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha10/Rollbar.zip).
 
 2. Extract the Rollbar directory in the zip file to your Xcode project directory.
 
@@ -513,12 +513,12 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
     CaptureIpNone
 };
 
-- (void)setCaptureIp:(CaptureIpType)captureIp;
+- (void)setCaptureIpType:(CaptureIpType)captureIp;
 ```
 
 *Example*
 ```objc
-[Rollbar.currentConfiguration setCaptureIp:CaptureIpAnonymize];
+[Rollbar.currentConfiguration setCaptureIpType:CaptureIpAnonymize];
 ```
 
 `CaptureIpFull` is the default behaviour which attempts to capture the IP address on the backend
