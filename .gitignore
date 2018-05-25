@@ -17,6 +17,8 @@ DerivedData
 *.hmap
 *.xccheckout
 
+IDEWorkspaceChecks.plist
+
 #CocoaPods
 Pods
 

@@ -13,13 +13,9 @@ Objective-C library for crash reporting and logging with [Rollbar](https://rollb
 
 ### With [Cocoapods](http://cocoapods.org/)
 
-*NOTE:* The installation via Cocoapods may currently not work due to an incompatiability with C++
-libraries and Cocoapods. This is being resolved, but in the meantime installation via the
-downloadable Framework below should be the way forward.
-
 In your Podfile:
 
-    pod "Rollbar", "~> 1.0.0-alpha"
+    pod "Rollbar", "~> 1.0.0-alpha11"
 
 Make sure to declare your platform as `ios` at the top of your Podfile. E.g:
 
@@ -29,7 +25,11 @@ Be sure to remember to `pod install` after changing your Podfile!
 
 ### Without Cocoapods
 
-1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha10/Rollbar.zip).
+1. Download the [Rollbar framework](https://github.com/rollbar/rollbar-ios/releases/download/v1.0.0-alpha11/Rollbar.zip).
+   Note that depending on the version of Xcode you use to build your app, you might have to download
+   a different version of the framework if you have bitcode enabled. This is because of the way
+   handles bitcode serialization. The latest release on the [releases page](https://github.com/rollbar/rollbar-ios/releases)
+   should have a zip file for the most recent versions of Xcode.
 
 2. Extract the Rollbar directory in the zip file to your Xcode project directory.
 
