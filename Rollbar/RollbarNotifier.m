@@ -419,10 +419,10 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)queuePayload:(NSDictionary*)payload {
-    [self performSelector:@selector(queuePayloadOnThread:) onThread:rollbarThread withObject:payload waitUntilDone:NO];
+    [self performSelector:@selector(queuePayload_OnlyCallOnThread:) onThread:rollbarThread withObject:payload waitUntilDone:NO];
 }
 
-- (void)queuePayloadOnThread:(NSDictionary *)payload {
+- (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil safe:true]];
@@ -660,6 +660,10 @@ static BOOL isNetworkReachable = YES;
         }
         [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:RollbarWarning status:status extraData:@{@"network": networkType}];
     }
+}
+
+- (NSThread *)_rollbarThread {
+    return rollbarThread;
 }
 
 @end

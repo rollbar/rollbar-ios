@@ -13,6 +13,8 @@
 #define TELEMETRY_FILE_NAME @"rollbar.telemetry"
 
 static BOOL captureLog = false;
+static dispatch_queue_t queue = nil;
+static dispatch_queue_t globalConcurrentQueue = nil;
 
 @implementation RollbarTelemetry
 
@@ -22,6 +24,8 @@ static BOOL captureLog = false;
 
     dispatch_once(&onceToken, ^{
         sharedInstance = [[RollbarTelemetry alloc] init];
+        queue = dispatch_queue_create("com.rollbar.telemetryQueue", DISPATCH_QUEUE_SERIAL);
+        globalConcurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     });
     return sharedInstance;
 }
@@ -64,18 +68,23 @@ static BOOL captureLog = false;
  * Sets whether or not to use replacement log.
  */
 - (void)setCaptureLog:(BOOL)shouldCapture {
-    captureLog = shouldCapture;
+    dispatch_async(queue, ^{
+        self.captureLog = shouldCapture;
+    });
 }
 
 /**
  * Sets max number of telemetry events to capture.
  */
 - (void)setDataLimit:(NSInteger)dataLimit {
-    limit = dataLimit;
-    [self truncateDataArray];
+    dispatch_async(queue, ^{
+        limit = dataLimit;
+        [self truncateDataArray];
+    });
 }
 
 - (void)truncateDataArray {
+    dispatch_assert_queue_debug(queue);
     if (limit > 0 && dataArray.count > limit) {
         [dataArray removeObjectsInRange:NSMakeRange(0, dataArray.count - limit)];
     }
@@ -88,9 +97,15 @@ static BOOL captureLog = false;
     NSString *telemetryLvl = RollbarStringFromLevel(level);
     NSString *telemetryType = RollbarStringFromTelemetryType(type);
     NSDictionary *info = @{@"level": telemetryLvl, @"type": telemetryType, @"source": @"client", @"timestamp_ms": [NSString stringWithFormat:@"%.0f", round(timestamp)], @"body": data };
-    [dataArray addObject:info];
-    [self truncateDataArray];
-    [self saveTelemetryData];
+
+    dispatch_async(queue, ^{
+        [dataArray addObject:info];
+        [self truncateDataArray];
+        NSData *data = [self serializedDataArray];
+        dispatch_async(globalConcurrentQueue, ^{
+            [self saveTelemetryData:data];
+        });
+    });
 }
 
 #pragma mark -
@@ -188,18 +203,32 @@ static BOOL captureLog = false;
 #pragma mark -
 
 - (NSArray *)getAllData {
-    return [NSArray arrayWithArray:dataArray];
+    __block NSArray *dataCopy = nil;
+    dispatch_sync(queue, ^{
+        dataCopy = [dataArray copy];
+    });
+    return dataCopy;
 }
 
 - (void)clearAllData {
-    [dataArray removeAllObjects];
-    [self saveTelemetryData];
+    dispatch_async(queue, ^{
+        [dataArray removeAllObjects];
+        NSData *data = [self serializedDataArray];
+        dispatch_async(globalConcurrentQueue, ^{
+            [self saveTelemetryData:data];
+        });
+    });
 }
 
 #pragma mark - Data storage
 
-- (void)saveTelemetryData {
+- (NSData *)serializedDataArray {
+    dispatch_assert_queue_debug(queue);
     NSData *data = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil safe:true];
+    return data;
+}
+
+- (void)saveTelemetryData:(NSData *)data {
     [data writeToFile:dataFilePath atomically:true];
 }
 
