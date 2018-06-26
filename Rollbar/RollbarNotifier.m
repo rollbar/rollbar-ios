@@ -66,6 +66,7 @@ static BOOL isNetworkReachable = YES;
                                 @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
             }
 
+
             // Deals with sending items that have been queued up
             rollbarThread = [[RollbarThread alloc] initWithNotifier:self];
             [rollbarThread start];
@@ -418,6 +419,10 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)queuePayload:(NSDictionary*)payload {
+    [self performSelector:@selector(queuePayloadOnThread:) onThread:rollbarThread withObject:payload waitUntilDone:NO];
+}
+
+- (void)queuePayloadOnThread:(NSDictionary *)payload {
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil safe:true]];
