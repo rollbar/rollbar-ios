@@ -69,7 +69,7 @@ static dispatch_queue_t globalConcurrentQueue = nil;
  */
 - (void)setCaptureLog:(BOOL)shouldCapture {
     dispatch_async(queue, ^{
-        self.captureLog = shouldCapture;
+        captureLog = shouldCapture;
     });
 }
 

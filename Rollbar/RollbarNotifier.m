@@ -66,7 +66,6 @@ static BOOL isNetworkReachable = YES;
                                 @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
             }
 
-
             // Deals with sending items that have been queued up
             rollbarThread = [[RollbarThread alloc] initWithNotifier:self];
             [rollbarThread start];
@@ -662,6 +661,7 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
+// THIS IS ONLY FOR TESTS, DO NOT ACTUALLY USE THIS METHOD, HENCE BEING "PRIVATE"
 - (NSThread *)_rollbarThread {
     return rollbarThread;
 }
