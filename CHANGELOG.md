@@ -2,6 +2,11 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.0.0**
+
+- Fix some threading issues
+- Drop the alpha moniker
+
 **1.0.0-alpha11**
 
 - Framework builds for each of the recent versions of Xcode

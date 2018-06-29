@@ -1,9 +1,3 @@
-# ALPHA RELEASE
-
-This library is currently under heavy development, however it should be usable and therefore please
-[file an issue](https://github.com/rollbar/rollbar-ios/issues) if you have any problems working with
-this library.
-
 # Rollbar for iOS
 
 Objective-C & Swift library for crash reporting and logging with [Rollbar](https://rollbar.com).
