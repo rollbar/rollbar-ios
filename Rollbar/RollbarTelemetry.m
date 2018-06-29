@@ -21,7 +21,11 @@ static dispatch_queue_t queue = nil;
 // want or need to block our state queue by file system writes
 static dispatch_queue_t fileQueue = nil;
 
-@implementation RollbarTelemetry
+@implementation RollbarTelemetry {
+    NSMutableArray *_dataArray;
+    NSInteger _limit;
+    NSString *_dataFilePath;
+}
 
 + (instancetype)sharedInstance {
     static RollbarTelemetry *sharedInstance = nil;
@@ -54,13 +58,13 @@ static dispatch_queue_t fileQueue = nil;
 - (id)init {
     self = [super init];
     if (self) {
-        dataArray = [NSMutableArray array];
-        limit = DEFAULT_DATA_LIMIT;
+        _dataArray = [NSMutableArray array];
+        _limit = DEFAULT_DATA_LIMIT;
         
         // Create cache file
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString *cachesDirectory = [paths objectAtIndex:0];
-        dataFilePath = [cachesDirectory stringByAppendingPathComponent:TELEMETRY_FILE_NAME];
+        _dataFilePath = [cachesDirectory stringByAppendingPathComponent:TELEMETRY_FILE_NAME];
         
         [self loadTelemetryData];
     }
@@ -83,7 +87,7 @@ static dispatch_queue_t fileQueue = nil;
  */
 - (void)setDataLimit:(NSInteger)dataLimit {
     dispatch_async(queue, ^{
-        self.limit = dataLimit;
+        self->_limit = dataLimit;
         [self truncateDataArray];
     });
 }
@@ -92,8 +96,8 @@ static dispatch_queue_t fileQueue = nil;
     if (@available(iOS 10.0, *)) {
         dispatch_assert_queue_debug(queue);
     }
-    if (limit > 0 && dataArray.count > limit) {
-        [dataArray removeObjectsInRange:NSMakeRange(0, dataArray.count - limit)];
+    if (_limit > 0 && _dataArray.count > _limit) {
+        [_dataArray removeObjectsInRange:NSMakeRange(0, _dataArray.count - _limit)];
     }
 }
 
@@ -106,7 +110,7 @@ static dispatch_queue_t fileQueue = nil;
     NSDictionary *info = @{@"level": telemetryLvl, @"type": telemetryType, @"source": @"client", @"timestamp_ms": [NSString stringWithFormat:@"%.0f", round(timestamp)], @"body": data };
 
     dispatch_async(queue, ^{
-        [self.dataArray addObject:info];
+        [self->_dataArray addObject:info];
         [self truncateDataArray];
         NSData *data = [self serializedDataArray];
         dispatch_async(fileQueue, ^{
@@ -212,14 +216,14 @@ static dispatch_queue_t fileQueue = nil;
 - (NSArray *)getAllData {
     __block NSArray *dataCopy = nil;
     dispatch_sync(queue, ^{
-        dataCopy = [self.dataArray copy];
+        dataCopy = [self->_dataArray copy];
     });
     return dataCopy;
 }
 
 - (void)clearAllData {
     dispatch_async(queue, ^{
-        [self.dataArray removeAllObjects];
+        [self->_dataArray removeAllObjects];
         NSData *data = [self serializedDataArray];
         dispatch_async(fileQueue, ^{
             [self saveTelemetryData:data];
@@ -237,7 +241,7 @@ static dispatch_queue_t fileQueue = nil;
     if (@available(iOS 10.0, *)) {
         dispatch_assert_queue_debug(queue);
     }
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil safe:true];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:_dataArray options:0 error:nil safe:true];
     return data;
 }
 
@@ -245,19 +249,19 @@ static dispatch_queue_t fileQueue = nil;
     if (@available(iOS 10.0, *)) {
         dispatch_assert_queue_debug(fileQueue);
     }
-    [data writeToFile:dataFilePath atomically:true];
+    [data writeToFile:_dataFilePath atomically:true];
 }
 
 // This must only be called in init, calls to this method at any other time
 // would present a race condition because dataArray is modified without
 // protecting which thread/queue we are being called from
 - (void)loadTelemetryData {
-    if ([[NSFileManager defaultManager] fileExistsAtPath:dataFilePath]) {
-        NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_dataFilePath]) {
+        NSData *data = [NSData dataWithContentsOfFile:_dataFilePath];
         if (data) {
             NSArray *telemetryDataList = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             if (telemetryDataList) {
-                dataArray = [telemetryDataList mutableCopy];
+                _dataArray = [telemetryDataList mutableCopy];
             }
         }
     }

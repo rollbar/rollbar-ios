@@ -12,11 +12,7 @@
 
 #define NSLog(args...) [RollbarTelemetry NSLogReplacement:args];
 
-@interface RollbarTelemetry : NSObject {
-    NSMutableArray *dataArray;
-    NSInteger limit;
-    NSString *dataFilePath;
-}
+@interface RollbarTelemetry : NSObject
 
 + (instancetype)sharedInstance;
 + (void)NSLogReplacement:(NSString *)format, ...;
