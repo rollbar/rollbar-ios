@@ -418,6 +418,10 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)queuePayload:(NSDictionary*)payload {
+    [self performSelector:@selector(queuePayload_OnlyCallOnThread:) onThread:rollbarThread withObject:payload waitUntilDone:NO];
+}
+
+- (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil safe:true]];
@@ -655,6 +659,11 @@ static BOOL isNetworkReachable = YES;
         }
         [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:RollbarWarning status:status extraData:@{@"network": networkType}];
     }
+}
+
+// THIS IS ONLY FOR TESTS, DO NOT ACTUALLY USE THIS METHOD, HENCE BEING "PRIVATE"
+- (NSThread *)_rollbarThread {
+    return rollbarThread;
 }
 
 @end

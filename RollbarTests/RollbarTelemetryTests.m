@@ -14,6 +14,10 @@
 
 @end
 
+@interface RollbarNotifier (Tests)
+- (NSThread *)_rollbarThread;
+@end
+
 @implementation RollbarTelemetryTests
 
 - (void)setUp {
@@ -29,6 +33,8 @@
     [super tearDown];
 }
 
+- (void)doNothing {}
+
 - (void)testTelemetryCapture {
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"from" to:@"to"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"status"];
@@ -37,6 +43,9 @@
     [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"name" reason:@"reason" userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"data": @"content"}];
     [Rollbar debug:@"Test"];
+
+    // We need to block to ensure the file we are trying to read from has been written to
+    [self performSelector:@selector(doNothing) onThread:[Rollbar.currentNotifier _rollbarThread] withObject:nil waitUntilDone:YES];
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
