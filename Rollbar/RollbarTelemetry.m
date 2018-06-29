@@ -83,13 +83,15 @@ static dispatch_queue_t fileQueue = nil;
  */
 - (void)setDataLimit:(NSInteger)dataLimit {
     dispatch_async(queue, ^{
-        limit = dataLimit;
+        self.limit = dataLimit;
         [self truncateDataArray];
     });
 }
 
 - (void)truncateDataArray {
-    dispatch_assert_queue_debug(queue);
+    if (@available(iOS 10.0, *)) {
+        dispatch_assert_queue_debug(queue);
+    }
     if (limit > 0 && dataArray.count > limit) {
         [dataArray removeObjectsInRange:NSMakeRange(0, dataArray.count - limit)];
     }
@@ -104,7 +106,7 @@ static dispatch_queue_t fileQueue = nil;
     NSDictionary *info = @{@"level": telemetryLvl, @"type": telemetryType, @"source": @"client", @"timestamp_ms": [NSString stringWithFormat:@"%.0f", round(timestamp)], @"body": data };
 
     dispatch_async(queue, ^{
-        [dataArray addObject:info];
+        [self.dataArray addObject:info];
         [self truncateDataArray];
         NSData *data = [self serializedDataArray];
         dispatch_async(fileQueue, ^{
@@ -210,14 +212,14 @@ static dispatch_queue_t fileQueue = nil;
 - (NSArray *)getAllData {
     __block NSArray *dataCopy = nil;
     dispatch_sync(queue, ^{
-        dataCopy = [dataArray copy];
+        dataCopy = [self.dataArray copy];
     });
     return dataCopy;
 }
 
 - (void)clearAllData {
     dispatch_async(queue, ^{
-        [dataArray removeAllObjects];
+        [self.dataArray removeAllObjects];
         NSData *data = [self serializedDataArray];
         dispatch_async(fileQueue, ^{
             [self saveTelemetryData:data];
@@ -232,13 +234,17 @@ static dispatch_queue_t fileQueue = nil;
 // on the internal queue to serialize the dataArray read, but the result
 // is free to be used anywhere
 - (NSData *)serializedDataArray {
-    dispatch_assert_queue_debug(queue);
+    if (@available(iOS 10.0, *)) {
+        dispatch_assert_queue_debug(queue);
+    }
     NSData *data = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil safe:true];
     return data;
 }
 
 - (void)saveTelemetryData:(NSData *)data {
-    dispatch_assert_queue_debug(fileQueue);
+    if (@available(iOS 10.0, *)) {
+        dispatch_assert_queue_debug(fileQueue);
+    }
     [data writeToFile:dataFilePath atomically:true];
 }
 
