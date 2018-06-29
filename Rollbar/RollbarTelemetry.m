@@ -13,8 +13,13 @@
 #define TELEMETRY_FILE_NAME @"rollbar.telemetry"
 
 static BOOL captureLog = false;
+
+// this queue is used for serializing state changes to the various
+// state in this class: captureLog, limit, dataArray
 static dispatch_queue_t queue = nil;
-static dispatch_queue_t globalConcurrentQueue = nil;
+// this queue is used for dispatching file system writes, we don't
+// want or need to block our state queue by file system writes
+static dispatch_queue_t fileQueue = nil;
 
 @implementation RollbarTelemetry
 
@@ -25,7 +30,7 @@ static dispatch_queue_t globalConcurrentQueue = nil;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[RollbarTelemetry alloc] init];
         queue = dispatch_queue_create("com.rollbar.telemetryQueue", DISPATCH_QUEUE_SERIAL);
-        globalConcurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        fileQueue = dispatch_queue_create("com.rollbar.telemetryFileQueue", DISPATCH_QUEUE_SERIAL);
     });
     return sharedInstance;
 }
@@ -102,7 +107,7 @@ static dispatch_queue_t globalConcurrentQueue = nil;
         [dataArray addObject:info];
         [self truncateDataArray];
         NSData *data = [self serializedDataArray];
-        dispatch_async(globalConcurrentQueue, ^{
+        dispatch_async(fileQueue, ^{
             [self saveTelemetryData:data];
         });
     });
@@ -214,7 +219,7 @@ static dispatch_queue_t globalConcurrentQueue = nil;
     dispatch_async(queue, ^{
         [dataArray removeAllObjects];
         NSData *data = [self serializedDataArray];
-        dispatch_async(globalConcurrentQueue, ^{
+        dispatch_async(fileQueue, ^{
             [self saveTelemetryData:data];
         });
     });
@@ -222,6 +227,10 @@ static dispatch_queue_t globalConcurrentQueue = nil;
 
 #pragma mark - Data storage
 
+// This is used for getting a read-only copy of our shared dataArray
+// which can later be written to a file. This method must be called
+// on the internal queue to serialize the dataArray read, but the result
+// is free to be used anywhere
 - (NSData *)serializedDataArray {
     dispatch_assert_queue_debug(queue);
     NSData *data = [NSJSONSerialization dataWithJSONObject:dataArray options:0 error:nil safe:true];
@@ -229,9 +238,13 @@ static dispatch_queue_t globalConcurrentQueue = nil;
 }
 
 - (void)saveTelemetryData:(NSData *)data {
+    dispatch_assert_queue_debug(fileQueue);
     [data writeToFile:dataFilePath atomically:true];
 }
 
+// This must only be called in init, calls to this method at any other time
+// would present a race condition because dataArray is modified without
+// protecting which thread/queue we are being called from
 - (void)loadTelemetryData {
     if ([[NSFileManager defaultManager] fileExistsAtPath:dataFilePath]) {
         NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
