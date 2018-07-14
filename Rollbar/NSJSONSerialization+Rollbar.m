@@ -14,7 +14,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-+ (nullable NSData *)dataWithJSONObject:(id)obj options:(NSJSONWritingOptions)opt error:(NSError **)error safe:(BOOL)safe {
++ (nullable NSData *)dataWithJSONObject:(id)obj
+                                options:(NSJSONWritingOptions)opt
+                                  error:(NSError **)error
+                                   safe:(BOOL)safe {
     if (safe) {
         if ([obj isKindOfClass:[NSArray class]]) {
             NSMutableArray *newArr = [NSMutableArray array];
@@ -64,6 +67,23 @@ NS_ASSUME_NONNULL_BEGIN
         }
     }];
     return safeData;
+}
+
++ (unsigned long)measureJSONDataByteSize:(NSData*)jsonData {
+    
+    // make sure jsonData was produced using following options:
+    //   NSData* jsonData = [NSJSONSerialization dataWithJSONObject:info
+    //                                                      options:NSJSONWritingPrettyPrinted
+    //                                                        error:&error];
+    
+    NSString* jsonString = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding
+                            ];
+
+    // calculate bytesize of the jsonString:
+    NSUInteger totalBytes = [jsonString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    
+    return totalBytes;
 }
 
 NS_ASSUME_NONNULL_END

@@ -37,7 +37,9 @@ static BOOL isNetworkReachable = YES;
 
 @implementation RollbarNotifier
 
-- (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot {
+- (id)initWithAccessToken:(NSString*)accessToken
+            configuration:(RollbarConfiguration*)configuration
+                   isRoot:(BOOL)isRoot {
 
     if ((self = [super init])) {
         [self updateAccessToken:accessToken configuration:configuration isRoot:isRoot];
@@ -99,8 +101,18 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (void)log:(NSString*)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*) context {
-    NSDictionary *payload = [self buildPayloadWithLevel:level message:message exception:exception extra:data crashReport:nil context:context];
+- (void)log:(NSString*)level
+    message:(NSString*)message
+  exception:(NSException*)exception
+       data:(NSDictionary*)data
+    context:(NSString*) context {
+    NSDictionary *payload = [self buildPayloadWithLevel:level
+                                                message:message
+                                              exception:exception
+                                                  extra:data
+                                            crashReport:nil
+                                                context:context
+                             ];
     if (payload) {
         [self queuePayload:payload];
     }
@@ -292,7 +304,12 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (NSDictionary*)buildPayloadWithLevel:(NSString*)level message:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport context:(NSString*)context {
+- (NSDictionary*)buildPayloadWithLevel:(NSString*)level
+                               message:(NSString*)message
+                             exception:(NSException*)exception
+                                 extra:(NSDictionary*)extra
+                           crashReport:(NSString*)crashReport
+                               context:(NSString*)context {
     
     NSDictionary *clientData = [self buildClientData];
     NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
@@ -344,7 +361,8 @@ static BOOL isNetworkReachable = YES;
     return @{@"crash_report": @{@"raw": crashReport}};
 }
 
-- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message extra:(NSDictionary*)extra {
+- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message
+                                       extra:(NSDictionary*)extra {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     result[@"body"] = message ? message : @"";
     
@@ -394,7 +412,10 @@ static BOOL isNetworkReachable = YES;
     return buf ? buf : @"Unknown";
 }
 
-- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message exception:(NSException*)exception extra:(NSDictionary*)extra crashReport:(NSString*)crashReport {
+- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message
+                                   exception:(NSException*)exception
+                                       extra:(NSDictionary*)extra
+                                 crashReport:(NSString*)crashReport {
     NSDictionary *payloadBody;
     if (crashReport) {
         payloadBody = [self buildPayloadBodyWithCrashReport:crashReport];
@@ -418,7 +439,11 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)queuePayload:(NSDictionary*)payload {
-    [self performSelector:@selector(queuePayload_OnlyCallOnThread:) onThread:rollbarThread withObject:payload waitUntilDone:NO];
+    [self performSelector:@selector(queuePayload_OnlyCallOnThread:)
+                 onThread:rollbarThread
+               withObject:payload
+            waitUntilDone:NO
+     ];
 }
 
 - (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
@@ -430,7 +455,9 @@ static BOOL isNetworkReachable = YES;
     [[RollbarTelemetry sharedInstance] clearAllData];
 }
 
-- (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken nextOffset:(NSUInteger)nextOffset {
+- (BOOL)sendItems:(NSArray*)itemData
+  withAccessToken:(NSString*)accessToken
+       nextOffset:(NSUInteger)nextOffset {
     NSMutableArray *payloadItems = [NSMutableArray array];
     for (NSDictionary *item in itemData) {
         NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
@@ -491,7 +518,9 @@ static BOOL isNetworkReachable = YES;
     return result;
 }
 
-- (BOOL)checkPayloadResponse:(NSURLResponse*)response error:(NSError*)error data:(NSData*)data {
+- (BOOL)checkPayloadResponse:(NSURLResponse*)response
+                       error:(NSError*)error
+                        data:(NSData*)data {
     if (error) {
         RollbarLog(@"There was an error reporting to Rollbar");
         RollbarLog(@"Error: %@", [error localizedDescription]);
@@ -519,7 +548,8 @@ static BOOL isNetworkReachable = YES;
 
 #pragma mark - Payload truncate
 
-- (void)createMutablePayloadWithData:(NSMutableDictionary *)data forPath:(NSString *)path {
+- (void)createMutablePayloadWithData:(NSMutableDictionary *)data
+                             forPath:(NSString *)path {
     NSArray *pathComponents = [path componentsSeparatedByString:@"."];
     NSString *currentPath = @"";
 
@@ -538,7 +568,8 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (void)truncatePayload:(NSMutableDictionary *)data forKeyPath:(NSString *)keypath {
+- (void)truncatePayload:(NSMutableDictionary *)data
+             forKeyPath:(NSString *)keypath {
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil safe:true];
     NSInteger dataSize = jsonPayload.length * 0.001;
 
@@ -621,7 +652,9 @@ static BOOL isNetworkReachable = YES;
 
 #pragma mark - Update configuration methods
 
-- (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+- (void)updateAccessToken:(NSString*)accessToken
+            configuration:(RollbarConfiguration *)configuration
+                   isRoot:(BOOL)isRoot {
     if (configuration) {
         self.configuration = configuration;
     } else {
@@ -657,7 +690,10 @@ static BOOL isNetworkReachable = YES;
         else if (networkStatus == ReachableViaWWAN) {
             networkType = @"Cellular";
         }
-        [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:RollbarWarning status:status extraData:@{@"network": networkType}];
+        [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:RollbarWarning
+                                                                    status:status
+                                                                 extraData:@{@"network": networkType}
+         ];
     }
 }
 
