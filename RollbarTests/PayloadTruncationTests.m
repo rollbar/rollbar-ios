@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 #import "RollbarPayloadTruncator.h"
+#import "Rollbar.h"
+#import "RollbarTestUtil.h"
 
 @interface PayloadTruncationTests : XCTestCase
 
@@ -17,11 +19,14 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    RollbarClearLogFile();
+    if (!Rollbar.currentConfiguration) {
+        [Rollbar initWithAccessToken:@""];
+    }
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
     [super tearDown];
 }
 
@@ -68,18 +73,58 @@
 - (void)testTruncateStringToTotalBytes {
     
     NSString *testString = @"ABCDE-ABCDE-ABCDE";
+    const int truncationBytesLimit = 10;
+    XCTAssertTrue(truncationBytesLimit
+                  < [RollbarPayloadTruncator measureTotalEncodingBytes:testString]
+                  );
     NSString *truncatedString = [RollbarPayloadTruncator truncateString:testString
-                                                           toTotalBytes:10];
+                                                           toTotalBytes:truncationBytesLimit];
     XCTAssertTrue([RollbarPayloadTruncator measureTotalEncodingBytes:testString]
                   > [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]);
+    XCTAssertTrue(truncationBytesLimit
+                  >= [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]
+                  );
     XCTAssertTrue(testString.length > truncatedString.length);
     
     testString = @"abcd";
     truncatedString = [RollbarPayloadTruncator truncateString:testString
-                                                 toTotalBytes:10];
+                                                 toTotalBytes:truncationBytesLimit];
     XCTAssertTrue([RollbarPayloadTruncator measureTotalEncodingBytes:testString]
                   == [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]);
     XCTAssertTrue(testString.length == truncatedString.length);
     XCTAssertTrue(testString == truncatedString);
+}
+
+- (void)testPayloadTruncation {
+
+    @try {
+        NSArray *crew = [NSArray arrayWithObjects:
+                         @"Dave",
+                         @"Heywood",
+                         @"Frank", nil];
+        // This will throw an exception.
+        NSLog(@"%@", [crew objectAtIndex:10]);
+    }
+    @catch (NSException *exception) {
+        [Rollbar error:nil exception:exception];
+    }
+//    @catch (id exception) {
+//        [Rollbar error:@"GOT AN EXCEPTION" exception:exception];
+//    }
+    @finally {
+        NSLog(@"Cleaning up");
+    }
+    
+    [NSThread sleepForTimeInterval:9.0f];
+    NSArray *items = RollbarReadLogItemFromFile();
+    
+    for (id payload in items) {
+        NSMutableArray *frames = [payload mutableArrayValueForKeyPath:@"body.trace.frames"];
+        unsigned long totalFramesBeforeTruncation = frames.count;
+        [RollbarPayloadTruncator truncatePayload:payload toTotalBytes:20];
+        unsigned long totalFramesAfterTruncation = frames.count;
+        XCTAssertTrue(totalFramesBeforeTruncation > totalFramesAfterTruncation);
+        XCTAssertTrue(20 == totalFramesAfterTruncation);
+    }
 }
 @end

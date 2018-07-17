@@ -38,13 +38,18 @@ NSArray* RollbarReadLogItemFromFile() {
     
     NSMutableArray *items = [NSMutableArray array];
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
-        NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:[line dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        NSMutableDictionary *payload =
+            [NSJSONSerialization JSONObjectWithData:[line dataUsingEncoding:NSUTF8StringEncoding]
+                                            options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                              error:nil
+             ];
+        
         
         if (!payload) {
             return;
         }
         
-        NSDictionary *data = payload[@"data"];
+        NSMutableDictionary *data = payload[@"data"];
         [items addObject:data];
     }];
     

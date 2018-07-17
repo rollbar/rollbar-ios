@@ -13,6 +13,9 @@
 +(void)truncatePayloads:(NSArray*)payloads
           toMaxByteSize:(int)maxByteSize;
 
++(void)truncatePayload:(NSMutableDictionary*)payload
+          toTotalBytes:(unsigned long) limit;
+
 +(unsigned long)measureTotalEncodingBytes:(NSString*)string
                             usingEncoding:(NSStringEncoding)encoding;
 +(unsigned long)measureTotalEncodingBytes:(NSString*)string;
