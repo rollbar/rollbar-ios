@@ -11,7 +11,7 @@
 @interface RollbarPayloadTruncator : NSObject
 
 +(void)truncatePayloads:(NSArray*)payloads
-          toMaxByteSize:(int)maxByteSize;
+          toMaxByteSize:(unsigned long)maxByteSize;
 
 +(void)truncatePayload:(NSMutableDictionary*)payload
           toTotalBytes:(unsigned long) limit;
@@ -21,7 +21,7 @@
 +(unsigned long)measureTotalEncodingBytes:(NSString*)string;
 
 +(NSString*)truncateString:(NSString*)inputString
-              toTotalBytes:(int)totalBytesLimit;
+              toTotalBytes:(unsigned long)totalBytesLimit;
 
 /*
 @property (readonly) int maxPayloadSizeInBytes;

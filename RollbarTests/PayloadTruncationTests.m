@@ -115,7 +115,7 @@
         NSLog(@"Cleaning up");
     }
     
-    [NSThread sleepForTimeInterval:9.0f];
+    [NSThread sleepForTimeInterval:5.0f];
     NSArray *items = RollbarReadLogItemFromFile();
     
     for (id payload in items) {
@@ -125,6 +125,13 @@
         unsigned long totalFramesAfterTruncation = frames.count;
         XCTAssertTrue(totalFramesBeforeTruncation > totalFramesAfterTruncation);
         XCTAssertTrue(20 == totalFramesAfterTruncation);
+        
+        NSMutableString *simulatedLongString = [@"1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_" mutableCopy];
+        [[frames objectAtIndex:0] setObject:simulatedLongString forKey:@"library"];
+        XCTAssertTrue([[[frames objectAtIndex:0] objectForKey:@"library"] length] > 256);
+        [RollbarPayloadTruncator truncatePayload:payload toTotalBytes:20];
+        XCTAssertTrue(totalFramesAfterTruncation == frames.count);
+        XCTAssertTrue([[[frames objectAtIndex:0] objectForKey:@"library"] length] <= 256);
     }
 }
 @end

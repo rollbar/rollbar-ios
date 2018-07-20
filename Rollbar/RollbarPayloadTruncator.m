@@ -22,8 +22,11 @@ static NSString *const pathToCrashThreads = @"body.message.extra.crash.threads";
 static const unsigned long payloadHeadCrashThreadsToKeep = 10;
 static const unsigned long payloadTailCrashThreadsToKeep = 10;
 
+static const unsigned long maxStringBytesLimit = 1024;
+static const unsigned long minStringBytesLimit = 256;
+
 +(void)truncatePayloads:(NSArray*)payloads
-          toMaxByteSize:(int)maxByteSize {
+          toMaxByteSize:(unsigned long)maxByteSize {
     
 }
 
@@ -47,28 +50,73 @@ static const unsigned long payloadTailCrashThreadsToKeep = 10;
              ];
     }
     
-//    unsigned long totalPayloadBytes = [NSJSONSerialization measureJSONDataByteSize:jsonPayload];
-//    if (totalPayloadBytes > limit) {
-//        NSArray *keyPaths = @[@"body.message.extra.crash.threads", @"body.trace.frames"];
-//        for (NSString *keyPath in keyPaths) {
-//            NSArray *obj = [payload valueForKeyPath:keyPath];
-//            if (obj) {
-//                [self truncatePayload:data forKeyPath:keyPath];
-//                break;
-//            }
-//        }
-//    }
+    unsigned long stringLimit = maxStringBytesLimit;
+    while (continueTruncation && (stringLimit >= minStringBytesLimit)) {
+        continueTruncation = [RollbarPayloadTruncator truncatePayload:payload
+                                                         toTotalBytes:limit
+                                                byLimitingStringBytes:stringLimit
+                              ];
+        stringLimit /= 2;
+    }
 }
 
 +(BOOL)truncatePayload:(NSMutableDictionary*)payload
           toTotalBytes:(unsigned long) payloadLimit
- byLimitingStringBytes:(unsigned long)stringBytsLimit {
+ byLimitingStringBytes:(unsigned long)stringBytesLimit {
     
     if (![RollbarPayloadTruncator isTruncationNeeded:payload forLimit:payloadLimit]) {
         return FALSE;  //payload is small enough, no need to truncate further...
     }
     
-    return FALSE;
+    [RollbarPayloadTruncator itereateObjectStructure:payload
+                               whileTuncatingStrings:stringBytesLimit
+     ];
+    return TRUE;
+}
+
++(void)itereateObjectStructure:(id)obj whileTuncatingStrings:(unsigned long)stringBytesLimit {
+    
+    if ([obj isKindOfClass:[NSMutableString class]] && [RollbarPayloadTruncator isMutable:obj]) {
+        //truncate the string obj:
+        [obj setString:[RollbarPayloadTruncator truncateString:obj
+                                                  toTotalBytes:stringBytesLimit]
+         ];
+    } else if ([obj isKindOfClass:[NSArray class]]) {
+        //recurse the collection obj's items:
+        [obj enumerateObjectsUsingBlock: ^(id item, NSUInteger idx, BOOL *stop) {
+            [RollbarPayloadTruncator itereateObjectStructure:item
+                                       whileTuncatingStrings:stringBytesLimit
+             ];
+        }];
+    } else if ([obj isKindOfClass:[NSDictionary class]]) {
+        //recurse the collection obj's items:
+        [obj enumerateKeysAndObjectsUsingBlock: ^(id key, id item, BOOL *stop) {
+            //if ([item isKindOfClass:[NSMutableString class]] && ![item respondsToSelector:@selector(setString:)]) {
+            if ([item isKindOfClass:[NSMutableString class]] && ![RollbarPayloadTruncator isMutable:obj]) {
+                NSMutableString *mutableItem = [item mutableCopy];
+                [obj setObject:mutableItem forKey:key];
+                [RollbarPayloadTruncator itereateObjectStructure:mutableItem
+                                           whileTuncatingStrings:stringBytesLimit];
+            }
+            
+            [RollbarPayloadTruncator itereateObjectStructure:item
+                                       whileTuncatingStrings:stringBytesLimit];
+        }];
+    } else if ([obj isKindOfClass:[NSSet class]]) {
+        //recurse the collection obj's items:
+        [obj enumerateObjectsUsingBlock: ^(id item, BOOL *stop) {
+            [RollbarPayloadTruncator itereateObjectStructure:item
+                                       whileTuncatingStrings:stringBytesLimit
+             ];
+        }];
+    } else {
+        //nothing really...
+    }
+}
+
++(BOOL)isMutable:(id)str {
+    NSString *copy = [str copy];
+    return copy != str;
 }
 
 +(BOOL)truncatePayload:(NSMutableDictionary*)payload
@@ -77,16 +125,6 @@ static const unsigned long payloadTailCrashThreadsToKeep = 10;
      keepingHeadsCount:(unsigned long)headsCount
      keepingTailsCount:(unsigned long)tailsCount {
     
-//    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:payload
-//                                                          options:0
-//                                                            error:nil
-//                                                             safe:true
-//                           ];
-//    //unsigned long totalPayloadBytes = [NSJSONSerialization measureJSONDataByteSize:jsonPayload];    
-//    if (jsonPayload.length <= limit) {
-//        return FALSE;  //payload is small enough, no need to truncate further...
-//    }
-//    
     if (![RollbarPayloadTruncator isTruncationNeeded:payload forLimit:payloadLimit]) {
         return FALSE;  //payload is small enough, no need to truncate further...
     }
@@ -99,31 +137,16 @@ static const unsigned long payloadTailCrashThreadsToKeep = 10;
     unsigned long totalItemsToRemove = items.count - headsCount - tailsCount;
     [items removeObjectsInRange:NSMakeRange(headsCount, totalItemsToRemove)];
     
-//    [RollbarPayloadTruncator createMutablePayloadWithData:payload forPath:pathToItems];
-//    NSMutableArray *items = [payload valueForKeyPath:pathToItems]; //[payload mutableArrayValueForKeyPath:pathToItems];
-//    BOOL isMutable = [items isKindOfClass: [NSMutableArray class]];
-//    [payload setValue:@[] forKeyPath:pathToItems];
-//
-//    if (items.count <= (headsCount + tailsCount)) {
-//        return TRUE;
-//    }
-//
-//    unsigned long totalItemsToRemove = items.count - headsCount - tailsCount;
-//    //[items  removeObjectsInRange:NSMakeRange(headsCount, totalItemsToRemove)];
-//    [items removeObjectsInRange:NSMakeRange(headsCount, totalItemsToRemove)];
-//    [payload setValue:items forKeyPath:pathToItems];
-    
     return TRUE;
 }
 
 +(BOOL)isTruncationNeeded:(NSMutableDictionary*)payload forLimit:(unsigned long)payloadBytesLimit {
+    
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:payload
                                                           options:0
                                                             error:nil
                                                              safe:true
                            ];
-    //unsigned long totalPayloadBytes = [NSJSONSerialization measureJSONDataByteSize:jsonPayload];
-    //return (payloadBytesLimit < totalPayloadBytes);
     return (payloadBytesLimit < jsonPayload.length);
 }
 
@@ -146,7 +169,7 @@ static const unsigned long payloadTailCrashThreadsToKeep = 10;
 }
 
 +(NSString*)truncateString:(NSString*)inputString
-              toTotalBytes:(int)totalBytesLimit {
+              toTotalBytes:(unsigned long)totalBytesLimit {
     
     unsigned long currentStringEncoodingBytes =
         [RollbarPayloadTruncator measureTotalEncodingBytes:inputString];
@@ -181,42 +204,6 @@ static const unsigned long payloadTailCrashThreadsToKeep = 10;
     
     return result;
 }
-
-//+(void)createMutablePayloadWithData:(NSMutableDictionary *)data
-//                            forPath:(NSString *)path {
-//    NSArray *pathComponents = [path componentsSeparatedByString:@"."];
-//    NSString *currentPath = @"";
-//
-//    for (int i=0; i<pathComponents.count; i++) {
-//        NSString *part = pathComponents[i];
-//        currentPath = i == 0 ? part : [NSString stringWithFormat:@"%@.%@", currentPath, part];
-//        id val = [data valueForKeyPath:currentPath];
-//        if (!val) return;
-//        if ([val isKindOfClass:[NSArray class]] && ![val isKindOfClass:[NSMutableArray class]]) {
-//            NSMutableArray *newVal = [NSMutableArray arrayWithArray:val];
-//            [data setValue:newVal forKeyPath:currentPath];
-//        } else if ([val isKindOfClass:[NSDictionary class]] && ![val isKindOfClass:[NSMutableDictionary class]]) {
-//            NSMutableDictionary *newVal = [NSMutableDictionary dictionaryWithDictionary:val];
-//            [data setObject:newVal forKey:currentPath];
-//        }
-//    }
-//}
-
-/*
-- (id)initWithPayload:(NSDictionary*)payload
-maxPayloadSizeInBytes:(int)maxPayloadSizeInBytes {
-    return self;
-}
-
-- (id)initWithPayloads:(NSArray*)payloads
- maxPayloadSizeInBytes:(int)maxPayloadSizeInBytes {
-    return self;
-}
-
-- (void)truncate {
-    return;
-}
-*/
 
 @end
 
