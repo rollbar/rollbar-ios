@@ -25,6 +25,11 @@ static const unsigned long payloadTailCrashThreadsToKeep = 10;
 static const unsigned long maxStringBytesLimit = 1024;
 static const unsigned long minStringBytesLimit = 256;
 
+static NSString *const pathToTrace = @"body.trace";
+static NSString *const pathToTraceChain = @"body.trace_chain";
+static const unsigned long maxExceptionMessageChars = 256;
+static const unsigned long maxTraceFrames = 1;
+
 +(void)truncatePayloads:(NSArray*)payloads
           toMaxByteSize:(unsigned long)maxByteSize {
     
@@ -58,6 +63,49 @@ static const unsigned long minStringBytesLimit = 256;
                               ];
         stringLimit /= 2;
     }
+    
+    if (continueTruncation) {
+        continueTruncation = [RollbarPayloadTruncator truncatePayload:payload
+                                                         toTotalBytes:limit
+                                            withExceptionMessageLimit:maxExceptionMessageChars
+                                                  andTraceFramesLimit:maxTraceFrames
+                              ];
+    }
+}
+
++(BOOL)   truncatePayload:(NSMutableDictionary*)payload
+             toTotalBytes:(unsigned long) payloadLimit
+withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
+      andTraceFramesLimit:(unsigned long)traceFramesLimit {
+    
+    if (![RollbarPayloadTruncator isTruncationNeeded:payload forLimit:payloadLimit]) {
+        return FALSE;  //payload is small enough, no need to truncate further...
+    }
+    
+    NSMutableArray *traces = [payload mutableArrayValueForKeyPath:pathToTraceChain];
+    if ((nil == traces) || (0 == traces.count))
+    {
+        traces = [NSMutableArray arrayWithObject:[payload valueForKeyPath:pathToTrace]];
+    }
+    
+    if (nil == traces) {
+        return TRUE;
+    }
+    
+    [traces enumerateObjectsUsingBlock:^(id item, NSUInteger idx, BOOL *stop) {
+        NSMutableDictionary *exception = [item objectForKey:@"exception"];
+        if (nil != exception) {
+            [exception removeObjectForKey:@"description"];
+            NSMutableString *message = [exception objectForKey:@"message"];
+            if (nil != message && message.length > exeptionMessageLimit) {
+                [exception setObject:[message substringWithRange:NSMakeRange(0, exeptionMessageLimit)] forKey:@"message"];
+            }
+        }
+        NSMutableArray *frames = [item objectForKey:@"frames"];
+        [frames removeObjectsInRange:NSMakeRange(traceFramesLimit, frames.count - traceFramesLimit)];
+    }];
+    
+    return TRUE;
 }
 
 +(BOOL)truncatePayload:(NSMutableDictionary*)payload

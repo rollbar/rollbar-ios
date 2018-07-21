@@ -377,7 +377,12 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception {
-    NSDictionary *exceptionInfo = @{@"class": NSStringFromClass([exception class]), @"message": exception.reason, @"description": exception.description};
+
+    NSMutableDictionary *exceptionInfo = [[NSMutableDictionary alloc] init];
+    [exceptionInfo setObject:NSStringFromClass([exception class]) forKey:@"class"];
+    [exceptionInfo setObject:[exception.reason mutableCopy] forKey:@"message"];
+    [exceptionInfo setObject:[exception.description mutableCopy] forKey:@"description"];
+
     NSMutableArray *frames = [NSMutableArray array];
     for (NSString *line in exception.callStackSymbols) {
         NSMutableArray *components =  [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];

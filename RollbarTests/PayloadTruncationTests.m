@@ -124,7 +124,7 @@
         [RollbarPayloadTruncator truncatePayload:payload toTotalBytes:20];
         unsigned long totalFramesAfterTruncation = frames.count;
         XCTAssertTrue(totalFramesBeforeTruncation > totalFramesAfterTruncation);
-        XCTAssertTrue(20 == totalFramesAfterTruncation);
+        XCTAssertTrue(1 == totalFramesAfterTruncation);
         
         NSMutableString *simulatedLongString = [@"1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_1234567890_" mutableCopy];
         [[frames objectAtIndex:0] setObject:simulatedLongString forKey:@"library"];
