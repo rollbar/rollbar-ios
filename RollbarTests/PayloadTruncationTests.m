@@ -115,7 +115,7 @@
         NSLog(@"Cleaning up");
     }
     
-    [NSThread sleepForTimeInterval:5.0f];
+    [NSThread sleepForTimeInterval:1.0f];
     NSArray *items = RollbarReadLogItemFromFile();
     
     for (id payload in items) {

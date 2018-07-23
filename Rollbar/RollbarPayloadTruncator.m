@@ -30,9 +30,23 @@ static NSString *const pathToTraceChain = @"body.trace_chain";
 static const unsigned long maxExceptionMessageChars = 256;
 static const unsigned long maxTraceFrames = 1;
 
++(void)truncatePayloads:(NSArray*)payloads {
+    
+    [RollbarPayloadTruncator truncatePayloads:payloads toMaxByteSize:payloadTotalBytesLimit];
+}
+
 +(void)truncatePayloads:(NSArray*)payloads
           toMaxByteSize:(unsigned long)maxByteSize {
     
+    [payloads enumerateObjectsUsingBlock: ^(id item, NSUInteger idx, BOOL *stop) {
+        
+        [RollbarPayloadTruncator truncatePayload:item toTotalBytes:maxByteSize];
+    }];
+}
+
++(void)truncatePayload:(NSMutableDictionary*)payload {
+
+    [RollbarPayloadTruncator truncatePayload:payload toTotalBytes:payloadTotalBytesLimit];
 }
 
 +(void)truncatePayload:(NSMutableDictionary*)payload

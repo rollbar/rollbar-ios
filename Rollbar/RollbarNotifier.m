@@ -16,6 +16,7 @@
 #import "NSJSONSerialization+Rollbar.h"
 #import "KSCrash.h"
 #import "RollbarTelemetry.h"
+#import "RollbarPayloadTruncator.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
@@ -469,7 +470,7 @@ static BOOL isNetworkReachable = YES;
     NSMutableArray *payloadItems = [NSMutableArray array];
     for (NSDictionary *item in itemData) {
         NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
-        [self truncatePayloadIfNecessary:newItem];
+        [RollbarPayloadTruncator truncatePayload:newItem];
         [payloadItems addObject:newItem];
     }
     NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken, @"data": payloadItems}];
@@ -572,47 +573,6 @@ static BOOL isNetworkReachable = YES;
         } else if ([val isKindOfClass:[NSDictionary class]] && ![val isKindOfClass:[NSMutableDictionary class]]) {
             NSMutableDictionary *newVal = [NSMutableDictionary dictionaryWithDictionary:val];
             [data setValue:newVal forKeyPath:currentPath];
-        }
-    }
-}
-
-- (void)truncatePayload:(NSMutableDictionary *)data
-             forKeyPath:(NSString *)keypath {
-    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil safe:true];
-    NSInteger dataSize = jsonPayload.length * 0.001;
-
-    if (dataSize <= MAX_PAYLOAD_SIZE) {
-        return;
-    }
-
-    [self createMutablePayloadWithData:data forPath:keypath];
-    NSMutableArray *array = [data valueForKeyPath:keypath];
-    [data setValue:@[] forKeyPath:keypath];
-
-    jsonPayload = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil safe:true];
-    NSInteger sizeDiff = dataSize - jsonPayload.length * 0.001;
-
-    double sizePerItem = sizeDiff / (double)array.count;
-    if (dataSize - sizeDiff + (sizePerItem * 2) >= MAX_PAYLOAD_SIZE) {
-        // Not enough to truncate, will do the best we can
-    } else {
-        // Cut the number of items necessary from the middle
-        NSInteger truncateCnt = (dataSize - MAX_PAYLOAD_SIZE) / sizePerItem;
-        NSInteger start = array.count / 2 - truncateCnt / 2;
-        [array removeObjectsInRange:NSMakeRange(start, truncateCnt)];
-    }
-
-    [data setValue:array forKeyPath:keypath];
-}
-
-- (void)truncatePayloadIfNecessary:(NSMutableDictionary *)data {
-    NSArray *keyPaths = @[@"body.message.extra.crash.threads", @"body.trace.frames"];
-
-    for (NSString *keyPath in keyPaths) {
-        NSArray *obj = [data valueForKeyPath:keyPath];
-        if (obj) {
-            [self truncatePayload:data forKeyPath:keyPath];
-            break;
         }
     }
 }
