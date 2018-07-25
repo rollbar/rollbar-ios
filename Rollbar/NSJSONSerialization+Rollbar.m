@@ -74,19 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (unsigned long)measureJSONDataByteSize:(NSData*)jsonData {
     
-    // make sure jsonData was produced using following options:
-    //   NSData* jsonData = [NSJSONSerialization dataWithJSONObject:info
-    //                                                      options:NSJSONWritingPrettyPrinted
-    //                                                        error:&error];
-    
-    NSString* jsonString = [[NSString alloc] initWithData:jsonData
-                                                 encoding:NSUTF8StringEncoding
-                            ];
-
-    // calculate bytesize of the jsonString:
-    NSUInteger totalBytes = [jsonString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-    
-    return totalBytes;
+    return jsonData.length;
 }
 
 NS_ASSUME_NONNULL_END

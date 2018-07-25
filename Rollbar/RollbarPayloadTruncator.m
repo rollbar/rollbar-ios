@@ -250,7 +250,7 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
 
     NSMutableString *result =
         [NSMutableString stringWithString:
-         [inputString substringToIndex:inputString.length - bytesToRemove - 1]
+         [inputString substringToIndex:inputString.length - bytesToRemove]
          ];
     [result appendString:ellipsis];
     currentStringEncoodingBytes = [RollbarPayloadTruncator measureTotalEncodingBytes:result];
