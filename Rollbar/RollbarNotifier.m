@@ -320,7 +320,8 @@ static BOOL isNetworkReachable = YES;
     
     NSDictionary *body = [self buildPayloadBodyWithMessage:message
                                                  exception:exception
-                                                     extra:extra crashReport:crashReport
+                                                     extra:extra
+                                               crashReport:crashReport
                           ];
     
     NSMutableDictionary *data = [@{@"environment": self.configuration.environment,

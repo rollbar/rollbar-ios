@@ -153,16 +153,17 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
     } else if ([obj isKindOfClass:[NSDictionary class]]) {
         //recurse the collection obj's items:
         [obj enumerateKeysAndObjectsUsingBlock: ^(id key, id item, BOOL *stop) {
-            //if ([item isKindOfClass:[NSMutableString class]] && ![item respondsToSelector:@selector(setString:)]) {
-            if ([item isKindOfClass:[NSMutableString class]] && ![RollbarPayloadTruncator isMutable:obj]) {
+
+            if ([item isKindOfClass:[NSMutableString class]] && ![RollbarPayloadTruncator isMutable:item]) {
                 NSMutableString *mutableItem = [item mutableCopy];
                 [obj setObject:mutableItem forKey:key];
                 [RollbarPayloadTruncator itereateObjectStructure:mutableItem
                                            whileTuncatingStrings:stringBytesLimit];
             }
-            
+            else {
             [RollbarPayloadTruncator itereateObjectStructure:item
                                        whileTuncatingStrings:stringBytesLimit];
+            }
         }];
     } else if ([obj isKindOfClass:[NSSet class]]) {
         //recurse the collection obj's items:

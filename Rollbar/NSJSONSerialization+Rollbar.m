@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
                 }
             }
             return [NSJSONSerialization dataWithJSONObject:newArr options:opt error:error];
-        } else if ([obj isKindOfClass:[NSMutableDictionary class]]) {
+        } else if ([obj isKindOfClass:[NSDictionary class]]) {
             return [NSJSONSerialization dataWithJSONObject:[[self class] safeDataFromJSONObject:obj] options:opt error:error];
         }
     }
@@ -55,7 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
             [safeData setObject:[[obj allObjects] componentsJoinedByString:@","] forKey:key];
         } else if ([obj isKindOfClass:[NSData class]]) {
             NSError* error = nil;
-            NSMutableDictionary* json = [NSJSONSerialization JSONObjectWithData:obj options:kNilOptions error:&error];
+            NSMutableDictionary* json =
+                [NSJSONSerialization JSONObjectWithData:obj
+                                                options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                  error:&error];
 
             if (error == nil) {
                 [safeData setObject:[[self class] safeDataFromJSONObject:json] forKey:key];
