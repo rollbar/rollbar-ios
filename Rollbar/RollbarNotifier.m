@@ -120,7 +120,8 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)saveQueueState {
-    NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:nil safe:true];
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:&error safe:true];
     [data writeToFile:stateFilePath atomically:YES];
 }
 
@@ -156,7 +157,8 @@ static BOOL isNetworkReachable = YES;
     }
 
     // Iterate through the items file and send the items in batches.
-    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath andOffset:startOffset];
+    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath
+                                                                  andOffset:startOffset];
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
         NSData *lineData = [line dataUsingEncoding:NSUTF8StringEncoding];
         if (!lineData) {
@@ -164,7 +166,10 @@ static BOOL isNetworkReachable = YES;
             RollbarLog(@"Error converting file line to NSData");
             return;
         }
-        NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:lineData options:0 error:nil];
+        NSError *error;
+        NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:lineData
+                                                                options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                                  error:&error];
 
         if (!payload) {
             // Ignore this line if it isn't valid json and proceed to the next line
@@ -176,7 +181,8 @@ static BOOL isNetworkReachable = YES;
 
         // If the max batch size is reached as the file is being processed,
         // try sending the current batch before starting a new one
-        if ([items count] >= MAX_BATCH_SIZE || (lastAccessToken != nil && [accessToken compare:lastAccessToken] != NSOrderedSame)) {
+        if ([items count] >= MAX_BATCH_SIZE
+            || (lastAccessToken != nil && [accessToken compare:lastAccessToken] != NSOrderedSame)) {
             BOOL shouldContinue = [self sendItems:items withAccessToken:lastAccessToken nextOffset:nextOffset];
 
             if (!shouldContinue) {
@@ -468,15 +474,19 @@ static BOOL isNetworkReachable = YES;
 - (BOOL)sendItems:(NSArray*)itemData
   withAccessToken:(NSString*)accessToken
        nextOffset:(NSUInteger)nextOffset {
+    
     NSMutableArray *payloadItems = [NSMutableArray array];
     for (NSDictionary *item in itemData) {
         NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
-        [RollbarPayloadTruncator truncatePayload:newItem];
         [payloadItems addObject:newItem];
     }
     NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken, @"data": payloadItems}];
-    
-    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload options:0 error:nil safe:true];
+    [RollbarPayloadTruncator truncatePayload:newPayload];
+
+    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload
+                                                          options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                            error:nil
+                                                             safe:true];
     
     BOOL success = [self sendPayload:jsonPayload];
     if (!success) {
@@ -511,10 +521,12 @@ static BOOL isNetworkReachable = YES;
     if (IS_IOS7_OR_HIGHER) {
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            result = [self checkPayloadResponse:response error:error data:data];
-            dispatch_semaphore_signal(sem);
-        }];
+        NSURLSessionDataTask *dataTask =
+            [[NSURLSession sharedSession] dataTaskWithRequest:request
+                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                result = [self checkPayloadResponse:response error:error data:data];
+                                                dispatch_semaphore_signal(sem);
+                                            }];
         [dataTask resume];
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     } else {

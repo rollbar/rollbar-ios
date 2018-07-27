@@ -21,7 +21,8 @@
     [super setUp];
     RollbarClearLogFile();
     if (!Rollbar.currentConfiguration) {
-        [Rollbar initWithAccessToken:@""];
+        [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
+        Rollbar.currentConfiguration.environment = @"unit-tests";
     }
 }
 
@@ -134,4 +135,34 @@
         XCTAssertTrue([[[frames objectAtIndex:0] objectForKey:@"library"] length] <= 256);
     }
 }
+
+- (void)testErrorReportingWithTruncation {
+    
+    @try {
+        NSArray *crew = [NSArray arrayWithObjects:
+                         @"Dave",
+                         @"Heywood",
+                         @"Frank", nil];
+        // This will throw an exception.
+        NSLog(@"%@", [crew objectAtIndex:10]);
+    }
+    @catch (NSException *exception) {
+        NSMutableString *simulatedLongString = [[NSMutableString alloc] initWithCapacity:(512 + 1)*1024];
+        while (simulatedLongString.length < (512 * 1024)) {
+            [simulatedLongString appendString:@"1234567890_"];
+        }
+        [Rollbar critical:simulatedLongString exception:exception data:@{@"extra_truncatable_data": simulatedLongString}];
+    }
+    //    @catch (id exception) {
+    //        [Rollbar error:@"GOT AN EXCEPTION" exception:exception];
+    //    }
+    @finally {
+        NSLog(@"Cleaning up");
+    }
+    
+    [NSThread sleepForTimeInterval:30.0f];
+    
+    
+}
+
 @end
