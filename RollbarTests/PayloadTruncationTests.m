@@ -138,6 +138,13 @@
 
 - (void)testErrorReportingWithTruncation {
     
+    NSMutableString *simulatedLongString = [[NSMutableString alloc] initWithCapacity:(512 + 1)*1024];
+    while (simulatedLongString.length < (512 * 1024)) {
+        [simulatedLongString appendString:@"1234567890_"];
+    }
+
+    [Rollbar critical:@"Message with long extra data" exception:nil data:@{@"extra_truncatable_data": simulatedLongString}];
+
     @try {
         NSArray *crew = [NSArray arrayWithObjects:
                          @"Dave",
@@ -147,10 +154,7 @@
         NSLog(@"%@", [crew objectAtIndex:10]);
     }
     @catch (NSException *exception) {
-        NSMutableString *simulatedLongString = [[NSMutableString alloc] initWithCapacity:(512 + 1)*1024];
-        while (simulatedLongString.length < (512 * 1024)) {
-            [simulatedLongString appendString:@"1234567890_"];
-        }
+
         [Rollbar critical:simulatedLongString exception:exception data:@{@"extra_truncatable_data": simulatedLongString}];
     }
     //    @catch (id exception) {
