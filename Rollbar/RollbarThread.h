@@ -14,6 +14,7 @@
 }
 
 - (id)initWithNotifier:(RollbarNotifier*)aNotifier;
+- (void)updateReportingRate:(NSUInteger)maximumReportsPerMinute;
 
 @property(atomic) BOOL active;
 

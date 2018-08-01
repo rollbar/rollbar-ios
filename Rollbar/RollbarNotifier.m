@@ -658,6 +658,14 @@ static BOOL isNetworkReachable = YES;
     self.configuration.accessToken = accessToken;
 }
 
+- (void)updateReportingRate:(NSUInteger)maximumReportsPerMinute {
+    if (nil != self.configuration) {
+        [self.configuration setReportingRate:maximumReportsPerMinute];
+    }
+    if (nil != rollbarThread) {
+        [rollbarThread updateReportingRate:maximumReportsPerMinute];
+    }
+}
 #pragma mark - Network telemetry data
 
 - (void)captureTelemetryDataForNetwork:(BOOL)reachable {

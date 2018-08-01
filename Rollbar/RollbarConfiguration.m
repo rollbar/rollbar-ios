@@ -35,6 +35,7 @@ static NSString *configurationFilePath = nil;
 @property (atomic, copy) NSString *framework;
 @property (atomic) BOOL shouldCaptureConnectivity;
 @property (atomic) CaptureIpType captureIp;
+@property (atomic) NSUInteger maximumReportsPerMinute;
 
 @end
 
@@ -69,6 +70,7 @@ static NSString *configurationFilePath = nil;
         self.framework = FRAMEWORK;
         self.captureIp = CaptureIpFull;
 
+        [self setReportingRate:60];
         [self setCaptureLogAsTelemetryData:false];
     }
 
@@ -93,6 +95,12 @@ static NSString *configurationFilePath = nil;
     }
 
     return self;
+}
+
+- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
+    self.maximumReportsPerMinute = maximumReportsPerMinute;
+    
+    [self save];
 }
 
 - (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData {
