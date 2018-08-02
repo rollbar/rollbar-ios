@@ -32,12 +32,17 @@
 }
 
 - (void)checkItems {
+    
+#ifdef DEBUG
     RollbarLog(@"Checking items...");
+#endif
     
     if (self.cancelled) {
         if (timer) {
             [timer invalidate];
+            timer = nil;
         }
+        [NSThread exit];
     }
     @autoreleasepool {
         [notifier processSavedItems];
