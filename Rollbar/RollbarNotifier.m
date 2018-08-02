@@ -70,7 +70,9 @@ static BOOL isNetworkReachable = YES;
             }
 
             // Deals with sending items that have been queued up
-            rollbarThread = [[RollbarThread alloc] initWithNotifier:self];
+            rollbarThread = [[RollbarThread alloc] initWithNotifier:self
+                                               andWithReportingRate:configuration.maximumReportsPerMinute
+                             ];
             [rollbarThread start];
 
             // Listen for reachability status so that items are only sent when the internet is available
@@ -663,7 +665,11 @@ static BOOL isNetworkReachable = YES;
         [self.configuration setReportingRate:maximumReportsPerMinute];
     }
     if (nil != rollbarThread) {
-        [rollbarThread updateReportingRate:maximumReportsPerMinute];
+        [rollbarThread cancel];
+        rollbarThread = [[RollbarThread alloc] initWithNotifier:self
+                                           andWithReportingRate:maximumReportsPerMinute
+                         ];
+        [rollbarThread start];
     }
 }
 #pragma mark - Network telemetry data
