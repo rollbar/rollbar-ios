@@ -324,8 +324,19 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
                                    @"version": self.configuration.notifierVersion};
     
-    NSDictionary *customData = self.configuration.customData;
-    
+    NSMutableDictionary *customData =
+        [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];
+    if (crashReport || exception) {
+        // neither crash report no exception payload objects have placeholders for any extra data
+        // or an extra message, let's preserve them as the custom data:
+        if (extra) {
+            customData[@"error.extra"] = extra;
+        }
+        if (message && message.length > 0) {
+            customData[@"error.message"] = message;
+        }
+    }
+
     NSDictionary *body = [self buildPayloadBodyWithMessage:message
                                                  exception:exception
                                                      extra:extra
@@ -408,13 +419,6 @@ static BOOL isNetworkReachable = YES;
     return @{@"trace": @{@"frames": frames, @"exception": exceptionInfo}};
 }
 
-- (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception message:(NSString*)message {
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    result[@"body"] = [NSString stringWithFormat:@"%@\r\r%@\r\r%@", message, exception.reason, [exception.callStackSymbols componentsJoinedByString:@"\n"]];
-
-    return @{@"message": result};
-}
-
 - (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
     int start = false;
     NSString *buf;
@@ -437,8 +441,6 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *payloadBody;
     if (crashReport) {
         payloadBody = [self buildPayloadBodyWithCrashReport:crashReport];
-    } else if (exception && message && message.length > 0) {
-        payloadBody = [self buildPayloadBodyWithException:exception message:message];
     } else if (exception) {
         payloadBody = [self buildPayloadBodyWithException:exception];
     } else {
