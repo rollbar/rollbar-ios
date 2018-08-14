@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RollbarLevel.h"
 
 typedef NS_ENUM(NSUInteger, CaptureIpType) {
     CaptureIpFull,
@@ -41,6 +42,8 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
 - (void)setCaptureIpType:(CaptureIpType)captureIp;
 - (void)setReportingRate:(NSUInteger)maximumReportsPerMinute;
+- (void)setRollbarLevel:(RollbarLevel)level;
+- (RollbarLevel)getRollbarLevel;
 
 - (NSDictionary *)customData;
 
@@ -53,6 +56,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 @property (readonly, atomic, copy) NSString *personUsername;
 @property (readonly, atomic, copy) NSString *personEmail;
 @property (readonly, atomic) NSUInteger maximumReportsPerMinute;
+@property (atomic, copy) NSString *logLevel;
 
 // Modify payload
 @property (atomic, copy) void (^payloadModification)(NSMutableDictionary *payload);

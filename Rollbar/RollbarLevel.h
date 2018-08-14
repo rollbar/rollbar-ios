@@ -17,3 +17,4 @@ typedef enum {
 } RollbarLevel;
 
 NSString* RollbarStringFromLevel(RollbarLevel level);
+RollbarLevel RollbarLevelFromString(NSString *levelString);

@@ -98,7 +98,12 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)logCrashReport:(NSString*)crashReport {
-    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport context:nil];
+    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel
+                                                message:nil
+                                              exception:nil
+                                                  extra:nil
+                                            crashReport:crashReport
+                                                context:nil];
     if (payload) {
         [self queuePayload:payload];
     }
@@ -109,6 +114,12 @@ static BOOL isNetworkReachable = YES;
   exception:(NSException*)exception
        data:(NSDictionary*)data
     context:(NSString*) context {
+    
+    RollbarLevel rollbarLevel = RollbarLevelFromString(level);
+    if (rollbarLevel < [self.configuration getRollbarLevel]) {
+        return;
+    }
+
     NSDictionary *payload = [self buildPayloadWithLevel:level
                                                 message:message
                                               exception:exception

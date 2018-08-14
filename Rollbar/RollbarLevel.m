@@ -26,3 +26,25 @@ NSString* RollbarStringFromLevel(RollbarLevel level) {
     }
 }
 
+/**
+ * Translates given string to RollbarLevel. Default is RollbarInfo.
+ */
+RollbarLevel RollbarLevelFromString(NSString *levelString) {
+
+    if (NSOrderedSame == [levelString caseInsensitiveCompare:@"debug"]) {
+        return RollbarDebug;
+    }
+    else  if (NSOrderedSame == [levelString caseInsensitiveCompare:@"warning"]) {
+        return RollbarWarning;
+    }
+    else  if (NSOrderedSame == [levelString caseInsensitiveCompare:@"critical"]) {
+        return RollbarCritical;
+    }
+    else  if (NSOrderedSame == [levelString caseInsensitiveCompare:@"error"]) {
+        return RollbarError;
+    }
+    else {
+        return RollbarInfo; // default case...
+    }
+}
+
