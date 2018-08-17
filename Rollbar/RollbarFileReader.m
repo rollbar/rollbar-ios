@@ -81,6 +81,10 @@
     return line;
 }
 
+- (NSUInteger) getCurrentOffset {
+    return currentOffset;
+}
+
 - (void) enumerateLinesUsingBlock:(void(^)(NSString*, NSUInteger, BOOL*))block {
     NSString * line = nil;
     BOOL stop = NO;

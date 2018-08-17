@@ -127,7 +127,11 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
-- (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion {
+- (void)setServerHost:(NSString *)host
+                 root:(NSString*)root
+               branch:(NSString*)branch
+          codeVersion:(NSString*)codeVersion {
+    
     self.serverHost = host;
     self.serverRoot = root ? [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] : root;
     self.serverBranch = branch;
@@ -136,7 +140,9 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
-- (void)setNotifierName:(NSString *)name version:(NSString *)version {
+- (void)setNotifierName:(NSString *)name
+                version:(NSString *)version {
+    
     self.notifierName = name ? name : NOTIFIER_NAME;
     self.notifierVersion = version ? version : NOTIFIER_VERSION;
     [self save];

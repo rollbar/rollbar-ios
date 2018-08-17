@@ -24,7 +24,7 @@ static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
 static NSUInteger MAX_RETRY_COUNT = 5;
-static NSUInteger MAX_BATCH_SIZE = 10;
+static NSUInteger MAX_BATCH_SIZE = 1;
 
 static NSString *queuedItemsFilePath = nil;
 static NSString *stateFilePath = nil;
@@ -43,22 +43,33 @@ static BOOL isNetworkReachable = YES;
                    isRoot:(BOOL)isRoot {
 
     if ((self = [super init])) {
-        [self updateAccessToken:accessToken configuration:configuration isRoot:isRoot];
+        [self updateAccessToken:accessToken
+                  configuration:configuration
+                         isRoot:isRoot];
 
         if (isRoot) {
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-            NSString *cachesDirectory = [paths objectAtIndex:0];
-            queuedItemsFilePath = [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
-            stateFilePath = [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
+                                                                 NSUserDomainMask,
+                                                                 YES);
+            NSString *cachesDirectory =
+                [paths objectAtIndex:0];
+            queuedItemsFilePath =
+                [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
+            stateFilePath =
+                [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
 
             if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
-                [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath contents:nil attributes:nil];
+                [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath
+                                                        contents:nil
+                                                      attributes:nil];
             }
 
             if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
                 NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
                 if (stateData) {
-                    NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData options:0 error:nil];
+                    NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData
+                                                                          options:0
+                                                                            error:nil];
                     queueState = [state mutableCopy];
                 } else {
                     RollbarLog(@"There was an error restoring saved queue state");
@@ -75,7 +86,8 @@ static BOOL isNetworkReachable = YES;
                              ];
             [rollbarThread start];
 
-            // Listen for reachability status so that items are only sent when the internet is available
+            // Listen for reachability status
+            // so that items are only sent when the internet is available
             reachability = [RollbarReachability reachabilityForInternetConnection];
 
             isNetworkReachable = [reachability isReachable];
@@ -134,12 +146,115 @@ static BOOL isNetworkReachable = YES;
 
 - (void)saveQueueState {
     NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:&error safe:true];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:queueState
+                                                   options:0
+                                                     error:&error
+                                                      safe:true];
     if (error) {
         RollbarLog(@"Error: %@", [error localizedDescription]);
     }
     [data writeToFile:stateFilePath atomically:YES];
 }
+
+
+// Following commented out code attempts to get rid off batch processing of items completely:
+//
+//- (void)processSavedItems {
+//    if (!isNetworkReachable) {
+//        // Don't attempt sending if the network is known to be not reachable
+//        return;
+//    }
+//
+//    NSUInteger startOffset = [queueState[@"offset"] unsignedIntegerValue];
+//    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:queuedItemsFilePath];
+//    [fileHandle seekToEndOfFile];
+//    __block unsigned long long fileLength = [fileHandle offsetInFile];
+//    [fileHandle closeFile];
+//
+//    if (!fileLength) {
+//        return;
+//    }
+//
+//    // Empty out the queued item file if all items have been processed already
+//    if (startOffset == fileLength) {
+//        [@"" writeToFile:queuedItemsFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+//
+//        queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
+//        queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
+//        [self saveQueueState];
+//
+//        return;
+//    }
+//
+//    // Iterate through the items file and send the items in batches.
+//    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath
+//                                                                  andOffset:startOffset];
+//
+//    NSMutableDictionary *payload = nil;
+//    NSUInteger nextOffset = startOffset;
+//    while (nextOffset < fileLength) {
+//        NSString *payloadLine = [reader readLine];
+//        nextOffset = [reader getCurrentOffset];
+//        NSData *lineData = [payloadLine dataUsingEncoding:NSUTF8StringEncoding];
+//        if (!lineData) {
+//            // All we can do is ignore this line
+//            RollbarLog(@"Error converting file line to NSData");
+//            continue;
+//        }
+//        NSError *error;
+//        payload = [NSJSONSerialization JSONObjectWithData:lineData
+//                                                  options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+//                                                    error:&error];
+//        if (!payload) {
+//            // Ignore this line if it isn't valid json and proceed to the next line
+//            RollbarLog(@"Error restoring data from file to JSON");
+//            continue;
+//        }
+//
+//    }
+//
+//    if(payload) {
+//        [RollbarPayloadTruncator truncatePayload:payload];
+//        BOOL shouldContinue = [self sendItem:payload withNextOffset:(nextOffset)];
+//        if (!shouldContinue) {
+//            // Stop processing the file so that the current file offset will be
+//            // retried next time the file is processed
+//            return;
+//        }
+//        // The file has had items added since we started iterating through it,
+//        // update the known file length to equal the next offset
+//        if (nextOffset > fileLength) {
+//            fileLength = nextOffset;
+//        }
+//    }
+//}
+//
+//- (BOOL)sendItem:(NSDictionary*)itemData
+//  withNextOffset:(NSUInteger)nextOffset {
+//
+//    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:itemData
+//                                                          options:0 //NSJSONWritingPrettyPrinted
+//                                                            error:nil
+//                                                             safe:true];
+//    BOOL success = [self sendPayload:jsonPayload];
+//    if (!success) {
+//        NSUInteger retryCount = [queueState[@"retry_count"] unsignedIntegerValue];
+//
+//        if (retryCount < MAX_RETRY_COUNT) {
+//            queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:retryCount + 1];
+//            [self saveQueueState];
+//
+//            // Return NO so that the current batch will be retried next time
+//            return NO;
+//        }
+//    }
+//
+//    queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];
+//    queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
+//    [self saveQueueState];
+//
+//    return YES;
+//}
 
 - (void)processSavedItems {
     if (!isNetworkReachable) {
