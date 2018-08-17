@@ -135,6 +135,9 @@ static BOOL isNetworkReachable = YES;
 - (void)saveQueueState {
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:&error safe:true];
+    if (error) {
+        RollbarLog(@"Error: %@", [error localizedDescription]);
+    }
     [data writeToFile:stateFilePath atomically:YES];
 }
 
@@ -493,13 +496,14 @@ static BOOL isNetworkReachable = YES;
     NSMutableArray *payloadItems = [NSMutableArray array];
     for (NSDictionary *item in itemData) {
         NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
+        [RollbarPayloadTruncator truncatePayload:newItem];
         [payloadItems addObject:newItem];
     }
     NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken, @"data": payloadItems}];
     [RollbarPayloadTruncator truncatePayload:newPayload];
 
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload
-                                                          options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                          options:NSJSONWritingPrettyPrinted
                                                             error:nil
                                                              safe:true];
     
