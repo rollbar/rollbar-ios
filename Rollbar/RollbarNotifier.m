@@ -614,8 +614,15 @@ static BOOL isNetworkReachable = YES;
         [RollbarPayloadTruncator truncatePayload:newItem];
         [payloadItems addObject:newItem];
     }
-    NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken, @"data": payloadItems}];
-    [RollbarPayloadTruncator truncatePayload:newPayload];
+    NSMutableDictionary *newPayload =
+        [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken,
+                                                        @"data": payloadItems}
+         ];
+    if ([payloadItems count] > 1) {
+        // we want multiple items peayload to also be below truncation threashold
+        // so it can be successfully sent via HTT{ POST:
+        [RollbarPayloadTruncator truncatePayload:newPayload];
+    }
 
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload
                                                           options:NSJSONWritingPrettyPrinted
