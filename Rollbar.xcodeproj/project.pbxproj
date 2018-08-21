@@ -1978,7 +1978,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.Rollbar;
 				PRODUCT_NAME = Rollbar;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
@@ -2010,7 +2010,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.Rollbar;
 				PRODUCT_NAME = Rollbar;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2150,7 +2150,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
@@ -2174,7 +2174,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
