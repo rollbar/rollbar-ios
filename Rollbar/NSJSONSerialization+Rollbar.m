@@ -14,7 +14,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-+ (nullable NSData *)dataWithJSONObject:(id)obj options:(NSJSONWritingOptions)opt error:(NSError **)error safe:(BOOL)safe {
++ (nullable NSData *)dataWithJSONObject:(id)obj
+                                options:(NSJSONWritingOptions)opt
+                                  error:(NSError **)error
+                                   safe:(BOOL)safe {
     if (safe) {
         if ([obj isKindOfClass:[NSArray class]]) {
             NSMutableArray *newArr = [NSMutableArray array];
@@ -33,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
     return [NSJSONSerialization dataWithJSONObject:obj options:opt error:error];
 }
 
-+ (NSDictionary *)safeDataFromJSONObject:(id)obj {
++ (NSMutableDictionary *)safeDataFromJSONObject:(id)obj {
     NSMutableDictionary *safeData = [NSMutableDictionary new];
     [obj enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[NSDictionary class]]) {
@@ -52,7 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
             [safeData setObject:[[obj allObjects] componentsJoinedByString:@","] forKey:key];
         } else if ([obj isKindOfClass:[NSData class]]) {
             NSError* error = nil;
-            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:obj options:kNilOptions error:&error];
+            NSMutableDictionary* json =
+                [NSJSONSerialization JSONObjectWithData:obj
+                                                options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                  error:&error];
 
             if (error == nil) {
                 [safeData setObject:[[self class] safeDataFromJSONObject:json] forKey:key];
@@ -64,6 +70,11 @@ NS_ASSUME_NONNULL_BEGIN
         }
     }];
     return safeData;
+}
+
++ (unsigned long)measureJSONDataByteSize:(NSData*)jsonData {
+    
+    return jsonData.length;
 }
 
 NS_ASSUME_NONNULL_END
