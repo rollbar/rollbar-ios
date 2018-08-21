@@ -37,6 +37,8 @@
 		343AB4651CC9AAF400962943 /* RollbarReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E07191B10AE00F0168A /* RollbarReachability.m */; };
 		343AB4661CC9AAF400962943 /* RollbarLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 96AB9E14191C0B4000F0168A /* RollbarLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		343AB4671CC9AAF400962943 /* RollbarLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB9E15191C0B4000F0168A /* RollbarLogger.m */; };
+		5515653A212CA69B00AE4C74 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
+		5515653B212CA6FB00AE4C74 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; };
 		55B568D420F7E32200052D01 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
 		55B568D620F7E37E00052D01 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; };
 		55B568D820F9560A00052D01 /* PayloadTruncationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D720F9560A00052D01 /* PayloadTruncationTests.m */; };
@@ -1253,6 +1255,7 @@
 				B54F1A8D1FDA6CA600A6AB0C /* KSCrashMonitor_CPPException.h in Headers */,
 				B54F1B5B1FDA6CA700A6AB0C /* KSCrash.h in Headers */,
 				B54F1B6F1FDA6CA700A6AB0C /* StringRef.h in Headers */,
+				5515653B212CA6FB00AE4C74 /* RollbarPayloadTruncator.h in Headers */,
 				B54F1B901FDA6CA700A6AB0C /* KSCrashInstallationStandard.h in Headers */,
 				B57C558D1FC4F06C00103A8B /* RollbarTelemetry.h in Headers */,
 				B54F1A5F1FDA6CA600A6AB0C /* KSCrashReportSinkConsole.h in Headers */,
@@ -1638,6 +1641,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5515653A212CA69B00AE4C74 /* RollbarPayloadTruncator.m in Sources */,
 				B591859F1FB906E70072324B /* RollbarKSCrashInstallation.m in Sources */,
 				B54F1AD91FDA6CA600A6AB0C /* KSCPU_arm.c in Sources */,
 				B54F1A131FDA6CA600A6AB0C /* Container+DeepSearch.m in Sources */,
