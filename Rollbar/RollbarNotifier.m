@@ -98,7 +98,12 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)logCrashReport:(NSString*)crashReport {
-    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel message:nil exception:nil extra:nil crashReport:crashReport context:nil];
+    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel
+                                                message:nil
+                                              exception:nil
+                                                  extra:nil
+                                            crashReport:crashReport
+                                                context:nil];
     if (payload) {
         [self queuePayload:payload];
     }
@@ -109,6 +114,12 @@ static BOOL isNetworkReachable = YES;
   exception:(NSException*)exception
        data:(NSDictionary*)data
     context:(NSString*) context {
+    
+    RollbarLevel rollbarLevel = RollbarLevelFromString(level);
+    if (rollbarLevel < [self.configuration getRollbarLevel]) {
+        return;
+    }
+
     NSDictionary *payload = [self buildPayloadWithLevel:level
                                                 message:message
                                               exception:exception
@@ -124,6 +135,9 @@ static BOOL isNetworkReachable = YES;
 - (void)saveQueueState {
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:queueState options:0 error:&error safe:true];
+    if (error) {
+        RollbarLog(@"Error: %@", [error localizedDescription]);
+    }
     [data writeToFile:stateFilePath atomically:YES];
 }
 
@@ -482,13 +496,14 @@ static BOOL isNetworkReachable = YES;
     NSMutableArray *payloadItems = [NSMutableArray array];
     for (NSDictionary *item in itemData) {
         NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
+        [RollbarPayloadTruncator truncatePayload:newItem];
         [payloadItems addObject:newItem];
     }
     NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken, @"data": payloadItems}];
     [RollbarPayloadTruncator truncatePayload:newPayload];
 
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload
-                                                          options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                          options:NSJSONWritingPrettyPrinted
                                                             error:nil
                                                              safe:true];
     

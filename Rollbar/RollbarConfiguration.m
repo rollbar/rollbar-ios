@@ -69,6 +69,8 @@ static NSString *configurationFilePath = nil;
         self.notifierVersion = NOTIFIER_VERSION;
         self.framework = FRAMEWORK;
         self.captureIp = CaptureIpFull;
+        
+        self.logLevel = @"info";
 
         [self setReportingRate:60];
         [self setCaptureLogAsTelemetryData:false];
@@ -95,6 +97,16 @@ static NSString *configurationFilePath = nil;
     }
 
     return self;
+}
+
+- (void)setRollbarLevel:(RollbarLevel)level {
+    self.logLevel = RollbarStringFromLevel(level);
+    
+    [self save];
+}
+
+- (RollbarLevel)getRollbarLevel {
+    return RollbarLevelFromString(self.logLevel);
 }
 
 - (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
