@@ -2,6 +2,16 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.1.0**
+
+- resolve #81: Truncate large payloads to ensure we don't drop them
+- resolve #84: Add items per minute config option
+- resolve #107: logging an exception does not include extra data into a payload
+- resolve #109: when an NSException is reported with an auxiliary message it is not reported as a trace object
+- resolve #87: Add log level config option
+- resolve #111: Add telemetry example
+- resolve #113: Eliminate payload batch sending - send one payload at a time
+
 **1.0.0**
 
 - Fix some threading issues
