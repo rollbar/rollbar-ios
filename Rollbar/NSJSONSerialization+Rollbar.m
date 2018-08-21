@@ -28,9 +28,13 @@ NS_ASSUME_NONNULL_BEGIN
                     [newArr addObject:item];
                 }
             }
-            return [NSJSONSerialization dataWithJSONObject:newArr options:opt error:error];
+            return [NSJSONSerialization dataWithJSONObject:newArr
+                                                   options:opt
+                                                     error:error];
         } else if ([obj isKindOfClass:[NSDictionary class]]) {
-            return [NSJSONSerialization dataWithJSONObject:[[self class] safeDataFromJSONObject:obj] options:opt error:error];
+            return [NSJSONSerialization dataWithJSONObject:[[self class] safeDataFromJSONObject:obj]
+                                                   options:opt
+                                                     error:error];
         }
     }
     return [NSJSONSerialization dataWithJSONObject:obj options:opt error:error];
@@ -66,7 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
                 RollbarLog(@"Error serializing NSData: %@", [error localizedDescription]);
             }
         } else {
-            RollbarLog(@"Error serializing class '%@' using NSJSONSerialization", NSStringFromClass([obj class]));
+            RollbarLog(@"Error serializing class '%@' using NSJSONSerialization",
+                       NSStringFromClass([obj class]));
         }
     }];
     return safeData;

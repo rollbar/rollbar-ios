@@ -19,6 +19,8 @@
 
 - (NSString *) readLine;
 
+- (NSUInteger) getCurrentOffset;
+
 - (void) enumerateLinesUsingBlock:(void(^)(NSString*, NSUInteger, BOOL*))block;
 
 @end

@@ -93,7 +93,9 @@
     [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"someExceptionName" reason:@"someExceptionReason" userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"myTelemetryParameter": @"itsValue"}];
     [Rollbar debug:@"Demonstrate Telemetry capture"];
-    
+
+    [Rollbar debug:@"Demonstrate Telemetry capture once more..."];
+
     [NSThread sleepForTimeInterval:5.0f];
     
 }
