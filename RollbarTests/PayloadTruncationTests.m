@@ -156,6 +156,16 @@
     @catch (NSException *exception) {
 
         [Rollbar critical:simulatedLongString exception:exception data:@{@"extra_truncatable_data": simulatedLongString}];
+
+        [NSThread sleepForTimeInterval:5.0f];
+        [Rollbar.currentNotifier updateReportingRate:10];
+        [NSThread sleepForTimeInterval:20.0f];
+        [Rollbar.currentNotifier updateReportingRate:60];
+        [NSThread sleepForTimeInterval:5.0f];
+        [Rollbar.currentNotifier updateReportingRate:20];
+        [NSThread sleepForTimeInterval:10.0f];
+        [Rollbar.currentNotifier updateReportingRate:60];
+        [NSThread sleepForTimeInterval:5.0f];
     }
     //    @catch (id exception) {
     //        [Rollbar error:@"GOT AN EXCEPTION" exception:exception];
@@ -163,10 +173,8 @@
     @finally {
         NSLog(@"Cleaning up");
     }
-    
-    [NSThread sleepForTimeInterval:30.0f];
-    
-    
+    //[NSThread sleepForTimeInterval:10.0f];
+
 }
 
 @end

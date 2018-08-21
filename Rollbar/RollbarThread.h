@@ -13,7 +13,8 @@
     RollbarNotifier *notifier;
 }
 
-- (id)initWithNotifier:(RollbarNotifier*)aNotifier;
+- (id)initWithNotifier:(RollbarNotifier*)aNotifier
+  andWithReportingRate:(NSUInteger)reportsPerMinute;
 
 @property(atomic) BOOL active;
 

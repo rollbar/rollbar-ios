@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
 - (void)setCaptureIpType:(CaptureIpType)captureIp;
+- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute;
 
 - (NSDictionary *)customData;
 
@@ -51,6 +52,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 @property (readonly, atomic, copy) NSString *personId;
 @property (readonly, atomic, copy) NSString *personUsername;
 @property (readonly, atomic, copy) NSString *personEmail;
+@property (readonly, atomic) NSUInteger maximumReportsPerMinute;
 
 // Modify payload
 @property (atomic, copy) void (^payloadModification)(NSMutableDictionary *payload);

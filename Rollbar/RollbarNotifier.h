@@ -44,5 +44,6 @@
 - (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot;
 - (void)updateConfiguration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot;
 - (void)updateAccessToken:(NSString*)accessToken;
+- (void)updateReportingRate:(NSUInteger)maximumReportsPerMinute;
 
 @end
