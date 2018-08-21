@@ -138,12 +138,16 @@
 
 - (void)testErrorReportingWithTruncation {
     
-    NSMutableString *simulatedLongString = [[NSMutableString alloc] initWithCapacity:(512 + 1)*1024];
+    NSMutableString *simulatedLongString =
+        [[NSMutableString alloc] initWithCapacity:(512 + 1)*1024];
     while (simulatedLongString.length < (512 * 1024)) {
         [simulatedLongString appendString:@"1234567890_"];
     }
 
-    [Rollbar critical:@"Message with long extra data" exception:nil data:@{@"extra_truncatable_data": simulatedLongString}];
+    [Rollbar critical:@"Message with long extra data"
+            exception:nil
+                 data:@{@"extra_truncatable_data": simulatedLongString}
+     ];
 
     @try {
         NSArray *crew = [NSArray arrayWithObjects:
@@ -155,7 +159,10 @@
     }
     @catch (NSException *exception) {
 
-        [Rollbar critical:simulatedLongString exception:exception data:@{@"extra_truncatable_data": simulatedLongString}];
+        [Rollbar critical:simulatedLongString
+                exception:exception
+                     data:@{@"extra_truncatable_data": simulatedLongString}
+         ];
 
         [NSThread sleepForTimeInterval:5.0f];
         [Rollbar.currentNotifier updateReportingRate:10];
