@@ -33,9 +33,9 @@
 
 - (void)checkItems {
     
-#ifdef DEBUG
-    RollbarLog(@"Checking items...");
-#endif
+//#ifdef DEBUG
+//    RollbarLog(@"Checking items...");
+//#endif
     
     if (self.cancelled) {
         if (timer) {
