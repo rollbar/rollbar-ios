@@ -19,6 +19,10 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
     // Stores whether this configuration is the root level
     // configuration used by the root level notifier
     BOOL isRootConfiguration;
+    
+    // Essentially represents whether the Rollbar Notifier
+    // is turned ON or OFF:
+    BOOL _enabled;
 }
 
 + (RollbarConfiguration*)configuration;
@@ -27,6 +31,9 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 
 - (void)_setRoot;
 - (void)save;
+
+- (void)setEnabled:(BOOL)yesNo;
+- (BOOL)enabled;
 
 - (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData;
 - (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;

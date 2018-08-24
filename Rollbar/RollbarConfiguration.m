@@ -72,6 +72,7 @@ static NSString *configurationFilePath = nil;
         
         self.logLevel = @"info";
 
+        self.enabled = true;
         [self setReportingRate:60];
         [self setCaptureLogAsTelemetryData:false];
     }
@@ -97,6 +98,16 @@ static NSString *configurationFilePath = nil;
     }
 
     return self;
+}
+
+- (void)setEnabled:(BOOL)yesNo {
+    _enabled = yesNo;
+    
+    [self save];
+}
+
+- (BOOL)enabled {
+    return _enabled;
 }
 
 - (void)setRollbarLevel:(RollbarLevel)level {
