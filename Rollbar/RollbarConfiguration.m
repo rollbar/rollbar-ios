@@ -72,9 +72,11 @@ static NSString *configurationFilePath = nil;
         
         self.logLevel = @"info";
 
-        self.enabled = true;
-        [self setReportingRate:60];
+        _enabled = true;
+        self.maximumReportsPerMinute = 60;
         [self setCaptureLogAsTelemetryData:false];
+        
+        [self save];
     }
 
     return self;
@@ -100,12 +102,11 @@ static NSString *configurationFilePath = nil;
     return self;
 }
 
+@synthesize enabled = _enabled;
 - (void)setEnabled:(BOOL)yesNo {
     _enabled = yesNo;
-    
     [self save];
 }
-
 - (BOOL)enabled {
     return _enabled;
 }
