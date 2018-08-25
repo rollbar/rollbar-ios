@@ -73,6 +73,7 @@ static NSString *configurationFilePath = nil;
         self.logLevel = @"info";
 
         _enabled = true;
+        self.telemetryEnabled = false;
         self.maximumReportsPerMinute = 60;
         [self setCaptureLogAsTelemetryData:false];
         
@@ -102,6 +103,7 @@ static NSString *configurationFilePath = nil;
     return self;
 }
 
+// Rollbar enabled flag:
 @synthesize enabled = _enabled;
 - (void)setEnabled:(BOOL)yesNo {
     _enabled = yesNo;
@@ -109,6 +111,15 @@ static NSString *configurationFilePath = nil;
 }
 - (BOOL)enabled {
     return _enabled;
+}
+
+// Telemetry enabled flag:
+- (void)setTelemetryEnabled:(BOOL)yesNo {
+    [RollbarTelemetry sharedInstance].enabled = yesNo;
+    [self save];
+}
+- (BOOL)telemetryEnabled {
+    return [RollbarTelemetry sharedInstance].enabled;
 }
 
 - (void)setRollbarLevel:(RollbarLevel)level {
