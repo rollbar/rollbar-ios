@@ -47,6 +47,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 
 - (NSDictionary *)customData;
 
+@property (readwrite, atomic) BOOL enabled;
 @property (readonly, atomic) BOOL shouldCaptureConnectivity;
 @property (atomic, copy) NSString *accessToken;
 @property (atomic, copy) NSString *environment;

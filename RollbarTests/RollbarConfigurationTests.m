@@ -29,6 +29,30 @@
     [super tearDown];
 }
 
+- (void)testEnabled {
+    
+    RollbarClearLogFile();
+    [NSThread sleepForTimeInterval:3.0f];
+    
+    Rollbar.currentConfiguration.enabled = NO;
+    [Rollbar debug:@"Test1"];
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 0, @"logItems count is expected to be 0. Actual value is %lu", logItems.count);
+
+    Rollbar.currentConfiguration.enabled = YES;
+    [Rollbar debug:@"Test2"];
+    [NSThread sleepForTimeInterval:3.0f];
+    logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 1, @"logItems count is expected to be 1. Actual value is %lu", logItems.count);
+
+    Rollbar.currentConfiguration.enabled = NO;
+    [Rollbar debug:@"Test3"];
+    logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 1, @"logItems count is expected to be 1. Actual value is %lu", logItems.count);
+    
+    RollbarClearLogFile();
+}
+
 - (void)testMaximumTelemetryData {
     int testCount = 10;
     int max = 5;

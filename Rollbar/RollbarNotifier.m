@@ -127,6 +127,10 @@ static BOOL isNetworkReachable = YES;
        data:(NSDictionary*)data
     context:(NSString*) context {
     
+    if (!self.configuration.enabled) {
+        return;
+    }
+    
     RollbarLevel rollbarLevel = RollbarLevelFromString(level);
     if (rollbarLevel < [self.configuration getRollbarLevel]) {
         return;
