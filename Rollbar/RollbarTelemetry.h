@@ -39,4 +39,6 @@
 - (NSArray *)getAllData;
 - (void)clearAllData;
 
+@property (readwrite, atomic) BOOL enabled;
+
 @end

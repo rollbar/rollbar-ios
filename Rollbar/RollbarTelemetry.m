@@ -73,6 +73,15 @@ static dispatch_queue_t fileQueue = nil;
 
 #pragma mark -
 
+// Telemetry enabled flag:
+@synthesize enabled = _enabled;
+- (void)setEnabled:(BOOL)yesNo {
+    _enabled = yesNo;
+}
+- (BOOL)enabled {
+    return _enabled;
+}
+
 /**
  * Sets whether or not to use replacement log.
  */
@@ -104,6 +113,9 @@ static dispatch_queue_t fileQueue = nil;
 #pragma mark -
 
 - (void)recordEventForLevel:(RollbarLevel)level type:(RollbarTelemetryType)type data:(NSDictionary *)data {
+    if (!_enabled) {
+        return;
+    }
     NSTimeInterval timestamp = NSDate.date.timeIntervalSince1970 * 1000.0;
     NSString *telemetryLvl = RollbarStringFromLevel(level);
     NSString *telemetryType = RollbarStringFromTelemetryType(type);
