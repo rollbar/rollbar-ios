@@ -2,6 +2,12 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.2.0**
+
+- resolve #88: Add enable/disable telemetry config option
+- resolve #89: Add enabled/disabled config option
+- resolve #119: Is there a reason why library should constantly spam "Checking items..." into console?
+
 **1.1.0**
 
 - resolve #81: Truncate large payloads to ensure we don't drop them
