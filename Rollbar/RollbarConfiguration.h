@@ -37,6 +37,8 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 - (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
 - (void)addScrubField:(NSString *)field;
 - (void)removeScrubField:(NSString *)field;
+- (void)addScrubWhitelistField:(NSString *)field;
+- (void)removeScrubWhitelistField:(NSString *)field;
 - (void)setRequestId:(NSString*)requestId;
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
@@ -68,6 +70,9 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 
 // Fields to scrub from the payload
 @property (atomic, retain) NSMutableSet *scrubFields;
+
+// Fields to not scrub from the payload even if they mention among scrubFields:
+@property (atomic, retain) NSMutableSet *scrubWhitelistFields;
 
 /*** Optional ***/
 

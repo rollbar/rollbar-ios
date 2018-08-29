@@ -64,6 +64,7 @@ static NSString *configurationFilePath = nil;
 
         self.crashLevel = @"error";
         self.scrubFields = [NSMutableSet new];
+        self.scrubWhitelistFields = [NSMutableSet new];
 
         self.notifierName = NOTIFIER_NAME;
         self.notifierVersion = NOTIFIER_VERSION;
@@ -190,6 +191,14 @@ static NSString *configurationFilePath = nil;
 
 - (void)removeScrubField:(NSString *)field {
     [self.scrubFields removeObject:field];
+}
+
+- (void)addScrubWhitelistField:(NSString *)field {
+    [self.scrubWhitelistFields addObject:field];
+}
+
+- (void)removeScrubWhitelistField:(NSString *)field {
+    [self.scrubWhitelistFields removeObject:field];
 }
 
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog {
