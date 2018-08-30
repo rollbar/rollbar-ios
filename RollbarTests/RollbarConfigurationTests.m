@@ -29,6 +29,52 @@
     [super tearDown];
 }
 
+- (void)testScrubWhitelistFields {
+    NSString *scrubedContent = @"*****";
+    NSArray *keys = @[@"client.ios.app_name", @"client.ios.ios_version", @"body.message.body"];
+    
+    // define scrub fields:
+    for (NSString *key in keys) {
+        [Rollbar.currentConfiguration addScrubField:key];
+    }
+    [Rollbar debug:@"test"];
+    [NSThread sleepForTimeInterval:3.0f];
+    
+    // verify the fields were scrubbed:
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    for (NSString *key in keys) {
+        NSString *content = [logItems[0] valueForKeyPath:key];
+        XCTAssertTrue([content isEqualToString:scrubedContent],
+                      @"%@ is %@, should be %@",
+                      key,
+                      content,
+                      scrubedContent
+                      );
+    }
+    
+    RollbarClearLogFile();
+    [NSThread sleepForTimeInterval:3.0f];
+    
+    // define scrub whitelist fields (the same as the scrub fields - to counterbalance them):
+    for (NSString *key in keys) {
+        [Rollbar.currentConfiguration addScrubWhitelistField:key];
+    }
+    [Rollbar debug:@"test"];
+    [NSThread sleepForTimeInterval:3.0f];
+    
+    // verify the fields were not scrubbed:
+    logItems = RollbarReadLogItemFromFile();
+    for (NSString *key in keys) {
+        NSString *content = [logItems[0] valueForKeyPath:key];
+        XCTAssertTrue(![content isEqualToString:scrubedContent],
+                      @"%@ is %@, should not be %@",
+                      key,
+                      content,
+                      scrubedContent
+                      );
+    }
+}
+
 - (void)testTelemetryEnabled {
     RollbarClearLogFile();
     [NSThread sleepForTimeInterval:3.0f];
@@ -106,6 +152,7 @@
 }
 
 - (void)testMaximumTelemetryData {
+    
     int testCount = 10;
     int max = 5;
     for (int i=0; i<testCount; i++) {

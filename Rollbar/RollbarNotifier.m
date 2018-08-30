@@ -764,11 +764,31 @@ static BOOL isNetworkReachable = YES;
 
 // Scrub specified fields from payload
 - (void)scrubPayload:(NSMutableDictionary*)data {
+
     if (self.configuration.scrubFields.count == 0) {
         return;
     }
 
-    for (NSString *key in self.configuration.scrubFields) {
+    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields;
+    if (self.configuration.scrubWhitelistFields.count > 0) {
+        // actualFieldsToScrub =
+        // self.configuration.scrubFields - self.configuration.scrubWhitelistFields
+        // while using case insensitive field name comparison:
+        actualFieldsToScrub = [NSMutableSet new];
+        for(NSString *key in self.configuration.scrubFields) {
+            BOOL isWhitelisted = false;
+            for (NSString *whiteKey in self.configuration.scrubWhitelistFields) {
+                if (NSOrderedSame == [key caseInsensitiveCompare:whiteKey]) {
+                    isWhitelisted = true;
+                }
+            }
+            if (!isWhitelisted) {
+                [actualFieldsToScrub addObject:key];
+            }
+        }
+    }
+    
+    for (NSString *key in actualFieldsToScrub) {
         if ([data valueForKeyPath:key]) {
             [self createMutablePayloadWithData:data forPath:key];
             [data setValue:@"*****" forKeyPath:key];
