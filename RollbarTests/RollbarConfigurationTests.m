@@ -118,6 +118,48 @@
     [RollbarTelemetry.sharedInstance clearAllData];
 }
 
+- (void)testScrubViewInputsTelemetryConfig {
+
+    BOOL expectedFlag = NO;
+    Rollbar.currentConfiguration.scrubViewInputsTelemetry = expectedFlag;
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.scrubViewInputs == expectedFlag,
+                  @"RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be NO."
+                  );
+    expectedFlag = YES;
+    Rollbar.currentConfiguration.scrubViewInputsTelemetry = expectedFlag;
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.scrubViewInputs == expectedFlag,
+                  @"RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be YES."
+                  );
+}
+
+- (void)testViewInputTelemetrScrubFieldsConfig {
+
+    NSString *element1 = @"password";
+    NSString *element2 = @"pin";
+    
+    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:element1];
+    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:element2];
+
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.viewInputsToScrub.count == 2,
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 2"
+                  );
+    XCTAssertTrue([RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element1],
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
+                  element1
+                  );
+    XCTAssertTrue([RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element2],
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
+                  element2
+                  );
+    
+    [Rollbar.currentConfiguration removeTelemetryViewInputToScrub:element1];
+    [Rollbar.currentConfiguration removeTelemetryViewInputToScrub:element2];
+    
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.viewInputsToScrub.count == 0,
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 0"
+                  );
+}
+
 - (void)testEnabled {
     
     RollbarClearLogFile();

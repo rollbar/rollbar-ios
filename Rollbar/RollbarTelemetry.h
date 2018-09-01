@@ -40,5 +40,7 @@
 - (void)clearAllData;
 
 @property (readwrite, atomic) BOOL enabled;
+@property (readwrite, atomic) BOOL scrubViewInputs;
+@property (atomic, retain) NSMutableSet *viewInputsToScrub;
 
 @end

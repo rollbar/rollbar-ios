@@ -28,39 +28,51 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 - (void)_setRoot;
 - (void)save;
 
-- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData;
-- (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
-- (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
-- (void)setNotifierName:(NSString *)name version:(NSString *)version;
-- (void)setCodeFramework:(NSString *)framework;
-- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
-- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
-- (void)addScrubField:(NSString *)field;
-- (void)removeScrubField:(NSString *)field;
-- (void)addScrubWhitelistField:(NSString *)field;
-- (void)removeScrubWhitelistField:(NSString *)field;
-- (void)setRequestId:(NSString*)requestId;
-- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
-- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
-- (void)setCaptureIpType:(CaptureIpType)captureIp;
 - (void)setReportingRate:(NSUInteger)maximumReportsPerMinute;
 - (void)setRollbarLevel:(RollbarLevel)level;
 - (RollbarLevel)getRollbarLevel;
 
+- (void)setPersonId:(NSString*)personId username:(NSString*)username email:(NSString*)email;
+- (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
+- (void)setNotifierName:(NSString *)name version:(NSString *)version;
+- (void)setCodeFramework:(NSString *)framework;
+
+- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
+
+- (void)addScrubField:(NSString *)field;
+- (void)removeScrubField:(NSString *)field;
+- (void)addScrubWhitelistField:(NSString *)field;
+- (void)removeScrubWhitelistField:(NSString *)field;
+
+- (void)addTelemetryViewInputToScrub:(NSString *)input;
+- (void)removeTelemetryViewInputToScrub:(NSString *)input;
+
+- (void)setRequestId:(NSString*)requestId;
+- (void)setCaptureIpType:(CaptureIpType)captureIp;
+
+- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData;
+- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
+- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
+
 - (NSDictionary *)customData;
 
 @property (readwrite, atomic) BOOL enabled;
-@property (readwrite, atomic) BOOL telemetryEnabled;
-@property (readonly, atomic) BOOL shouldCaptureConnectivity;
 @property (atomic, copy) NSString *accessToken;
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;
 @property (atomic, copy) NSString *crashLevel;
+@property (atomic, copy) NSString *logLevel;
+@property (readonly, atomic) NSUInteger maximumReportsPerMinute;
+@property (readonly, atomic) BOOL shouldCaptureConnectivity;
+
 @property (readonly, atomic, copy) NSString *personId;
 @property (readonly, atomic, copy) NSString *personUsername;
 @property (readonly, atomic, copy) NSString *personEmail;
-@property (readonly, atomic) NSUInteger maximumReportsPerMinute;
-@property (atomic, copy) NSString *logLevel;
+
+@property (readwrite, atomic) BOOL telemetryEnabled;
+@property (readwrite, atomic) BOOL scrubViewInputsTelemetry;
+@property (atomic, retain) NSMutableSet *telemetryViewInputsToScrub;
 
 // Modify payload
 @property (atomic, copy) void (^payloadModification)(NSMutableDictionary *payload);

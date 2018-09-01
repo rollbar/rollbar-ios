@@ -66,6 +66,8 @@ static dispatch_queue_t fileQueue = nil;
         NSString *cachesDirectory = [paths objectAtIndex:0];
         _dataFilePath = [cachesDirectory stringByAppendingPathComponent:TELEMETRY_FILE_NAME];
         
+        _viewInputsToScrub = [NSMutableSet new];
+        
         [self loadTelemetryData];
     }
     return self;
@@ -81,6 +83,8 @@ static dispatch_queue_t fileQueue = nil;
 - (BOOL)enabled {
     return _enabled;
 }
+
+@synthesize viewInputsToScrub = _viewInputsToScrub;
 
 /**
  * Sets whether or not to use replacement log.

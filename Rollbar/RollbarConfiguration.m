@@ -65,6 +65,7 @@ static NSString *configurationFilePath = nil;
         self.crashLevel = @"error";
         self.scrubFields = [NSMutableSet new];
         self.scrubWhitelistFields = [NSMutableSet new];
+        self.telemetryViewInputsToScrub = [NSMutableSet new];
 
         self.notifierName = NOTIFIER_NAME;
         self.notifierVersion = NOTIFIER_VERSION;
@@ -122,6 +123,26 @@ static NSString *configurationFilePath = nil;
 - (BOOL)telemetryEnabled {
     return [RollbarTelemetry sharedInstance].enabled;
 }
+
+// Scrub Telemetry View Inputs:
+- (void)setScrubViewInputsTelemetry:(BOOL)yesNo {
+    [RollbarTelemetry sharedInstance].scrubViewInputs = yesNo;
+    [self save];
+}
+- (BOOL)scrubViewInputsTelemetry {
+    return [RollbarTelemetry sharedInstance].scrubViewInputs;
+}
+
+- (void)addTelemetryViewInputToScrub:(NSString *)input {
+    [[RollbarTelemetry sharedInstance].viewInputsToScrub addObject:input];
+    [self save];
+}
+
+- (void)removeTelemetryViewInputToScrub:(NSString *)input {
+    [[RollbarTelemetry sharedInstance].viewInputsToScrub removeObject:input];
+    [self save];
+}
+
 
 - (void)setRollbarLevel:(RollbarLevel)level {
     self.logLevel = RollbarStringFromLevel(level);
