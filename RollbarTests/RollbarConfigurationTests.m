@@ -195,6 +195,8 @@
 
 - (void)testMaximumTelemetryData {
     
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
+
     int testCount = 10;
     int max = 5;
     for (int i=0; i<testCount; i++) {
@@ -215,6 +217,7 @@
 
 - (void)testCheckIgnore {
     [Rollbar debug:@"Don't ignore this"];
+    [NSThread sleepForTimeInterval:3.0f];
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 
@@ -237,6 +240,8 @@
                                     codeVersion:codeVersion
      ];
     [Rollbar debug:@"test"];
+
+    [NSThread sleepForTimeInterval:3.0f];
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
@@ -272,6 +277,8 @@
     }];
     [Rollbar debug:@"test"];
 
+    [NSThread sleepForTimeInterval:3.0f];
+
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSString *msg1 = [logItems[0] valueForKeyPath:@"body.message.body"];
     NSString *msg2 = [logItems[0] valueForKeyPath:@"body.message.body2"];
@@ -297,6 +304,8 @@
     }
     [Rollbar debug:@"test"];
 
+    [NSThread sleepForTimeInterval:3.0f];
+
     NSArray *logItems = RollbarReadLogItemFromFile();
     for (NSString *key in keys) {
         NSString *content = [logItems[0] valueForKeyPath:key];
@@ -312,10 +321,13 @@
 - (void)testLogTelemetryAutoCapture {
     NSString *logMsg = @"log-message-testing";
     [[RollbarTelemetry sharedInstance] clearAllData];
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
     [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:true];
     NSLog(logMsg);
-
     [Rollbar debug:@"test"];
+    
+    [NSThread sleepForTimeInterval:3.0f];
+
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSArray *telemetryData = [logItems[0] valueForKeyPath:@"body.telemetry"];
     NSString *telemetryMsg = [telemetryData[0] valueForKeyPath:@"body.message"];
