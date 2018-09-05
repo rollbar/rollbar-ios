@@ -100,4 +100,32 @@
     
 }
 
+- (void)testTelemetryViewEventScrubbing {
+    // configure telemetry scrubbing:
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
+    Rollbar.currentConfiguration.scrubViewInputsTelemetry = YES;
+    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:@"password"];
+    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:@"pin"];
+    
+    // add scrubable event:
+    [Rollbar recordViewEventForLevel:RollbarDebug
+                             element:@"password"
+                           extraData:@{@"content" : @"My Password"}];
+    // add non-scrubable event:
+    [Rollbar recordViewEventForLevel:RollbarDebug
+                             element:@"not-password"
+                           extraData:@{@"content" : @"My Password"}];
+    [NSThread sleepForTimeInterval:5.0f];
+
+    NSArray *telemetryEvents = [RollbarTelemetry.sharedInstance getAllData];
+    
+    // verify that the scribbing actually happend:
+    XCTAssertTrue([@"password" compare:[telemetryEvents[0] valueForKeyPath:@"body.element"]] == NSOrderedSame);
+    XCTAssertTrue([@"[scrubbed]" compare:[telemetryEvents[0] valueForKeyPath:@"body.content"]] == NSOrderedSame);
+
+    // verify that no scrubbing was performed on the event:
+    XCTAssertTrue([@"not-password" compare:[telemetryEvents[1] valueForKeyPath:@"body.element"]] == NSOrderedSame);
+    XCTAssertTrue([@"My Password" compare:[telemetryEvents[1] valueForKeyPath:@"body.content"]] == NSOrderedSame);
+}
+
 @end

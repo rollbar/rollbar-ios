@@ -47,9 +47,12 @@ static NSString *configurationFilePath = nil;
 
 - (id)init {
     if (!configurationFilePath) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString *cachesDirectory = [paths objectAtIndex:0];
-        configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
+        NSArray *paths =
+            NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *cachesDirectory =
+            [paths objectAtIndex:0];
+        configurationFilePath =
+            [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
     }
 
     if (self = [super init]) {
@@ -90,7 +93,9 @@ static NSString *configurationFilePath = nil;
 
     NSData *data = [NSData dataWithContentsOfFile:configurationFilePath];
     if (data) {
-        NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data
+                                                               options:0
+                                                                 error:nil];
 
         if (!config) {
             return self;
@@ -164,7 +169,9 @@ static NSString *configurationFilePath = nil;
     [[RollbarTelemetry sharedInstance] setDataLimit:maximumTelemetryData];
 }
 
-- (void)setPersonId:(NSString *)personId username:(NSString *)username email:(NSString *)email {
+- (void)setPersonId:(NSString *)personId
+           username:(NSString *)username
+              email:(NSString *)email {
     self.personId = personId;
     self.personUsername = username;
     self.personEmail = email;
@@ -178,7 +185,9 @@ static NSString *configurationFilePath = nil;
           codeVersion:(NSString*)codeVersion {
     
     self.serverHost = host;
-    self.serverRoot = root ? [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] : root;
+    self.serverRoot = root ?
+        [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]
+        : root;
     self.serverBranch = branch;
     self.serverCodeVersion = codeVersion;
 
@@ -255,7 +264,10 @@ static NSString *configurationFilePath = nil;
     
     for (NSString *propertyName in [self getProperties]) {
         if ([propertyName rangeOfString:@"person"].location == NSNotFound) {
-            [self addObserver:self forKeyPath:propertyName options:NSKeyValueObservingOptionNew context:nil];
+            [self addObserver:self
+                   forKeyPath:propertyName
+                      options:NSKeyValueObservingOptionNew
+                      context:nil];
         }
     }
 }
@@ -269,16 +281,24 @@ static NSString *configurationFilePath = nil;
         for (NSString *propertyName in [self getProperties]) {
             id value = [self valueForKey:propertyName];
             if (value) {
-                [config setObject:value forKey:propertyName];
+                [config setObject:value
+                           forKey:propertyName];
             }
         }
 
-        NSData *configJson = [NSJSONSerialization dataWithJSONObject:config options:0 error:nil safe:true];
-        [configJson writeToFile:configurationFilePath atomically:YES];
+        NSData *configJson = [NSJSONSerialization dataWithJSONObject:config
+                                                             options:0
+                                                               error:nil
+                                                                safe:true];
+        [configJson writeToFile:configurationFilePath
+                     atomically:YES];
     }
 }
 
-- (void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context {
+- (void)observeValueForKeyPath:(NSString*)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary*)change
+                       context:(void*)context {
     [self save];
 }
 
@@ -292,8 +312,8 @@ static NSString *configurationFilePath = nil;
         objc_property_t property = properties[i];
         const char *propName = property_getName(property);
         if(propName) {
-            NSString *propertyName = [NSString stringWithCString:propName encoding:[NSString defaultCStringEncoding]];
-            
+            NSString *propertyName = [NSString stringWithCString:propName
+                                                        encoding:[NSString defaultCStringEncoding]];            
             [result addObject:propertyName];
         }
     }
@@ -304,7 +324,6 @@ static NSString *configurationFilePath = nil;
     
     return result;
 }
-
 
 - (NSDictionary *)customData {
     return [NSDictionary dictionaryWithDictionary:customData];
