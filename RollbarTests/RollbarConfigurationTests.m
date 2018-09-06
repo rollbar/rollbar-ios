@@ -118,6 +118,48 @@
     [RollbarTelemetry.sharedInstance clearAllData];
 }
 
+- (void)testScrubViewInputsTelemetryConfig {
+
+    BOOL expectedFlag = NO;
+    Rollbar.currentConfiguration.scrubViewInputsTelemetry = expectedFlag;
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.scrubViewInputs == expectedFlag,
+                  @"RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be NO."
+                  );
+    expectedFlag = YES;
+    Rollbar.currentConfiguration.scrubViewInputsTelemetry = expectedFlag;
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.scrubViewInputs == expectedFlag,
+                  @"RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be YES."
+                  );
+}
+
+- (void)testViewInputTelemetrScrubFieldsConfig {
+
+    NSString *element1 = @"password";
+    NSString *element2 = @"pin";
+    
+    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:element1];
+    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:element2];
+
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.viewInputsToScrub.count == 2,
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 2"
+                  );
+    XCTAssertTrue([RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element1],
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
+                  element1
+                  );
+    XCTAssertTrue([RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element2],
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
+                  element2
+                  );
+    
+    [Rollbar.currentConfiguration removeTelemetryViewInputToScrub:element1];
+    [Rollbar.currentConfiguration removeTelemetryViewInputToScrub:element2];
+    
+    XCTAssertTrue(RollbarTelemetry.sharedInstance.viewInputsToScrub.count == 0,
+                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 0"
+                  );
+}
+
 - (void)testEnabled {
     
     RollbarClearLogFile();
@@ -153,6 +195,8 @@
 
 - (void)testMaximumTelemetryData {
     
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
+
     int testCount = 10;
     int max = 5;
     for (int i=0; i<testCount; i++) {
@@ -173,6 +217,7 @@
 
 - (void)testCheckIgnore {
     [Rollbar debug:@"Don't ignore this"];
+    [NSThread sleepForTimeInterval:3.0f];
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 
@@ -195,6 +240,8 @@
                                     codeVersion:codeVersion
      ];
     [Rollbar debug:@"test"];
+
+    [NSThread sleepForTimeInterval:3.0f];
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
@@ -230,6 +277,8 @@
     }];
     [Rollbar debug:@"test"];
 
+    [NSThread sleepForTimeInterval:3.0f];
+
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSString *msg1 = [logItems[0] valueForKeyPath:@"body.message.body"];
     NSString *msg2 = [logItems[0] valueForKeyPath:@"body.message.body2"];
@@ -255,6 +304,8 @@
     }
     [Rollbar debug:@"test"];
 
+    [NSThread sleepForTimeInterval:3.0f];
+
     NSArray *logItems = RollbarReadLogItemFromFile();
     for (NSString *key in keys) {
         NSString *content = [logItems[0] valueForKeyPath:key];
@@ -270,10 +321,13 @@
 - (void)testLogTelemetryAutoCapture {
     NSString *logMsg = @"log-message-testing";
     [[RollbarTelemetry sharedInstance] clearAllData];
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
     [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:true];
     NSLog(logMsg);
-
     [Rollbar debug:@"test"];
+    
+    [NSThread sleepForTimeInterval:3.0f];
+
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSArray *telemetryData = [logItems[0] valueForKeyPath:@"body.telemetry"];
     NSString *telemetryMsg = [telemetryData[0] valueForKeyPath:@"body.message"];
