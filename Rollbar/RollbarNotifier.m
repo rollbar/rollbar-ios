@@ -666,12 +666,43 @@ static BOOL isNetworkReachable = YES;
     if (IS_IOS7_OR_HIGHER) {
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        
+        NSDictionary *connectionProxyDictionary =
+        @{
+            @"HTTPEnable"   : [NSNumber numberWithInt:1],
+            @"HTTPProxy"    : @"",
+            @"HTTPPort"     : @"[NSNumber numberWithInt: 12345] or int",
+            @"HTTPSEnable"  : [NSNumber numberWithInt:1],
+            @"HTTPSProxy"   : @"",
+            @"HTTPSPort"    : @"[NSNumber numberWithInt: 12345] or int"
+          
+//          @"HTTPEnable"    : [NSNumber numberWithInt:1],
+//          (NSString *)kCFStreamPropertyHTTPProxyHost      : @"",
+//          (NSString *)kCFStreamPropertyHTTPProxyPort     : @"[NSNumber numberWithInt: 12345] or int",
+//          @"HTTPSEnable"    : [NSNumber numberWithInt:1],
+//          (NSString *)kCFStreamPropertyHTTPSProxyHost      : @"",
+//          (NSString *)kCFStreamPropertyHTTPSProxyPort     : @"[NSNumber numberWithInt: 12345] or int"
+
+//          (NSString*)kCFNetworkProxiesHTTPEnable    : [NSNumber numberWithInt:1],
+//          (NSString*)kCFNetworkProxiesHTTPProxy     : @"",
+//          (NSString*)kCFNetworkProxiesHTTPPort      : @"[NSNumber numberWithInt: 12345] or int",
+//          (NSString*)kCFNetworkProxiesHTTPSEnable    : [NSNumber numberWithInt:1],
+//          (NSString*)kCFNetworkProxiesHTTPSProxy     : @"",
+//          (NSString*)kCFNetworkProxiesHTTPSPort      : @"[NSNumber numberWithInt: 12345] or int"
+        };
+
+        NSURLSessionConfiguration *sessionConfig =
+            [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
+        
         NSURLSessionDataTask *dataTask =
-            [[NSURLSession sharedSession] dataTaskWithRequest:request
-                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                                                result = [self checkPayloadResponse:response error:error data:data];
-                                                dispatch_semaphore_signal(sem);
-                                            }];
+            [session dataTaskWithRequest:request
+                       completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                result = [self checkPayloadResponse:response error:error data:data];
+                dispatch_semaphore_signal(sem);
+            }];
         [dataTask resume];
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     } else {
