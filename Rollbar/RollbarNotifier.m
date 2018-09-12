@@ -666,13 +666,36 @@ static BOOL isNetworkReachable = YES;
     if (IS_IOS7_OR_HIGHER) {
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        
+        if (self.configuration.httpProxyEnabled
+            || self.configuration.httpsProxyEnabled) {
+            
+            NSDictionary *connectionProxyDictionary =
+            @{
+              @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxyEnabled],
+              @"HTTPProxy"    : self.configuration.httpProxy,
+              @"HTTPPort"     : self.configuration.httpProxyPort,
+              @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxyEnabled],
+              @"HTTPSProxy"   : self.configuration.httpsProxy,
+              @"HTTPSPort"    : self.configuration.httpsProxyPort
+              };
+
+            NSURLSessionConfiguration *sessionConfig =
+            [NSURLSessionConfiguration ephemeralSessionConfiguration];
+            sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
+            session = [NSURLSession sessionWithConfiguration:sessionConfig];
+        }
+        
         NSURLSessionDataTask *dataTask =
-            [[NSURLSession sharedSession] dataTaskWithRequest:request
-                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                                                result = [self checkPayloadResponse:response error:error data:data];
-                                                dispatch_semaphore_signal(sem);
-                                            }];
+            [session dataTaskWithRequest:request
+                       completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                result = [self checkPayloadResponse:response error:error data:data];
+                dispatch_semaphore_signal(sem);
+            }];
         [dataTask resume];
+        
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     } else {
         // Using method sendSynchronousRequest, deprecated since iOS 9.0

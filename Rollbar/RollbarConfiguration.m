@@ -82,6 +82,14 @@ static NSString *configurationFilePath = nil;
         self.maximumReportsPerMinute = 60;
         [self setCaptureLogAsTelemetryData:false];
         
+        _httpProxyEnabled = NO;
+        _httpProxy = @"";
+        _httpProxyPort = [NSNumber numberWithInteger:0];
+
+        _httpsProxyEnabled = NO;
+        _httpsProxy = @"";
+        _httpsProxyPort = [NSNumber numberWithInteger:0];
+
         [self save];
     }
 
@@ -118,6 +126,62 @@ static NSString *configurationFilePath = nil;
 }
 - (BOOL)enabled {
     return _enabled;
+}
+
+// HTTP Proxy settings
+@synthesize  httpProxyEnabled = _httpProxyEnabled;
+- (void)setHttpProxyEnabled:(BOOL)yesNo {
+    _httpProxyEnabled = yesNo;
+    [self save];
+}
+- (BOOL)httpProxyEnabled {
+    return _httpProxyEnabled;
+}
+
+@synthesize  httpProxy = _httpProxy;
+- (void)setHttpProxy:(NSString *)proxy {
+    _httpProxy = proxy;
+    [self save];
+}
+- (NSString *)httpProxy {
+    return _httpProxy;
+}
+
+@synthesize httpProxyPort = _httpProxyPort;
+- (void)setHttpProxyPort:(NSNumber *)port {
+    _httpProxyPort = port;
+    [self save];
+}
+- (NSNumber *)httpProxyPort {
+    return _httpProxyPort;
+}
+
+// HTTPS Proxy settings
+@synthesize httpsProxyEnabled = _httpsProxyEnabled;
+- (void)setHttpsProxyEnabled:(BOOL)yesNo {
+    _httpsProxyEnabled = yesNo;
+    [self save];
+}
+- (BOOL)httpsProxyEnabled {
+    return _httpsProxyEnabled;
+}
+
+@synthesize httpsProxy = _httpsProxy;
+- (void)setHttpsProxy:(NSString *)proxy {
+    _httpsProxy = proxy;
+    [self save];
+}
+- (NSString *)httpsProxy {
+    return _httpsProxy;
+}
+
+@synthesize httpsProxyPort = _httpsProxyPort;
+- (void)setHttpsProxyPort:(NSNumber *)port {
+    _httpsProxyPort = port;
+    [self save];
+}
+- (NSNumber *)httpsProxyPort {
+    return _httpsProxyPort;
 }
 
 // Telemetry enabled flag:
