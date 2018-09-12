@@ -2,6 +2,13 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.3.0**
+
+- resolve #80: Add telemetry scrubbing options
+- resolve #83:Add support for using a proxy
+- resolve #90: Add scrub whitelist config option
+- resolve #124: fix failing unit tests
+
 **1.2.0**
 
 - resolve #88: Add enable/disable telemetry config option
