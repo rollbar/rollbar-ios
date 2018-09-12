@@ -61,6 +61,17 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 @property (atomic, copy) NSString *accessToken;
 @property (atomic, copy) NSString *environment;
 @property (atomic, copy) NSString *endpoint;
+
+// HTTP Proxy:
+@property (readwrite, atomic) BOOL httpProxyEnabled;
+@property (readwrite, atomic, copy) NSString *httpProxy;
+@property (readwrite, atomic) NSNumber *httpProxyPort;
+
+// HTTPS Proxy:
+@property (readwrite, atomic) BOOL httpsProxyEnabled;
+@property (readwrite, atomic, copy) NSString *httpsProxy;
+@property (readwrite, atomic) NSNumber *httpsProxyPort;
+
 @property (atomic, copy) NSString *crashLevel;
 @property (atomic, copy) NSString *logLevel;
 @property (readonly, atomic) NSUInteger maximumReportsPerMinute;

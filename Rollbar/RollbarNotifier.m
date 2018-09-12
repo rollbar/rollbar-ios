@@ -667,35 +667,26 @@ static BOOL isNetworkReachable = YES;
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         
-        NSDictionary *connectionProxyDictionary =
-        @{
-            @"HTTPEnable"   : [NSNumber numberWithInt:1],
-            @"HTTPProxy"    : @"",
-            @"HTTPPort"     : @"[NSNumber numberWithInt: 12345] or int",
-            @"HTTPSEnable"  : [NSNumber numberWithInt:1],
-            @"HTTPSProxy"   : @"",
-            @"HTTPSPort"    : @"[NSNumber numberWithInt: 12345] or int"
-          
-//          @"HTTPEnable"    : [NSNumber numberWithInt:1],
-//          (NSString *)kCFStreamPropertyHTTPProxyHost      : @"",
-//          (NSString *)kCFStreamPropertyHTTPProxyPort     : @"[NSNumber numberWithInt: 12345] or int",
-//          @"HTTPSEnable"    : [NSNumber numberWithInt:1],
-//          (NSString *)kCFStreamPropertyHTTPSProxyHost      : @"",
-//          (NSString *)kCFStreamPropertyHTTPSProxyPort     : @"[NSNumber numberWithInt: 12345] or int"
-
-//          (NSString*)kCFNetworkProxiesHTTPEnable    : [NSNumber numberWithInt:1],
-//          (NSString*)kCFNetworkProxiesHTTPProxy     : @"",
-//          (NSString*)kCFNetworkProxiesHTTPPort      : @"[NSNumber numberWithInt: 12345] or int",
-//          (NSString*)kCFNetworkProxiesHTTPSEnable    : [NSNumber numberWithInt:1],
-//          (NSString*)kCFNetworkProxiesHTTPSProxy     : @"",
-//          (NSString*)kCFNetworkProxiesHTTPSPort      : @"[NSNumber numberWithInt: 12345] or int"
-        };
-
-        NSURLSessionConfiguration *sessionConfig =
-            [NSURLSessionConfiguration ephemeralSessionConfiguration];
-        sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
+        NSURLSession *session = [NSURLSession sharedSession];
         
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
+        if (self.configuration.httpProxyEnabled
+            || self.configuration.httpsProxyEnabled) {
+            
+            NSDictionary *connectionProxyDictionary =
+            @{
+              @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxyEnabled],
+              @"HTTPProxy"    : self.configuration.httpProxy,
+              @"HTTPPort"     : self.configuration.httpProxyPort,
+              @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxyEnabled],
+              @"HTTPSProxy"   : self.configuration.httpsProxy,
+              @"HTTPSPort"    : self.configuration.httpsProxyPort
+              };
+
+            NSURLSessionConfiguration *sessionConfig =
+            [NSURLSessionConfiguration ephemeralSessionConfiguration];
+            sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
+            session = [NSURLSession sessionWithConfiguration:sessionConfig];
+        }
         
         NSURLSessionDataTask *dataTask =
             [session dataTaskWithRequest:request
@@ -704,6 +695,7 @@ static BOOL isNetworkReachable = YES;
                 dispatch_semaphore_signal(sem);
             }];
         [dataTask resume];
+        
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     } else {
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
