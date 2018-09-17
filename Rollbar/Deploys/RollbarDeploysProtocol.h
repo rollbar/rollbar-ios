@@ -13,13 +13,13 @@
 
 #import "Deployment.h"
 #import "DeploymentDetails.h"
-#import "ApiCallResult.h"
+#import "DeployApiCallResult.h"
 
 // Deploys Service Callback Protocols:
 
 @protocol RegisterDeploymentDelegate
 @required
-- (void)registrationCompleted:(ApiCallResult *)result;
+- (void)registrationCompleted:(DeployApiCallResult *)result;
 @end
 
 @protocol GetDeploymentDetailsDelegate

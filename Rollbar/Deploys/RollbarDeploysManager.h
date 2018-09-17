@@ -14,6 +14,9 @@
 #import "RollbarDeploysProtocol.h"
 
 @interface RollbarDeploysManager : NSObject <RollbarDeploysProtocol>
+// Designated Initializer:
+- (id)initWithWriteAccessToken:(NSString *)writeAccessToken
+               readAccessToken:(NSString *)readAccessToken;
 @end
 
 //#endif /* RollbarDeploysManager_h */

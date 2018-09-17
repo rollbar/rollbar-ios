@@ -12,13 +12,17 @@
 #import <Foundation/Foundation.h>
 
 @interface Deployment : NSObject
-
-@property (readonly) NSString *environment;
-@property (readonly) NSString *comment;
-@property (readonly) NSString *revision;
-@property (readonly) NSString *localUsername;
-@property (readonly) NSString *rollbarUsername;
-
+@property (readonly, retain) NSString *environment;
+@property (readonly, retain) NSString *comment;
+@property (readonly, retain) NSString *revision;
+@property (readonly, retain) NSString *localUsername;
+@property (readonly, retain) NSString *rollbarUsername;
+// Designated Initializer:
+- (id)initWithEnvironment:(NSString *)environment
+                  comment:(NSString *)comment
+                 revision:(NSString *)revision
+            localUserName:(NSString *)lovalUserName
+          rollbarUserName:(NSString *)rollbarUserName;
 @end
 
 //#endif /* Deployment_h */
