@@ -50,6 +50,9 @@
 		55143D94214CB35F00761B20 /* DeployApiCallResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D93214CB35F00761B20 /* DeployApiCallResult.h */; };
 		55143D95214CB35F00761B20 /* DeployApiCallResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D93214CB35F00761B20 /* DeployApiCallResult.h */; };
 		55143D97214CB39000761B20 /* DeployApiCallResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D96214CB39000761B20 /* DeployApiCallResult.m */; };
+		55143D99215016A100761B20 /* RollbarJSONFriendlyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */; };
+		55143D9B21501E5B00761B20 /* RollbarJSONFriendlyObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */; };
+		55143D9E21501E8E00761B20 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
 		5515653A212CA69B00AE4C74 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
 		5515653B212CA6FB00AE4C74 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; };
 		55B568D420F7E32200052D01 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
@@ -589,6 +592,9 @@
 		55143D90214C80C800761B20 /* DeploymentDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeploymentDetails.h; sourceTree = "<group>"; };
 		55143D93214CB35F00761B20 /* DeployApiCallResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeployApiCallResult.h; sourceTree = "<group>"; };
 		55143D96214CB39000761B20 /* DeployApiCallResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeployApiCallResult.m; sourceTree = "<group>"; };
+		55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarJSONFriendlyProtocol.h; sourceTree = "<group>"; };
+		55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarJSONFriendlyObject.h; sourceTree = "<group>"; };
+		55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarJSONFriendlyObject.m; sourceTree = "<group>"; };
 		55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarPayloadTruncator.m; sourceTree = "<group>"; };
 		55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarPayloadTruncator.h; sourceTree = "<group>"; };
 		55B568D720F9560A00052D01 /* PayloadTruncationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayloadTruncationTests.m; sourceTree = "<group>"; };
@@ -905,6 +911,9 @@
 		96D2220F18D8E40600933444 /* Rollbar */ = {
 			isa = PBXGroup;
 			children = (
+				55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */,
+				55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */,
+				55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */,
 				55143D7C214C5E2200761B20 /* Deploys */,
 				B54F19511FDA6CA600A6AB0C /* KSCrash */,
 				B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */,
@@ -1457,6 +1466,7 @@
 				B54F1AA51FDA6CA600A6AB0C /* KSCrashMonitor_System.h in Headers */,
 				B54F1A991FDA6CA600A6AB0C /* KSCrashMonitor_User.h in Headers */,
 				B54F1A0F1FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.h in Headers */,
+				55143D99215016A100761B20 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				B54F1A1D1FDA6CA600A6AB0C /* KSCrashReportFilterStringify.h in Headers */,
 				B54F1A8C1FDA6CA600A6AB0C /* KSCrashMonitor_CPPException.h in Headers */,
 				B54F1BAD1FDA6CA700A6AB0C /* Demangle.h in Headers */,
@@ -1516,6 +1526,7 @@
 				B54F1AB61FDA6CA600A6AB0C /* KSCrashReport.h in Headers */,
 				B54F1BB11FDA6CA700A6AB0C /* Fallthrough.h in Headers */,
 				B54F1AC61FDA6CA600A6AB0C /* KSCPU_Apple.h in Headers */,
+				55143D9B21501E5B00761B20 /* RollbarJSONFriendlyObject.h in Headers */,
 				B54F1A5E1FDA6CA600A6AB0C /* KSCrashReportSinkConsole.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1845,6 +1856,7 @@
 				55B568D420F7E32200052D01 /* RollbarPayloadTruncator.m in Sources */,
 				B54F1B131FDA6CA600A6AB0C /* KSSignalInfo.c in Sources */,
 				B54F1A961FDA6CA600A6AB0C /* KSCrashMonitor_MachException.c in Sources */,
+				55143D9E21501E8E00761B20 /* RollbarJSONFriendlyObject.m in Sources */,
 				B54F1AD41FDA6CA600A6AB0C /* KSObjC.c in Sources */,
 				B54F1B181FDA6CA600A6AB0C /* KSDebug.c in Sources */,
 				B54F1B041FDA6CA600A6AB0C /* KSDemangle_CPP.cpp in Sources */,

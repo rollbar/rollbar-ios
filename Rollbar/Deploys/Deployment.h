@@ -2,7 +2,7 @@
 //  Deployment.h
 //  Rollbar
 //
-//  Created by Andrey Kornich on 2018-09-12.
+//  Created by Andrey Kornich (Wide Spectrum Computing LLC) on 2018-09-17.
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
@@ -10,8 +10,9 @@
 //#define Deployment_h
 
 #import <Foundation/Foundation.h>
+#import "RollbarJSONFriendlyObject.h"
 
-@interface Deployment : NSObject
+@interface Deployment : RollbarJSONFriendlyObject
 @property (readonly, retain) NSString *environment;
 @property (readonly, retain) NSString *comment;
 @property (readonly, retain) NSString *revision;
@@ -21,7 +22,7 @@
 - (id)initWithEnvironment:(NSString *)environment
                   comment:(NSString *)comment
                  revision:(NSString *)revision
-            localUserName:(NSString *)lovalUserName
+            localUserName:(NSString *)localUserName
           rollbarUserName:(NSString *)rollbarUserName;
 @end
 

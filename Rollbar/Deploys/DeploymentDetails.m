@@ -2,7 +2,7 @@
 //  DeploymentDetails.m
 //  Rollbar
 //
-//  Created by Andrey Kornich on 2018-09-12.
+//  Created by Andrey Kornich (Wide Spectrum Computing LLC) on 2018-09-17.
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
