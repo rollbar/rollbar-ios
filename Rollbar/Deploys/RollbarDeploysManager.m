@@ -36,7 +36,7 @@
     return [self initWithWriteAccessToken:nil readAccessToken:nil];
 }
 
-- (void)getDeploymentUsing:(NSString *)deployId {
+- (void)getDeploymentWithDeployId:(NSString *)deployId {
     NSString * const url = @"https://api.rollbar.com/api/1/deploy/";
     
     NSString * const getUrl =
@@ -44,8 +44,7 @@
     [self sendGetRequestToUrl:getUrl];
 }
 
-- (void)getDeploymentsPageForEnvironment:(NSString *)environmentId
-                         usingPageNumber:(NSUInteger)pageNumber {
+- (void)getDeploymentsPageNumber:(NSUInteger)pageNumber {
     NSString * const url = @"https://api.rollbar.com/api/1/deploys/";
     
     NSString * const getUrl =

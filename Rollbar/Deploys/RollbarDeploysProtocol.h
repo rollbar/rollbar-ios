@@ -37,9 +37,8 @@
 @protocol RollbarDeploysProtocol
 @required
 - (void) registerDeployment:(Deployment *)deployment;
-- (void) getDeploymentUsing:(NSString *)deployId;
-- (void) getDeploymentsPageForEnvironment:(NSString *)environmentId
-                          usingPageNumber:(NSUInteger)pageNumber;
+- (void) getDeploymentWithDeployId:(NSString *)deployId;
+- (void) getDeploymentsPageNumber:(NSUInteger)pageNumber;
 @optional
 @end
 

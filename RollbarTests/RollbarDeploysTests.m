@@ -96,7 +96,7 @@
     RollbarDeploysManager *deploysManager =
     [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
                                             readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"];
-    [deploysManager getDeploymentUsing:testDeploymentId];
+    [deploysManager getDeploymentWithDeployId:testDeploymentId];
     [NSThread sleepForTimeInterval:3.0f];
 }
 
@@ -105,7 +105,7 @@
     RollbarDeploysManager *deploysManager =
     [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
                                             readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"];
-    [deploysManager getDeploymentsPageForEnvironment:@"unit-tests" usingPageNumber:0];
+    [deploysManager getDeploymentWithDeployId:0];
     [NSThread sleepForTimeInterval:3.0f];
 }
 
