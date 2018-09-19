@@ -23,17 +23,28 @@
 @implementation RollbarDeploysManager
 
 - (id)initWithWriteAccessToken:(NSString *)writeAccessToken
-               readAccessToken:(NSString *)readAccessToken {
+               readAccessToken:(NSString *)readAccessToken
+deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploymentRegistrationObserver
+     deploymentDetailsObserver:(NSObject<DeploymentDetailsObserver>*)deploymentDetailsObserver
+ deploymentDetailsPageObserver:(NSObject<DeploymentDetailsPageObserver>*)deploymentDetailsPageObserver {
     self = [super init];
     if (nil != self) {
         self.writeAccessToken = writeAccessToken;
         self.readAccessToken = readAccessToken;
+        _deploymentRegistrationObserver = deploymentRegistrationObserver;
+        _deploymentDetailsObserver = deploymentDetailsObserver;
+        _deploymentDetailsPageObserver = deploymentDetailsPageObserver;
     }
     return self;
 }
 
 - (id)init {
-    return [self initWithWriteAccessToken:nil readAccessToken:nil];
+    return [self initWithWriteAccessToken:nil
+                          readAccessToken:nil
+           deploymentRegistrationObserver:nil
+                deploymentDetailsObserver:nil
+            deploymentDetailsPageObserver:nil
+            ];
 }
 
 - (void)getDeploymentWithDeployId:(NSString *)deployId {
@@ -122,7 +133,7 @@
         NSURLSessionDataTask *dataTask =
         [session dataTaskWithRequest:request
                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                       result = [self checkResponse:response error:error data:data];
+                       result = [self checkResponse:response error:error data:data forRequest:request];
                        dispatch_semaphore_signal(sem);
                    }];
         [dataTask resume];
@@ -133,7 +144,7 @@
         NSError *error;
         NSHTTPURLResponse *response;
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        result = [self checkResponse:response error:error data:data];
+        result = [self checkResponse:response error:error data:data forRequest:request];
     }
     
     return result;
@@ -184,7 +195,7 @@
         NSURLSessionDataTask *dataTask =
         [session dataTaskWithRequest:request
                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                       result = [self checkResponse:response error:error data:data];
+                       result = [self checkResponse:response error:error data:data forRequest:request];
                        dispatch_semaphore_signal(sem);
                    }];
         [dataTask resume];
@@ -195,15 +206,38 @@
         NSError *error;
         NSHTTPURLResponse *response;
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        result = [self checkResponse:response error:error data:data];
+        result = [self checkResponse:response error:error data:data forRequest:request];
     }
     
     return result;
 }
 
 - (BOOL)checkResponse:(NSURLResponse*)response
-                       error:(NSError*)error
-                        data:(NSData*)data {
+                error:(NSError*)error
+                 data:(NSData*)data
+           forRequest:(NSMutableURLRequest*)request {
+    
+    if ((nil == request) || (nil == request.URL)) {
+        return NO;
+    }
+    
+    NSString *requestHttpMethod = request.HTTPMethod;
+    NSString *requestUrl = request.URL.absoluteString;
+    
+    if (([requestHttpMethod caseInsensitiveCompare:@"POST"] == NSOrderedSame)
+        && [requestUrl hasSuffix:@"/deploy/"]) {
+        //call deploy reqistration callback...
+    }
+    else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
+             && [requestUrl hasSuffix:@"/deploy/"]) {
+        //call deploy details by deploy ID callback...
+    }
+    else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
+             && [requestUrl hasSuffix:@"/deploys/"]) {
+        //call deploys page callback...
+    }
+
+    
     if (error) {
         NSLog(@"There was an error reporting to Rollbar");
         NSLog(@"Error: %@", [error localizedDescription]);
@@ -213,8 +247,11 @@
             NSLog(@"Success");
             
             NSDictionary *headers = httpResponse.allHeaderFields;
+            NSLog(@"Response: %@", httpResponse);
+
             if (data) {
-                NSLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                // decode data:
+                NSLog(@"Response data: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             }
 
             return YES;

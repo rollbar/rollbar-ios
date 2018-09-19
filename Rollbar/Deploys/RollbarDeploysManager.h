@@ -15,10 +15,16 @@
 
 @interface RollbarDeploysManager : NSObject <RollbarDeploysProtocol> {
     NSMutableData *responseData;
+    NSObject<DeploymentRegistrationObserver> *_deploymentRegistrationObserver;
+    NSObject<DeploymentDetailsObserver> *_deploymentDetailsObserver;
+    NSObject<DeploymentDetailsPageObserver> *_deploymentDetailsPageObserver;
 }
 // Designated Initializer:
 - (id)initWithWriteAccessToken:(NSString *)writeAccessToken
-               readAccessToken:(NSString *)readAccessToken;
+               readAccessToken:(NSString *)readAccessToken
+deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploymentRegistrationObserver
+     deploymentDetailsObserver:(NSObject<DeploymentDetailsObserver>*)deploymentDetailsObserver
+ deploymentDetailsPageObserver:(NSObject<DeploymentDetailsPageObserver>*)deploymentDetailsPageObserver;
 @end
 
 //#endif /* RollbarDeploysManager_h */

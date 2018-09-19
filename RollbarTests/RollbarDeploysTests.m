@@ -86,7 +86,11 @@
                                                      rollbarUserName:rollbarUsername];
     RollbarDeploysManager *deploysManager =
         [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
-                                                readAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
+                                                readAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"
+                                 deploymentRegistrationObserver:nil
+                                      deploymentDetailsObserver:nil
+                                  deploymentDetailsPageObserver:nil
+         ];
     [deploysManager registerDeployment:deployment];
     [NSThread sleepForTimeInterval:3.0f];
 }
@@ -95,7 +99,11 @@
     NSString * const testDeploymentId = @"9961771";
     RollbarDeploysManager *deploysManager =
     [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
-                                            readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"];
+                                            readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"
+                             deploymentRegistrationObserver:nil
+                                  deploymentDetailsObserver:nil
+                              deploymentDetailsPageObserver:nil
+     ];
     [deploysManager getDeploymentWithDeployId:testDeploymentId];
     [NSThread sleepForTimeInterval:3.0f];
 }
@@ -104,7 +112,11 @@
     NSString * const testDeploymentId = @"9961771";
     RollbarDeploysManager *deploysManager =
     [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
-                                            readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"];
+                                            readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"
+                             deploymentRegistrationObserver:nil
+                                  deploymentDetailsObserver:nil
+                              deploymentDetailsPageObserver:nil
+     ];
     [deploysManager getDeploymentWithDeployId:0];
     [NSThread sleepForTimeInterval:3.0f];
 }

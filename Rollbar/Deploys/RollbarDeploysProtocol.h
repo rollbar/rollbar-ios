@@ -15,21 +15,21 @@
 #import "DeploymentDetails.h"
 #import "DeployApiCallResult.h"
 
-// Deploys Service Callback Protocols:
+// Deploys Service Response Observer Protocols:
 
-@protocol RegisterDeploymentDelegate
+@protocol DeploymentRegistrationObserver
 @required
-- (void)registrationCompleted:(DeployApiCallResult *)result;
+- (void)onRegisterDeploymentCompleted:(DeployApiCallResult *)result;
 @end
 
-@protocol GetDeploymentDetailsDelegate
+@protocol DeploymentDetailsObserver
 @required
-- (void)getDeploymentDetailsCompleted:(DeploymentDetailsResult *)result;
+- (void)onGetDeploymentDetailsCompleted:(DeploymentDetailsResult *)result;
 @end
 
-@protocol GetDeploymentDetailsPageDelegate
+@protocol DeploymentDetailsPageObserver
 @required
-- (void)getDeploymentDetailsPageCompleted:(DeploymentDetailsPageResult *)result;
+- (void)onGetDeploymentDetailsPageCompleted:(DeploymentDetailsPageResult *)result;
 @end
 
 // Deploys Service Requests Protocol:

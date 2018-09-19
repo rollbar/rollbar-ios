@@ -10,27 +10,20 @@
 
 #import "DeployApiCallResult.h"
 
-// DeployApiCallResult
-//////////////////////
-
-//@interface DeployApiCallResult()
-//// redeclare the properties as read-write:
-//@property (readwrite) DeployApiCallOutcome outcome;
-//@property (readwrite, retain) NSString *description;
-//@end
-
 @implementation DeployApiCallResult
-//@synthesize outcome;
-//@synthesize description;
+
 static NSString * const PROPERTY_outcome = @"outcome";
 static NSString * const PROPERTY_description = @"description";
 
 - (DeployApiCallOutcome)outcome {
     return [[self.dataDictionary objectForKey:PROPERTY_outcome] intValue];
 }
+
 - (NSString *)description {
     return (NSString *) [self.dataDictionary objectForKey:PROPERTY_description];
 }
+
+// Designated Initializer:
 - (id)initWithOutcome:(DeployApiCallOutcome)outcome
           description:(NSString *)description {
     self = [super init];
@@ -50,23 +43,47 @@ static NSString * const PROPERTY_description = @"description";
 //- (id)initWithJSONData:(NSData *)jsonData {
 //
 //}
+
 @end
 
-// DeploymentDetailsResult
-//////////////////////////
+@implementation DeploymentRegistrationResult
 
-//@interface DeploymentDetailsResult()
-//// redeclare the properties as read-write:
-//@property (readwrite, retain) DeploymentDetails *deployment;
-//@end
+static NSString * const PROPERTY_deplymentId = @"deploymentId";
+
+- (NSString *)deploymentId {
+    return (NSString *) [self.dataDictionary objectForKey:PROPERTY_deplymentId];
+}
+
+// Designated Initializer:
+- (id)initWithOutcome:(DeployApiCallOutcome)outcome
+          description:(NSString *)description
+         deploymentId:(NSString *)deploymentId {
+    self = [super initWithOutcome:outcome
+                      description:description];
+    if (nil != self) {
+        [self.dataDictionary setObject:deploymentId forKey:PROPERTY_deplymentId];
+    }
+    return self;
+}
+
+- (id)initWithOutcome:(DeployApiCallOutcome)outcome
+          description:(NSString *)description {
+    return [self initWithOutcome:outcome
+                     description:description
+                      deploymentId:nil];
+}
+
+@end
 
 @implementation DeploymentDetailsResult
-//@synthesize deployment;
+
 static NSString * const PROPERTY_deplyment = @"deployment";
 
 - (DeploymentDetails *)deployment {
     return (DeploymentDetails *) [self.dataDictionary objectForKey:PROPERTY_deplyment];
 }
+
+// Designated Initializer:
 - (id)initWithOutcome:(DeployApiCallOutcome)outcome
           description:(NSString *)description
            deployment:(DeploymentDetails *)deployment {
@@ -77,28 +94,24 @@ static NSString * const PROPERTY_deplyment = @"deployment";
     }
     return self;
 }
+
 - (id)initWithOutcome:(DeployApiCallOutcome)outcome
           description:(NSString *)description {
     return [self initWithOutcome:outcome
                      description:description
                       deployment:nil];
 }
+
 @end
 
-// DeploymentDetailsPageResult
-//////////////////////////////
-
-//@interface DeploymentDetailsPageResult()
-//@property (readwrite, retain) NSSet<DeploymentDetails *> *deployments;
-//@end
-
 @implementation DeploymentDetailsPageResult
-//@synthesize deployments;
+
 static NSString * const PROPERTY_deplyments = @"deployments";
 
 - (NSSet<DeploymentDetails *> *)deployments {
     return (NSSet<DeploymentDetails *> *) [self.dataDictionary objectForKey:PROPERTY_deplyments];
 }
+
 // Designated Initializer:
 - (id)initWithOutcome:(DeployApiCallOutcome)outcome
           description:(NSString *)description
@@ -110,6 +123,7 @@ static NSString * const PROPERTY_deplyments = @"deployments";
     }
     return self;
 }
+
 - (id)initWithOutcome:(DeployApiCallOutcome)outcome
           description:(NSString *)description {
     return [self initWithOutcome:outcome
