@@ -72,7 +72,7 @@
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
-    NSString * const environment = @"unit-tests";
+    NSString * const environment = @"unit-tests123";
     NSString * const comment =
         [NSString stringWithFormat:@"a new deploy at %@", [dateFormatter stringFromDate:[NSDate date]]];
     NSString * const revision = @"a_revision";
@@ -86,8 +86,26 @@
                                                      rollbarUserName:rollbarUsername];
     RollbarDeploysManager *deploysManager =
         [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
-                                                readAccessToken:@""];
+                                                readAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
     [deploysManager registerDeployment:deployment];
+    [NSThread sleepForTimeInterval:3.0f];
+}
+
+- (void)testGetDeploymentDetailsById {
+    NSString * const testDeploymentId = @"9961771";
+    RollbarDeploysManager *deploysManager =
+    [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
+                                            readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"];
+    [deploysManager getDeploymentUsing:testDeploymentId];
+    [NSThread sleepForTimeInterval:3.0f];
+}
+
+- (void)testGetDeploymentsPage {
+    NSString * const testDeploymentId = @"9961771";
+    RollbarDeploysManager *deploysManager =
+    [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
+                                            readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"];
+    [deploysManager getDeploymentsPageForEnvironment:@"unit-tests" usingPageNumber:0];
     [NSThread sleepForTimeInterval:3.0f];
 }
 
