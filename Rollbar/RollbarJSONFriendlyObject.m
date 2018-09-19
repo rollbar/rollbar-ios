@@ -35,6 +35,11 @@
 }
 
 - (id)init {
-    return [super init];
+    self = [super init];
+    if (nil != self) {
+        _dataDictionary = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+    //return [self initWithJSONData:nil];
 }
 @end

@@ -27,8 +27,8 @@
 static NSString * const PROPERTY_environment = @"environment";
 static NSString * const PROPERTY_comment = @"comment";
 static NSString * const PROPERTY_revision = @"revision";
-static NSString * const PROPERTY_localUsername = @"localUsername";
-static NSString * const PROPERTY_rollbarUsername = @"rollbarUsername";
+static NSString * const PROPERTY_localUsername = @"local_username";
+static NSString * const PROPERTY_rollbarUsername = @"rollbar_username";
 
 -(NSString *)environment {
     return [self.dataDictionary objectForKey:PROPERTY_environment] ;
