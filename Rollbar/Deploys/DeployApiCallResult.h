@@ -22,9 +22,18 @@ typedef enum DeployApiCallOutcome {
 @interface DeployApiCallResult : RollbarJSONFriendlyObject
 @property (readonly) DeployApiCallOutcome outcome;
 @property (readonly, copy) NSString *description;
++ (id)createForRequest:(NSURLRequest*)request
+          withResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error;
 // Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description;
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request;
+
+//- (id)initWithOutcome:(DeployApiCallOutcome)outcome
+//          description:(NSString *)description;
 @end
 
 @interface DeploymentRegistrationResult : DeployApiCallResult

@@ -48,30 +48,32 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
 }
 
 - (void)getDeploymentWithDeployId:(NSString *)deployId {
-    NSString * const url = @"https://api.rollbar.com/api/1/deploy/";
-    
+    NSString * const url =
+        @"https://api.rollbar.com/api/1/deploy/";
     NSString * const getUrl =
         [NSString stringWithFormat:@"%@%@/?access_token=%@",url,deployId,self.readAccessToken];
     [self sendGetRequestToUrl:getUrl];
 }
 
 - (void)getDeploymentsPageNumber:(NSUInteger)pageNumber {
-    NSString * const url = @"https://api.rollbar.com/api/1/deploys/";
-    
+    NSString * const url =
+        @"https://api.rollbar.com/api/1/deploys/";
     NSString * const getUrl =
-    [NSString stringWithFormat:@"%@?access_token=%@&page=%lu",url,self.readAccessToken,(unsigned long)pageNumber];
-//    [NSString stringWithFormat:@"%@?access_token=%@&environment=%@&page=%lu",url,self.readAccessToken,environmentId,(unsigned long)pageNumber];
+        [NSString stringWithFormat:@"%@?access_token=%@&page=%lu",url,self.readAccessToken,(unsigned long)pageNumber];
     [self sendGetRequestToUrl:getUrl];
 }
 
 - (void)registerDeployment:(Deployment *)deployment {
-    NSString * const url = @"https://api.rollbar.com/api/1/deploy/";
-    //NSString * const readAccessToken = @"8c2982e875544037b51870d558f51ed3";
-    
+    NSString * const url =
+        @"https://api.rollbar.com/api/1/deploy/";
     NSMutableDictionary *params =
         [[NSMutableDictionary alloc] initWithDictionary:deployment.asJSONData];
-    [params setObject:self.writeAccessToken forKey:@"access_token"];
-    [self sendPostRequest:params toUrl:url];
+    [params setObject:self.writeAccessToken
+               forKey:@"access_token"
+     ];
+    [self sendPostRequest:params
+                    toUrl:url
+     ];
 }
 
 -(BOOL)sendGetRequestToUrl:(NSString *)urlString {
@@ -90,20 +92,11 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
 //    [[NSURLConnection alloc] initWithRequest:request
 //                                    delegate:self];
     
-    
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setValue:[params valueForKey:@"access_token"] forHTTPHeaderField:@"X-Rollbar-Access-Token"];
-//
-//    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:params
-//                                                          options:NSJSONWritingPrettyPrinted
-//                                                            error:nil
-//                                                             safe:true];
-//    [request setHTTPBody:jsonPayload];
-    
+
     __block BOOL result = NO;
     if (IS_IOS7_OR_HIGHER) {
         // This requires iOS 7.0+
@@ -148,14 +141,12 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     }
     
     return result;
-
 }
 
 -(BOOL)sendPostRequest:(NSDictionary *)params toUrl:(NSString *)urlString {
 
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[params valueForKey:@"access_token"] forHTTPHeaderField:@"X-Rollbar-Access-Token"];
@@ -163,7 +154,8 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:params
                                                           options:NSJSONWritingPrettyPrinted
                                                             error:nil
-                                                             safe:true];
+                                                             safe:true
+                           ];
     [request setHTTPBody:jsonPayload];
     
     __block BOOL result = NO;

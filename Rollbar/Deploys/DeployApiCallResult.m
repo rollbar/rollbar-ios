@@ -23,18 +23,78 @@ static NSString * const PROPERTY_description = @"description";
     return (NSString *) [self.dataDictionary objectForKey:PROPERTY_description];
 }
 
++ (id)createForRequest:(NSURLRequest*)request
+          withResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error {
+    if ((nil == request) || (nil == request.URL)) {
+        return nil;
+    }
+    
+    NSString *requestHttpMethod = request.HTTPMethod;
+    NSString *requestUrl = request.URL.absoluteString;
+    if (([requestHttpMethod caseInsensitiveCompare:@"POST"] == NSOrderedSame)
+        && [requestUrl hasSuffix:@"/deploy/"]) {
+        //call deploy reqistration callback...
+    }
+    else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
+             && [requestUrl hasSuffix:@"/deploy/"]) {
+        //call deploy details by deploy ID callback...
+    }
+    else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
+             && [requestUrl hasSuffix:@"/deploys/"]) {
+        //call deploys page callback...
+    }
+
+}
+
 // Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description {
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request {
     self = [super init];
     if (nil != self) {
-        [self.dataDictionary setObject:[NSNumber numberWithInt:outcome]
-                                forKey:PROPERTY_outcome];
-        [self.dataDictionary setObject:description
-                                forKey:PROPERTY_description];
+        if (error) {
+            [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Error]
+                                    forKey:PROPERTY_outcome];
+            NSString *description =
+            [NSString stringWithFormat:@"Rollbar Deploy API communication error: %@",[error localizedDescription]];
+            [self.dataDictionary setObject:description
+                                    forKey:PROPERTY_description];
+        }
+        if (nil != httpResponse) {
+            if (200 == httpResponse.statusCode) {
+                [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Success]
+                                        forKey:PROPERTY_outcome];
+            }
+            else {
+                [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Error]
+                                        forKey:PROPERTY_outcome];
+            }
+            NSMutableString *description =
+            [NSMutableString stringWithFormat:@"HTTP Status Code: %ldi and Description: %@",(long)httpResponse.statusCode,[NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]];
+            if (data) {
+                [description appendFormat:@"\n\rResponse data:\n\r\%@",[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
+            }
+            [self.dataDictionary setObject:description
+                                    forKey:PROPERTY_description];
+        }
     }
     return self;
 }
+
+//- (id)initWithOutcome:(DeployApiCallOutcome)outcome
+//          description:(NSString *)description {
+//    self = [super init];
+//    if (nil != self) {
+//        [self.dataDictionary setObject:[NSNumber numberWithInt:outcome]
+//                                forKey:PROPERTY_outcome];
+//        [self.dataDictionary setObject:description
+//                                forKey:PROPERTY_description];
+//    }
+//    return self;
+//}
 //- (id)init {
 //    static NSString * const defaultDescription = @"Default response";
 //    return [self initWithOutcome:Outcome_Error
