@@ -31,33 +31,33 @@ typedef enum DeployApiCallOutcome {
                   data:(NSData*)data
                  error:(NSError*)error
             forRequest:(NSURLRequest*)request;
-
-//- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-//          description:(NSString *)description;
 @end
 
 @interface DeploymentRegistrationResult : DeployApiCallResult
-@property (readonly, copy) NSString *deployId;
+@property (readonly, copy) NSString *deploymentId;
 // Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description
-           deployId:(NSString *)deployId;
+//- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+//                  data:(NSData*)data
+//                 error:(NSError*)error
+//            forRequest:(NSURLRequest*)request;
 @end
 
 @interface DeploymentDetailsResult : DeployApiCallResult
 @property (readonly, retain) DeploymentDetails *deployment;
 // Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description
-           deployment:(DeploymentDetails *)deployment;
+//- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+//                  data:(NSData*)data
+//                 error:(NSError*)error
+//            forRequest:(NSURLRequest*)request;
 @end
 
 @interface DeploymentDetailsPageResult : DeployApiCallResult
 @property (readonly, retain) NSSet<DeploymentDetails *> *deployments;
-// Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description
-          deployments:(NSSet<DeploymentDetails *> *)deployments;
+//// Designated Initializer:
+//- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+//                  data:(NSData*)data
+//                 error:(NSError*)error
+//            forRequest:(NSURLRequest*)request;
 @end
 
 //#endif /* ApiCallResult_h */

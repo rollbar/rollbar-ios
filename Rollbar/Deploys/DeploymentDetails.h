@@ -14,10 +14,11 @@
 #import "Deployment.h"
 
 @interface DeploymentDetails : Deployment
-@property (readonly, retain) NSString *deployId;
-@property (readonly, retain) NSString *projectId;
-@property (readonly, retain) NSDate *startTime;
-@property (readonly, retain) NSDate *endTime;
+@property (readonly, copy) NSString *deployId;
+@property (readonly, copy) NSString *projectId;
+@property (readonly, copy) NSDate *startTime;
+@property (readonly, copy) NSDate *endTime;
+@property (readonly, copy) NSString *status;
 @end
 
 //#endif /* DeploymentDetails_h */

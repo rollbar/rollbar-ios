@@ -216,44 +216,69 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     NSString *requestHttpMethod = request.HTTPMethod;
     NSString *requestUrl = request.URL.absoluteString;
     
+    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+//    DeployApiCallResult *apiCallResult = [DeployApiCallResult createForRequest:request
+//                                                                  withResponse:httpResponse
+//                                                                          data:data
+//                                                                         error:error
+//                                          ];
+    
     if (([requestHttpMethod caseInsensitiveCompare:@"POST"] == NSOrderedSame)
-        && [requestUrl hasSuffix:@"/deploy/"]) {
-        //call deploy reqistration callback...
+        && [requestUrl hasSuffix:@"/deploy/"]
+        //&& (nil != _deploymentRegistrationObserver)
+        ) {
+        DeploymentRegistrationResult *result =
+        [[DeploymentRegistrationResult alloc] initWithResponse:httpResponse
+                                                          data:data
+                                                         error:error
+                                                    forRequest:request];
+        [_deploymentRegistrationObserver onRegisterDeploymentCompleted:result];
     }
     else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
-             && [requestUrl hasSuffix:@"/deploy/"]) {
-        //call deploy details by deploy ID callback...
+             && [requestUrl containsString:@"/deploy/"]
+             //&& (nil != _deploymentDetailsObserver)
+             ) {
+        DeploymentDetailsResult *result =
+        [[DeploymentDetailsResult alloc] initWithResponse:httpResponse
+                                                     data:data
+                                                    error:error
+                                               forRequest:request];
+        [_deploymentDetailsObserver onGetDeploymentDetailsCompleted:result];
     }
     else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
-             && [requestUrl hasSuffix:@"/deploys/"]) {
+             && [requestUrl hasSuffix:@"/deploys/"]
+             && (nil != _deploymentDetailsPageObserver)) {
         //call deploys page callback...
+    }
+    else {
+        return NO;
     }
 
     
-    if (error) {
-        NSLog(@"There was an error reporting to Rollbar");
-        NSLog(@"Error: %@", [error localizedDescription]);
-    } else {
-        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-        if ([httpResponse statusCode] == 200) {
-            NSLog(@"Success");
-            
-            NSDictionary *headers = httpResponse.allHeaderFields;
-            NSLog(@"Response: %@", httpResponse);
-
-            if (data) {
-                // decode data:
-                NSLog(@"Response data: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-            }
-
-            return YES;
-        } else {
-            NSLog(@"There was a problem reporting to Rollbar");
-            if (data) {
-                NSLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-            }
-        }
-    }
-    return NO;
+//    if (error) {
+//        NSLog(@"There was an error reporting to Rollbar");
+//        NSLog(@"Error: %@", [error localizedDescription]);
+//    } else {
+//        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+//        if ([httpResponse statusCode] == 200) {
+//            NSLog(@"Success");
+//
+//            NSDictionary *headers = httpResponse.allHeaderFields;
+//            NSLog(@"Response: %@", httpResponse);
+//
+//            if (data) {
+//                // decode data:
+//                NSLog(@"Response data: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+//            }
+//
+//            return YES;
+//        } else {
+//            NSLog(@"There was a problem reporting to Rollbar");
+//            if (data) {
+//                NSLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+//            }
+//        }
+//    }
+    return YES;
 }
 @end

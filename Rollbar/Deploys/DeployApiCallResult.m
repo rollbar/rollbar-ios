@@ -27,6 +27,7 @@ static NSString * const PROPERTY_description = @"description";
           withResponse:(NSHTTPURLResponse*)httpResponse
                   data:(NSData*)data
                  error:(NSError*)error {
+    
     if ((nil == request) || (nil == request.URL)) {
         return nil;
     }
@@ -39,13 +40,18 @@ static NSString * const PROPERTY_description = @"description";
     }
     else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
              && [requestUrl hasSuffix:@"/deploy/"]) {
-        //call deploy details by deploy ID callback...
+        return [[DeploymentRegistrationResult alloc] initWithResponse:httpResponse
+                                                                 data:data
+                                                                error:error
+                                                           forRequest:request
+                ];
     }
     else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
              && [requestUrl hasSuffix:@"/deploys/"]) {
         //call deploys page callback...
     }
-
+    
+    return nil;
 }
 
 // Designated Initializer:
@@ -84,26 +90,6 @@ static NSString * const PROPERTY_description = @"description";
     return self;
 }
 
-//- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-//          description:(NSString *)description {
-//    self = [super init];
-//    if (nil != self) {
-//        [self.dataDictionary setObject:[NSNumber numberWithInt:outcome]
-//                                forKey:PROPERTY_outcome];
-//        [self.dataDictionary setObject:description
-//                                forKey:PROPERTY_description];
-//    }
-//    return self;
-//}
-//- (id)init {
-//    static NSString * const defaultDescription = @"Default response";
-//    return [self initWithOutcome:Outcome_Error
-//                     description:defaultDescription];
-//}
-//- (id)initWithJSONData:(NSData *)jsonData {
-//
-//}
-
 @end
 
 @implementation DeploymentRegistrationResult
@@ -115,22 +101,28 @@ static NSString * const PROPERTY_deplymentId = @"deploymentId";
 }
 
 // Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description
-         deploymentId:(NSString *)deploymentId {
-    self = [super initWithOutcome:outcome
-                      description:description];
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request {
+    
+    self = [super initWithResponse:httpResponse
+                              data:data
+                             error:error
+                        forRequest:request
+            ];
     if (nil != self) {
-        [self.dataDictionary setObject:deploymentId forKey:PROPERTY_deplymentId];
+        if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
+            NSDictionary *dataStruct =
+            [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if (nil != dataStruct) {
+                NSNumber *deploy_id = dataStruct[@"data"][@"deploy_id"];
+                [self.dataDictionary setObject:[deploy_id stringValue]
+                                        forKey:PROPERTY_deplymentId];
+            }
+        }
     }
     return self;
-}
-
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description {
-    return [self initWithOutcome:outcome
-                     description:description
-                      deploymentId:nil];
 }
 
 @end
@@ -144,22 +136,31 @@ static NSString * const PROPERTY_deplyment = @"deployment";
 }
 
 // Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description
-           deployment:(DeploymentDetails *)deployment {
-    self = [super initWithOutcome:outcome
-                      description:description];
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request {
+    
+    self = [super initWithResponse:httpResponse
+                              data:data
+                             error:error
+                        forRequest:request
+            ];
     if (nil != self) {
-        [self.dataDictionary setObject:deployment forKey:PROPERTY_deplyment];
+        if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
+            NSDictionary *dataStruct =
+            [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSLog(@"%@", dataStruct);
+            if (nil != dataStruct) {
+                DeploymentDetails *deploymentDetails =
+                [[DeploymentDetails alloc] initWithJSONData:dataStruct];
+                [self.dataDictionary setObject:deploymentDetails
+                                        forKey:PROPERTY_deplyment
+                 ];
+            }
+        }
     }
     return self;
-}
-
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description {
-    return [self initWithOutcome:outcome
-                     description:description
-                      deployment:nil];
 }
 
 @end
@@ -173,22 +174,24 @@ static NSString * const PROPERTY_deplyments = @"deployments";
 }
 
 // Designated Initializer:
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description
-          deployments:(NSSet<DeploymentDetails *> *)deployments {
-    self = [super initWithOutcome:outcome
-                      description:description];
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request {
+    
+    self = [super initWithResponse:httpResponse
+                              data:data
+                             error:error
+                        forRequest:request
+            ];
     if (nil != self) {
-        [self.dataDictionary setObject:deployments forKey:PROPERTY_deplyments];
+        if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
+            //            [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Error]
+            //                                    forKey:PROPERTY_outcome];
+        }
     }
     return self;
 }
 
-- (id)initWithOutcome:(DeployApiCallOutcome)outcome
-          description:(NSString *)description {
-    return [self initWithOutcome:outcome
-                     description:description
-                      deployments:nil];
-}
 @end
 

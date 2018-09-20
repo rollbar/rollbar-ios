@@ -10,17 +10,64 @@
 
 #import "DeploymentDetails.h"
 
-@interface DeploymentDetails()
-// redeclare the properties as read-write:
-@property (readwrite, retain) NSString *deployId;
-@property (readwrite, retain) NSString *projectId;
-@property (readwrite, retain) NSDate *startTime;
-@property (readwrite, retain) NSDate *endTime;
-@end
+//@interface DeploymentDetails()
+//// redeclare the properties as read-write:
+//@property (readwrite, retain) NSString *deployId;
+//@property (readwrite, retain) NSString *projectId;
+//@property (readwrite, retain) NSDate *startTime;
+//@property (readwrite, retain) NSDate *endTime;
+//@end
 
 @implementation DeploymentDetails
-@synthesize deployId;
-@synthesize projectId;
-@synthesize startTime;
-@synthesize endTime;
+//@synthesize deployId;
+//@synthesize projectId;
+//@synthesize startTime;
+//@synthesize endTime;
+
+static NSString * const PROPERTY_deployId = @"id";
+static NSString * const PROPERTY_projectId = @"project_id";
+static NSString * const PROPERTY_startTime = @"start_time";
+static NSString * const PROPERTY_endTime = @"finish_time";
+static NSString * const PROPERTY_status = @"status";
+
+-(NSString *)deployId {
+    return [self.dataDictionary objectForKey:PROPERTY_deployId] ;
+}
+-(NSString *)projectId {
+    return [self.dataDictionary objectForKey:PROPERTY_projectId] ;
+}
+-(NSString *)startTime {
+    return [self.dataDictionary objectForKey:PROPERTY_startTime] ;
+}
+-(NSString *)endTime {
+    return [self.dataDictionary objectForKey:PROPERTY_endTime] ;
+}
+-(NSString *)status {
+    return [self.dataDictionary objectForKey:PROPERTY_status] ;
+}
+
+- (id)initWithJSONData:(NSDictionary *)jsonData {
+    self = [super initWithJSONData:jsonData];
+    if (nil != self) {
+        NSNumber *deploy_id = jsonData[@"result"][@"id"];
+        NSNumber *project_id = jsonData[@"result"][@"project_id"];
+        NSNumber *start_time = jsonData[@"result"][@"start_time"];
+        NSNumber *finish_time = jsonData[@"result"][@"finish_time"];
+        NSString *status = jsonData[@"result"][@"status"];
+        
+        [self.dataDictionary setObject:[deploy_id stringValue] forKey:PROPERTY_deployId];
+        [self.dataDictionary setObject:[project_id stringValue] forKey:PROPERTY_projectId];
+        [self.dataDictionary setObject:status forKey:PROPERTY_status];
+        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)start_time.doubleValue] forKey:PROPERTY_startTime];
+        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)finish_time.doubleValue] forKey:PROPERTY_endTime];
+    }
+    return self;
+}
+- (id)init {
+    return [self initWithEnvironment:nil
+                             comment:nil
+                            revision:nil
+                       localUserName:nil
+                     rollbarUserName:nil];
+}
 @end

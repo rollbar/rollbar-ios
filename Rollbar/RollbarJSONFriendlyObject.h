@@ -15,7 +15,7 @@
 
 @interface RollbarJSONFriendlyObject : NSObject<RollbarJSONFriendlyProtocol>
 @property (readonly) NSMutableDictionary *dataDictionary;
-- (id)initWithJSONData:(NSData *)jsonData;
+- (id)initWithJSONData:(NSDictionary *)jsonData;
 @end
 
 //#endif /* RollbarJSONFriendlyObject_h */
