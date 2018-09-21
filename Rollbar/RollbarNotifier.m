@@ -624,7 +624,7 @@ static BOOL isNetworkReachable = YES;
          ];
     if ([payloadItems count] > 1) {
         // we want multiple items peayload to also be below truncation threashold
-        // so it can be successfully sent via HTT{ POST:
+        // so it can be successfully sent via HTTP POST:
         [RollbarPayloadTruncator truncatePayload:newPayload];
     }
 
