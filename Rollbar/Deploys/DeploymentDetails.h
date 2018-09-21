@@ -6,9 +6,6 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
-//#ifndef DeploymentDetails_h
-//#define DeploymentDetails_h
-
 #import <Foundation/Foundation.h>
 
 #import "Deployment.h"
@@ -20,5 +17,3 @@
 @property (readonly, copy) NSDate *endTime;
 @property (readonly, copy) NSString *status;
 @end
-
-//#endif /* DeploymentDetails_h */

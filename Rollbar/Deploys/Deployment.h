@@ -6,11 +6,8 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
-//#ifndef Deployment_h
-//#define Deployment_h
-
 #import <Foundation/Foundation.h>
-#import "RollbarJSONFriendlyObject.h"
+#import "../RollbarJSONFriendlyObject.h"
 
 @interface Deployment : RollbarJSONFriendlyObject
 @property (readonly, retain) NSString *environment;
@@ -25,5 +22,3 @@
             localUserName:(NSString *)localUserName
           rollbarUserName:(NSString *)rollbarUserName;
 @end
-
-//#endif /* Deployment_h */

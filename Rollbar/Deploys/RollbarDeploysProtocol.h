@@ -6,9 +6,6 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
-//#ifndef RollbarDeploysProtocol_h
-//#define RollbarDeploysProtocol_h
-
 #import <Foundation/Foundation.h>
 
 #import "Deployment.h"
@@ -41,5 +38,3 @@
 - (void) getDeploymentsPageNumber:(NSUInteger)pageNumber;
 @optional
 @end
-
-//#endif /* RollbarDeploysProtocol_h */

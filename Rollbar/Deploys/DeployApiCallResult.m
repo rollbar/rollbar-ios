@@ -23,37 +23,6 @@ static NSString * const PROPERTY_description = @"description";
     return (NSString *) [self.dataDictionary objectForKey:PROPERTY_description];
 }
 
-+ (id)createForRequest:(NSURLRequest*)request
-          withResponse:(NSHTTPURLResponse*)httpResponse
-                  data:(NSData*)data
-                 error:(NSError*)error {
-    
-    if ((nil == request) || (nil == request.URL)) {
-        return nil;
-    }
-    
-    NSString *requestHttpMethod = request.HTTPMethod;
-    NSString *requestUrl = request.URL.absoluteString;
-    if (([requestHttpMethod caseInsensitiveCompare:@"POST"] == NSOrderedSame)
-        && [requestUrl hasSuffix:@"/deploy/"]) {
-        //call deploy reqistration callback...
-    }
-    else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
-             && [requestUrl hasSuffix:@"/deploy/"]) {
-        return [[DeploymentRegistrationResult alloc] initWithResponse:httpResponse
-                                                                 data:data
-                                                                error:error
-                                                           forRequest:request
-                ];
-    }
-    else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
-             && [requestUrl hasSuffix:@"/deploys/"]) {
-        //call deploys page callback...
-    }
-    
-    return nil;
-}
-
 // Designated Initializer:
 - (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
                   data:(NSData*)data

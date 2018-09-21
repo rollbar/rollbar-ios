@@ -6,17 +6,12 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
-//#ifndef Header_h
-//#define Header_h
-
 #import <Foundation/Foundation.h>
 
 @protocol RollbarJSONFriendlyProtocol
 @required
+- (NSDictionary *)asJSONData;
 // Designated Initializer:
 - (id)initWithJSONData:(NSDictionary *)jsonData;
-- (NSDictionary *)asJSONData;
 @optional
 @end
-
-//#endif /* Header_h */

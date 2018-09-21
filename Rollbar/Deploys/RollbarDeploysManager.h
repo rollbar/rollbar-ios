@@ -6,9 +6,6 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
-//#ifndef RollbarDeploysManager_h
-//#define RollbarDeploysManager_h
-
 #import <Foundation/Foundation.h>
 
 #import "RollbarDeploysProtocol.h"
@@ -26,5 +23,3 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
      deploymentDetailsObserver:(NSObject<DeploymentDetailsObserver>*)deploymentDetailsObserver
  deploymentDetailsPageObserver:(NSObject<DeploymentDetailsPageObserver>*)deploymentDetailsPageObserver;
 @end
-
-//#endif /* RollbarDeploysManager_h */

@@ -25,13 +25,10 @@
 }
 
 - (NSDictionary *)asJSONData {
-//    if ([NSJSONSerialization isValidJSONObject:self.dataDictionary]) {
-//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.dataDictionary
-//                                                           options:0
-//                                                             error:nil];
-//        return jsonData;
-//    }
-    return _dataDictionary;
+    if ([NSJSONSerialization isValidJSONObject:_dataDictionary]) {
+        return _dataDictionary;
+    }
+    return nil;
 }
 
 - (id)init {
@@ -40,6 +37,5 @@
         _dataDictionary = [[NSMutableDictionary alloc] init];
     }
     return self;
-    //return [self initWithJSONData:nil];
 }
 @end

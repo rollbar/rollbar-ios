@@ -6,9 +6,6 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
-//#ifndef RollbarJSONFriendlyObject_h
-//#define RollbarJSONFriendlyObject_h
-
 #import <Foundation/Foundation.h>
 
 #import "RollbarJSONFriendlyProtocol.h"
@@ -17,5 +14,3 @@
 @property (readonly) NSMutableDictionary *dataDictionary;
 - (id)initWithJSONData:(NSDictionary *)jsonData;
 @end
-
-//#endif /* RollbarJSONFriendlyObject_h */

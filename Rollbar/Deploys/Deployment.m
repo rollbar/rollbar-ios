@@ -8,21 +8,7 @@
 
 #import "Deployment.h"
 
-//@interface Deployment()
-//// redeclare the properties as read-write:
-//@property (readwrite, retain) NSString *environment;
-//@property (readwrite, retain) NSString *comment;
-//@property (readwrite, retain) NSString *revision;
-//@property (readwrite, retain) NSString *localUsername;
-//@property (readwrite, retain) NSString *rollbarUsername;
-//@end
-
 @implementation Deployment
-//@synthesize environment;
-//@synthesize comment;
-//@synthesize revision;
-//@synthesize localUsername;
-//@synthesize rollbarUsername;
 
 static NSString * const PROPERTY_environment = @"environment";
 static NSString * const PROPERTY_comment = @"comment";

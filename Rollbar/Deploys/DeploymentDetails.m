@@ -10,19 +10,7 @@
 
 #import "DeploymentDetails.h"
 
-//@interface DeploymentDetails()
-//// redeclare the properties as read-write:
-//@property (readwrite, retain) NSString *deployId;
-//@property (readwrite, retain) NSString *projectId;
-//@property (readwrite, retain) NSDate *startTime;
-//@property (readwrite, retain) NSDate *endTime;
-//@end
-
 @implementation DeploymentDetails
-//@synthesize deployId;
-//@synthesize projectId;
-//@synthesize startTime;
-//@synthesize endTime;
 
 static NSString * const PROPERTY_deployId = @"id";
 static NSString * const PROPERTY_projectId = @"project_id";

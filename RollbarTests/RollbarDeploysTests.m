@@ -7,9 +7,10 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "Deployment.h"
-#import "RollbarDeploysManager.h"
-#import "RollbarDeploysProtocol.h"
+#import "../Rollbar/Deploys/Deployment.h"
+#import "../Rollbar/Deploys/DeployApiCallResult.h"
+#import "../Rollbar/Deploys/RollbarDeploysManager.h"
+#import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
 
 
 @interface RollbarDeploysObserver : NSObject
@@ -35,35 +36,16 @@ DeploymentDetailsPageObserver>
 
 
 @interface RollbarDeploysTests : XCTestCase
-
 @end
 
 @implementation RollbarDeploysTests
 
 - (void)setUp {
     [super setUp];
-//    RollbarClearLogFile();
-//    if (!Rollbar.currentConfiguration) {
-//        [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
-//        Rollbar.currentConfiguration.environment = @"unit-tests";
-//    }
 }
 
 - (void)tearDown {
-//    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
     [super tearDown];
-}
-
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
 }
 
 - (void)testDeploymentDto {
@@ -117,7 +99,7 @@ DeploymentDetailsPageObserver>
                                   deploymentDetailsPageObserver:observer
          ];
     [deploysManager registerDeployment:deployment];
-    [NSThread sleepForTimeInterval:3.0f];
+    [NSThread sleepForTimeInterval:1.0f];
 }
 
 - (void)testGetDeploymentDetailsById {
@@ -131,7 +113,7 @@ DeploymentDetailsPageObserver>
                               deploymentDetailsPageObserver:observer
      ];
     [deploysManager getDeploymentWithDeployId:testDeploymentId];
-    [NSThread sleepForTimeInterval:3.0f];
+    [NSThread sleepForTimeInterval:1.0f];
 }
 
 - (void)testGetDeploymentsPage {
@@ -143,8 +125,8 @@ DeploymentDetailsPageObserver>
                                   deploymentDetailsObserver:observer
                               deploymentDetailsPageObserver:observer
      ];
-    [deploysManager getDeploymentsPageNumber:0];
-    [NSThread sleepForTimeInterval:3.0f];
+    [deploysManager getDeploymentsPageNumber:1];
+    [NSThread sleepForTimeInterval:1.0f];
 }
 
 @end

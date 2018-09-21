@@ -6,11 +6,9 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 //
 
-//#import <Foundation/Foundation.h>
-
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
-#import "NSJSONSerialization+Rollbar.h"
+#import "../NSJSONSerialization+Rollbar.h"
 #import "RollbarDeploysManager.h"
 
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
