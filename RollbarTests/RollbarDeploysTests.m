@@ -9,6 +9,30 @@
 #import <XCTest/XCTest.h>
 #import "Deployment.h"
 #import "RollbarDeploysManager.h"
+#import "RollbarDeploysProtocol.h"
+
+
+@interface RollbarDeploysObserver : NSObject
+<DeploymentRegistrationObserver,
+DeploymentDetailsObserver,
+DeploymentDetailsPageObserver>
+@end
+
+@implementation RollbarDeploysObserver
+- (void)onRegisterDeploymentCompleted:(DeployApiCallResult *)result {
+    NSLog(@"%@", result);
+}
+
+- (void)onGetDeploymentDetailsCompleted:(DeploymentDetailsResult *)result {
+    NSLog(@"%@", result);
+}
+
+- (void)onGetDeploymentDetailsPageCompleted:(DeploymentDetailsPageResult *)result {
+    NSLog(@"%@", result);
+}
+
+@end
+
 
 @interface RollbarDeploysTests : XCTestCase
 
@@ -79,6 +103,7 @@
     NSString * const localUsername = @"UnitTestRunner";
     NSString * const rollbarUsername = @"rollbar";
     
+    RollbarDeploysObserver *observer = [[RollbarDeploysObserver alloc] init];
     Deployment *deployment = [[Deployment alloc] initWithEnvironment:environment
                                                              comment:comment
                                                             revision:revision
@@ -87,9 +112,9 @@
     RollbarDeploysManager *deploysManager =
         [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
                                                 readAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"
-                                 deploymentRegistrationObserver:nil
-                                      deploymentDetailsObserver:nil
-                                  deploymentDetailsPageObserver:nil
+                                 deploymentRegistrationObserver:observer
+                                      deploymentDetailsObserver:observer
+                                  deploymentDetailsPageObserver:observer
          ];
     [deploysManager registerDeployment:deployment];
     [NSThread sleepForTimeInterval:3.0f];
@@ -97,28 +122,30 @@
 
 - (void)testGetDeploymentDetailsById {
     NSString * const testDeploymentId = @"9961771";
+    RollbarDeploysObserver *observer = [[RollbarDeploysObserver alloc] init];
     RollbarDeploysManager *deploysManager =
     [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
                                             readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"
-                             deploymentRegistrationObserver:nil
-                                  deploymentDetailsObserver:nil
-                              deploymentDetailsPageObserver:nil
+                             deploymentRegistrationObserver:observer
+                                  deploymentDetailsObserver:observer
+                              deploymentDetailsPageObserver:observer
      ];
     [deploysManager getDeploymentWithDeployId:testDeploymentId];
     [NSThread sleepForTimeInterval:3.0f];
 }
 
 - (void)testGetDeploymentsPage {
-    NSString * const testDeploymentId = @"9961771";
+    RollbarDeploysObserver *observer = [[RollbarDeploysObserver alloc] init];
     RollbarDeploysManager *deploysManager =
     [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
                                             readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"
-                             deploymentRegistrationObserver:nil
-                                  deploymentDetailsObserver:nil
-                              deploymentDetailsPageObserver:nil
+                             deploymentRegistrationObserver:observer
+                                  deploymentDetailsObserver:observer
+                              deploymentDetailsPageObserver:observer
      ];
-    [deploysManager getDeploymentWithDeployId:0];
+    [deploysManager getDeploymentsPageNumber:0];
     [NSThread sleepForTimeInterval:3.0f];
 }
 
 @end
+

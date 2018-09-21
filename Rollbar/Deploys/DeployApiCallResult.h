@@ -36,28 +36,29 @@ typedef enum DeployApiCallOutcome {
 @interface DeploymentRegistrationResult : DeployApiCallResult
 @property (readonly, copy) NSString *deploymentId;
 // Designated Initializer:
-//- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
-//                  data:(NSData*)data
-//                 error:(NSError*)error
-//            forRequest:(NSURLRequest*)request;
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request;
 @end
 
 @interface DeploymentDetailsResult : DeployApiCallResult
 @property (readonly, retain) DeploymentDetails *deployment;
 // Designated Initializer:
-//- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
-//                  data:(NSData*)data
-//                 error:(NSError*)error
-//            forRequest:(NSURLRequest*)request;
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request;
 @end
 
 @interface DeploymentDetailsPageResult : DeployApiCallResult
 @property (readonly, retain) NSSet<DeploymentDetails *> *deployments;
-//// Designated Initializer:
-//- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
-//                  data:(NSData*)data
-//                 error:(NSError*)error
-//            forRequest:(NSURLRequest*)request;
+@property (readonly, copy) NSNumber *pageNumber;
+// Designated Initializer:
+- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                  data:(NSData*)data
+                 error:(NSError*)error
+            forRequest:(NSURLRequest*)request;
 @end
 
 //#endif /* ApiCallResult_h */

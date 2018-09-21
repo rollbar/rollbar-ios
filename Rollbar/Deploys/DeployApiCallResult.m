@@ -129,10 +129,10 @@ static NSString * const PROPERTY_deplymentId = @"deploymentId";
 
 @implementation DeploymentDetailsResult
 
-static NSString * const PROPERTY_deplyment = @"deployment";
+static NSString * const PROPERTY_deployment = @"deployment";
 
 - (DeploymentDetails *)deployment {
-    return (DeploymentDetails *) [self.dataDictionary objectForKey:PROPERTY_deplyment];
+    return (DeploymentDetails *) [self.dataDictionary objectForKey:PROPERTY_deployment];
 }
 
 // Designated Initializer:
@@ -150,12 +150,12 @@ static NSString * const PROPERTY_deplyment = @"deployment";
         if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
             NSDictionary *dataStruct =
             [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@", dataStruct);
+            //NSLog(@"%@", dataStruct);
             if (nil != dataStruct) {
                 DeploymentDetails *deploymentDetails =
-                [[DeploymentDetails alloc] initWithJSONData:dataStruct];
+                [[DeploymentDetails alloc] initWithJSONData:dataStruct[@"result"]];
                 [self.dataDictionary setObject:deploymentDetails
-                                        forKey:PROPERTY_deplyment
+                                        forKey:PROPERTY_deployment
                  ];
             }
         }
@@ -167,10 +167,14 @@ static NSString * const PROPERTY_deplyment = @"deployment";
 
 @implementation DeploymentDetailsPageResult
 
-static NSString * const PROPERTY_deplyments = @"deployments";
+static NSString * const PROPERTY_deployments = @"deployments";
+static NSString * const PROPERTY_pageNumber = @"page";
 
 - (NSSet<DeploymentDetails *> *)deployments {
-    return (NSSet<DeploymentDetails *> *) [self.dataDictionary objectForKey:PROPERTY_deplyments];
+    return (NSSet<DeploymentDetails *> *) [self.dataDictionary objectForKey:PROPERTY_deployments];
+}
+- (NSNumber*)pageNumber {
+    return (NSNumber*) [self.dataDictionary objectForKey:PROPERTY_pageNumber];
 }
 
 // Designated Initializer:
@@ -186,8 +190,26 @@ static NSString * const PROPERTY_deplyments = @"deployments";
             ];
     if (nil != self) {
         if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
-            //            [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Error]
-            //                                    forKey:PROPERTY_outcome];
+            NSDictionary *dataStruct =
+            [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            //NSLog(@"%@", dataStruct);
+            if (nil != dataStruct) {
+                NSNumber *pageNumber = dataStruct[@"result"][@"page"];
+                [self.dataDictionary setObject:pageNumber
+                                        forKey:PROPERTY_pageNumber
+                 ];
+                NSArray *deploys = dataStruct[@"result"][@"deploys"];
+                NSMutableSet<DeploymentDetails *> *deployments =
+                [[NSMutableSet<DeploymentDetails *> alloc] initWithCapacity:deploys.count];
+                [deploys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    DeploymentDetails *deploymentDetails =
+                    [[DeploymentDetails alloc] initWithJSONData:obj];
+                    [deployments addObject:deploymentDetails];
+                }];
+                [self.dataDictionary setObject:deployments
+                                        forKey:PROPERTY_deployments
+                 ];
+            }
         }
     }
     return self;

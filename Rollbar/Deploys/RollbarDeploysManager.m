@@ -215,17 +215,11 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     
     NSString *requestHttpMethod = request.HTTPMethod;
     NSString *requestUrl = request.URL.absoluteString;
-    
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-//    DeployApiCallResult *apiCallResult = [DeployApiCallResult createForRequest:request
-//                                                                  withResponse:httpResponse
-//                                                                          data:data
-//                                                                         error:error
-//                                          ];
     
     if (([requestHttpMethod caseInsensitiveCompare:@"POST"] == NSOrderedSame)
         && [requestUrl hasSuffix:@"/deploy/"]
-        //&& (nil != _deploymentRegistrationObserver)
+        && (nil != _deploymentRegistrationObserver)
         ) {
         DeploymentRegistrationResult *result =
         [[DeploymentRegistrationResult alloc] initWithResponse:httpResponse
@@ -236,7 +230,7 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     }
     else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
              && [requestUrl containsString:@"/deploy/"]
-             //&& (nil != _deploymentDetailsObserver)
+             && (nil != _deploymentDetailsObserver)
              ) {
         DeploymentDetailsResult *result =
         [[DeploymentDetailsResult alloc] initWithResponse:httpResponse
@@ -246,39 +240,20 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
         [_deploymentDetailsObserver onGetDeploymentDetailsCompleted:result];
     }
     else if (([requestHttpMethod caseInsensitiveCompare:@"GET"] == NSOrderedSame)
-             && [requestUrl hasSuffix:@"/deploys/"]
-             && (nil != _deploymentDetailsPageObserver)) {
-        //call deploys page callback...
+             && [requestUrl containsString:@"/deploys/"]
+             && (nil != _deploymentDetailsPageObserver)
+             ) {
+        DeploymentDetailsPageResult *result =
+        [[DeploymentDetailsPageResult alloc] initWithResponse:httpResponse
+                                                     data:data
+                                                    error:error
+                                               forRequest:request];
+        [_deploymentDetailsPageObserver onGetDeploymentDetailsPageCompleted:result];
     }
     else {
         return NO;
     }
 
-    
-//    if (error) {
-//        NSLog(@"There was an error reporting to Rollbar");
-//        NSLog(@"Error: %@", [error localizedDescription]);
-//    } else {
-//        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-//        if ([httpResponse statusCode] == 200) {
-//            NSLog(@"Success");
-//
-//            NSDictionary *headers = httpResponse.allHeaderFields;
-//            NSLog(@"Response: %@", httpResponse);
-//
-//            if (data) {
-//                // decode data:
-//                NSLog(@"Response data: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-//            }
-//
-//            return YES;
-//        } else {
-//            NSLog(@"There was a problem reporting to Rollbar");
-//            if (data) {
-//                NSLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-//            }
-//        }
-//    }
     return YES;
 }
 @end

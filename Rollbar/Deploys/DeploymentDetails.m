@@ -49,17 +49,22 @@ static NSString * const PROPERTY_status = @"status";
 - (id)initWithJSONData:(NSDictionary *)jsonData {
     self = [super initWithJSONData:jsonData];
     if (nil != self) {
-        NSNumber *deploy_id = jsonData[@"result"][@"id"];
-        NSNumber *project_id = jsonData[@"result"][@"project_id"];
-        NSNumber *start_time = jsonData[@"result"][@"start_time"];
-        NSNumber *finish_time = jsonData[@"result"][@"finish_time"];
-        NSString *status = jsonData[@"result"][@"status"];
+        NSNumber *deploy_id = jsonData[@"id"];
+        NSNumber *project_id = jsonData[@"project_id"];
+        NSNumber *start_time = jsonData[@"start_time"];
+        NSNumber *finish_time = jsonData[@"finish_time"];
+        NSString *status = jsonData[@"status"];
         
-        [self.dataDictionary setObject:[deploy_id stringValue] forKey:PROPERTY_deployId];
-        [self.dataDictionary setObject:[project_id stringValue] forKey:PROPERTY_projectId];
-        [self.dataDictionary setObject:status forKey:PROPERTY_status];
-        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)start_time.doubleValue] forKey:PROPERTY_startTime];
-        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)finish_time.doubleValue] forKey:PROPERTY_endTime];
+        [self.dataDictionary setObject:[deploy_id stringValue]
+                                forKey:PROPERTY_deployId];
+        [self.dataDictionary setObject:[project_id stringValue]
+                                forKey:PROPERTY_projectId];
+        [self.dataDictionary setObject:status
+                                forKey:PROPERTY_status];
+        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)start_time.doubleValue]
+                                forKey:PROPERTY_startTime];
+        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)finish_time.doubleValue]
+                                forKey:PROPERTY_endTime];
     }
     return self;
 }

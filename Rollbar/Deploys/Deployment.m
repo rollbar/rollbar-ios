@@ -64,18 +64,11 @@ static NSString * const PROPERTY_rollbarUsername = @"rollbar_username";
 - (id)initWithJSONData:(NSDictionary *)jsonData {
     self = [super initWithJSONData:jsonData];
     if (nil != self) {
-        NSString *revision = jsonData[@"result"][@"revision"];
-        NSString *environment = jsonData[@"result"][@"environment"];
-        NSString *user_id = jsonData[@"result"][@"user_id"];
-        NSString *local_username = jsonData[@"result"][@"local_username"];
-        NSString *comment = jsonData[@"result"][@"comment"];
-        
-        NSNumber *deploy_id = jsonData[@"result"][@"id"];
-        NSNumber *start_time = jsonData[@"result"][@"start_time"];
-        NSNumber *finish_time = jsonData[@"result"][@"finish_time"];
-        NSNumber *project_id = jsonData[@"result"][@"project_id"];
-        NSString *status = jsonData[@"result"][@"status"];
-
+        NSString *revision = jsonData[@"revision"];
+        NSString *environment = jsonData[@"environment"];
+        NSString *user_id = jsonData[@"user_id"];
+        NSString *local_username = jsonData[@"local_username"];
+        NSString *comment = jsonData[@"comment"];
         
         [self.dataDictionary setObject:environment forKey:PROPERTY_environment];
         [self.dataDictionary setObject:comment forKey:PROPERTY_comment];
