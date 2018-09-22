@@ -2,6 +2,10 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.4.0**
+
+- resolve #73: Support deploy tracking
+
 **1.3.0**
 
 - resolve #80: Add telemetry scrubbing options
