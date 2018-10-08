@@ -2,6 +2,11 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.4.1**
+
+- resolve #130: Update podspec with the Deploy API related headers
+- resolve #131: Make RollbarPayloadTruncator.h public
+
 **1.4.0**
 
 - resolve #73: Support deploy tracking
