@@ -24,6 +24,7 @@ Pod::Spec.new do |s|
                           'Rollbar/RollbarLogger.h',
                           'Rollbar/RollbarConfiguration.h',
                           'Rollbar/RollbarLevel.h',
+                          'Rollbar/RollbarPayloadTruncator.h',
                           'Rollbar/RollbarReachability.h',
                           'Rollbar/RollbarFileReader.h',
                           'Rollbar/RollbarThread.h',
