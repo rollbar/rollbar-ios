@@ -55,7 +55,7 @@
 		55143D9E21501E8E00761B20 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
 		55143DA12151A83D00761B20 /* RollbarDeploysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143DA02151A83D00761B20 /* RollbarDeploysTests.m */; };
 		5515653A212CA69B00AE4C74 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
-		5515653B212CA6FB00AE4C74 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; };
+		5515653B212CA6FB00AE4C74 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B568D420F7E32200052D01 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
 		55B568D620F7E37E00052D01 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; };
 		55B568D820F9560A00052D01 /* PayloadTruncationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D720F9560A00052D01 /* PayloadTruncationTests.m */; };
@@ -83,6 +83,9 @@
 		96D75C2B18EA0528002AA729 /* RollbarConfiguration.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9630826318DCDDC000256154 /* RollbarConfiguration.h */; };
 		96DBB59118FDFED8007CFE13 /* RollbarFileReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 96DBB58F18FDFED8007CFE13 /* RollbarFileReader.h */; };
 		96DBB59218FDFED8007CFE13 /* RollbarFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DBB59018FDFED8007CFE13 /* RollbarFileReader.m */; };
+		9E28F92F216BD67700B3B7E8 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
+		9E28F930216BD6A900B3B7E8 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
+		9E28F931216BD6AA00B3B7E8 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
 		9E8C61BB2008187D00B0E24A /* RollbarNotifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D2223318D8E51600933444 /* RollbarNotifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9ED9216C20B38BF0005FB29F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B59185841FB7ABA50072324B /* libz.tbd */; };
 		B51C56871FD10FBF00E21661 /* RollbarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C56861FD10FBF00E21661 /* RollbarTests.m */; };
@@ -1791,6 +1794,7 @@
 				B54F1A731FDA6CA600A6AB0C /* KSCrashReportSinkEMail.m in Sources */,
 				B54F1AAE1FDA6CA600A6AB0C /* KSCrashMonitor.c in Sources */,
 				B54F1A551FDA6CA600A6AB0C /* KSHTTPRequestSender.m in Sources */,
+				9E28F930216BD6A900B3B7E8 /* RollbarJSONFriendlyObject.m in Sources */,
 				B54F1A3F1FDA6CA600A6AB0C /* KSCrashReportFilterBasic.m in Sources */,
 				B54F1B121FDA6CA600A6AB0C /* KSLogger.c in Sources */,
 				B54F1A4C1FDA6CA600A6AB0C /* KSReachabilityKSCrash.m in Sources */,
@@ -1986,9 +1990,11 @@
 				B54F1AE31FDA6CA600A6AB0C /* KSMachineContext.c in Sources */,
 				B54F1B801FDA6CA700A6AB0C /* KSCrashInstallationConsole.m in Sources */,
 				B54F1B421FDA6CA600A6AB0C /* KSCPU_arm64.c in Sources */,
+				9E28F92F216BD67700B3B7E8 /* RollbarPayloadTruncator.m in Sources */,
 				B54F1B551FDA6CA700A6AB0C /* KSCrashDoctor.m in Sources */,
 				B54F1AFD1FDA6CA600A6AB0C /* KSStackCursor_MachineContext.c in Sources */,
 				B54F1BA41FDA6CA700A6AB0C /* Demangle.cpp in Sources */,
+				9E28F931216BD6AA00B3B7E8 /* RollbarJSONFriendlyObject.m in Sources */,
 				B54F1A2E1FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.m in Sources */,
 				B572132F1FD3A1EB00E3B21C /* RollbarConfigurationTests.m in Sources */,
 				B54F1AF51FDA6CA600A6AB0C /* KSJSONCodecObjC.m in Sources */,
