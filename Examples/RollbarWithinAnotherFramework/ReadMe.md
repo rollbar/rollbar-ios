@@ -19,13 +19,11 @@ Integrated Rollbar-iOS notifier into the KnobControl framework, so when the Knob
 3. Locate your local repo/codebase of Rollbar-iOS in Finder and drag-and-drop its Rollbar project file onto 
    the KnobControl project item within the Xcode's Project Navigator.
 4. Now you should see your project roots organized in the Project Navigator like so:
-   
+```   
       KnobShowcase
-      
       |__KnobControl
-      
           |__Rollbar
-          
+```          
 
 5. In the Project Navigator, unfold Products subfolder of the Rollbar project so that you can see Rollbar.framework within its content.
 6. In the Project Navigator, elect/click KnobControl project root. In the project configuration view (to the right of the Project Navigator), select KnobControl target and Genral settings for it. Down the General settings view there is the Linked Frameworks and Libraries section.
