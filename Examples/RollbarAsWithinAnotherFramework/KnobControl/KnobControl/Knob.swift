@@ -41,12 +41,14 @@ import UIKit
   /** Sets the receiver’s current value, allowing you to animate the change visually. */
   public func setValue(_ newValue: Float, animated: Bool = false) {
     value = min(maximumValue, max(minimumValue, newValue))
+    Rollbar.debug(String(format: "value = %f", value))
 
     let angleRange = endAngle - startAngle
     let valueRange = maximumValue - minimumValue
     let angleValue = CGFloat(value - minimumValue) / CGFloat(valueRange) * angleRange + startAngle
     renderer.setPointerAngle(angleValue, animated: animated)
-  }
+    Rollbar.debug(String(format: "angle = %f", angleValue))
+ }
 
   /** Contains a Boolean value indicating whether changes
    in the sliders value generate continuous update events. */
@@ -99,6 +101,11 @@ import UIKit
   }
 
   private func commonInit() {
+    // configure Rollbar:
+    let config: RollbarConfiguration = RollbarConfiguration()
+    config.environment = "samples"
+    Rollbar.initWithAccessToken("2ffc7997ed864dda94f63e7b7daae0f3", configuration: config)
+    
     renderer.updateBounds(bounds)
     renderer.color = tintColor
     renderer.setPointerAngle(renderer.startAngle)
@@ -108,6 +115,8 @@ import UIKit
 
     let gestureRecognizer = RotationGestureRecognizer(target: self, action: #selector(Knob.handleGesture(_:)))
     addGestureRecognizer(gestureRecognizer)
+  
+    Rollbar.info("The Knob initialized!")
   }
 
   @objc private func handleGesture(_ gesture: RotationGestureRecognizer) {

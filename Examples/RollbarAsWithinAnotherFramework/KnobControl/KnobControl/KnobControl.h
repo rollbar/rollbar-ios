@@ -27,6 +27,8 @@
 /// THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <Rollbar/Rollbar.h>
 
 //! Project version number for KnobControl.
 FOUNDATION_EXPORT double KnobControlVersionNumber;

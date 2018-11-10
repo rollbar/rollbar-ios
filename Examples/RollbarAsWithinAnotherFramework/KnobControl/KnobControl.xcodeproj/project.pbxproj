@@ -7,13 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		559E76FD2196795000181AF7 /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559E76FB2196792D00181AF7 /* Rollbar.framework */; };
 		9AA5BE0920A09553009D5610 /* KnobControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA5BE0720A09553009D5610 /* KnobControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AA5BE1420A09739009D5610 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5BE1320A09739009D5610 /* Knob.swift */; };
 		9AA5BE1620A09930009D5610 /* KnobRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5BE1520A09930009D5610 /* KnobRender.swift */; };
 		9AA5BE1820A09A79009D5610 /* RotationGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5BE1720A09A79009D5610 /* RotationGestureRecognizer.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		559E76F62196792D00181AF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96D2220A18D8E40600933444;
+			remoteInfo = Rollbar;
+		};
+		559E76F82196792D00181AF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96D2221A18D8E40600933444;
+			remoteInfo = RollbarTests;
+		};
+		559E76FA2196792D00181AF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 343AB4521CC9AAE600962943;
+			remoteInfo = RollbarFramework;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rollbar.xcodeproj; path = ../../../Rollbar.xcodeproj; sourceTree = "<group>"; };
 		9AA5BE0420A09553009D5610 /* KnobControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KnobControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA5BE0720A09553009D5610 /* KnobControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KnobControl.h; sourceTree = "<group>"; };
 		9AA5BE0820A09553009D5610 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -27,17 +53,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				559E76FD2196795000181AF7 /* Rollbar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		559E76F02196792C00181AF7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				559E76F72196792D00181AF7 /* libRollbar.a */,
+				559E76F92196792D00181AF7 /* RollbarTests.xctest */,
+				559E76FB2196792D00181AF7 /* Rollbar.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		559E76FC2196795000181AF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9AA5BDFA20A09553009D5610 = {
 			isa = PBXGroup;
 			children = (
+				559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */,
 				9AA5BE0620A09553009D5610 /* KnobControl */,
 				9AA5BE0520A09553009D5610 /* Products */,
+				559E76FC2196795000181AF7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,12 +164,42 @@
 			mainGroup = 9AA5BDFA20A09553009D5610;
 			productRefGroup = 9AA5BE0520A09553009D5610 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 559E76F02196792C00181AF7 /* Products */;
+					ProjectRef = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9AA5BE0320A09553009D5610 /* KnobControl */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		559E76F72196792D00181AF7 /* libRollbar.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRollbar.a;
+			remoteRef = 559E76F62196792D00181AF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		559E76F92196792D00181AF7 /* RollbarTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RollbarTests.xctest;
+			remoteRef = 559E76F82196792D00181AF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		559E76FB2196792D00181AF7 /* Rollbar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Rollbar.framework;
+			remoteRef = 559E76FA2196792D00181AF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9AA5BE0220A09553009D5610 /* Resources */ = {
