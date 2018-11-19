@@ -1,10 +1,4 @@
-//
-//  PayloadTruncationTests.m
-//  RollbarTests
-//
-//  Created by Andrey Kornich on 2018-07-13.
-//  Copyright © 2018 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
 #import "RollbarPayloadTruncator.h"

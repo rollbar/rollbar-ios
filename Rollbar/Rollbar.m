@@ -1,10 +1,4 @@
-//
-//  Rollbar.m
-//  Rollbar
-//
-//  Created by Sergei Bezborodko on 3/18/14.
-//  Copyright (c) 2014 Rollbar, Inc. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "Rollbar.h"
 #import "RollbarLogger.h"

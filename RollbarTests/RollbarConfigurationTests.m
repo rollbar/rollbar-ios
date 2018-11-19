@@ -1,10 +1,4 @@
-//
-//  RollbarConfigurationTest.m
-//  RollbarTests
-//
-//  Created by Ben Wong on 12/2/17.
-//  Copyright © 2017 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
 #import "Rollbar.h"
@@ -323,6 +317,8 @@
     [[RollbarTelemetry sharedInstance] clearAllData];
     Rollbar.currentConfiguration.telemetryEnabled = YES;
     [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:true];
+    // The following line ensures the captureLogAsTelemetryData setting is flushed through the internal queue
+    [[RollbarTelemetry sharedInstance] getAllData];
     NSLog(logMsg);
     [Rollbar debug:@"test"];
     

@@ -1,10 +1,4 @@
-//
-//  RollbarTelemetryTests.m
-//  RollbarTests
-//
-//  Created by Ben Wong on 12/4/17.
-//  Copyright © 2017 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
 #import "Rollbar.h"

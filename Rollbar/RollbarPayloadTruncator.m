@@ -1,10 +1,4 @@
-//
-//  RollbarPayloadTruncator.m
-//  Rollbar
-//
-//  Created by Andrey Kornich on 2018-07-12.
-//  Copyright © 2018 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarPayloadTruncator.h"
 #import "NSJSONSerialization+Rollbar.h"

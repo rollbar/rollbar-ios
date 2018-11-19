@@ -1,10 +1,4 @@
-//
-//  RollbarConfiguration.m
-//  Rollbar
-//
-//  Created by Sergei Bezborodko on 3/21/14.
-//  Copyright (c) 2014 Rollbar, Inc. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarConfiguration.h"
 #import "objc/runtime.h"
@@ -22,20 +16,6 @@ static NSString *configurationFilePath = nil;
 @interface RollbarConfiguration () {
     NSMutableDictionary *customData;
 }
-
-@property (atomic, copy) NSString *personId;
-@property (atomic, copy) NSString *personUsername;
-@property (atomic, copy) NSString *personEmail;
-@property (atomic, copy) NSString *serverHost;
-@property (atomic, copy) NSString *serverRoot;
-@property (atomic, copy) NSString *serverBranch;
-@property (atomic, copy) NSString *serverCodeVersion;
-@property (atomic, copy) NSString *notifierName;
-@property (atomic, copy) NSString *notifierVersion;
-@property (atomic, copy) NSString *framework;
-@property (atomic) BOOL shouldCaptureConnectivity;
-@property (atomic) CaptureIpType captureIp;
-@property (atomic) NSUInteger maximumReportsPerMinute;
 
 @end
 
@@ -70,16 +50,16 @@ static NSString *configurationFilePath = nil;
         self.scrubWhitelistFields = [NSMutableSet new];
         self.telemetryViewInputsToScrub = [NSMutableSet new];
 
-        self.notifierName = NOTIFIER_NAME;
-        self.notifierVersion = NOTIFIER_VERSION;
-        self.framework = FRAMEWORK;
-        self.captureIp = CaptureIpFull;
+        _notifierName = NOTIFIER_NAME;
+        _notifierVersion = NOTIFIER_VERSION;
+        _framework = FRAMEWORK;
+        _captureIp = CaptureIpFull;
         
         self.logLevel = @"info";
 
         _enabled = true;
         self.telemetryEnabled = false;
-        self.maximumReportsPerMinute = 60;
+        _maximumReportsPerMinute = 60;
         [self setCaptureLogAsTelemetryData:false];
         
         _httpProxyEnabled = NO;
@@ -118,86 +98,55 @@ static NSString *configurationFilePath = nil;
     return self;
 }
 
-// Rollbar enabled flag:
-@synthesize enabled = _enabled;
-- (void)setEnabled:(BOOL)yesNo {
-    _enabled = yesNo;
+- (void)setEnabled:(BOOL)enabled {
+    _enabled = enabled;
     [self save];
 }
-- (BOOL)enabled {
-    return _enabled;
-}
 
-// HTTP Proxy settings
-@synthesize  httpProxyEnabled = _httpProxyEnabled;
-- (void)setHttpProxyEnabled:(BOOL)yesNo {
-    _httpProxyEnabled = yesNo;
+- (void)setHttpProxyEnabled:(BOOL)httpProxyEnabled {
+    _httpProxyEnabled = httpProxyEnabled;
     [self save];
 }
-- (BOOL)httpProxyEnabled {
-    return _httpProxyEnabled;
-}
 
-@synthesize  httpProxy = _httpProxy;
 - (void)setHttpProxy:(NSString *)proxy {
     _httpProxy = proxy;
     [self save];
 }
-- (NSString *)httpProxy {
-    return _httpProxy;
-}
 
-@synthesize httpProxyPort = _httpProxyPort;
 - (void)setHttpProxyPort:(NSNumber *)port {
     _httpProxyPort = port;
     [self save];
 }
-- (NSNumber *)httpProxyPort {
-    return _httpProxyPort;
-}
 
-// HTTPS Proxy settings
-@synthesize httpsProxyEnabled = _httpsProxyEnabled;
-- (void)setHttpsProxyEnabled:(BOOL)yesNo {
-    _httpsProxyEnabled = yesNo;
+- (void)setHttpsProxyEnabled:(BOOL)httpsProxyEnabled {
+    _httpsProxyEnabled = httpsProxyEnabled;
     [self save];
 }
-- (BOOL)httpsProxyEnabled {
-    return _httpsProxyEnabled;
-}
 
-@synthesize httpsProxy = _httpsProxy;
 - (void)setHttpsProxy:(NSString *)proxy {
     _httpsProxy = proxy;
     [self save];
 }
-- (NSString *)httpsProxy {
-    return _httpsProxy;
-}
 
-@synthesize httpsProxyPort = _httpsProxyPort;
 - (void)setHttpsProxyPort:(NSNumber *)port {
     _httpsProxyPort = port;
     [self save];
 }
-- (NSNumber *)httpsProxyPort {
-    return _httpsProxyPort;
-}
 
-// Telemetry enabled flag:
-- (void)setTelemetryEnabled:(BOOL)yesNo {
-    [RollbarTelemetry sharedInstance].enabled = yesNo;
+- (void)setTelemetryEnabled:(BOOL)telemetryEnabled {
+    [RollbarTelemetry sharedInstance].enabled = telemetryEnabled;
     [self save];
 }
+
 - (BOOL)telemetryEnabled {
     return [RollbarTelemetry sharedInstance].enabled;
 }
 
-// Scrub Telemetry View Inputs:
-- (void)setScrubViewInputsTelemetry:(BOOL)yesNo {
-    [RollbarTelemetry sharedInstance].scrubViewInputs = yesNo;
+- (void)setScrubViewInputsTelemetry:(BOOL)scrubViewInputsTelemetry {
+    [RollbarTelemetry sharedInstance].scrubViewInputs = scrubViewInputsTelemetry;
     [self save];
 }
+
 - (BOOL)scrubViewInputsTelemetry {
     return [RollbarTelemetry sharedInstance].scrubViewInputs;
 }
@@ -212,7 +161,6 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
-
 - (void)setRollbarLevel:(RollbarLevel)level {
     self.logLevel = RollbarStringFromLevel(level);
     
@@ -224,7 +172,7 @@ static NSString *configurationFilePath = nil;
 }
 
 - (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
-    self.maximumReportsPerMinute = maximumReportsPerMinute;
+    _maximumReportsPerMinute = maximumReportsPerMinute;
     
     [self save];
 }
@@ -236,9 +184,9 @@ static NSString *configurationFilePath = nil;
 - (void)setPersonId:(NSString *)personId
            username:(NSString *)username
               email:(NSString *)email {
-    self.personId = personId;
-    self.personUsername = username;
-    self.personEmail = email;
+    _personId = personId;
+    _personUsername = username;
+    _personEmail = email;
 
     [self save];
 }
@@ -248,12 +196,12 @@ static NSString *configurationFilePath = nil;
                branch:(NSString*)branch
           codeVersion:(NSString*)codeVersion {
     
-    self.serverHost = host;
-    self.serverRoot = root ?
+    _serverHost = host;
+    _serverRoot = root ?
         [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]
         : root;
-    self.serverBranch = branch;
-    self.serverCodeVersion = codeVersion;
+    _serverBranch = branch;
+    _serverCodeVersion = codeVersion;
 
     [self save];
 }
@@ -261,13 +209,13 @@ static NSString *configurationFilePath = nil;
 - (void)setNotifierName:(NSString *)name
                 version:(NSString *)version {
     
-    self.notifierName = name ? name : NOTIFIER_NAME;
-    self.notifierVersion = version ? version : NOTIFIER_VERSION;
+    _notifierName = name ? name : NOTIFIER_NAME;
+    _notifierVersion = version ? version : NOTIFIER_VERSION;
     [self save];
 }
 
 - (void)setCodeFramework:(NSString *)framework {
-    self.framework = framework ? framework : FRAMEWORK;
+    _framework = framework ? framework : FRAMEWORK;
     [self save];
 }
 
@@ -300,11 +248,11 @@ static NSString *configurationFilePath = nil;
 }
 
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity {
-    self.shouldCaptureConnectivity = captureConnectivity;
+    _shouldCaptureConnectivity = captureConnectivity;
 }
 
 - (void)setCaptureIpType:(CaptureIpType)captureIp {
-    self.captureIp = captureIp;
+    _captureIp = captureIp;
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
