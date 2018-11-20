@@ -877,4 +877,6 @@ static BOOL isNetworkReachable = YES;
     return rollbarThread;
 }
 
+- (void)_test_doNothing {}
+
 @end

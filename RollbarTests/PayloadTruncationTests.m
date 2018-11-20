@@ -25,18 +25,6 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
 - (void)testMeasureTotalEncodingBytes {
     
     NSString *testString1 = @"ABCD";
@@ -103,14 +91,8 @@
     @catch (NSException *exception) {
         [Rollbar error:nil exception:exception];
     }
-//    @catch (id exception) {
-//        [Rollbar error:@"GOT AN EXCEPTION" exception:exception];
-//    }
-    @finally {
-        NSLog(@"Cleaning up");
-    }
     
-    [NSThread sleepForTimeInterval:1.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     NSArray *items = RollbarReadLogItemFromFile();
     
     for (id payload in items) {
@@ -158,24 +140,12 @@
                      data:@{@"extra_truncatable_data": simulatedLongString}
          ];
 
-        [NSThread sleepForTimeInterval:5.0f];
+        // What is this doing?
         [Rollbar.currentNotifier updateReportingRate:10];
-        [NSThread sleepForTimeInterval:20.0f];
         [Rollbar.currentNotifier updateReportingRate:60];
-        [NSThread sleepForTimeInterval:5.0f];
         [Rollbar.currentNotifier updateReportingRate:20];
-        [NSThread sleepForTimeInterval:10.0f];
         [Rollbar.currentNotifier updateReportingRate:60];
-        [NSThread sleepForTimeInterval:5.0f];
     }
-    //    @catch (id exception) {
-    //        [Rollbar error:@"GOT AN EXCEPTION" exception:exception];
-    //    }
-    @finally {
-        NSLog(@"Cleaning up");
-    }
-    //[NSThread sleepForTimeInterval:10.0f];
-
 }
 
 @end

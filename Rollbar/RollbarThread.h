@@ -3,12 +3,9 @@
 #import <Foundation/Foundation.h>
 #import "RollbarNotifier.h"
 
-@interface RollbarThread : NSThread {
-    RollbarNotifier *notifier;
-}
+@interface RollbarThread : NSThread
 
-- (id)initWithNotifier:(RollbarNotifier*)aNotifier
-  andWithReportingRate:(NSUInteger)reportsPerMinute;
+- (id)initWithNotifier:(RollbarNotifier*)notifier andWithReportingRate:(NSUInteger)reportsPerMinute;
 
 @property(atomic) BOOL active;
 

@@ -8,18 +8,11 @@
 
 @end
 
-@interface RollbarNotifier (Tests)
-- (NSThread *)_rollbarThread;
-@end
-
 @implementation RollbarTelemetryTests
 
 - (void)setUp {
     [super setUp];
     RollbarClearLogFile();
-//    if (!Rollbar.currentConfiguration) {
-//        [Rollbar initWithAccessToken:@""];
-//    }
     if (!Rollbar.currentConfiguration) {
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
         Rollbar.currentConfiguration.environment = @"unit-tests";
@@ -43,8 +36,7 @@
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"data": @"content"}];
     [Rollbar debug:@"Test"];
 
-    // We need to block to ensure the file we are trying to read from has been written to
-    [self performSelector:@selector(doNothing) onThread:[Rollbar.currentNotifier _rollbarThread] withObject:nil waitUntilDone:YES];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
@@ -77,9 +69,6 @@
 }
 
 - (void)testErrorReportingWithTelemetry {
-    
-    //RollbarClearLogFile();
-
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"SomeNavigationSource" to:@"SomeNavigationDestination"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"SomeConnectivityStatus"];
     [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"POST" url:@"www.myservice.com" statusCode:@"200"];
@@ -87,37 +76,27 @@
     [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"someExceptionName" reason:@"someExceptionReason" userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"myTelemetryParameter": @"itsValue"}];
     [Rollbar debug:@"Demonstrate Telemetry capture"];
-
     [Rollbar debug:@"Demonstrate Telemetry capture once more..."];
-
-    [NSThread sleepForTimeInterval:5.0f];
-    
 }
 
 - (void)testTelemetryViewEventScrubbing {
-    // configure telemetry scrubbing:
     Rollbar.currentConfiguration.telemetryEnabled = YES;
     Rollbar.currentConfiguration.scrubViewInputsTelemetry = YES;
     [Rollbar.currentConfiguration addTelemetryViewInputToScrub:@"password"];
     [Rollbar.currentConfiguration addTelemetryViewInputToScrub:@"pin"];
     
-    // add scrubable event:
     [Rollbar recordViewEventForLevel:RollbarDebug
                              element:@"password"
                            extraData:@{@"content" : @"My Password"}];
-    // add non-scrubable event:
     [Rollbar recordViewEventForLevel:RollbarDebug
                              element:@"not-password"
                            extraData:@{@"content" : @"My Password"}];
-    [NSThread sleepForTimeInterval:5.0f];
 
     NSArray *telemetryEvents = [RollbarTelemetry.sharedInstance getAllData];
     
-    // verify that the scribbing actually happend:
     XCTAssertTrue([@"password" compare:[telemetryEvents[0] valueForKeyPath:@"body.element"]] == NSOrderedSame);
     XCTAssertTrue([@"[scrubbed]" compare:[telemetryEvents[0] valueForKeyPath:@"body.content"]] == NSOrderedSame);
 
-    // verify that no scrubbing was performed on the event:
     XCTAssertTrue([@"not-password" compare:[telemetryEvents[1] valueForKeyPath:@"body.element"]] == NSOrderedSame);
     XCTAssertTrue([@"My Password" compare:[telemetryEvents[1] valueForKeyPath:@"body.content"]] == NSOrderedSame);
 }

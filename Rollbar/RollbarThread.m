@@ -4,21 +4,20 @@
 #import "RollbarLogger.h"
 
 @implementation RollbarThread {
-    
-    @private NSUInteger maxReportsPerMinute;
-    @private NSTimer *timer;
+    @private RollbarNotifier *_notifier;
+    @private NSUInteger _maxReportsPerMinute;
+    @private NSTimer *_timer;
 }
 
-- (id)initWithNotifier:(RollbarNotifier*)aNotifier
-  andWithReportingRate:(NSUInteger)reportsPerMinute {
+- (id)initWithNotifier:(RollbarNotifier*)notifier andWithReportingRate:(NSUInteger)reportsPerMinute {
     
-    timer = nil;
-    maxReportsPerMinute = 60; //default rate
+    _timer = nil;
+    _maxReportsPerMinute = 60;
     
     if ((self = [super initWithTarget:self selector:@selector(run) object:nil])) {
-        notifier = aNotifier;
+        _notifier = notifier;
         if(reportsPerMinute > 0) {
-            maxReportsPerMinute = reportsPerMinute;
+            _maxReportsPerMinute = reportsPerMinute;
         }
         self.active = YES;
     }
@@ -27,32 +26,33 @@
 
 - (void)checkItems {
     if (self.cancelled) {
-        if (timer) {
-            [timer invalidate];
-            timer = nil;
+        if (_timer) {
+            [_timer invalidate];
+            _timer = nil;
         }
         [NSThread exit];
     }
     @autoreleasepool {
-        [notifier processSavedItems];
+        [_notifier processSavedItems];
     }
 }
 
 - (void)run {
     @autoreleasepool {
         
-        NSTimeInterval timeIntervalInSeconds = 60.0 / maxReportsPerMinute;
-        timer = [NSTimer timerWithTimeInterval:timeIntervalInSeconds
+        NSTimeInterval timeIntervalInSeconds = 60.0 / _maxReportsPerMinute;
+        _timer = [NSTimer timerWithTimeInterval:timeIntervalInSeconds
                                         target:self
                                       selector:@selector(checkItems)
                                       userInfo:nil
                                        repeats:YES
                  ];
         NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-        [runLoop addTimer:timer forMode:NSDefaultRunLoopMode];
+        [runLoop addTimer:_timer forMode:NSDefaultRunLoopMode];
         while (self.active) {
             [runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
     }
 }
+
 @end

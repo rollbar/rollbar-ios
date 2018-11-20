@@ -34,18 +34,10 @@ DeploymentDetailsPageObserver>
 
 @implementation RollbarDeploysTests
 
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
-
 - (void)testDeploymentDto {
     NSString * const environment = @"unit-tests";
     NSString * const comment = @"a new deploy";
-        NSString * const revision = @"a_revision";
+    NSString * const revision = @"a_revision";
     NSString * const localUsername = @"UnitTestRunner";
     NSString * const rollbarUsername = @"rollbar";
     
@@ -93,7 +85,6 @@ DeploymentDetailsPageObserver>
                                   deploymentDetailsPageObserver:observer
          ];
     [deploysManager registerDeployment:deployment];
-    [NSThread sleepForTimeInterval:1.0f];
 }
 
 - (void)testGetDeploymentDetailsById {
@@ -107,7 +98,6 @@ DeploymentDetailsPageObserver>
                               deploymentDetailsPageObserver:observer
      ];
     [deploysManager getDeploymentWithDeployId:testDeploymentId];
-    [NSThread sleepForTimeInterval:1.0f];
 }
 
 - (void)testGetDeploymentsPage {
@@ -120,7 +110,6 @@ DeploymentDetailsPageObserver>
                               deploymentDetailsPageObserver:observer
      ];
     [deploysManager getDeploymentsPageNumber:1];
-    [NSThread sleepForTimeInterval:1.0f];
 }
 
 @end

@@ -1,10 +1,13 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import "RollbarNotifier.h"
 
-@interface RollbarTestUtil : NSObject
+void RollbarClearLogFile(void);
+NSArray* RollbarReadLogItemFromFile(void);
+void RollbarFlushFileThread(RollbarNotifier *notifier);
 
-void RollbarClearLogFile();
-NSArray* RollbarReadLogItemFromFile();
-
+@interface RollbarNotifier (Tests)
+- (NSThread *)_rollbarThread;
+- (void)_test_doNothing;
 @end

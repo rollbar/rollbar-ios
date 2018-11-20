@@ -3,8 +3,6 @@
 #import "RollbarTestUtil.h"
 #import "RollbarFileReader.h"
 
-@implementation RollbarTestUtil
-
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 
 NSString* _logFilePath() {
@@ -50,4 +48,6 @@ NSArray* RollbarReadLogItemFromFile() {
     return items;
 }
 
-@end
+void RollbarFlushFileThread(RollbarNotifier *notifier) {
+    [notifier performSelector:@selector(_test_doNothing) onThread:[notifier _rollbarThread] withObject:nil waitUntilDone:YES];
+}
