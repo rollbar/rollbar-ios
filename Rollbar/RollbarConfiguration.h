@@ -9,11 +9,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
     CaptureIpNone
 };
 
-@interface RollbarConfiguration : NSObject {
-    // Stores whether this configuration is the root level
-    // configuration used by the root level notifier
-    BOOL isRootConfiguration;
-}
+@interface RollbarConfiguration : NSObject
 
 + (RollbarConfiguration*)configuration;
 
@@ -78,21 +74,19 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 @property (nonatomic, strong) NSMutableSet *telemetryViewInputsToScrub;
 
 // Modify payload
-@property (nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
+@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
 
 // Decides whether or not to send payload. Returns true to ignore, false to send
-@property (nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
+@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
 
 // Fields to scrub from the payload
-@property (nonatomic, strong) NSMutableSet *scrubFields;
+@property (readonly, nonatomic, strong) NSMutableSet *scrubFields;
 
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (nonatomic, strong) NSMutableSet *scrubWhitelistFields;
-
-/*** Optional ***/
+@property (readonly, nonatomic, strong) NSMutableSet *scrubWhitelistFields;
 
 // ID to link request between client/server
-@property (nonatomic, copy) NSString *requestId;
+@property (readonly, nonatomic, copy) NSString *requestId;
 
 @property (readonly, nonatomic) CaptureIpType captureIp;
 

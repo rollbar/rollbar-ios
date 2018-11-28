@@ -212,7 +212,7 @@
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 
-    [Rollbar.currentConfiguration setCheckIgnore:^BOOL(NSDictionary *payload) {
+    [Rollbar.currentConfiguration setCheckIgnoreBlock:^BOOL(NSDictionary *payload) {
         return true;
     }];
     [Rollbar debug:@"Ignore this"];
@@ -262,7 +262,7 @@
 
 - (void)testPayloadModification {
     NSString *newMsg = @"Modified message";
-    [Rollbar.currentConfiguration setPayloadModification:^(NSMutableDictionary *payload) {
+    [Rollbar.currentConfiguration setPayloadModificationBlock:^(NSMutableDictionary *payload) {
         [payload setValue:newMsg forKeyPath:@"body.message.body"];
         [payload setValue:newMsg forKeyPath:@"body.message.body2"];
     }];

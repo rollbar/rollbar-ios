@@ -772,7 +772,7 @@ static BOOL isNetworkReachable = YES;
             RollbarLog(@"checkIgnore error: %@", e.reason);
 
             // Remove checkIgnore to prevent future exceptions
-            [self.configuration setCheckIgnore:nil];
+            [self.configuration setCheckIgnoreBlock:nil];
         }
     }
 

@@ -14,7 +14,8 @@ static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/items/";
 static NSString *configurationFilePath = nil;
 
 @interface RollbarConfiguration () {
-    NSMutableDictionary *customData;
+    NSMutableDictionary *_customData;
+    BOOL _isRootConfiguration;
 }
 
 @end
@@ -36,18 +37,18 @@ static NSString *configurationFilePath = nil;
     }
 
     if (self = [super init]) {
-        customData = [NSMutableDictionary dictionaryWithCapacity:10];
-        self.endpoint = DEFAULT_ENDPOINT;
+        _customData = [NSMutableDictionary dictionaryWithCapacity:10];
+        _endpoint = DEFAULT_ENDPOINT;
 
         #ifdef DEBUG
-        self.environment = @"development";
+        _environment = @"development";
         #else
-        self.environment = @"unspecified";
+        _environment = @"unspecified";
         #endif
 
-        self.crashLevel = @"error";
-        self.scrubFields = [NSMutableSet new];
-        self.scrubWhitelistFields = [NSMutableSet new];
+        _crashLevel = @"error";
+        _scrubFields = [NSMutableSet new];
+        _scrubWhitelistFields = [NSMutableSet new];
         self.telemetryViewInputsToScrub = [NSMutableSet new];
 
         _notifierName = NOTIFIER_NAME;
@@ -55,7 +56,7 @@ static NSString *configurationFilePath = nil;
         _framework = FRAMEWORK;
         _captureIp = CaptureIpFull;
         
-        self.logLevel = @"info";
+        _logLevel = @"info";
 
         _enabled = true;
         self.telemetryEnabled = false;
@@ -162,18 +163,16 @@ static NSString *configurationFilePath = nil;
 }
 
 - (void)setRollbarLevel:(RollbarLevel)level {
-    self.logLevel = RollbarStringFromLevel(level);
-    
+    _logLevel = RollbarStringFromLevel(level);
     [self save];
 }
 
 - (RollbarLevel)getRollbarLevel {
-    return RollbarLevelFromString(self.logLevel);
+    return RollbarLevelFromString(_logLevel);
 }
 
 - (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
     _maximumReportsPerMinute = maximumReportsPerMinute;
-    
     [self save];
 }
 
@@ -187,7 +186,6 @@ static NSString *configurationFilePath = nil;
     _personId = personId;
     _personUsername = username;
     _personEmail = email;
-
     [self save];
 }
 
@@ -202,7 +200,6 @@ static NSString *configurationFilePath = nil;
         : root;
     _serverBranch = branch;
     _serverCodeVersion = codeVersion;
-
     [self save];
 }
 
@@ -219,28 +216,33 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (void)setRequestId:(NSString *)requestId {
+    _requestId = requestId;
+    [self save];
+}
+
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock {
-    self.payloadModification = payloadModificationBlock;
+    _payloadModification = payloadModificationBlock;
 }
 
 - (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary *))checkIgnoreBlock {
-    self.checkIgnore = checkIgnoreBlock;
+    _checkIgnore = checkIgnoreBlock;
 }
 
 - (void)addScrubField:(NSString *)field {
-    [self.scrubFields addObject:field];
+    [_scrubFields addObject:field];
 }
 
 - (void)removeScrubField:(NSString *)field {
-    [self.scrubFields removeObject:field];
+    [_scrubFields removeObject:field];
 }
 
 - (void)addScrubWhitelistField:(NSString *)field {
-    [self.scrubWhitelistFields addObject:field];
+    [_scrubWhitelistFields addObject:field];
 }
 
 - (void)removeScrubWhitelistField:(NSString *)field {
-    [self.scrubWhitelistFields removeObject:field];
+    [_scrubWhitelistFields removeObject:field];
 }
 
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog {
@@ -257,22 +259,22 @@ static NSString *configurationFilePath = nil;
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if (value) {
-        customData[key] = value;
+        _customData[key] = value;
     } else {
-        [customData removeObjectForKey:key];
+        [_customData removeObjectForKey:key];
     }
     
     [self save];
 }
 
 - (id)valueForUndefinedKey:(NSString *)key {
-    return customData[key];
+    return _customData[key];
 }
 
 // Add a key value observer for all properties so that this object
 // is saved to disk every time a property is updated
 - (void)_setRoot {
-    isRootConfiguration = YES;
+    _isRootConfiguration = YES;
     
     for (NSString *propertyName in [self getProperties]) {
         if ([propertyName rangeOfString:@"person"].location == NSNotFound) {
@@ -287,7 +289,7 @@ static NSString *configurationFilePath = nil;
 // Convert this object's properties into json and save it to disk only if
 // this is the root level configuration
 - (void)save {
-    if (isRootConfiguration) {
+    if (_isRootConfiguration) {
         NSMutableDictionary *config = [NSMutableDictionary dictionary];
         
         for (NSString *propertyName in [self getProperties]) {
@@ -332,13 +334,13 @@ static NSString *configurationFilePath = nil;
     
     free(properties);
     
-    [result addObjectsFromArray:customData.allKeys];
+    [result addObjectsFromArray:_customData.allKeys];
     
     return result;
 }
 
 - (NSDictionary *)customData {
-    return [NSDictionary dictionaryWithDictionary:customData];
+    return [NSDictionary dictionaryWithDictionary:_customData];
 }
 
 @end
