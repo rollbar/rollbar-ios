@@ -1,10 +1,4 @@
-//
-//  ApiCallResult.m
-//  Rollbar
-//
-//  Created by Andrey Kornich (Wide Spectrum Computing LLC) on 2018-09-17.
 //  Copyright © 2018 Rollbar. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 
@@ -31,7 +25,7 @@ static NSString * const PROPERTY_description = @"description";
     self = [super init];
     if (nil != self) {
         if (error) {
-            [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Error]
+            [self.dataDictionary setObject:[NSNumber numberWithInt:DeployApiCallError]
                                     forKey:PROPERTY_outcome];
             NSString *description =
             [NSString stringWithFormat:@"Rollbar Deploy API communication error: %@",[error localizedDescription]];
@@ -40,11 +34,11 @@ static NSString * const PROPERTY_description = @"description";
         }
         if (nil != httpResponse) {
             if (200 == httpResponse.statusCode) {
-                [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Success]
+                [self.dataDictionary setObject:[NSNumber numberWithInt:DeployApiCallSuccess]
                                         forKey:PROPERTY_outcome];
             }
             else {
-                [self.dataDictionary setObject:[NSNumber numberWithInt:Outcome_Error]
+                [self.dataDictionary setObject:[NSNumber numberWithInt:DeployApiCallError]
                                         forKey:PROPERTY_outcome];
             }
             NSMutableString *description =
@@ -185,4 +179,3 @@ static NSString * const PROPERTY_pageNumber = @"page";
 }
 
 @end
-

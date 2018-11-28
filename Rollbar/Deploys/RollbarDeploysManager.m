@@ -1,14 +1,8 @@
-//
-//  RollbarDeploysManager.m
-//  Rollbar
-//
-//  Created by Andrey Kornich (Wide Spectrum Computing LLC) on 2018-09-17.
 //  Copyright © 2018 Rollbar. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 #include <sys/utsname.h>
-#import "../NSJSONSerialization+Rollbar.h"
+#import "NSJSONSerialization+Rollbar.h"
 #import "RollbarDeploysManager.h"
 
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
@@ -75,21 +69,6 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
 }
 
 -(BOOL)sendGetRequestToUrl:(NSString *)urlString {
-//-(BOOL)sendGetRequest:(NSDictionary *)params toUrl:(NSString *)urlString {
-//    responseData = [[NSMutableData alloc]init];
-//    NSMutableString *paramString = [NSMutableString stringWithString:@"?"];
-//    NSArray *keys = [params allKeys];
-//    for (NSString *key in keys) {
-//        [paramString appendFormat:@"%@=%@&", key, [params valueForKey:key]];
-//    }
-//    NSString *urlRequest =
-//        [NSString stringWithFormat:@"%@%@", urlString, [paramString substringToIndex:[paramString length]-1]];
-//    NSMutableURLRequest *request =
-//        [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlRequest]];
-//    [request setHTTPMethod:@"GET"];
-//    [[NSURLConnection alloc] initWithRequest:request
-//                                    delegate:self];
-    
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -101,25 +80,6 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         
         NSURLSession *session = [NSURLSession sharedSession];
-        
-        //        if (self.configuration.httpProxyEnabled
-        //            || self.configuration.httpsProxyEnabled) {
-        //
-        //            NSDictionary *connectionProxyDictionary =
-        //            @{
-        //              @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxyEnabled],
-        //              @"HTTPProxy"    : self.configuration.httpProxy,
-        //              @"HTTPPort"     : self.configuration.httpProxyPort,
-        //              @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxyEnabled],
-        //              @"HTTPSProxy"   : self.configuration.httpsProxy,
-        //              @"HTTPSPort"    : self.configuration.httpsProxyPort
-        //              };
-        //
-        //            NSURLSessionConfiguration *sessionConfig =
-        //            [NSURLSessionConfiguration ephemeralSessionConfiguration];
-        //            sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
-        //            session = [NSURLSession sessionWithConfiguration:sessionConfig];
-        //        }
         
         NSURLSessionDataTask *dataTask =
         [session dataTaskWithRequest:request
@@ -162,25 +122,6 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         
         NSURLSession *session = [NSURLSession sharedSession];
-        
-//        if (self.configuration.httpProxyEnabled
-//            || self.configuration.httpsProxyEnabled) {
-//
-//            NSDictionary *connectionProxyDictionary =
-//            @{
-//              @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxyEnabled],
-//              @"HTTPProxy"    : self.configuration.httpProxy,
-//              @"HTTPPort"     : self.configuration.httpProxyPort,
-//              @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxyEnabled],
-//              @"HTTPSProxy"   : self.configuration.httpsProxy,
-//              @"HTTPSPort"    : self.configuration.httpsProxyPort
-//              };
-//        
-//            NSURLSessionConfiguration *sessionConfig =
-//            [NSURLSessionConfiguration ephemeralSessionConfiguration];
-//            sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
-//            session = [NSURLSession sessionWithConfiguration:sessionConfig];
-//        }
         
         NSURLSessionDataTask *dataTask =
         [session dataTaskWithRequest:request

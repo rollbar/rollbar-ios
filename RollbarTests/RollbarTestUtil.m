@@ -1,15 +1,7 @@
-//
-//  RollbarTestUtil.m
-//  RollbarTests
-//
-//  Created by Ben Wong on 12/1/17.
-//  Copyright © 2017 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarTestUtil.h"
 #import "RollbarFileReader.h"
-
-@implementation RollbarTestUtil
 
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 
@@ -56,4 +48,6 @@ NSArray* RollbarReadLogItemFromFile() {
     return items;
 }
 
-@end
+void RollbarFlushFileThread(RollbarNotifier *notifier) {
+    [notifier performSelector:@selector(_test_doNothing) onThread:[notifier _rollbarThread] withObject:nil waitUntilDone:YES];
+}

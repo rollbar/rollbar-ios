@@ -1,10 +1,4 @@
-//
-//  RollbarTelemetry.m
-//  Rollbar
-//
-//  Created by Ben Wong on 11/21/17.
-//  Copyright © 2017 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarTelemetry.h"
 #import "NSJSONSerialization+Rollbar.h"
@@ -77,17 +71,6 @@ static dispatch_queue_t fileQueue = nil;
 
 #pragma mark -
 
-// Telemetry enabled flag:
-@synthesize enabled = _enabled;
-- (void)setEnabled:(BOOL)yesNo {
-    _enabled = yesNo;
-}
-- (BOOL)enabled {
-    return _enabled;
-}
-
-@synthesize viewInputsToScrub = _viewInputsToScrub;
-
 /**
  * Sets whether or not to use replacement log.
  */
@@ -159,7 +142,7 @@ static dispatch_queue_t fileQueue = nil;
 
     // check if the extradata needs some scrubbing based on the element name:
     __block BOOL needsScrubbing = false;
-    [self.viewInputsToScrub enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+    [_viewInputsToScrub enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
         if( [element caseInsensitiveCompare:obj] == NSOrderedSame ) {
             needsScrubbing = true;
             *stop = YES;

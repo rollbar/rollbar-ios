@@ -88,6 +88,14 @@
 		9E28F931216BD6AA00B3B7E8 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
 		9E8C61BB2008187D00B0E24A /* RollbarNotifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D2223318D8E51600933444 /* RollbarNotifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9ED9216C20B38BF0005FB29F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B59185841FB7ABA50072324B /* libz.tbd */; };
+		9EDA718721A36D1000D26BA6 /* DeployApiCallResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D96214CB39000761B20 /* DeployApiCallResult.m */; };
+		9EDA718821A36D2300D26BA6 /* DeployApiCallResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D96214CB39000761B20 /* DeployApiCallResult.m */; };
+		9EDA718921A36D2A00D26BA6 /* Deployment.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D86214C78AF00761B20 /* Deployment.m */; };
+		9EDA718A21A36D2B00D26BA6 /* Deployment.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D86214C78AF00761B20 /* Deployment.m */; };
+		9EDA718B21A36D2F00D26BA6 /* DeploymentDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D88214C791700761B20 /* DeploymentDetails.m */; };
+		9EDA718C21A36D3000D26BA6 /* DeploymentDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D88214C791700761B20 /* DeploymentDetails.m */; };
+		9EDA718D21A36D3400D26BA6 /* RollbarDeploysManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D8D214C79C200761B20 /* RollbarDeploysManager.m */; };
+		9EDA718E21A36D3500D26BA6 /* RollbarDeploysManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D8D214C79C200761B20 /* RollbarDeploysManager.m */; };
 		B51C56871FD10FBF00E21661 /* RollbarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C56861FD10FBF00E21661 /* RollbarTests.m */; };
 		B51C568D1FD14E5300E21661 /* RollbarTestUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C568C1FD14E5300E21661 /* RollbarTestUtil.m */; };
 		B54736751FB3C8E6007F99D7 /* Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2221418D8E40600933444 /* Rollbar.m */; };
@@ -1607,7 +1615,7 @@
 		96D2220218D8E40600933444 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Rollbar;
 				TargetAttributes = {
 					343AB4511CC9AAE600962943 = {
@@ -1731,6 +1739,8 @@
 				B54F1A9D1FDA6CA600A6AB0C /* KSCrashMonitorType.c in Sources */,
 				B54F1A5B1FDA6CA600A6AB0C /* NSString+URLEncode.m in Sources */,
 				B54F1AFB1FDA6CA600A6AB0C /* KSStackCursor.c in Sources */,
+				9EDA718C21A36D3000D26BA6 /* DeploymentDetails.m in Sources */,
+				9EDA718A21A36D2B00D26BA6 /* Deployment.m in Sources */,
 				B54F1AD31FDA6CA600A6AB0C /* KSFileUtils.c in Sources */,
 				343AB4611CC9AAF400962943 /* RollbarThread.m in Sources */,
 				B54F1AEF1FDA6CA600A6AB0C /* KSDynamicLinker.c in Sources */,
@@ -1738,8 +1748,10 @@
 				B54F1A581FDA6CA600A6AB0C /* KSCString.m in Sources */,
 				B54F1A211FDA6CA600A6AB0C /* KSCrashReportFilterSets.m in Sources */,
 				B54F1AFE1FDA6CA600A6AB0C /* KSStackCursor_MachineContext.c in Sources */,
+				9EDA718821A36D2300D26BA6 /* DeployApiCallResult.m in Sources */,
 				B54F1A791FDA6CA600A6AB0C /* KSCrash.m in Sources */,
 				B54F1A1A1FDA6CA600A6AB0C /* NSData+GZip.m in Sources */,
+				9EDA718E21A36D3500D26BA6 /* RollbarDeploysManager.m in Sources */,
 				B54F1B031FDA6CA600A6AB0C /* KSDate.c in Sources */,
 				B54F1AE41FDA6CA600A6AB0C /* KSMachineContext.c in Sources */,
 				B54F1B481FDA6CA600A6AB0C /* KSID.c in Sources */,
@@ -1931,6 +1943,7 @@
 				B54F1A9C1FDA6CA600A6AB0C /* KSCrashMonitorType.c in Sources */,
 				B54F1A6F1FDA6CA600A6AB0C /* KSCrashReportSinkStandard.m in Sources */,
 				B54F1B221FDA6CA600A6AB0C /* KSStackCursor_SelfThread.c in Sources */,
+				9EDA718921A36D2A00D26BA6 /* Deployment.m in Sources */,
 				B54F1AD51FDA6CA600A6AB0C /* KSObjC.c in Sources */,
 				B54F1AFA1FDA6CA600A6AB0C /* KSStackCursor.c in Sources */,
 				B54F1B0E1FDA6CA600A6AB0C /* KSSymbolicator.c in Sources */,
@@ -1964,6 +1977,7 @@
 				B54F1B051FDA6CA600A6AB0C /* KSDemangle_CPP.cpp in Sources */,
 				B54F1A3E1FDA6CA600A6AB0C /* KSCrashReportFilterBasic.m in Sources */,
 				B547367A1FB3C8E6007F99D7 /* RollbarReachability.m in Sources */,
+				9EDA718B21A36D2F00D26BA6 /* DeploymentDetails.m in Sources */,
 				B54F1B8A1FDA6CA700A6AB0C /* KSCrashInstallation.m in Sources */,
 				B54F1AAA1FDA6CA600A6AB0C /* KSCrashMonitor_User.c in Sources */,
 				B54F1A311FDA6CA600A6AB0C /* KSCrashReportFilterAlert.m in Sources */,
@@ -1988,6 +2002,7 @@
 				B54F1B871FDA6CA700A6AB0C /* KSCrashInstallationEmail.m in Sources */,
 				B5D3971A1FB5492F000544DC /* RollbarKSCrashInstallation.m in Sources */,
 				B54F1AE31FDA6CA600A6AB0C /* KSMachineContext.c in Sources */,
+				9EDA718721A36D1000D26BA6 /* DeployApiCallResult.m in Sources */,
 				B54F1B801FDA6CA700A6AB0C /* KSCrashInstallationConsole.m in Sources */,
 				B54F1B421FDA6CA600A6AB0C /* KSCPU_arm64.c in Sources */,
 				9E28F92F216BD67700B3B7E8 /* RollbarPayloadTruncator.m in Sources */,
@@ -1997,6 +2012,7 @@
 				9E28F931216BD6AA00B3B7E8 /* RollbarJSONFriendlyObject.m in Sources */,
 				B54F1A2E1FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.m in Sources */,
 				B572132F1FD3A1EB00E3B21C /* RollbarConfigurationTests.m in Sources */,
+				9EDA718D21A36D3400D26BA6 /* RollbarDeploysManager.m in Sources */,
 				B54F1AF51FDA6CA600A6AB0C /* KSJSONCodecObjC.m in Sources */,
 				B54F1A921FDA6CA600A6AB0C /* KSCrashMonitor_NSException.m in Sources */,
 				B54F1AEE1FDA6CA600A6AB0C /* KSDynamicLinker.c in Sources */,
@@ -2132,12 +2148,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -2184,12 +2202,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -2268,7 +2288,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
@@ -2289,7 +2308,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);

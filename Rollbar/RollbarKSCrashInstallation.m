@@ -1,10 +1,4 @@
-//
-//  RollbarKSCrashInstallation.m
-//  Rollbar
-//
-//  Created by Ben Wong on 11/9/17.
-//  Copyright © 2017 Rollbar. All rights reserved.
-//
+//  Copyright © 2018 Rollbar. All rights reserved.
 
 #import "RollbarKSCrashInstallation.h"
 #import "RollbarKSCrashReportSink.h"

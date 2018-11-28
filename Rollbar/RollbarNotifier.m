@@ -1,10 +1,4 @@
-//
-//  RollbarNotifier.m
-//  Rollbar
-//
-//  Created by Sergei Bezborodko on 3/18/14.
-//  Copyright (c) 2014 Rollbar, Inc. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarNotifier.h"
 #import "RollbarThread.h"
@@ -778,7 +772,7 @@ static BOOL isNetworkReachable = YES;
             RollbarLog(@"checkIgnore error: %@", e.reason);
 
             // Remove checkIgnore to prevent future exceptions
-            [self.configuration setCheckIgnore:nil];
+            [self.configuration setCheckIgnoreBlock:nil];
         }
     }
 
@@ -882,5 +876,7 @@ static BOOL isNetworkReachable = YES;
 - (NSThread *)_rollbarThread {
     return rollbarThread;
 }
+
+- (void)_test_doNothing {}
 
 @end

@@ -1,10 +1,4 @@
-//
-//  RollbarConfigurationTest.m
-//  RollbarTests
-//
-//  Created by Ben Wong on 12/2/17.
-//  Copyright © 2017 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
 #import "Rollbar.h"
@@ -38,7 +32,7 @@
         [Rollbar.currentConfiguration addScrubField:key];
     }
     [Rollbar debug:@"test"];
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     
     // verify the fields were scrubbed:
     NSArray *logItems = RollbarReadLogItemFromFile();
@@ -53,14 +47,13 @@
     }
     
     RollbarClearLogFile();
-    [NSThread sleepForTimeInterval:3.0f];
     
     // define scrub whitelist fields (the same as the scrub fields - to counterbalance them):
     for (NSString *key in keys) {
         [Rollbar.currentConfiguration addScrubWhitelistField:key];
     }
     [Rollbar debug:@"test"];
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     
     // verify the fields were not scrubbed:
     logItems = RollbarReadLogItemFromFile();
@@ -77,7 +70,6 @@
 
 - (void)testTelemetryEnabled {
     RollbarClearLogFile();
-    [NSThread sleepForTimeInterval:3.0f];
     
     BOOL expectedFlag = NO;
     Rollbar.currentConfiguration.telemetryEnabled = expectedFlag;
@@ -90,7 +82,6 @@
         [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     }
     [Rollbar.currentConfiguration setMaximumTelemetryData:max];
-    [NSThread sleepForTimeInterval:3.0f];
     NSArray *telemetryCollection = [[RollbarTelemetry sharedInstance] getAllData];
     XCTAssertTrue(telemetryCollection.count == 0,
                   @"Telemetry count is expected to be %i. Actual is %lu",
@@ -107,7 +98,6 @@
         [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     }
     [Rollbar.currentConfiguration setMaximumTelemetryData:max];
-    [NSThread sleepForTimeInterval:3.0f];
     telemetryCollection = [[RollbarTelemetry sharedInstance] getAllData];
     XCTAssertTrue(telemetryCollection.count == max,
                   @"Telemetry count is expected to be %i. Actual is %lu",
@@ -163,10 +153,10 @@
 - (void)testEnabled {
     
     RollbarClearLogFile();
-    [NSThread sleepForTimeInterval:3.0f];
     
     Rollbar.currentConfiguration.enabled = NO;
     [Rollbar debug:@"Test1"];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 0,
                   @"logItems count is expected to be 0. Actual value is %lu",
@@ -175,7 +165,7 @@
 
     Rollbar.currentConfiguration.enabled = YES;
     [Rollbar debug:@"Test2"];
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1,
                   @"logItems count is expected to be 1. Actual value is %lu",
@@ -184,6 +174,7 @@
 
     Rollbar.currentConfiguration.enabled = NO;
     [Rollbar debug:@"Test3"];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1,
                   @"logItems count is expected to be 1. Actual value is %lu",
@@ -204,7 +195,7 @@
     }
     [Rollbar.currentConfiguration setMaximumTelemetryData:max];
     [Rollbar debug:@"Test"];
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
     NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
@@ -217,11 +208,11 @@
 
 - (void)testCheckIgnore {
     [Rollbar debug:@"Don't ignore this"];
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 
-    [Rollbar.currentConfiguration setCheckIgnore:^BOOL(NSDictionary *payload) {
+    [Rollbar.currentConfiguration setCheckIgnoreBlock:^BOOL(NSDictionary *payload) {
         return true;
     }];
     [Rollbar debug:@"Ignore this"];
@@ -241,7 +232,7 @@
      ];
     [Rollbar debug:@"test"];
 
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
@@ -271,13 +262,13 @@
 
 - (void)testPayloadModification {
     NSString *newMsg = @"Modified message";
-    [Rollbar.currentConfiguration setPayloadModification:^(NSMutableDictionary *payload) {
+    [Rollbar.currentConfiguration setPayloadModificationBlock:^(NSMutableDictionary *payload) {
         [payload setValue:newMsg forKeyPath:@"body.message.body"];
         [payload setValue:newMsg forKeyPath:@"body.message.body2"];
     }];
     [Rollbar debug:@"test"];
 
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSString *msg1 = [logItems[0] valueForKeyPath:@"body.message.body"];
@@ -304,7 +295,7 @@
     }
     [Rollbar debug:@"test"];
 
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     for (NSString *key in keys) {
@@ -323,10 +314,12 @@
     [[RollbarTelemetry sharedInstance] clearAllData];
     Rollbar.currentConfiguration.telemetryEnabled = YES;
     [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:true];
+    // The following line ensures the captureLogAsTelemetryData setting is flushed through the internal queue
+    [[RollbarTelemetry sharedInstance] getAllData];
     NSLog(logMsg);
     [Rollbar debug:@"test"];
     
-    [NSThread sleepForTimeInterval:3.0f];
+    RollbarFlushFileThread(Rollbar.currentNotifier);
 
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSArray *telemetryData = [logItems[0] valueForKeyPath:@"body.telemetry"];

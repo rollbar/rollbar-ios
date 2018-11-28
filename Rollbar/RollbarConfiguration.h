@@ -1,10 +1,4 @@
-//
-//  RollbarConfiguration.h
-//  Rollbar
-//
-//  Created by Sergei Bezborodko on 3/21/14.
-//  Copyright (c) 2014 Rollbar, Inc. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "RollbarLevel.h"
@@ -15,11 +9,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
     CaptureIpNone
 };
 
-@interface RollbarConfiguration : NSObject {
-    // Stores whether this configuration is the root level
-    // configuration used by the root level notifier
-    BOOL isRootConfiguration;
-}
+@interface RollbarConfiguration : NSObject
 
 + (RollbarConfiguration*)configuration;
 
@@ -57,61 +47,56 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 
 - (NSDictionary *)customData;
 
-@property (readwrite, atomic) BOOL enabled;
-@property (atomic, copy) NSString *accessToken;
-@property (atomic, copy) NSString *environment;
-@property (atomic, copy) NSString *endpoint;
+@property (nonatomic) BOOL enabled;
+@property (nonatomic, copy) NSString *accessToken;
+@property (nonatomic, copy) NSString *environment;
+@property (nonatomic, copy) NSString *endpoint;
 
-// HTTP Proxy:
-@property (readwrite, atomic) BOOL httpProxyEnabled;
-@property (readwrite, atomic, copy) NSString *httpProxy;
-@property (readwrite, atomic) NSNumber *httpProxyPort;
+@property (nonatomic) BOOL httpProxyEnabled;
+@property (nonatomic, copy) NSString *httpProxy;
+@property (nonatomic) NSNumber *httpProxyPort;
 
-// HTTPS Proxy:
-@property (readwrite, atomic) BOOL httpsProxyEnabled;
-@property (readwrite, atomic, copy) NSString *httpsProxy;
-@property (readwrite, atomic) NSNumber *httpsProxyPort;
+@property (nonatomic) BOOL httpsProxyEnabled;
+@property (nonatomic, copy) NSString *httpsProxy;
+@property (nonatomic) NSNumber *httpsProxyPort;
 
-@property (atomic, copy) NSString *crashLevel;
-@property (atomic, copy) NSString *logLevel;
-@property (readonly, atomic) NSUInteger maximumReportsPerMinute;
-@property (readonly, atomic) BOOL shouldCaptureConnectivity;
+@property (nonatomic, copy) NSString *crashLevel;
+@property (nonatomic, copy) NSString *logLevel;
+@property (readonly, nonatomic) NSUInteger maximumReportsPerMinute;
+@property (readonly, nonatomic) BOOL shouldCaptureConnectivity;
 
-@property (readonly, atomic, copy) NSString *personId;
-@property (readonly, atomic, copy) NSString *personUsername;
-@property (readonly, atomic, copy) NSString *personEmail;
+@property (readonly, nonatomic, copy) NSString *personId;
+@property (readonly, nonatomic, copy) NSString *personUsername;
+@property (readonly, nonatomic, copy) NSString *personEmail;
 
-@property (readwrite, atomic) BOOL telemetryEnabled;
-@property (readwrite, atomic) BOOL scrubViewInputsTelemetry;
-@property (atomic, retain) NSMutableSet *telemetryViewInputsToScrub;
+@property (nonatomic) BOOL telemetryEnabled;
+@property (nonatomic) BOOL scrubViewInputsTelemetry;
+@property (nonatomic, strong) NSMutableSet *telemetryViewInputsToScrub;
 
 // Modify payload
-@property (atomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
+@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
 
 // Decides whether or not to send payload. Returns true to ignore, false to send
-@property (atomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
+@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
 
 // Fields to scrub from the payload
-@property (atomic, retain) NSMutableSet *scrubFields;
+@property (readonly, nonatomic, strong) NSMutableSet *scrubFields;
 
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (atomic, retain) NSMutableSet *scrubWhitelistFields;
-
-/*** Optional ***/
+@property (readonly, nonatomic, strong) NSMutableSet *scrubWhitelistFields;
 
 // ID to link request between client/server
-@property (atomic, copy) NSString *requestId;
+@property (readonly, nonatomic, copy) NSString *requestId;
 
-@property (readonly, atomic) CaptureIpType captureIp;
+@property (readonly, nonatomic) CaptureIpType captureIp;
 
-// Data about the server
-@property (readonly, atomic, copy) NSString *serverHost;
-@property (readonly, atomic, copy) NSString *serverRoot;
-@property (readonly, atomic, copy) NSString *serverBranch;
-@property (readonly, atomic, copy) NSString *serverCodeVersion;
+@property (readonly, nonatomic, copy) NSString *serverHost;
+@property (readonly, nonatomic, copy) NSString *serverRoot;
+@property (readonly, nonatomic, copy) NSString *serverBranch;
+@property (readonly, nonatomic, copy) NSString *serverCodeVersion;
 
-@property (readonly, atomic, copy) NSString *notifierName;
-@property (readonly, atomic, copy) NSString *notifierVersion;
-@property (readonly, atomic, copy) NSString *framework;
+@property (readonly, nonatomic, copy) NSString *notifierName;
+@property (readonly, nonatomic, copy) NSString *notifierVersion;
+@property (readonly, nonatomic, copy) NSString *framework;
 
 @end

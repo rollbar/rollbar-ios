@@ -1,10 +1,4 @@
-//
-//  RollbarTelemetry.h
-//  Rollbar
-//
-//  Created by Ben Wong on 11/21/17.
-//  Copyright © 2017 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "RollbarLevel.h"

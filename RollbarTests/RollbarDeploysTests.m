@@ -1,16 +1,10 @@
-//
-//  RollbarDeploysTests.m
-//  RollbarTests
-//
-//  Created by Andrey Kornich (Wide Spectrum Computing LLC) on 2018-09-18.
-//  Copyright © 2018 Rollbar. All rights reserved.
-//
+//  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "../Rollbar/Deploys/Deployment.h"
-#import "../Rollbar/Deploys/DeployApiCallResult.h"
-#import "../Rollbar/Deploys/RollbarDeploysManager.h"
-#import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
+#import "Deployment.h"
+#import "DeployApiCallResult.h"
+#import "RollbarDeploysManager.h"
+#import "RollbarDeploysProtocol.h"
 
 
 @interface RollbarDeploysObserver : NSObject
@@ -40,18 +34,10 @@ DeploymentDetailsPageObserver>
 
 @implementation RollbarDeploysTests
 
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
-
 - (void)testDeploymentDto {
     NSString * const environment = @"unit-tests";
     NSString * const comment = @"a new deploy";
-        NSString * const revision = @"a_revision";
+    NSString * const revision = @"a_revision";
     NSString * const localUsername = @"UnitTestRunner";
     NSString * const rollbarUsername = @"rollbar";
     
@@ -99,7 +85,6 @@ DeploymentDetailsPageObserver>
                                   deploymentDetailsPageObserver:observer
          ];
     [deploysManager registerDeployment:deployment];
-    [NSThread sleepForTimeInterval:1.0f];
 }
 
 - (void)testGetDeploymentDetailsById {
@@ -113,7 +98,6 @@ DeploymentDetailsPageObserver>
                               deploymentDetailsPageObserver:observer
      ];
     [deploysManager getDeploymentWithDeployId:testDeploymentId];
-    [NSThread sleepForTimeInterval:1.0f];
 }
 
 - (void)testGetDeploymentsPage {
@@ -126,7 +110,6 @@ DeploymentDetailsPageObserver>
                               deploymentDetailsPageObserver:observer
      ];
     [deploysManager getDeploymentsPageNumber:1];
-    [NSThread sleepForTimeInterval:1.0f];
 }
 
 @end
