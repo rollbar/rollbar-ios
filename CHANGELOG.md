@@ -2,6 +2,15 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.4.2**
+
+- resolve #139: The Rollbar.zip's for version 1.4.0 and 1.4.1 don't include the framework
+Adopting Xcode 10 build process changes within Distribution target's build script
+- Numerous code fixes and clean-up
+- Cleaned up build warnings
+- resolve #137: Example of using Rollbar-iOS within a custom-built framework
+- documentation updates
+
 **1.4.1**
 
 - resolve #130: Update podspec with the Deploy API related headers
