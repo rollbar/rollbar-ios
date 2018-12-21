@@ -1,11 +1,11 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
-#import <UIKit/UIKit.h>
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarDeploysManager.h"
 
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+#define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
 
 @interface RollbarDeploysManager()
 @property (readwrite, retain) NSString *writeAccessToken;
@@ -75,7 +75,11 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
     __block BOOL result = NO;
+#if TARGET_OS_IPHONE
     if (IS_IOS7_OR_HIGHER) {
+#else
+    if (IS_MACOS10_10_OR_HIGHER) {
+#endif
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         
@@ -117,7 +121,11 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     [request setHTTPBody:jsonPayload];
     
     __block BOOL result = NO;
+#if TARGET_OS_IPHONE
     if (IS_IOS7_OR_HIGHER) {
+#else
+        if (IS_MACOS10_10_OR_HIGHER) {
+#endif
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         

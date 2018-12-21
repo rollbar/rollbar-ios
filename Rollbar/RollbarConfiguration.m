@@ -5,9 +5,14 @@
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarTelemetry.h"
 
+#if TARGET_OS_IPHONE
 static NSString *NOTIFIER_NAME = @"rollbar-ios";
-static NSString *NOTIFIER_VERSION = @"1.6.0";
 static NSString *FRAMEWORK = @"ios";
+#else
+static NSString *NOTIFIER_NAME = @"rollbar-macos";
+static NSString *FRAMEWORK = @"macos";
+#endif
+static NSString *NOTIFIER_VERSION = @"1.6.0";
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/item/";
 

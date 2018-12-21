@@ -5,7 +5,9 @@
 #import "RollbarFileReader.h"
 #import "RollbarReachability.h"
 #import "RollbarLogger.h"
-#import <UIKit/UIKit.h>
+#if TARGET_OS_IPHONE
+    #import <UIKit/UIKit.h>
+#endif
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
 #import "KSCrash.h"
@@ -28,6 +30,7 @@ static RollbarReachability *reachability = nil;
 static BOOL isNetworkReachable = YES;
 
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+#define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
 
 @implementation RollbarNotifier
 
@@ -301,24 +304,34 @@ static BOOL isNetworkReachable = YES;
     uname(&systemInfo);
     NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
     
-    NSDictionary *iosData = @{@"ios_version": [[UIDevice currentDevice] systemVersion],
+#if TARGET_OS_IPHONE
+    NSDictionary *osData = @{@"ios_version": [[UIDevice currentDevice] systemVersion],
                               @"device_code": deviceCode,
                               @"code_version": version ? version : @"",
                               @"short_version": shortVersion ? shortVersion : @"",
                               @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
                               @"app_name": bundleName ? bundleName : @""};
+#else
+    NSDictionary *systemVersion = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+    NSDictionary *osData = @{@"os_version": [systemVersion objectForKey:@"ProductVersion"],
+                             @"device_code": deviceCode,
+                             @"code_version": version ? version : @"",
+                             @"short_version": shortVersion ? shortVersion : @"",
+                             @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+                             @"app_name": bundleName ? bundleName : @""};
+#endif
 
     if (self.configuration.captureIp == CaptureIpFull) {
         return @{@"timestamp": timestamp,
-                 @"ios": iosData,
+                 @"ios": osData,
                  @"user_ip": @"$remote_ip"};
     } else if (self.configuration.captureIp == CaptureIpAnonymize) {
         return @{@"timestamp": timestamp,
-                 @"ios": iosData,
+                 @"ios": osData,
                  @"user_ip": @"$remote_ip_anonymize"};
     } else {
         return @{@"timestamp": timestamp,
-                 @"ios": iosData};
+                 @"ios": osData};
     }
 }
 
@@ -352,11 +365,17 @@ static BOOL isNetworkReachable = YES;
                                                crashReport:crashReport
                           ];
     
+#if TARGET_OS_IPHONE
+    NSString *platform = @"ios";
+#else
+    NSString *platform = @"client";
+#endif
+    
     NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
                                    @"level": level,
                                    @"language": @"objective-c",
                                    @"framework": self.configuration.framework,
-                                   @"platform": @"ios",
+                                   @"platform": platform,
                                    @"uuid": [self generateUUID],
                                    @"client": clientData,
                                    @"notifier": notifierData,
@@ -525,7 +544,11 @@ static BOOL isNetworkReachable = YES;
     [request setHTTPBody:payload];
 
     __block BOOL result = NO;
+#if TARGET_OS_IPHONE
     if (IS_IOS7_OR_HIGHER) {
+#else
+    if (IS_MACOS10_10_OR_HIGHER) {
+#endif
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         

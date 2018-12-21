@@ -13,11 +13,13 @@ Pod::Spec.new do |s|
   s.license            = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Rollbar" => "support@rollbar.com" }
   s.social_media_url   = "http://twitter.com/rollbar"
-  s.platform           = :ios, "7.0"
+  s.ios.deployment_target = '7.0'
+  s.osx.deployment_target = '10.10'
   s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.6.0", :submodules => true}
 
   s.source_files       =  'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
-                          'Rollbar/*.{h,m}'
+                          'Rollbar/*.{h,m}',
+                          'Rollbar/Deploys/*.{h,m}'
 
   s.public_header_files = 'Rollbar/Rollbar.h',
                           'Rollbar/RollbarNotifier.h',
@@ -27,6 +29,8 @@ Pod::Spec.new do |s|
                           'Rollbar/RollbarPayloadTruncator.h',
                           'Rollbar/RollbarReachability.h',
                           'Rollbar/RollbarFileReader.h',
+                          'Rollbar/RollbarJSONFriendlyObject.h',
+                          'Rollbar/RollbarJSONFriendlyProtocol.h',
                           'Rollbar/RollbarThread.h',
                           'Rollbar/RollbarTelemetry.h',
                           'Rollbar/RollbarTelemetryType.h',
@@ -48,9 +52,11 @@ Pod::Spec.new do |s|
                           'KSCrash/Source/KSCrash/Recording/Monitors/KSCrashMonitorType.h'
 
 
-  s.frameworks = "SystemConfiguration",
+  s.ios.frameworks = "SystemConfiguration",
                  "MessageUI",
                  "UIKit",
+                 "Foundation"
+  s.osx.frameworks = "SystemConfiguration",
                  "Foundation"
   s.libraries = "c++", "z"
   s.requires_arc = true
