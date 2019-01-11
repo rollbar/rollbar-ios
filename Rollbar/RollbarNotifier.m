@@ -18,7 +18,6 @@ static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 
 static NSUInteger MAX_RETRY_COUNT = 5;
-static NSUInteger MAX_BATCH_SIZE = 1;
 
 static NSString *queuedItemsFilePath = nil;
 static NSString *stateFilePath = nil;
@@ -75,9 +74,7 @@ static BOOL isNetworkReachable = YES;
             }
 
             // Deals with sending items that have been queued up
-            rollbarThread = [[RollbarThread alloc] initWithNotifier:self
-                                               andWithReportingRate:configuration.maximumReportsPerMinute
-                             ];
+            rollbarThread = [[RollbarThread alloc] initWithNotifier:self reportingRate:configuration.maximumReportsPerMinute];
             [rollbarThread start];
 
             // Listen for reachability status
@@ -154,114 +151,11 @@ static BOOL isNetworkReachable = YES;
     [data writeToFile:stateFilePath atomically:YES];
 }
 
-
-// Following commented out code attempts to get rid off batch processing of items completely:
-//
-//- (void)processSavedItems {
-//    if (!isNetworkReachable) {
-//        // Don't attempt sending if the network is known to be not reachable
-//        return;
-//    }
-//
-//    NSUInteger startOffset = [queueState[@"offset"] unsignedIntegerValue];
-//    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:queuedItemsFilePath];
-//    [fileHandle seekToEndOfFile];
-//    __block unsigned long long fileLength = [fileHandle offsetInFile];
-//    [fileHandle closeFile];
-//
-//    if (!fileLength) {
-//        return;
-//    }
-//
-//    // Empty out the queued item file if all items have been processed already
-//    if (startOffset == fileLength) {
-//        [@"" writeToFile:queuedItemsFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-//
-//        queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
-//        queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
-//        [self saveQueueState];
-//
-//        return;
-//    }
-//
-//    // Iterate through the items file and send the items in batches.
-//    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath
-//                                                                  andOffset:startOffset];
-//
-//    NSMutableDictionary *payload = nil;
-//    NSUInteger nextOffset = startOffset;
-//    while (nextOffset < fileLength) {
-//        NSString *payloadLine = [reader readLine];
-//        nextOffset = [reader getCurrentOffset];
-//        NSData *lineData = [payloadLine dataUsingEncoding:NSUTF8StringEncoding];
-//        if (!lineData) {
-//            // All we can do is ignore this line
-//            RollbarLog(@"Error converting file line to NSData");
-//            continue;
-//        }
-//        NSError *error;
-//        payload = [NSJSONSerialization JSONObjectWithData:lineData
-//                                                  options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
-//                                                    error:&error];
-//        if (!payload) {
-//            // Ignore this line if it isn't valid json and proceed to the next line
-//            RollbarLog(@"Error restoring data from file to JSON");
-//            continue;
-//        }
-//
-//    }
-//
-//    if(payload) {
-//        [RollbarPayloadTruncator truncatePayload:payload];
-//        BOOL shouldContinue = [self sendItem:payload withNextOffset:(nextOffset)];
-//        if (!shouldContinue) {
-//            // Stop processing the file so that the current file offset will be
-//            // retried next time the file is processed
-//            return;
-//        }
-//        // The file has had items added since we started iterating through it,
-//        // update the known file length to equal the next offset
-//        if (nextOffset > fileLength) {
-//            fileLength = nextOffset;
-//        }
-//    }
-//}
-//
-//- (BOOL)sendItem:(NSDictionary*)itemData
-//  withNextOffset:(NSUInteger)nextOffset {
-//
-//    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:itemData
-//                                                          options:0 //NSJSONWritingPrettyPrinted
-//                                                            error:nil
-//                                                             safe:true];
-//    BOOL success = [self sendPayload:jsonPayload];
-//    if (!success) {
-//        NSUInteger retryCount = [queueState[@"retry_count"] unsignedIntegerValue];
-//
-//        if (retryCount < MAX_RETRY_COUNT) {
-//            queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:retryCount + 1];
-//            [self saveQueueState];
-//
-//            // Return NO so that the current batch will be retried next time
-//            return NO;
-//        }
-//    }
-//
-//    queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];
-//    queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
-//    [self saveQueueState];
-//
-//    return YES;
-//}
-
 - (void)processSavedItems {
     if (!isNetworkReachable) {
         // Don't attempt sending if the network is known to be not reachable
         return;
     }
-
-    __block NSString *lastAccessToken = nil;
-    NSMutableArray *items = [NSMutableArray array];
 
     NSUInteger startOffset = [queueState[@"offset"] unsignedIntegerValue];
 
@@ -306,38 +200,22 @@ static BOOL isNetworkReachable = YES;
             return;
         }
 
-        NSString *accessToken = payload[@"access_token"];
+        BOOL shouldContinue = [self sendItem:payload nextOffset:nextOffset];
 
-        // If the max batch size is reached as the file is being processed,
-        // try sending the current batch before starting a new one
-        if ([items count] >= MAX_BATCH_SIZE
-            || (lastAccessToken != nil && [accessToken compare:lastAccessToken] != NSOrderedSame)) {
-            BOOL shouldContinue = [self sendItems:items withAccessToken:lastAccessToken nextOffset:nextOffset];
-
-            if (!shouldContinue) {
-                // Stop processing the file so that the current file offset will be
-                // retried next time the file is processed
-                *stop = YES;
-                return;
-            }
-
-            // The file has had items added since we started iterating through it,
-            // update the known file length to equal the next offset
-            if (nextOffset > fileLength) {
-                fileLength = nextOffset;
-            }
-
-            [items removeAllObjects];
+        if (!shouldContinue) {
+            // Stop processing the file so that the current file offset will be
+            // retried next time the file is processed
+            *stop = YES;
+            return;
         }
-        [items addObject:payload[@"data"]];
+        
+        // The file has had items added since we started iterating through it,
+        // update the known file length to equal the next offset
+        if (nextOffset > fileLength) {
+            fileLength = nextOffset;
+        }
 
-        lastAccessToken = accessToken;
     }];
-
-    // The whole file has been read, send all of the pending items
-    if ([items count]) {
-        [self sendItems:items withAccessToken:lastAccessToken nextOffset:(NSUInteger)fileLength];
-    }
 }
 
 - (NSDictionary*)buildPersonData {
@@ -602,28 +480,14 @@ static BOOL isNetworkReachable = YES;
     [[RollbarTelemetry sharedInstance] clearAllData];
 }
 
-- (BOOL)sendItems:(NSArray*)itemData
-  withAccessToken:(NSString*)accessToken
+- (BOOL)sendItem:(NSDictionary*)payload
        nextOffset:(NSUInteger)nextOffset {
     
-    NSMutableArray *payloadItems = [NSMutableArray array];
-    for (NSDictionary *item in itemData) {
-        NSMutableDictionary *newItem = [NSMutableDictionary dictionaryWithDictionary:item];
-        [RollbarPayloadTruncator truncatePayload:newItem];
-        [payloadItems addObject:newItem];
-    }
-    NSMutableDictionary *newPayload =
-        [NSMutableDictionary dictionaryWithDictionary:@{@"access_token": accessToken,
-                                                        @"data": payloadItems}
-         ];
-    if ([payloadItems count] > 1) {
-        // we want multiple items peayload to also be below truncation threashold
-        // so it can be successfully sent via HTTP POST:
-        [RollbarPayloadTruncator truncatePayload:newPayload];
-    }
+    NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:payload];
+    [RollbarPayloadTruncator truncatePayload:newPayload];
 
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload
-                                                          options:NSJSONWritingPrettyPrinted
+                                                          options:0
                                                             error:nil
                                                              safe:true];
     
@@ -846,9 +710,7 @@ static BOOL isNetworkReachable = YES;
     }
     if (nil != rollbarThread) {
         [rollbarThread cancel];
-        rollbarThread = [[RollbarThread alloc] initWithNotifier:self
-                                           andWithReportingRate:maximumReportsPerMinute
-                         ];
+        rollbarThread = [[RollbarThread alloc] initWithNotifier:self reportingRate:maximumReportsPerMinute];
         [rollbarThread start];
     }
 }

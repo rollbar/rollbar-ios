@@ -21,8 +21,7 @@
 /**
  Sends an item batch in a blocking manner.
  
- @param itemData an array of items to be sent in this batch
- @param accessToken the access token used for this batch
+ @param payload an item to send
  @param nextOffset the offset in the item queue file of the
  item immediately after this batch. If the send is successful
  or the retry limit is hit, nextOffset will be saved to the
@@ -32,7 +31,7 @@
  successful or a retry limit was hit. Otherwise NO is returned if this
  batch should be retried.
  */
-- (BOOL)sendItems:(NSArray*)itemData withAccessToken:(NSString*)accessToken nextOffset:(NSUInteger)nextOffset;
+- (BOOL)sendItem:(NSDictionary*)payload nextOffset:(NSUInteger)nextOffset;
 
 // Update configuration methods
 - (void)updateAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot;

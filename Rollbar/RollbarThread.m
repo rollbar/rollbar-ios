@@ -9,15 +9,13 @@
     @private NSTimer *_timer;
 }
 
-- (id)initWithNotifier:(RollbarNotifier*)notifier andWithReportingRate:(NSUInteger)reportsPerMinute {
-    
-    _timer = nil;
-    _maxReportsPerMinute = 60;
-    
+- (id)initWithNotifier:(RollbarNotifier*)notifier reportingRate:(NSUInteger)reportsPerMinute {
     if ((self = [super initWithTarget:self selector:@selector(run) object:nil])) {
         _notifier = notifier;
         if(reportsPerMinute > 0) {
             _maxReportsPerMinute = reportsPerMinute;
+        } else {
+            _maxReportsPerMinute = 60;
         }
         self.active = YES;
     }
@@ -39,7 +37,6 @@
 
 - (void)run {
     @autoreleasepool {
-        
         NSTimeInterval timeIntervalInSeconds = 60.0 / _maxReportsPerMinute;
         _timer = [NSTimer timerWithTimeInterval:timeIntervalInSeconds
                                         target:self
