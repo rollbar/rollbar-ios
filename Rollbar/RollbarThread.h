@@ -5,7 +5,7 @@
 
 @interface RollbarThread : NSThread
 
-- (id)initWithNotifier:(RollbarNotifier*)notifier andWithReportingRate:(NSUInteger)reportsPerMinute;
+- (id)initWithNotifier:(RollbarNotifier*)notifier reportingRate:(NSUInteger)reportsPerMinute;
 
 @property(atomic) BOOL active;
 

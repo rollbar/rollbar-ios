@@ -74,9 +74,7 @@ static BOOL isNetworkReachable = YES;
             }
 
             // Deals with sending items that have been queued up
-            rollbarThread = [[RollbarThread alloc] initWithNotifier:self
-                                               andWithReportingRate:configuration.maximumReportsPerMinute
-                             ];
+            rollbarThread = [[RollbarThread alloc] initWithNotifier:self reportingRate:configuration.maximumReportsPerMinute];
             [rollbarThread start];
 
             // Listen for reachability status
@@ -712,9 +710,7 @@ static BOOL isNetworkReachable = YES;
     }
     if (nil != rollbarThread) {
         [rollbarThread cancel];
-        rollbarThread = [[RollbarThread alloc] initWithNotifier:self
-                                           andWithReportingRate:maximumReportsPerMinute
-                         ];
+        rollbarThread = [[RollbarThread alloc] initWithNotifier:self reportingRate:maximumReportsPerMinute];
         [rollbarThread start];
     }
 }
