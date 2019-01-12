@@ -19,6 +19,8 @@ static const unsigned long payloadTailCrashThreadsToKeep = 10;
 static const unsigned long maxStringBytesLimit = 1024;
 static const unsigned long minStringBytesLimit = 256;
 
+static const unsigned long minRawStringByteLimit = 3072;
+
 static NSString *const pathToTrace = @"body.trace";
 static NSString *const pathToTraceChain = @"body.trace_chain";
 static const unsigned long maxExceptionMessageChars = 256;
@@ -147,15 +149,23 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
     } else if ([obj isKindOfClass:[NSDictionary class]]) {
         //recurse the collection obj's items:
         [obj enumerateKeysAndObjectsUsingBlock: ^(id key, id item, BOOL *stop) {
-
-            if ([item isKindOfClass:[NSMutableString class]] && ![RollbarPayloadTruncator isMutable:item]) {
+            if ([key isEqualToString:@"raw"] && [item isKindOfClass:[NSMutableString class]]) {
+                if (![RollbarPayloadTruncator isMutable:item]) {
+                    NSMutableString *mutableItem = [item mutableCopy];
+                    [obj setObject:mutableItem forKey:key];
+                    [mutableItem setString:[RollbarPayloadTruncator truncateString:mutableItem
+                                                                      toTotalBytes:minRawStringByteLimit]];
+                } else {
+                    [item setString:[RollbarPayloadTruncator truncateString:item
+                                                                      toTotalBytes:minRawStringByteLimit]];
+                }
+            } else if ([item isKindOfClass:[NSMutableString class]] && ![RollbarPayloadTruncator isMutable:item]) {
                 NSMutableString *mutableItem = [item mutableCopy];
                 [obj setObject:mutableItem forKey:key];
                 [RollbarPayloadTruncator itereateObjectStructure:mutableItem
                                            whileTuncatingStrings:stringBytesLimit];
-            }
-            else {
-            [RollbarPayloadTruncator itereateObjectStructure:item
+            } else {
+                [RollbarPayloadTruncator itereateObjectStructure:item
                                        whileTuncatingStrings:stringBytesLimit];
             }
         }];
