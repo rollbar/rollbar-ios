@@ -2,6 +2,12 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.5.0**
+- Change how the raw string for crash reports is truncated
+- Finish converting to the /item/ api endpoint. Note that the default endpoint has changed, so if
+  you were changing this configuration parameter, you should make sure that whatever you are using
+  is compatible with the changes in this release.
+
 **1.4.2**
 
 - resolve #139: The Rollbar.zip's for version 1.4.0 and 1.4.1 don't include the framework
