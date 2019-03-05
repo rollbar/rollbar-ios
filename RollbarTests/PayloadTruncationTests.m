@@ -55,6 +55,7 @@
 
 - (void)testTruncateStringToTotalBytes {
     
+    // test "truncation expected" case:
     NSString *testString = @"ABCDE-ABCDE-ABCDE";
     const int truncationBytesLimit = 10;
     XCTAssertTrue(truncationBytesLimit
@@ -69,6 +70,7 @@
                   );
     XCTAssertTrue(testString.length > truncatedString.length);
     
+    // test "truncation not needed" case:
     testString = @"abcd";
     truncatedString = [RollbarPayloadTruncator truncateString:testString
                                                  toTotalBytes:truncationBytesLimit];

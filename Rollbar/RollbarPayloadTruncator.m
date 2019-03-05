@@ -250,34 +250,42 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
     
     unsigned long currentStringEncoodingBytes =
         [RollbarPayloadTruncator measureTotalEncodingBytes:inputString];
-    if (currentStringEncoodingBytes <= totalBytesLimit)
-    {
+    
+    if (currentStringEncoodingBytes <= totalBytesLimit) {
         // no need to truncate:
         return inputString;
     }
     
     NSString *ellipsis = @"...";
-    unsigned long totalEllipsisEncodingBytes =
+    
+    const unsigned long totalEllipsisEncodingBytes =
         [RollbarPayloadTruncator measureTotalEncodingBytes:ellipsis];
-    unsigned long bytesToRemove =
-        currentStringEncoodingBytes - totalBytesLimit + totalEllipsisEncodingBytes;
-
-    NSMutableString *result =
-        [NSMutableString stringWithString:
-         [inputString substringToIndex:inputString.length - bytesToRemove]
-         ];
-    [result appendString:ellipsis];
-    currentStringEncoodingBytes = [RollbarPayloadTruncator measureTotalEncodingBytes:result];
-    while (totalBytesLimit < currentStringEncoodingBytes) {
+    
+    if (totalEllipsisEncodingBytes >= totalBytesLimit) {
+        // we have to have at least the ellipsis as a reasult of a string truncation:
+        return ellipsis;
+    }
+    
+    unsigned long charsToRemove = 0;
+    
+    NSMutableString *result = [NSMutableString stringWithString: inputString];
+    
+    do {
+        charsToRemove =
+            (currentStringEncoodingBytes - totalBytesLimit + totalEllipsisEncodingBytes) / 2;
+        if (0 == charsToRemove) {
+            charsToRemove++;
+        }
         
-        bytesToRemove =
-            currentStringEncoodingBytes - totalBytesLimit + totalEllipsisEncodingBytes;
-        
-        [result deleteCharactersInRange:NSMakeRange(result.length - bytesToRemove, bytesToRemove)];
-        [result appendString:ellipsis];
+        [result deleteCharactersInRange:NSMakeRange(result.length - charsToRemove, charsToRemove)];
         
         currentStringEncoodingBytes = [RollbarPayloadTruncator measureTotalEncodingBytes:result];
-    }
+        
+    } while ((totalBytesLimit < (currentStringEncoodingBytes + totalEllipsisEncodingBytes))
+             && (result.length > 0)
+             );
+    
+    [result appendString:ellipsis];
     
     return result;
 }
