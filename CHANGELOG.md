@@ -2,6 +2,9 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.5.2**
+- resolve #150: Crash during payload strings truncation
+
 **1.5.0**
 - Change how the raw string for crash reports is truncated
 - Finish converting to the /item/ api endpoint. Note that the default endpoint has changed, so if

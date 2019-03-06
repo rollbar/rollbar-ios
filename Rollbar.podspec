@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Rollbar"
-  s.version      = "1.5.0"
+  s.version      = "1.5.2"
   s.summary      = "Objective-C library for crash reporting and logging with Rollbar."
   s.description  = <<-DESC
     Find, fix, and resolve errors with Rollbar.
