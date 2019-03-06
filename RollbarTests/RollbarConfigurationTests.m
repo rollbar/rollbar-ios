@@ -86,7 +86,7 @@
     XCTAssertTrue(telemetryCollection.count == 0,
                   @"Telemetry count is expected to be %i. Actual is %lu",
                   0,
-                  telemetryCollection.count
+                  (unsigned long) telemetryCollection.count
                   );
 
     expectedFlag = YES;
@@ -102,7 +102,7 @@
     XCTAssertTrue(telemetryCollection.count == max,
                   @"Telemetry count is expected to be %i. Actual is %lu",
                   max,
-                  telemetryCollection.count
+                  (unsigned long) telemetryCollection.count
                   );
     
     [RollbarTelemetry.sharedInstance clearAllData];
@@ -160,7 +160,7 @@
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 0,
                   @"logItems count is expected to be 0. Actual value is %lu",
-                  logItems.count
+                  (unsigned long) logItems.count
                   );
 
     Rollbar.currentConfiguration.enabled = YES;
@@ -169,7 +169,7 @@
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1,
                   @"logItems count is expected to be 1. Actual value is %lu",
-                  logItems.count
+                  (unsigned long) logItems.count
                   );
 
     Rollbar.currentConfiguration.enabled = NO;
@@ -178,7 +178,7 @@
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1,
                   @"logItems count is expected to be 1. Actual value is %lu",
-                  logItems.count
+                  (unsigned long) logItems.count
                   );
     
     RollbarClearLogFile();
@@ -201,7 +201,7 @@
     NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
     XCTAssertTrue(telemetryData.count == max,
                   @"Telemetry item count is %lu, should be %lu",
-                  telemetryData.count,
+                  (unsigned long) telemetryData.count,
                   (long)max
                   );
 }

@@ -234,9 +234,6 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
             ];
 }
 
-
-
-
 +(unsigned long)measureTotalEncodingBytes:(NSString*)string
                             usingEncoding:(NSStringEncoding)encoding {
 
@@ -250,34 +247,44 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
     
     unsigned long currentStringEncoodingBytes =
         [RollbarPayloadTruncator measureTotalEncodingBytes:inputString];
-    if (currentStringEncoodingBytes <= totalBytesLimit)
-    {
+    
+    // let's take care if the trivial cases first:
+    
+    if (currentStringEncoodingBytes <= totalBytesLimit) {
         // no need to truncate:
         return inputString;
     }
     
     NSString *ellipsis = @"...";
-    unsigned long totalEllipsisEncodingBytes =
+    const unsigned long totalEllipsisEncodingBytes =
         [RollbarPayloadTruncator measureTotalEncodingBytes:ellipsis];
-    unsigned long bytesToRemove =
-        currentStringEncoodingBytes - totalBytesLimit + totalEllipsisEncodingBytes;
+    if (totalEllipsisEncodingBytes >= totalBytesLimit) {
+        // we have to have at least the ellipsis as a reasult of a string truncation:
+        return ellipsis;
+    }
+    
+    // let's try getting to the best fit target as close as possible in one shot:
 
-    NSMutableString *result =
-        [NSMutableString stringWithString:
-         [inputString substringToIndex:inputString.length - bytesToRemove]
-         ];
-    [result appendString:ellipsis];
+    NSUInteger cutOffCodeUnitIndex = (totalBytesLimit - totalEllipsisEncodingBytes);
+    if (cutOffCodeUnitIndex >= inputString.length) {
+        cutOffCodeUnitIndex = inputString.length - 1; // valid index == no trouble down the road...
+    }
+    NSRange cutOffCharRange = [inputString rangeOfComposedCharacterSequenceAtIndex:cutOffCodeUnitIndex];
+    NSRange truncationRange = NSMakeRange(0, cutOffCharRange.location);
+    NSString *truncatedSting = [inputString substringWithRange:truncationRange];
+    NSMutableString *result = [NSMutableString stringWithString:truncatedSting];
+    
+    // let's get even closer to the best fit target as much as possible:
+
     currentStringEncoodingBytes = [RollbarPayloadTruncator measureTotalEncodingBytes:result];
-    while (totalBytesLimit < currentStringEncoodingBytes) {
-        
-        bytesToRemove =
-            currentStringEncoodingBytes - totalBytesLimit + totalEllipsisEncodingBytes;
-        
-        [result deleteCharactersInRange:NSMakeRange(result.length - bytesToRemove, bytesToRemove)];
-        [result appendString:ellipsis];
-        
+    while (currentStringEncoodingBytes > (totalBytesLimit - totalEllipsisEncodingBytes)) {
+        cutOffCharRange = [result rangeOfComposedCharacterSequenceAtIndex:(result.length - 1)];
+        [result deleteCharactersInRange:cutOffCharRange];
         currentStringEncoodingBytes = [RollbarPayloadTruncator measureTotalEncodingBytes:result];
     }
+    
+    // add truncation signs:
+    [result appendString:ellipsis];
     
     return result;
 }

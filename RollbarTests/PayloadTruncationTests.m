@@ -55,6 +55,7 @@
 
 - (void)testTruncateStringToTotalBytes {
     
+    // test "truncation expected" case:
     NSString *testString = @"ABCDE-ABCDE-ABCDE";
     const int truncationBytesLimit = 10;
     XCTAssertTrue(truncationBytesLimit
@@ -69,6 +70,7 @@
                   );
     XCTAssertTrue(testString.length > truncatedString.length);
     
+    // test "truncation not needed" case:
     testString = @"abcd";
     truncatedString = [RollbarPayloadTruncator truncateString:testString
                                                  toTotalBytes:truncationBytesLimit];
@@ -76,6 +78,100 @@
                   == [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]);
     XCTAssertTrue(testString.length == truncatedString.length);
     XCTAssertTrue(testString == truncatedString);
+}
+
+- (void)testTruncateStringToTotalBytesUnicode {
+    
+    NSArray *testStrings = @[
+                             @"🌍🌍🌍🌍🌍-🌍🌍🌍🌍🌍",
+                             @"A🌍🌍🌍🌍-🌍🌍🌍🌍🌍",
+                             @"AB🌍🌍🌍-🌍🌍🌍🌍🌍",
+                             @"ABC🌍🌍-🌍🌍🌍🌍🌍",
+                             @"ABCD🌍-🌍🌍🌍🌍🌍",
+                             @"ABCDE-🌍🌍🌍🌍🌍",
+                             @"ABCDE-A🌍🌍🌍🌍",
+                             @"ABCDE-AB🌍🌍🌍",
+                             @"ABCDE-ABC🌍🌍",
+                             @"ABCDE-ABCD🌍",
+                             @"🌍🌍🌍🌍🌍-🌍🌍🌍🌍E",
+                             @"🌍🌍🌍🌍🌍-🌍🌍🌍DE",
+                             @"🌍🌍🌍🌍🌍-🌍🌍CDE",
+                             @"🌍🌍🌍🌍🌍-🌍BCDE",
+                             @"🌍🌍🌍🌍🌍-ABCDE",
+                             @"🌍🌍🌍🌍E-ABCDE",
+                             @"🌍🌍🌍DE-ABCDE",
+                             @"🌍🌍CDE-ABCDE",
+                             @"🌍BCDE-ABCDE",
+                             @"ABCDE-ABCDE",
+                             @"אספירין-אספירין",
+                             @"Pound123Pound"
+                             ];
+    
+    for (NSString *testString in testStrings) {
+        const int truncationBytesLimit = 10;
+        XCTAssertTrue(truncationBytesLimit
+                      < [RollbarPayloadTruncator measureTotalEncodingBytes:testString]
+                      );
+        NSString *truncatedString = [RollbarPayloadTruncator truncateString:testString
+                                                               toTotalBytes:truncationBytesLimit];
+        NSLog(testString);
+        NSLog(truncatedString);
+        NSLog(@"%d", [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]);
+
+        
+        XCTAssertTrue([RollbarPayloadTruncator measureTotalEncodingBytes:testString]
+                      > [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]);
+        XCTAssertTrue(truncationBytesLimit
+                      >= [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]
+                      );
+        XCTAssertTrue(testString.length > truncatedString.length);
+        
+    }
+}
+
+- (void)testVisuallyTruncateStringToTotalBytesUnicode {
+    
+    NSArray *testStrings = @[
+                             @"🌍🌍🌍🌍🌍-🌍🌍🌍🌍🌍",
+                             @"A🌍🌍🌍🌍-🌍🌍🌍🌍🌍",
+                             @"AB🌍🌍🌍-🌍🌍🌍🌍🌍",
+                             @"ABC🌍🌍-🌍🌍🌍🌍🌍",
+                             @"ABCD🌍-🌍🌍🌍🌍🌍",
+                             @"ABCDE-🌍🌍🌍🌍🌍",
+                             @"ABCDE-A🌍🌍🌍🌍",
+                             @"ABCDE-AB🌍🌍🌍",
+                             @"ABCDE-ABC🌍🌍",
+                             @"ABCDE-ABCD🌍",
+                             @"🌍🌍🌍🌍🌍-🌍🌍🌍🌍E",
+                             @"🌍🌍🌍🌍🌍-🌍🌍🌍DE",
+                             @"🌍🌍🌍🌍🌍-🌍🌍CDE",
+                             @"🌍🌍🌍🌍🌍-🌍BCDE",
+                             @"🌍🌍🌍🌍🌍-ABCDE",
+                             @"🌍🌍🌍🌍E-ABCDE",
+                             @"🌍🌍🌍DE-ABCDE",
+                             @"🌍🌍CDE-ABCDE",
+                             @"🌍BCDE-ABCDE",
+                             @"ABCDE-ABCDE",
+                             @"אספירין-אספירין",
+                             @"Pound123Pound"
+                             ];
+    
+    int truncationBytesLimit = -1;
+    while (truncationBytesLimit < 42) {
+        NSLog(@"*** Truncation limit: %d", truncationBytesLimit);
+        
+        for (NSString *testString in testStrings) {
+            NSString *truncatedString = [RollbarPayloadTruncator truncateString:testString
+                                                                   toTotalBytes:truncationBytesLimit];
+            NSLog(testString);
+            NSLog(truncatedString);
+            NSLog(@"%d", [RollbarPayloadTruncator measureTotalEncodingBytes:truncatedString]);
+        }
+
+        truncationBytesLimit++;
+    }
+        
+    
 }
 
 - (void)testPayloadTruncation {
