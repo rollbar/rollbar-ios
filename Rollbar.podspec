@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.author             = { "Rollbar" => "support@rollbar.com" }
   s.social_media_url   = "http://twitter.com/rollbar"
   s.platform           = :ios, "7.0"
-  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.5.0", :submodules => true}
+  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.5.2", :submodules => true}
 
   s.source_files       =  'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
                           'Rollbar/*.{h,m}'
