@@ -2,6 +2,7 @@
 
 #import "RollbarTelemetry.h"
 #import "NSJSONSerialization+Rollbar.h"
+#import "RollbarCachesDirectory.h"
 
 #define DEFAULT_DATA_LIMIT 10
 #define TELEMETRY_FILE_NAME @"rollbar.telemetry"
@@ -58,8 +59,7 @@ static dispatch_queue_t fileQueue = nil;
         _limit = DEFAULT_DATA_LIMIT;
         
         // Create cache file
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString *cachesDirectory = [paths objectAtIndex:0];
+        NSString *cachesDirectory = [RollbarCachesDirectory directory];
         _dataFilePath = [cachesDirectory stringByAppendingPathComponent:TELEMETRY_FILE_NAME];
         
         _viewInputsToScrub = [NSMutableSet new];

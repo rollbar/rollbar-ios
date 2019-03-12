@@ -13,6 +13,7 @@
 #import "KSCrash.h"
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
+#import "RollbarCachesDirectory.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
@@ -44,11 +45,7 @@ static BOOL isNetworkReachable = YES;
                          isRoot:isRoot];
 
         if (isRoot) {
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
-                                                                 NSUserDomainMask,
-                                                                 YES);
-            NSString *cachesDirectory =
-                [paths objectAtIndex:0];
+            NSString *cachesDirectory = [RollbarCachesDirectory directory];
             queuedItemsFilePath =
                 [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
             stateFilePath =

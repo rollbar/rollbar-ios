@@ -22,6 +22,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		3069AEC722385C8400104A28 /* RollbarCachesDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3069AEC522385C8400104A28 /* RollbarCachesDirectory.m */; };
+		3069AEC8223861BD00104A28 /* RollbarCachesDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3069AEC522385C8400104A28 /* RollbarCachesDirectory.m */; };
+		3069AEC92239B83300104A28 /* RollbarCachesDirectory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3069AEC422385C8400104A28 /* RollbarCachesDirectory.h */; };
+		3069AECA2239B83B00104A28 /* RollbarCachesDirectory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3069AEC422385C8400104A28 /* RollbarCachesDirectory.h */; };
 		343AB4551CC9AAE600962943 /* RollbarFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* RollbarFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		343AB45A1CC9AAF400962943 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		343AB45B1CC9AAF400962943 /* Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D2221418D8E40600933444 /* Rollbar.m */; };
@@ -595,6 +599,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3069AEC422385C8400104A28 /* RollbarCachesDirectory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarCachesDirectory.h; sourceTree = "<group>"; };
+		3069AEC522385C8400104A28 /* RollbarCachesDirectory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarCachesDirectory.m; sourceTree = "<group>"; };
 		343AB4521CC9AAE600962943 /* Rollbar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rollbar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		343AB4541CC9AAE600962943 /* RollbarFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarFramework.h; sourceTree = "<group>"; };
 		343AB4561CC9AAE600962943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -936,6 +942,8 @@
 				B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */,
 				96D2221218D8E40600933444 /* Rollbar.h */,
 				96D2221418D8E40600933444 /* Rollbar.m */,
+				3069AEC422385C8400104A28 /* RollbarCachesDirectory.h */,
+				3069AEC522385C8400104A28 /* RollbarCachesDirectory.m */,
 				9630826318DCDDC000256154 /* RollbarConfiguration.h */,
 				9630826418DCDDC000256154 /* RollbarConfiguration.m */,
 				96DBB58F18FDFED8007CFE13 /* RollbarFileReader.h */,
@@ -1398,6 +1406,7 @@
 				B54F1AE11FDA6CA600A6AB0C /* KSMemory.h in Headers */,
 				B54F1B381FDA6CA600A6AB0C /* KSStackCursor.h in Headers */,
 				B54F1ADB1FDA6CA600A6AB0C /* KSStackCursor_SelfThread.h in Headers */,
+				3069AECA2239B83B00104A28 /* RollbarCachesDirectory.h in Headers */,
 				B54F1B451FDA6CA600A6AB0C /* KSMachineContext.h in Headers */,
 				B54F1A951FDA6CA600A6AB0C /* KSCrashMonitor.h in Headers */,
 				B5EDEA811FCA679900830C78 /* RollbarLevel.h in Headers */,
@@ -1535,6 +1544,7 @@
 				B54F1B6C1FDA6CA700A6AB0C /* Optional.h in Headers */,
 				B54F1B4E1FDA6CA700A6AB0C /* KSSystemCapabilities.h in Headers */,
 				B54F1BA81FDA6CA700A6AB0C /* DemangleNodes.h in Headers */,
+				3069AEC92239B83300104A28 /* RollbarCachesDirectory.h in Headers */,
 				B54F1AA71FDA6CA600A6AB0C /* KSCrashMonitor_MachException.h in Headers */,
 				B54F1ACF1FDA6CA600A6AB0C /* KSSysCtl.h in Headers */,
 				B547368A1FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h in Headers */,
@@ -1854,6 +1864,7 @@
 				B54F1B461FDA6CA600A6AB0C /* KSID.c in Sources */,
 				96DBB59218FDFED8007CFE13 /* RollbarFileReader.m in Sources */,
 				55143D97214CB39000761B20 /* DeployApiCallResult.m in Sources */,
+				3069AEC722385C8400104A28 /* RollbarCachesDirectory.m in Sources */,
 				B5EDEA821FCA679900830C78 /* RollbarLevel.m in Sources */,
 				B54F1A4D1FDA6CA600A6AB0C /* KSHTTPMultipartPostBody.m in Sources */,
 				B54F1A2D1FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.m in Sources */,
@@ -2008,6 +2019,7 @@
 				9E28F92F216BD67700B3B7E8 /* RollbarPayloadTruncator.m in Sources */,
 				B54F1B551FDA6CA700A6AB0C /* KSCrashDoctor.m in Sources */,
 				B54F1AFD1FDA6CA600A6AB0C /* KSStackCursor_MachineContext.c in Sources */,
+				3069AEC8223861BD00104A28 /* RollbarCachesDirectory.m in Sources */,
 				B54F1BA41FDA6CA700A6AB0C /* Demangle.cpp in Sources */,
 				9E28F931216BD6AA00B3B7E8 /* RollbarJSONFriendlyObject.m in Sources */,
 				B54F1A2E1FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.m in Sources */,

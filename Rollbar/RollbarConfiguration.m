@@ -4,6 +4,7 @@
 #import "objc/runtime.h"
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarTelemetry.h"
+#import "RollbarCachesDirectory.h"
 
 #if TARGET_OS_IPHONE
 static NSString *NOTIFIER_NAME = @"rollbar-ios";
@@ -33,12 +34,8 @@ static NSString *configurationFilePath = nil;
 
 - (id)init {
     if (!configurationFilePath) {
-        NSArray *paths =
-            NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString *cachesDirectory =
-            [paths objectAtIndex:0];
-        configurationFilePath =
-            [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
+        NSString *cachesDirectory = [RollbarCachesDirectory directory];
+        configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
     }
 
     if (self = [super init]) {
