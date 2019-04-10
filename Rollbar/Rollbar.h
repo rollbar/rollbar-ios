@@ -80,6 +80,10 @@
 
 + (void)logCrashReport:(NSString*)crashReport;
 
+// Send JSON payload
+
++ (void)sendJsonPayload:(NSData*)payload;
+
 // Telemetry logging
 
 + (void)recordViewEventForLevel:(RollbarLevel)level element:(NSString *)element;
