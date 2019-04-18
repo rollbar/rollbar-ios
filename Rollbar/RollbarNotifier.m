@@ -289,6 +289,10 @@ static BOOL isNetworkReachable = YES;
     NSBundle *mainBundle = [NSBundle mainBundle];
     
     NSString *version = [mainBundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+    if (self.configuration.codeVersion.length > 0) {
+        version = self.configuration.codeVersion;
+    }
+    
     NSString *shortVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *bundleName = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
     NSString *bundleIdentifier = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey];
