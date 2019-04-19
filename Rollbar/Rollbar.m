@@ -21,20 +21,20 @@ static RollbarNotifier *notifier = nil;
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken {
-    
+
     [Rollbar initWithAccessToken:accessToken configuration:nil];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken
               configuration:(RollbarConfiguration*)configuration {
-    
+
     [Rollbar initWithAccessToken:accessToken configuration:configuration enableCrashReporter:YES];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken
               configuration:(RollbarConfiguration*)configuration
         enableCrashReporter:(BOOL)enable {
-    
+
     [RollbarTelemetry sharedInstance]; // Load saved data, if any
     if (notifier) {
         RollbarLog(@"Rollbar has already been initialized.");
@@ -46,7 +46,7 @@ static RollbarNotifier *notifier = nil;
         if (enable) {
             [Rollbar enableCrashReporter];
         }
-        
+
         [notifier.configuration save];
     }
 }
@@ -70,14 +70,14 @@ static RollbarNotifier *notifier = nil;
 
 + (void)log:(RollbarLevel)level
     message:(NSString*)message {
-    
+
     [Rollbar log:level message:message exception:nil];
 }
 
 + (void)log:(RollbarLevel)level
     message:(NSString*)message
   exception:(NSException*)exception {
-    
+
     [Rollbar log:level message:message exception:exception data:nil];
 }
 
@@ -85,7 +85,7 @@ static RollbarNotifier *notifier = nil;
     message:(NSString*)message
   exception:(NSException*)exception
        data:(NSDictionary*)data {
-    
+
     [Rollbar log:level message:message exception:exception data:data context:nil];
 }
 
@@ -94,7 +94,7 @@ static RollbarNotifier *notifier = nil;
   exception:(NSException*)exception
        data:(NSDictionary*)data
     context:(NSString*)context {
-    
+
     [notifier log:RollbarStringFromLevel(level)
           message:message
         exception:exception
@@ -224,6 +224,10 @@ static RollbarNotifier *notifier = nil;
             data:(NSDictionary*)data
          context:(NSString*)context {
     [Rollbar log:RollbarCritical message:message exception:exception data:data context:context];
+}
+
++ (void)sendJsonPayload:(NSData*)payload {
+    [notifier sendPayload:payload];
 }
 
 #pragma mark - Deprecated logging methods
