@@ -221,6 +221,11 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (void)setCodeVersion:(NSString *)codeVersion {
+    _codeVersion = codeVersion;
+    [self save];
+}
+
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock {
     _payloadModification = payloadModificationBlock;
 }

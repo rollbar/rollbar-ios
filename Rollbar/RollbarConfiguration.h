@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 - (void)setServerHost:(NSString *)host root:(NSString*)root branch:(NSString*)branch codeVersion:(NSString*)codeVersion;
 - (void)setNotifierName:(NSString *)name version:(NSString *)version;
 - (void)setCodeFramework:(NSString *)framework;
+- (void)setCodeVersion:(NSString *)codeVersion;
 
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
 - (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
@@ -68,6 +69,8 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 @property (readonly, nonatomic, copy) NSString *personId;
 @property (readonly, nonatomic, copy) NSString *personUsername;
 @property (readonly, nonatomic, copy) NSString *personEmail;
+
+@property (readonly, nonatomic, copy) NSString *codeVersion;
 
 @property (nonatomic) BOOL telemetryEnabled;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
