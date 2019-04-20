@@ -2,10 +2,17 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+**1.6.0**
+
+- resolve #157: Ability to customize client.ios.code_version
+- resolve #155: Enable sending complete JSON payloads, as proxy for other SDKs
+
 **1.5.2**
+
 - resolve #150: Crash during payload strings truncation
 
 **1.5.0**
+
 - Change how the raw string for crash reports is truncated
 - Finish converting to the /item/ api endpoint. Note that the default endpoint has changed, so if
   you were changing this configuration parameter, you should make sure that whatever you are using
