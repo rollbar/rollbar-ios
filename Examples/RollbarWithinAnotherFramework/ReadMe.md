@@ -10,7 +10,7 @@ KnobShowcase application uses KnobControl framework.
 
 ## Commit: 56770d7d14888c3313c064c7397115e3b43f58cc
 
-Integrated Rollbar-iOS notifier into the KnobControl framework, so when the KnobShowcase app runs and the Knob control is initialized and manipulated Rollbar-iOS SDK sends message to the Rollbar API (for example: https://rollbar.com/Rollbar/rollbar-ios/items/56/occurrences/58093544926/)
+Integrated Rollbar-iOS notifier into the KnobControl framework, so that, when the KnobShowcase app runs and the Knob control is initialized and manipulated, Rollbar-iOS SDK sends message to the Rollbar API (for example: https://rollbar.com/Rollbar/rollbar-ios/items/56/occurrences/58093544926/)
 
 ## What was done betwen the two commits above: Steps to integrate Rollbar-iOS into KnobControl
 
