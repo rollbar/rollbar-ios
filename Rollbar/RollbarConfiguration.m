@@ -59,6 +59,7 @@ static NSString *configurationFilePath = nil;
         _logLevel = @"info";
 
         _enabled = true;
+        _transmit = true;
         self.telemetryEnabled = false;
         _maximumReportsPerMinute = 60;
         [self setCaptureLogAsTelemetryData:false];
@@ -101,6 +102,21 @@ static NSString *configurationFilePath = nil;
 
 - (void)setEnabled:(BOOL)enabled {
     _enabled = enabled;
+    [self save];
+}
+
+- (void)setTransmit:(BOOL)transmit {
+    _transmit = transmit;
+    [self save];
+}
+
+- (void)setLogPayload:(BOOL)logPayload {
+    _logPayload = logPayload;
+    [self save];
+}
+
+- (void)setLogPayloadFile:(NSString *)logPayloadFile {
+    _logPayloadFile = logPayloadFile;
     [self save];
 }
 
