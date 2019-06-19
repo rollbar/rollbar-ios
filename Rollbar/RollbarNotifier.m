@@ -523,6 +523,18 @@ static BOOL isNetworkReachable = YES;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
+    
+    if (YES == self.configuration.logPayload) {
+        NSString *payloadString = [[NSString alloc]initWithData:payload
+                                                       encoding:NSUTF8StringEncoding
+                                   ];
+        NSLog(@"%@", payloadString);
+        //TODO: if self.configuration.logPayloadFile is defined, save the payload into the file...
+    }
+    
+    if (NO == self.configuration.transmit) {
+        return YES; // we just successfully shortcircuit here...
+    }
 
     __block BOOL result = NO;
     if (IS_IOS7_OR_HIGHER) {
@@ -573,6 +585,12 @@ static BOOL isNetworkReachable = YES;
 - (BOOL)checkPayloadResponse:(NSURLResponse*)response
                        error:(NSError*)error
                         data:(NSData*)data {
+    
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSDictionary *httpHeaders = [httpResponse allHeaderFields];
+    //TODO: lookup rate limiting headers and afjust reporting rate accordingly...
+    
+    
     if (error) {
         RollbarLog(@"There was an error reporting to Rollbar");
         RollbarLog(@"Error: %@", [error localizedDescription]);

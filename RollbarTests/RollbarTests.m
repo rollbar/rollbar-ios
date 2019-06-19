@@ -15,12 +15,38 @@
     RollbarClearLogFile();
     if (!Rollbar.currentConfiguration) {
         [Rollbar initWithAccessToken:@""];
+        
+//        [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
+//        Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
+//        Rollbar.currentConfiguration.environment = @"unit-tests";
+//        Rollbar.currentConfiguration.transmit = YES;
+
     }
 }
 
 - (void)tearDown {
     [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
     [super tearDown];
+}
+
+- (void)testRollbarTransmit {
+
+    Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
+    Rollbar.currentConfiguration.environment = @"unit-tests";
+    Rollbar.currentConfiguration.transmit = YES;
+
+    Rollbar.currentConfiguration.transmit = YES;
+    [Rollbar critical:@"Transmission test YES"];
+    [NSThread sleepForTimeInterval:2.0f];
+
+    Rollbar.currentConfiguration.transmit = NO;
+    [Rollbar critical:@"Transmission test NO"];
+    [NSThread sleepForTimeInterval:2.0f];
+
+    Rollbar.currentConfiguration.transmit = YES;
+    //Rollbar.currentConfiguration.enabled = NO;
+    [Rollbar critical:@"Transmission test YES2"];
+    [NSThread sleepForTimeInterval:2.0f];
 }
 
 - (void)testNotification {

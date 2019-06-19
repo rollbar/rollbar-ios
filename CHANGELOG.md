@@ -27,7 +27,8 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 **1.7.0**
 
-- feat: ref#162: Implement the standardized Development Configuration Options.
+- feat: ref #162: Implement the standardized Development Configuration Options.
+- feat: resolve #163: Add developer option: transmit.
 
 **1.6.0**
 

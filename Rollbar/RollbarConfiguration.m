@@ -60,6 +60,9 @@ static NSString *configurationFilePath = nil;
 
         _enabled = true;
         _transmit = true;
+        _logPayload = false;
+        _logPayloadFile = @"payloads.log";
+        
         self.telemetryEnabled = false;
         _maximumReportsPerMinute = 60;
         [self setCaptureLogAsTelemetryData:false];
