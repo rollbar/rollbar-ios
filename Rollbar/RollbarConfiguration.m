@@ -61,7 +61,7 @@ static NSString *configurationFilePath = nil;
         _enabled = true;
         _transmit = true;
         _logPayload = false;
-        _logPayloadFile = @"payloads.log";
+        _logPayloadFile = @"rollbar.payloads";
         
         self.telemetryEnabled = false;
         _maximumReportsPerMinute = 60;

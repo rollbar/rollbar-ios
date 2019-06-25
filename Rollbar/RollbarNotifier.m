@@ -16,12 +16,14 @@
 
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
+static NSString *PAYLOADS_FILE_NAME = @"rollbar.payloads";
 
 static NSUInteger MAX_RETRY_COUNT = 5;
 
 static NSString *queuedItemsFilePath = nil;
 static NSString *stateFilePath = nil;
 static NSMutableDictionary *queueState = nil;
+static NSString *payloadsFilePath = nil;
 
 static RollbarThread *rollbarThread = nil;
 static RollbarReachability *reachability = nil;
@@ -44,19 +46,38 @@ static BOOL isNetworkReachable = YES;
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
                                                                  NSUserDomainMask,
                                                                  YES);
+            // define expected file paths:
             NSString *cachesDirectory =
                 [paths objectAtIndex:0];
+            if (nil != self.configuration.logPayloadFile
+                && self.configuration.logPayloadFile.length > 0) {
+                
+                payloadsFilePath =
+                    [cachesDirectory stringByAppendingPathComponent:self.configuration.logPayloadFile];
+            }
+            else {
+                
+                payloadsFilePath =
+                    [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
+            }
             queuedItemsFilePath =
                 [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
             stateFilePath =
                 [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
 
+            // either create or overwrite the payloads log file:
+            [[NSFileManager defaultManager] createFileAtPath:payloadsFilePath
+                                                        contents:nil
+                                                      attributes:nil];
+            
+            // create the queued items file if does not exist already:
             if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
                 [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath
                                                         contents:nil
                                                       attributes:nil];
             }
 
+            // create state tracking file if does not exist already:
             if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
                 NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
                 if (stateData) {
@@ -494,6 +515,15 @@ static BOOL isNetworkReachable = YES;
                                                           options:0
                                                             error:nil
                                                              safe:true];
+    
+    if (YES == self.configuration.logPayload) {
+        // append-save this jsonPayload into the payloads log file:
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:payloadsFilePath];
+        [fileHandle seekToEndOfFile];
+        [fileHandle writeData:jsonPayload];
+        [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [fileHandle closeFile];
+    }
     
     BOOL success = [self sendPayload:jsonPayload];
     if (!success) {
