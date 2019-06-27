@@ -48,50 +48,51 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 
 - (NSDictionary *)customData;
 
+// Developer options:
 @property (nonatomic) BOOL enabled;
+@property (nonatomic) BOOL transmit;
+@property (nonatomic) BOOL logPayload;
+@property (readonly, nonatomic, copy) NSString *logPayloadFile;
+
+// Rollbar project endpoint/destination:
 @property (nonatomic, copy) NSString *accessToken;
 @property (nonatomic, copy) NSString *environment;
 @property (nonatomic, copy) NSString *endpoint;
 
+// HTTP proxy:
 @property (nonatomic) BOOL httpProxyEnabled;
 @property (nonatomic, copy) NSString *httpProxy;
 @property (nonatomic) NSNumber *httpProxyPort;
 
+// HTTPS proxy:
 @property (nonatomic) BOOL httpsProxyEnabled;
 @property (nonatomic, copy) NSString *httpsProxy;
 @property (nonatomic) NSNumber *httpsProxyPort;
 
+// Logging options:
 @property (nonatomic, copy) NSString *crashLevel;
 @property (nonatomic, copy) NSString *logLevel;
 @property (readonly, nonatomic) NSUInteger maximumReportsPerMinute;
 @property (readonly, nonatomic) BOOL shouldCaptureConnectivity;
 
-@property (readonly, nonatomic, copy) NSString *personId;
-@property (readonly, nonatomic, copy) NSString *personUsername;
-@property (readonly, nonatomic, copy) NSString *personEmail;
+// Payload content related:
+// ========================
+// Decides whether or not to send payload. Returns true to ignore, false to send
+@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
+// Modify payload
+@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
+// Fields to scrub from the payload
+@property (readonly, nonatomic, strong) NSMutableSet *scrubFields;
+// Fields to not scrub from the payload even if they mention among scrubFields:
+@property (readonly, nonatomic, strong) NSMutableSet *scrubWhitelistFields;
+@property (readonly, nonatomic) CaptureIpType captureIp;
 
-@property (readonly, nonatomic, copy) NSString *codeVersion;
-
+// Telemetry:
 @property (nonatomic) BOOL telemetryEnabled;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
 @property (nonatomic, strong) NSMutableSet *telemetryViewInputsToScrub;
 
-// Modify payload
-@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
-
-// Decides whether or not to send payload. Returns true to ignore, false to send
-@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
-
-// Fields to scrub from the payload
-@property (readonly, nonatomic, strong) NSMutableSet *scrubFields;
-
-// Fields to not scrub from the payload even if they mention among scrubFields:
-@property (readonly, nonatomic, strong) NSMutableSet *scrubWhitelistFields;
-
-// ID to link request between client/server
-@property (readonly, nonatomic, copy) NSString *requestId;
-
-@property (readonly, nonatomic) CaptureIpType captureIp;
+@property (readonly, nonatomic, copy) NSString *codeVersion;
 
 @property (readonly, nonatomic, copy) NSString *serverHost;
 @property (readonly, nonatomic, copy) NSString *serverRoot;
@@ -101,5 +102,13 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 @property (readonly, nonatomic, copy) NSString *notifierName;
 @property (readonly, nonatomic, copy) NSString *notifierVersion;
 @property (readonly, nonatomic, copy) NSString *framework;
+
+// Person/user tracking:
+@property (readonly, nonatomic, copy) NSString *personId;
+@property (readonly, nonatomic, copy) NSString *personUsername;
+@property (readonly, nonatomic, copy) NSString *personEmail;
+
+// ID to link request between client/server
+@property (readonly, nonatomic, copy) NSString *requestId;
 
 @end
