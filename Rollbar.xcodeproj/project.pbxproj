@@ -492,6 +492,9 @@
 		55454B9422C69E2B00D4A414 /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0B1FDA6CA600A6AB0C /* Punycode.h */; };
 		55454B9522C69E2B00D4A414 /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0C1FDA6CA600A6AB0C /* Fallthrough.h */; };
 		55454B9622C69E2B00D4A414 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0D1FDA6CA600A6AB0C /* LLVM.h */; };
+		55454B9722C6A1F400D4A414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
+		55454B9822C6A1F700D4A414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
+		55454B9922C6A20700D4A414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2223618D8E54600933444 /* UIKit.framework */; };
 		55B568D420F7E32200052D01 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
 		55B568D620F7E37E00052D01 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; };
 		55B568D820F9560A00052D01 /* PayloadTruncationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D720F9560A00052D01 /* PayloadTruncationTests.m */; };
@@ -1300,6 +1303,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55454B9722C6A1F400D4A414 /* Foundation.framework in Frameworks */,
+				55454B9922C6A20700D4A414 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1307,6 +1312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55454B9822C6A1F700D4A414 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2411,15 +2417,12 @@
 			};
 			buildConfigurationList = 96D2220518D8E40600933444 /* Build configuration list for PBXProject "Rollbar" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				English,
 				es,
 				fi,
-				French,
-				German,
 				pt,
 				ru,
 				da,
@@ -2434,6 +2437,7 @@
 				sv,
 				zh_CN,
 				zh_TW,
+				Base,
 			);
 			mainGroup = 96D2220118D8E40600933444;
 			productRefGroup = 96D2220B18D8E40600933444 /* Products */;
@@ -3285,6 +3289,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -3332,6 +3337,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
