@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "RollbarConfiguration.h"
 
-@interface RollbarNotifier : NSObject 
+@interface RollbarNotifier : NSObject
 
 @property (atomic, strong) RollbarConfiguration *configuration;
 

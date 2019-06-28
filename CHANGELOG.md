@@ -30,7 +30,6 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 - feat: ref #162: Implement the standardized Development Configuration Options.
 - feat: resolve #163: Add developer option: transmit.
 - feat: resolve #164: Add a developer config option: logPayload.
-- feat: ref #165: Make SDK to obey service-side enforced rate limits unless client-side RollbarConfig defines one.
 
 **1.6.0**
 
