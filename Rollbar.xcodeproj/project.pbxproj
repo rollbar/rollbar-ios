@@ -495,6 +495,12 @@
 		55454B9722C6A1F400D4A414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
 		55454B9822C6A1F700D4A414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
 		55454B9922C6A20700D4A414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2223618D8E54600933444 /* UIKit.framework */; };
+		55454BA822C6A97700D4A414 /* RollbarKit_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55454B9F22C6A97600D4A414 /* RollbarKit_iOS.framework */; };
+		55454BAD22C6A97700D4A414 /* RollbarKit_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55454BAC22C6A97700D4A414 /* RollbarKit_iOSTests.m */; };
+		55454BAF22C6A97700D4A414 /* RollbarKit_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 55454BA122C6A97600D4A414 /* RollbarKit_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55454BC422C6A9CC00D4A414 /* RollbarKit_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55454BBB22C6A9CC00D4A414 /* RollbarKit_macOS.framework */; };
+		55454BC922C6A9CC00D4A414 /* RollbarKit_macOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55454BC822C6A9CC00D4A414 /* RollbarKit_macOSTests.m */; };
+		55454BCB22C6A9CC00D4A414 /* RollbarKit_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 55454BBD22C6A9CC00D4A414 /* RollbarKit_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B568D420F7E32200052D01 /* RollbarPayloadTruncator.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */; };
 		55B568D620F7E37E00052D01 /* RollbarPayloadTruncator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */; };
 		55B568D820F9560A00052D01 /* PayloadTruncationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D720F9560A00052D01 /* PayloadTruncationTests.m */; };
@@ -1003,6 +1009,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		55454BA922C6A97700D4A414 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96D2220218D8E40600933444 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55454B9E22C6A97600D4A414;
+			remoteInfo = "RollbarKit-iOS";
+		};
+		55454BC522C6A9CC00D4A414 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96D2220218D8E40600933444 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55454BBA22C6A9CC00D4A414;
+			remoteInfo = "RollbarKit-macOS";
+		};
 		96150F6D18EB9CEE004CBC34 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96D2220218D8E40600933444 /* Project object */;
@@ -1068,6 +1088,18 @@
 		554549DD22C68E8F00D4A414 /* libRollbar-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libRollbar-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		554549DF22C68E8F00D4A414 /* Rollbar_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rollbar_macOS.h; sourceTree = "<group>"; };
 		554549E122C68E8F00D4A414 /* Rollbar_macOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Rollbar_macOS.m; sourceTree = "<group>"; };
+		55454B9F22C6A97600D4A414 /* RollbarKit_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RollbarKit_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55454BA122C6A97600D4A414 /* RollbarKit_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarKit_iOS.h; sourceTree = "<group>"; };
+		55454BA222C6A97700D4A414 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55454BA722C6A97700D4A414 /* RollbarKit-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RollbarKit-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55454BAC22C6A97700D4A414 /* RollbarKit_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarKit_iOSTests.m; sourceTree = "<group>"; };
+		55454BAE22C6A97700D4A414 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55454BBB22C6A9CC00D4A414 /* RollbarKit_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RollbarKit_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55454BBD22C6A9CC00D4A414 /* RollbarKit_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarKit_macOS.h; sourceTree = "<group>"; };
+		55454BBE22C6A9CC00D4A414 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55454BC322C6A9CC00D4A414 /* RollbarKit-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RollbarKit-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55454BC822C6A9CC00D4A414 /* RollbarKit_macOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarKit_macOSTests.m; sourceTree = "<group>"; };
+		55454BCA22C6A9CC00D4A414 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarPayloadTruncator.m; sourceTree = "<group>"; };
 		55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarPayloadTruncator.h; sourceTree = "<group>"; };
 		55B568D720F9560A00052D01 /* PayloadTruncationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayloadTruncationTests.m; sourceTree = "<group>"; };
@@ -1316,6 +1348,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55454B9C22C6A97600D4A414 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BA422C6A97700D4A414 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55454BA822C6A97700D4A414 /* RollbarKit_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BB822C6A9CC00D4A414 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BC022C6A9CC00D4A414 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55454BC422C6A9CC00D4A414 /* RollbarKit_macOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96D2220718D8E40600933444 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1381,6 +1443,42 @@
 			path = "Rollbar-macOS";
 			sourceTree = "<group>";
 		};
+		55454BA022C6A97600D4A414 /* RollbarKit-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				55454BA122C6A97600D4A414 /* RollbarKit_iOS.h */,
+				55454BA222C6A97700D4A414 /* Info.plist */,
+			);
+			path = "RollbarKit-iOS";
+			sourceTree = "<group>";
+		};
+		55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				55454BAC22C6A97700D4A414 /* RollbarKit_iOSTests.m */,
+				55454BAE22C6A97700D4A414 /* Info.plist */,
+			);
+			path = "RollbarKit-iOSTests";
+			sourceTree = "<group>";
+		};
+		55454BBC22C6A9CC00D4A414 /* RollbarKit-macOS */ = {
+			isa = PBXGroup;
+			children = (
+				55454BBD22C6A9CC00D4A414 /* RollbarKit_macOS.h */,
+				55454BBE22C6A9CC00D4A414 /* Info.plist */,
+			);
+			path = "RollbarKit-macOS";
+			sourceTree = "<group>";
+		};
+		55454BC722C6A9CC00D4A414 /* RollbarKit-macOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				55454BC822C6A9CC00D4A414 /* RollbarKit_macOSTests.m */,
+				55454BCA22C6A9CC00D4A414 /* Info.plist */,
+			);
+			path = "RollbarKit-macOSTests";
+			sourceTree = "<group>";
+		};
 		96D2220118D8E40600933444 = {
 			isa = PBXGroup;
 			children = (
@@ -1389,6 +1487,10 @@
 				343AB4531CC9AAE600962943 /* RollbarFramework */,
 				554549C422C68DBA00D4A414 /* Rollbar-iOS */,
 				554549DE22C68E8F00D4A414 /* Rollbar-macOS */,
+				55454BA022C6A97600D4A414 /* RollbarKit-iOS */,
+				55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */,
+				55454BBC22C6A9CC00D4A414 /* RollbarKit-macOS */,
+				55454BC722C6A9CC00D4A414 /* RollbarKit-macOSTests */,
 				96D2220C18D8E40600933444 /* Frameworks */,
 				96D2220B18D8E40600933444 /* Products */,
 			);
@@ -1402,6 +1504,10 @@
 				343AB4521CC9AAE600962943 /* Rollbar.framework */,
 				554549C322C68DBA00D4A414 /* libRollbar-iOS.a */,
 				554549DD22C68E8F00D4A414 /* libRollbar-macOS.a */,
+				55454B9F22C6A97600D4A414 /* RollbarKit_iOS.framework */,
+				55454BA722C6A97700D4A414 /* RollbarKit-iOSTests.xctest */,
+				55454BBB22C6A9CC00D4A414 /* RollbarKit_macOS.framework */,
+				55454BC322C6A9CC00D4A414 /* RollbarKit-macOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2177,6 +2283,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55454B9A22C6A97600D4A414 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55454BAF22C6A97700D4A414 /* RollbarKit_iOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BB622C6A9CC00D4A414 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55454BCB22C6A9CC00D4A414 /* RollbarKit_macOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9691838218E4EAEF00DE3699 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2358,6 +2480,78 @@
 			productReference = 554549DD22C68E8F00D4A414 /* libRollbar-macOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		55454B9E22C6A97600D4A414 /* RollbarKit-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55454BB022C6A97700D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-iOS" */;
+			buildPhases = (
+				55454B9A22C6A97600D4A414 /* Headers */,
+				55454B9B22C6A97600D4A414 /* Sources */,
+				55454B9C22C6A97600D4A414 /* Frameworks */,
+				55454B9D22C6A97600D4A414 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RollbarKit-iOS";
+			productName = "RollbarKit-iOS";
+			productReference = 55454B9F22C6A97600D4A414 /* RollbarKit_iOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		55454BA622C6A97700D4A414 /* RollbarKit-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55454BB322C6A97700D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-iOSTests" */;
+			buildPhases = (
+				55454BA322C6A97700D4A414 /* Sources */,
+				55454BA422C6A97700D4A414 /* Frameworks */,
+				55454BA522C6A97700D4A414 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55454BAA22C6A97700D4A414 /* PBXTargetDependency */,
+			);
+			name = "RollbarKit-iOSTests";
+			productName = "RollbarKit-iOSTests";
+			productReference = 55454BA722C6A97700D4A414 /* RollbarKit-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		55454BBA22C6A9CC00D4A414 /* RollbarKit-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55454BCC22C6A9CC00D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-macOS" */;
+			buildPhases = (
+				55454BB622C6A9CC00D4A414 /* Headers */,
+				55454BB722C6A9CC00D4A414 /* Sources */,
+				55454BB822C6A9CC00D4A414 /* Frameworks */,
+				55454BB922C6A9CC00D4A414 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RollbarKit-macOS";
+			productName = "RollbarKit-macOS";
+			productReference = 55454BBB22C6A9CC00D4A414 /* RollbarKit_macOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		55454BC222C6A9CC00D4A414 /* RollbarKit-macOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55454BCF22C6A9CC00D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-macOSTests" */;
+			buildPhases = (
+				55454BBF22C6A9CC00D4A414 /* Sources */,
+				55454BC022C6A9CC00D4A414 /* Frameworks */,
+				55454BC122C6A9CC00D4A414 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55454BC622C6A9CC00D4A414 /* PBXTargetDependency */,
+			);
+			name = "RollbarKit-macOSTests";
+			productName = "RollbarKit-macOSTests";
+			productReference = 55454BC322C6A9CC00D4A414 /* RollbarKit-macOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		96D2220918D8E40600933444 /* Rollbar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96D2222D18D8E40600933444 /* Build configuration list for PBXNativeTarget "Rollbar" */;
@@ -2413,6 +2607,18 @@
 					554549DC22C68E8F00D4A414 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
+					55454B9E22C6A97600D4A414 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					55454BA622C6A97700D4A414 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					55454BBA22C6A9CC00D4A414 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					55454BC222C6A9CC00D4A414 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
 				};
 			};
 			buildConfigurationList = 96D2220518D8E40600933444 /* Build configuration list for PBXProject "Rollbar" */;
@@ -2450,6 +2656,10 @@
 				343AB4511CC9AAE600962943 /* RollbarFramework */,
 				554549C222C68DBA00D4A414 /* Rollbar-iOS */,
 				554549DC22C68E8F00D4A414 /* Rollbar-macOS */,
+				55454B9E22C6A97600D4A414 /* RollbarKit-iOS */,
+				55454BA622C6A97700D4A414 /* RollbarKit-iOSTests */,
+				55454BBA22C6A9CC00D4A414 /* RollbarKit-macOS */,
+				55454BC222C6A9CC00D4A414 /* RollbarKit-macOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2461,6 +2671,34 @@
 			files = (
 				B54F1BB61FDA6CA700A6AB0C /* LICENSE.txt in Resources */,
 				B54F1B7B1FDA6CA700A6AB0C /* LICENSE.TXT in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454B9D22C6A97600D4A414 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BA522C6A97700D4A414 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BB922C6A9CC00D4A414 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BC122C6A9CC00D4A414 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2818,6 +3056,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55454B9B22C6A97600D4A414 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BA322C6A97700D4A414 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55454BAD22C6A97700D4A414 /* RollbarKit_iOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BB722C6A9CC00D4A414 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55454BBF22C6A9CC00D4A414 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55454BC922C6A9CC00D4A414 /* RollbarKit_macOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96D2220618D8E40600933444 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3033,6 +3301,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		55454BAA22C6A97700D4A414 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55454B9E22C6A97600D4A414 /* RollbarKit-iOS */;
+			targetProxy = 55454BA922C6A97700D4A414 /* PBXContainerItemProxy */;
+		};
+		55454BC622C6A9CC00D4A414 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55454BBA22C6A9CC00D4A414 /* RollbarKit-macOS */;
+			targetProxy = 55454BC522C6A9CC00D4A414 /* PBXContainerItemProxy */;
+		};
 		96150F6E18EB9CEE004CBC34 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 96D2220918D8E40600933444 /* Rollbar */;
@@ -3219,6 +3497,276 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		55454BB122C6A97700D4A414 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		55454BB222C6A97700D4A414 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		55454BB422C6A97700D4A414 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		55454BB522C6A97700D4A414 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		55454BCD22C6A9CC00D4A414 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-macOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		55454BCE22C6A9CC00D4A414 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-macOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		55454BD022C6A9CC00D4A414 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-macOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-macOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		55454BD122C6A9CC00D4A414 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "RollbarKit-macOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.RollbarKit-macOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -3458,6 +4006,42 @@
 			buildConfigurations = (
 				554549E422C68E8F00D4A414 /* Debug */,
 				554549E522C68E8F00D4A414 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55454BB022C6A97700D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55454BB122C6A97700D4A414 /* Debug */,
+				55454BB222C6A97700D4A414 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55454BB322C6A97700D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55454BB422C6A97700D4A414 /* Debug */,
+				55454BB522C6A97700D4A414 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55454BCC22C6A9CC00D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55454BCD22C6A9CC00D4A414 /* Debug */,
+				55454BCE22C6A9CC00D4A414 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55454BCF22C6A9CC00D4A414 /* Build configuration list for PBXNativeTarget "RollbarKit-macOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55454BD022C6A9CC00D4A414 /* Debug */,
+				55454BD122C6A9CC00D4A414 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
