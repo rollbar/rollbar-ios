@@ -19,12 +19,14 @@
 
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
+static NSString *PAYLOADS_FILE_NAME = @"rollbar.payloads";
 
 static NSUInteger MAX_RETRY_COUNT = 5;
 
 static NSString *queuedItemsFilePath = nil;
 static NSString *stateFilePath = nil;
 static NSMutableDictionary *queueState = nil;
+static NSString *payloadsFilePath = nil;
 
 static RollbarThread *rollbarThread = nil;
 static RollbarReachability *reachability = nil;
@@ -46,17 +48,35 @@ static BOOL isNetworkReachable = YES;
 
         if (isRoot) {
             NSString *cachesDirectory = [RollbarCachesDirectory directory];
+            if (nil != self.configuration.logPayloadFile
+                && self.configuration.logPayloadFile.length > 0) {
+                
+                payloadsFilePath =
+                    [cachesDirectory stringByAppendingPathComponent:self.configuration.logPayloadFile];
+            }
+            else {
+                
+                payloadsFilePath =
+                    [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
+            }
             queuedItemsFilePath =
                 [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
             stateFilePath =
                 [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
 
+            // either create or overwrite the payloads log file:
+            [[NSFileManager defaultManager] createFileAtPath:payloadsFilePath
+                                                        contents:nil
+                                                      attributes:nil];
+            
+            // create the queued items file if does not exist already:
             if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
                 [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath
                                                         contents:nil
                                                       attributes:nil];
             }
 
+            // create state tracking file if does not exist already:
             if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
                 NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
                 if (stateData) {
@@ -511,6 +531,15 @@ static BOOL isNetworkReachable = YES;
                                                             error:nil
                                                              safe:true];
     
+    if (YES == self.configuration.logPayload) {
+        // append-save this jsonPayload into the payloads log file:
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:payloadsFilePath];
+        [fileHandle seekToEndOfFile];
+        [fileHandle writeData:jsonPayload];
+        [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [fileHandle closeFile];
+    }
+    
     BOOL success = [self sendPayload:jsonPayload];
     if (!success) {
         NSUInteger retryCount = [queueState[@"retry_count"] unsignedIntegerValue];
@@ -539,6 +568,18 @@ static BOOL isNetworkReachable = YES;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
+    
+    if (YES == self.configuration.logPayload) {
+        NSString *payloadString = [[NSString alloc]initWithData:payload
+                                                       encoding:NSUTF8StringEncoding
+                                   ];
+        NSLog(@"%@", payloadString);
+        //TODO: if self.configuration.logPayloadFile is defined, save the payload into the file...
+    }
+    
+    if (NO == self.configuration.transmit) {
+        return YES; // we just successfully shortcircuit here...
+    }
 
     __block BOOL result = NO;
 #if TARGET_OS_IPHONE
@@ -593,6 +634,12 @@ static BOOL isNetworkReachable = YES;
 - (BOOL)checkPayloadResponse:(NSURLResponse*)response
                        error:(NSError*)error
                         data:(NSData*)data {
+    
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSDictionary *httpHeaders = [httpResponse allHeaderFields];
+    //TODO: lookup rate limiting headers and afjust reporting rate accordingly...
+    
+    
     if (error) {
         RollbarLog(@"There was an error reporting to Rollbar");
         RollbarLog(@"Error: %@", [error localizedDescription]);

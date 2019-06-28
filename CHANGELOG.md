@@ -2,6 +2,35 @@
 
 The change log has moved to this repo's [GitHub Releases Page](https://github.com/rollbar/rollbar-ios/releases).
 
+## Release Notes Tagging Conventions
+
+1.  Every entry within the PackageReleaseNotes element is expected to be started with
+    at least one of the tags listed:
+
+    feat:     A new feature
+    fix:      A bug fix
+    docs:     Documentation only changes
+    style:    Changes that do not affect the meaning of the code
+    refactor: A code change that neither a bug fix nor a new feature
+    perf:     A code change that improves performance
+    test:     Adding or modifying unit test code
+    chore:    Changes to the build process or auxiliary tools and libraries such as documentation generation, etc.
+
+2.  Every entry within the PackageReleaseNotes element is expected to be tagged with 
+    EITHER 
+    "resolve #GITHUB_ISSUE_NUMBER:" - meaning completely addresses the GitHub issue
+    OR 
+    "ref #GITHUB_ISSUE_NUMBER:" - meaning relevant to the GitHub issue
+    depending on what is more appropriate in each case.
+
+## Release Notes
+
+**1.7.0**
+
+- feat: ref #162: Implement the standardized Development Configuration Options.
+- feat: resolve #163: Add developer option: transmit.
+- feat: resolve #164: Add a developer config option: logPayload.
+
 **1.6.0**
 
 - resolve #157: Ability to customize client.ios.code_version
