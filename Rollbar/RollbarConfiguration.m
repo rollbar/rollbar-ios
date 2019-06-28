@@ -58,14 +58,14 @@ static NSString *configurationFilePath = nil;
         
         _logLevel = @"info";
 
-        _enabled = true;
-        _transmit = true;
-        _logPayload = false;
+        _enabled = YES;
+        _transmit = YES;
+        _logPayload = NO;
         _logPayloadFile = @"rollbar.payloads";
         
-        self.telemetryEnabled = false;
+        self.telemetryEnabled = NO;
         _maximumReportsPerMinute = 60;
-        [self setCaptureLogAsTelemetryData:false];
+        [self setCaptureLogAsTelemetryData:NO];
         
         _httpProxyEnabled = NO;
         _httpProxy = @"";
