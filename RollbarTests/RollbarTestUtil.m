@@ -2,12 +2,12 @@
 
 #import "RollbarTestUtil.h"
 #import "RollbarFileReader.h"
+#import "RollbarCachesDirectory.h"
 
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 
 NSString* _logFilePath() {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachesDirectory = [paths objectAtIndex:0];
+    NSString *cachesDirectory = [RollbarCachesDirectory directory];
     return [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
 }
 

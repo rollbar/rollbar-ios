@@ -2,6 +2,7 @@
 
 #import "RollbarTelemetry.h"
 #import "NSJSONSerialization+Rollbar.h"
+#import "RollbarCachesDirectory.h"
 
 #define DEFAULT_DATA_LIMIT 10
 #define TELEMETRY_FILE_NAME @"rollbar.telemetry"
@@ -58,8 +59,7 @@ static dispatch_queue_t fileQueue = nil;
         _limit = DEFAULT_DATA_LIMIT;
         
         // Create cache file
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString *cachesDirectory = [paths objectAtIndex:0];
+        NSString *cachesDirectory = [RollbarCachesDirectory directory];
         _dataFilePath = [cachesDirectory stringByAppendingPathComponent:TELEMETRY_FILE_NAME];
         
         _viewInputsToScrub = [NSMutableSet new];
@@ -91,7 +91,7 @@ static dispatch_queue_t fileQueue = nil;
 }
 
 - (void)truncateDataArray {
-    if (@available(iOS 10.0, *)) {
+    if (@available(iOS 10.0, macOS 10.12, *)) {
         dispatch_assert_queue_debug(queue);
     }
     if (_limit > 0 && _dataArray.count > _limit) {
@@ -287,7 +287,7 @@ static dispatch_queue_t fileQueue = nil;
 // on the internal queue to serialize the dataArray read, but the result
 // is free to be used anywhere
 - (NSData *)serializedDataArray {
-    if (@available(iOS 10.0, *)) {
+    if (@available(iOS 10.0, macOS 10.12, *)) {
         dispatch_assert_queue_debug(queue);
     }
     NSData *data = [NSJSONSerialization dataWithJSONObject:_dataArray
@@ -298,7 +298,7 @@ static dispatch_queue_t fileQueue = nil;
 }
 
 - (void)saveTelemetryData:(NSData *)data {
-    if (@available(iOS 10.0, *)) {
+    if (@available(iOS 10.0, macOS 10.12, *)) {
         dispatch_assert_queue_debug(fileQueue);
     }
     [data writeToFile:_dataFilePath atomically:true];
