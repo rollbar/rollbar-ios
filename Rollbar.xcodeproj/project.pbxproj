@@ -88,8 +88,8 @@
 		55454A0022C69A5F00D4A414 /* RollbarDeploysManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D8A214C79AD00761B20 /* RollbarDeploysManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55454A0122C69A6900D4A414 /* RollbarDeploysManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D8D214C79C200761B20 /* RollbarDeploysManager.m */; };
 		55454A0222C69A6900D4A414 /* RollbarDeploysManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D8D214C79C200761B20 /* RollbarDeploysManager.m */; };
-		55454A0322C69AA600D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55454A0422C69AA700D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55454A0322C69AA600D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; };
+		55454A0422C69AA700D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; };
 		55454A0522C69AB200D4A414 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
 		55454A0622C69AB300D4A414 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
 		55454A0722C69ABF00D4A414 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -525,8 +525,8 @@
 		55454BE722C6ABD000D4A414 /* RollbarDeploysManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D8A214C79AD00761B20 /* RollbarDeploysManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55454BE822C6ABD900D4A414 /* RollbarDeploysManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D8D214C79C200761B20 /* RollbarDeploysManager.m */; };
 		55454BE922C6ABDA00D4A414 /* RollbarDeploysManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D8D214C79C200761B20 /* RollbarDeploysManager.m */; };
-		55454BEA22C6ABE100D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55454BEB22C6ABE200D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55454BEA22C6ABE100D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; };
+		55454BEB22C6ABE200D4A414 /* NSJSONSerialization+Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */; };
 		55454BEC22C6ABEB00D4A414 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
 		55454BED22C6ABEC00D4A414 /* NSJSONSerialization+Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B54736891FB405F2007F99D7 /* NSJSONSerialization+Rollbar.m */; };
 		55454BEE22C6ABF000D4A414 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D2221218D8E40600933444 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -3268,7 +3268,7 @@
 		96D2220218D8E40600933444 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Rollbar;
 				TargetAttributes = {
 					343AB4511CC9AAE600962943 = {
@@ -4379,7 +4379,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -4418,7 +4418,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
