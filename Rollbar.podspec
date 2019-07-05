@@ -13,8 +13,8 @@ Pod::Spec.new do |s|
   s.license            = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Rollbar" => "support@rollbar.com" }
   s.social_media_url   = "http://twitter.com/rollbar"
-  s.ios.deployment_target = '7.0'
-  s.osx.deployment_target = '10.10'
+  s.ios.deployment_target = '8.0'
+  s.osx.deployment_target = '10.12'
   s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.7.0", :submodules => true}
 
   s.source_files       =  'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',

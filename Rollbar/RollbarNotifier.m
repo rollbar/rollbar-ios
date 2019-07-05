@@ -664,8 +664,8 @@ static BOOL isNetworkReachable = YES;
                        error:(NSError*)error
                         data:(NSData*)data {
     
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSDictionary *httpHeaders = [httpResponse allHeaderFields];
+    //NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    //NSDictionary *httpHeaders = [httpResponse allHeaderFields];
     //TODO: lookup rate limiting headers and afjust reporting rate accordingly...
     
     
