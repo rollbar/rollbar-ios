@@ -1,26 +1,27 @@
 Pod::Spec.new do |s|
-  s.version      = "1.7.0"
-  s.name         = "Rollbar"
-  s.summary      = "Objective-C library for crash reporting and logging with Rollbar."
-  s.description  = <<-DESC
+
+  s.version                   = "1.7.0"
+  s.name                      = "Rollbar"
+  s.summary                   = "Objective-C library for crash reporting and logging with Rollbar."
+  s.description               = <<-DESC
     Find, fix, and resolve errors with Rollbar.
     Easily send error data using Rollbar's API.
     Analyze, de-dupe, send alerts, and prepare the data for further analysis.
     Search, sort, and prioritize via the Rollbar dashboard.
-                   DESC
-
-  s.homepage           = "https://rollbar.com"
-  s.license            = { :type => "MIT", :file => "LICENSE" }
-  s.author             = { "Rollbar" => "support@rollbar.com" }
-  s.social_media_url   = "http://twitter.com/rollbar"
-  s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.12'
-  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", 
+                                DESC
+  s.screenshot                = "https://github.com/rollbar/rollbar-ios/blob/master/rollbar-logo.png"
+  s.homepage                  = "https://rollbar.com"
+  s.license                   = { :type => "MIT", :file => "LICENSE" }
+  s.author                    = { "Rollbar" => "support@rollbar.com" }
+  s.social_media_url          = "http://twitter.com/rollbar"
+  s.ios.deployment_target     = '8.0'
+  s.osx.deployment_target     = '10.12'
+  s.source                    = { :git => "https://github.com/rollbar/rollbar-ios.git", 
                            :tag => "v#{s.version}", 
                            :submodules => true
                            }
 
-  s.source_files       =  'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
+  s.source_files        = 'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
                           'Rollbar/*.{h,m}',
                           'Rollbar/Deploys/*.{h,m}'
 
@@ -60,4 +61,5 @@ Pod::Spec.new do |s|
                 "c++", 
                 "z"
   s.requires_arc = true
+
 end
