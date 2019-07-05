@@ -439,9 +439,6 @@
 		55454B9422C69E2B00D4A414 /* Punycode.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0B1FDA6CA600A6AB0C /* Punycode.h */; };
 		55454B9522C69E2B00D4A414 /* Fallthrough.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0C1FDA6CA600A6AB0C /* Fallthrough.h */; };
 		55454B9622C69E2B00D4A414 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0D1FDA6CA600A6AB0C /* LLVM.h */; };
-		55454B9722C6A1F400D4A414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
-		55454B9822C6A1F700D4A414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2220D18D8E40600933444 /* Foundation.framework */; };
-		55454B9922C6A20700D4A414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D2223618D8E54600933444 /* UIKit.framework */; };
 		55454BA822C6A97700D4A414 /* RollbarKit_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55454B9F22C6A97600D4A414 /* RollbarKit_iOS.framework */; };
 		55454BAD22C6A97700D4A414 /* RollbarKit_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55454BAC22C6A97700D4A414 /* RollbarKit_iOSTests.m */; };
 		55454BAF22C6A97700D4A414 /* RollbarKit_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 55454BA122C6A97600D4A414 /* RollbarKit_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -880,8 +877,6 @@
 		55454D8122C6AEE500D4A414 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0D1FDA6CA600A6AB0C /* LLVM.h */; };
 		55454D8222C6AEF900D4A414 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B54F1A0E1FDA6CA600A6AB0C /* LICENSE.txt */; };
 		55454D8322C6AEFC00D4A414 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B54F1A0E1FDA6CA600A6AB0C /* LICENSE.txt */; };
-		55454D8522C6B07700D4A414 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B59185841FB7ABA50072324B /* libz.tbd */; };
-		55454D8622C6B07A00D4A414 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B59185841FB7ABA50072324B /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1175,8 +1170,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55454B9722C6A1F400D4A414 /* Foundation.framework in Frameworks */,
-				55454B9922C6A20700D4A414 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1184,7 +1177,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55454B9822C6A1F700D4A414 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1192,7 +1184,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55454D8522C6B07700D4A414 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1208,7 +1199,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55454D8622C6B07A00D4A414 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

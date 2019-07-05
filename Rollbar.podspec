@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
-  s.name         = "Rollbar"
   s.version      = "1.7.0"
+  s.name         = "Rollbar"
   s.summary      = "Objective-C library for crash reporting and logging with Rollbar."
   s.description  = <<-DESC
     Find, fix, and resolve errors with Rollbar.
@@ -15,7 +15,10 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/rollbar"
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.12'
-  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.7.0", :submodules => true}
+  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", 
+                           :tag => "v#{s.version}", 
+                           :submodules => true
+                           }
 
   s.source_files       =  'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
                           'Rollbar/*.{h,m}',
@@ -23,18 +26,11 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'Rollbar/Rollbar.h',
                           'Rollbar/RollbarNotifier.h',
-                          'Rollbar/RollbarLogger.h',
                           'Rollbar/RollbarConfiguration.h',
                           'Rollbar/RollbarLevel.h',
-                          'Rollbar/RollbarPayloadTruncator.h',
-                          'Rollbar/RollbarReachability.h',
-                          'Rollbar/RollbarFileReader.h',
-                          'Rollbar/RollbarJSONFriendlyObject.h',
                           'Rollbar/RollbarJSONFriendlyProtocol.h',
-                          'Rollbar/RollbarThread.h',
                           'Rollbar/RollbarTelemetry.h',
                           'Rollbar/RollbarTelemetryType.h',
-                          'Rollbar/NSJSONSerialization+Rollbar.h',
                           'Rollbar/RollbarKSCrashReportSink.h',
                           'Rollbar/RollbarKSCrashInstallation.h',                          
                           'Rollbar/Deploys/RollbarDeploysProtocol.h',
@@ -52,12 +48,16 @@ Pod::Spec.new do |s|
                           'KSCrash/Source/KSCrash/Recording/Monitors/KSCrashMonitorType.h'
 
 
-  s.ios.frameworks = "SystemConfiguration",
-                 "MessageUI",
-                 "UIKit",
-                 "Foundation"
-  s.osx.frameworks = "SystemConfiguration",
-                 "Foundation"
-  s.libraries = "c++", "z"
+  s.ios.frameworks = 
+                "Foundation",
+                "SystemConfiguration",
+                "UIKit",
+                "MessageUI"
+  s.osx.frameworks = 
+                "Foundation",
+                "SystemConfiguration"
+  s.libraries = 
+                "c++", 
+                "z"
   s.requires_arc = true
 end
