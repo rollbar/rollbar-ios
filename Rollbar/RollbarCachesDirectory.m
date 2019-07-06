@@ -18,6 +18,11 @@
     if (appBundleID) {
         cachesDirectory = [cachesDirectory stringByAppendingPathComponent:appBundleID];
     }
+    else {
+        cachesDirectory =
+        [cachesDirectory stringByAppendingPathComponent:
+         [[NSProcessInfo processInfo] processName]];
+    }
 #endif
     return cachesDirectory;
 }

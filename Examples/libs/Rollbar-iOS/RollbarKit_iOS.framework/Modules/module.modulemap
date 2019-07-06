@@ -1,0 +1,6 @@
+framework module RollbarKit_iOS {
+  umbrella header "RollbarKit_iOS.h"
+
+  export *
+  module * { export * }
+}
