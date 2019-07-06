@@ -13,7 +13,7 @@ static NSString *FRAMEWORK = @"ios";
 static NSString *NOTIFIER_NAME = @"rollbar-macos";
 static NSString *FRAMEWORK = @"macos";
 #endif
-static NSString *NOTIFIER_VERSION = @"1.7.0";
+static NSString *NOTIFIER_VERSION = @"1.8.0";
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/item/";
 
