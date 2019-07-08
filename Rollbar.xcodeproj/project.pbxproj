@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		552C3BF022D3E76D00F97C88 /* RollbarFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* RollbarFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		552C3BF122D3E76E00F97C88 /* RollbarFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* RollbarFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554549C722C68DBA00D4A414 /* Rollbar_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 554549C622C68DBA00D4A414 /* Rollbar_iOS.m */; };
 		554549C822C68DBA00D4A414 /* Rollbar_iOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 554549C522C68DBA00D4A414 /* Rollbar_iOS.h */; };
 		554549E022C68E8F00D4A414 /* Rollbar_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 554549DF22C68E8F00D4A414 /* Rollbar_macOS.h */; };
@@ -1720,7 +1722,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554549EC22C699BE00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454B0722C69DD100D4A414 /* KSCPU_Apple.h in Headers */,
+				554549EE22C699D000D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454B8222C69E1300D4A414 /* KSCrashInstallationVictory.h in Headers */,
 				55454B1922C69DD100D4A414 /* KSThread.h in Headers */,
 				55454B4922C69DDE00D4A414 /* KSCrashC.h in Headers */,
@@ -1754,7 +1758,6 @@
 				55454AB922C69DBC00D4A414 /* KSCrashMonitor_User.h in Headers */,
 				55454B1422C69DD100D4A414 /* KSID.h in Headers */,
 				55454B5122C69DDE00D4A414 /* KSCrashReportStore.h in Headers */,
-				554549EC22C699BE00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454A4722C69D5400D4A414 /* NSData+GZip.h in Headers */,
 				55454B4B22C69DDE00D4A414 /* KSSystemCapabilities.h in Headers */,
 				55454A3422C69C2900D4A414 /* RollbarTelemetryType.h in Headers */,
@@ -1782,7 +1785,6 @@
 				55454B1C22C69DD100D4A414 /* KSStackCursor_Backtrace.h in Headers */,
 				55454A1822C69B3800D4A414 /* RollbarKSCrashInstallation.h in Headers */,
 				55454B0A22C69DD100D4A414 /* KSSignalInfo.h in Headers */,
-				554549EE22C699D000D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454A1022C69AF500D4A414 /* RollbarConfiguration.h in Headers */,
 				55454A7522C69D9700D4A414 /* KSHTTPMultipartPostBody.h in Headers */,
 				55454B3422C69DD100D4A414 /* KSStackCursor.h in Headers */,
@@ -1846,6 +1848,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554549EB22C699BC00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
+				554549ED22C699CF00D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454B5F22C69E0500D4A414 /* Casting.h in Headers */,
 				55454A5622C69D5B00D4A414 /* KSCrashReportFilterSets.h in Headers */,
 				55454AF622C69DD100D4A414 /* KSDate.h in Headers */,
@@ -1887,7 +1891,6 @@
 				55454B6022C69E0500D4A414 /* AlignOf.h in Headers */,
 				55454A9822C69DBB00D4A414 /* KSCrashMonitorContext.h in Headers */,
 				55454AA822C69DBB00D4A414 /* KSCrashMonitor_MachException.h in Headers */,
-				554549EB22C699BC00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454B8B22C69E2A00D4A414 /* Demangle.h in Headers */,
 				55454B8822C69E2A00D4A414 /* Malloc.h in Headers */,
 				55454AD222C69DD100D4A414 /* KSSysCtl.h in Headers */,
@@ -1895,7 +1898,6 @@
 				55454B3D22C69DDD00D4A414 /* KSSystemCapabilities.h in Headers */,
 				55454B8D22C69E2A00D4A414 /* Fallthrough.h in Headers */,
 				55454AD622C69DD100D4A414 /* KSStackCursor_SelfThread.h in Headers */,
-				554549ED22C699CF00D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454A4522C69D5300D4A414 /* KSVarArgs.h in Headers */,
 				55454B4722C69DDD00D4A414 /* KSCrashDoctor.h in Headers */,
 				55454B3F22C69DDD00D4A414 /* KSCrashReportFixer.h in Headers */,
@@ -1971,8 +1973,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55454BD222C6AB2500D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454C2E22C6AE3800D4A414 /* KSCrashReportFilterAlert.h in Headers */,
 				55454D5E22C6AED300D4A414 /* KSCrashInstallationVictory.h in Headers */,
+				55454BD422C6AB3500D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454D0022C6AE8C00D4A414 /* KSStackCursor.h in Headers */,
 				55454C0322C6AC9300D4A414 /* RollbarKSCrashReportSink.h in Headers */,
 				55454CAB22C6AE7F00D4A414 /* KSCrashMonitor_User.h in Headers */,
@@ -1996,7 +2000,6 @@
 				55454CFE22C6AE8C00D4A414 /* KSJSONCodecObjC.h in Headers */,
 				55454C6C22C6AE5B00D4A414 /* KSCrashReportSinkQuincyHockey.h in Headers */,
 				55454BEA22C6ABE100D4A414 /* NSJSONSerialization+Rollbar.h in Headers */,
-				55454BD222C6AB2500D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454D4222C6AE9D00D4A414 /* StringRef.h in Headers */,
 				55454D7822C6AEE400D4A414 /* Fallthrough.h in Headers */,
 				55454C5022C6AE4F00D4A414 /* KSHTTPRequestSender.h in Headers */,
@@ -2027,7 +2030,6 @@
 				55454CDC22C6AE8C00D4A414 /* KSCPU.h in Headers */,
 				55454C2F22C6AE3800D4A414 /* KSCrashReportFilter.h in Headers */,
 				55454D5422C6AED300D4A414 /* KSCrashInstallation+Alert.h in Headers */,
-				55454BD422C6AB3500D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454CCF22C6AE8C00D4A414 /* KSString.h in Headers */,
 				55454C8C22C6AE7400D4A414 /* KSCrashReportStore.h in Headers */,
 				55454C2C22C6AE3800D4A414 /* KSCrashReportFilterGZip.h in Headers */,
@@ -2063,6 +2065,7 @@
 				55454C6922C6AE5B00D4A414 /* KSCrashReportSinkStandard.h in Headers */,
 				55454D4922C6AEAD00D4A414 /* AlignOf.h in Headers */,
 				55454D0322C6AE8C00D4A414 /* KSDynamicLinker.h in Headers */,
+				552C3BF022D3E76D00F97C88 /* RollbarFramework.h in Headers */,
 				55454D4B22C6AEAD00D4A414 /* type_traits.h in Headers */,
 				55454D5922C6AED300D4A414 /* KSCrashInstallationStandard.h in Headers */,
 				55454C8022C6AE6D00D4A414 /* KSCrashReport.h in Headers */,
@@ -2097,8 +2100,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55454BD322C6AB2700D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454C3C22C6AE3900D4A414 /* KSCrashReportFilterAlert.h in Headers */,
 				55454D6D22C6AED400D4A414 /* KSCrashInstallationVictory.h in Headers */,
+				55454BD522C6AB3700D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454D3922C6AE8D00D4A414 /* KSStackCursor.h in Headers */,
 				55454C0422C6AC9400D4A414 /* RollbarKSCrashReportSink.h in Headers */,
 				55454CC222C6AE8000D4A414 /* KSCrashMonitor_User.h in Headers */,
@@ -2122,7 +2127,6 @@
 				55454D3722C6AE8D00D4A414 /* KSJSONCodecObjC.h in Headers */,
 				55454C7622C6AE5C00D4A414 /* KSCrashReportSinkQuincyHockey.h in Headers */,
 				55454BEB22C6ABE200D4A414 /* NSJSONSerialization+Rollbar.h in Headers */,
-				55454BD322C6AB2700D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454D4522C6AE9F00D4A414 /* StringRef.h in Headers */,
 				55454D8022C6AEE500D4A414 /* Fallthrough.h in Headers */,
 				55454C5C22C6AE5000D4A414 /* KSHTTPRequestSender.h in Headers */,
@@ -2153,7 +2157,6 @@
 				55454D1522C6AE8D00D4A414 /* KSCPU.h in Headers */,
 				55454C3D22C6AE3900D4A414 /* KSCrashReportFilter.h in Headers */,
 				55454D6322C6AED400D4A414 /* KSCrashInstallation+Alert.h in Headers */,
-				55454BD522C6AB3700D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454D0822C6AE8D00D4A414 /* KSString.h in Headers */,
 				55454C9A22C6AE7500D4A414 /* KSCrashReportStore.h in Headers */,
 				55454C3A22C6AE3900D4A414 /* KSCrashReportFilterGZip.h in Headers */,
@@ -2189,6 +2192,7 @@
 				55454C7322C6AE5C00D4A414 /* KSCrashReportSinkStandard.h in Headers */,
 				55454D4D22C6AEAE00D4A414 /* AlignOf.h in Headers */,
 				55454D3C22C6AE8D00D4A414 /* KSDynamicLinker.h in Headers */,
+				552C3BF122D3E76E00F97C88 /* RollbarFramework.h in Headers */,
 				55454D4F22C6AEAE00D4A414 /* type_traits.h in Headers */,
 				55454D6822C6AED400D4A414 /* KSCrashInstallationStandard.h in Headers */,
 				55454C8222C6AE6E00D4A414 /* KSCrashReport.h in Headers */,
@@ -3347,6 +3351,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -3398,6 +3403,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
