@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		552C3BF022D3E76D00F97C88 /* RollbarFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* RollbarFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		552C3BF122D3E76E00F97C88 /* RollbarFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* RollbarFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554549C722C68DBA00D4A414 /* Rollbar_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 554549C622C68DBA00D4A414 /* Rollbar_iOS.m */; };
 		554549C822C68DBA00D4A414 /* Rollbar_iOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 554549C522C68DBA00D4A414 /* Rollbar_iOS.h */; };
 		554549E022C68E8F00D4A414 /* Rollbar_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 554549DF22C68E8F00D4A414 /* Rollbar_macOS.h */; };
@@ -2063,6 +2065,7 @@
 				55454C6922C6AE5B00D4A414 /* KSCrashReportSinkStandard.h in Headers */,
 				55454D4922C6AEAD00D4A414 /* AlignOf.h in Headers */,
 				55454D0322C6AE8C00D4A414 /* KSDynamicLinker.h in Headers */,
+				552C3BF022D3E76D00F97C88 /* RollbarFramework.h in Headers */,
 				55454D4B22C6AEAD00D4A414 /* type_traits.h in Headers */,
 				55454D5922C6AED300D4A414 /* KSCrashInstallationStandard.h in Headers */,
 				55454C8022C6AE6D00D4A414 /* KSCrashReport.h in Headers */,
@@ -2189,6 +2192,7 @@
 				55454C7322C6AE5C00D4A414 /* KSCrashReportSinkStandard.h in Headers */,
 				55454D4D22C6AEAE00D4A414 /* AlignOf.h in Headers */,
 				55454D3C22C6AE8D00D4A414 /* KSDynamicLinker.h in Headers */,
+				552C3BF122D3E76E00F97C88 /* RollbarFramework.h in Headers */,
 				55454D4F22C6AEAE00D4A414 /* type_traits.h in Headers */,
 				55454D6822C6AED400D4A414 /* KSCrashInstallationStandard.h in Headers */,
 				55454C8222C6AE6E00D4A414 /* KSCrashReport.h in Headers */,
