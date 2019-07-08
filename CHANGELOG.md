@@ -25,6 +25,11 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.8.0**
+
+- feat: ref #168: add support for high sierra 
+- feat: ref #45: How about support for macOS?
+
 **1.7.0**
 
 - feat: ref #162: Implement the standardized Development Configuration Options.

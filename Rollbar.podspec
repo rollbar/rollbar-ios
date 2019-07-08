@@ -1,40 +1,37 @@
 Pod::Spec.new do |s|
-  s.name         = "Rollbar"
-  s.version      = "1.7.0"
-  s.summary      = "Objective-C library for crash reporting and logging with Rollbar."
-  s.description  = <<-DESC
+
+  s.version                   = "1.8.0"
+  s.name                      = "Rollbar"
+  s.summary                   = "Objective-C library for crash reporting and logging with Rollbar."
+  s.description               = <<-DESC
     Find, fix, and resolve errors with Rollbar.
     Easily send error data using Rollbar's API.
     Analyze, de-dupe, send alerts, and prepare the data for further analysis.
     Search, sort, and prioritize via the Rollbar dashboard.
-                   DESC
+                                DESC
+  s.screenshot                = "https://github.com/rollbar/rollbar-ios/blob/master/rollbar-logo.png"
+  s.homepage                  = "https://rollbar.com"
+  s.license                   = { :type => "MIT", :file => "LICENSE" }
+  s.author                    = { "Rollbar" => "support@rollbar.com" }
+  s.social_media_url          = "http://twitter.com/rollbar"
+  s.ios.deployment_target     = '8.0'
+  s.osx.deployment_target     = '10.12'
+  s.source                    = { :git => "https://github.com/rollbar/rollbar-ios.git", 
+                           :tag => "v#{s.version}", 
+                           :submodules => true
+                           }
 
-  s.homepage           = "https://rollbar.com"
-  s.license            = { :type => "MIT", :file => "LICENSE" }
-  s.author             = { "Rollbar" => "support@rollbar.com" }
-  s.social_media_url   = "http://twitter.com/rollbar"
-  s.ios.deployment_target = '7.0'
-  s.osx.deployment_target = '10.10'
-  s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git", :tag => "v1.7.0", :submodules => true}
-
-  s.source_files       =  'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
+  s.source_files        = 'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
                           'Rollbar/*.{h,m}',
                           'Rollbar/Deploys/*.{h,m}'
 
   s.public_header_files = 'Rollbar/Rollbar.h',
                           'Rollbar/RollbarNotifier.h',
-                          'Rollbar/RollbarLogger.h',
                           'Rollbar/RollbarConfiguration.h',
                           'Rollbar/RollbarLevel.h',
-                          'Rollbar/RollbarPayloadTruncator.h',
-                          'Rollbar/RollbarReachability.h',
-                          'Rollbar/RollbarFileReader.h',
-                          'Rollbar/RollbarJSONFriendlyObject.h',
                           'Rollbar/RollbarJSONFriendlyProtocol.h',
-                          'Rollbar/RollbarThread.h',
                           'Rollbar/RollbarTelemetry.h',
                           'Rollbar/RollbarTelemetryType.h',
-                          'Rollbar/NSJSONSerialization+Rollbar.h',
                           'Rollbar/RollbarKSCrashReportSink.h',
                           'Rollbar/RollbarKSCrashInstallation.h',                          
                           'Rollbar/Deploys/RollbarDeploysProtocol.h',
@@ -52,12 +49,17 @@ Pod::Spec.new do |s|
                           'KSCrash/Source/KSCrash/Recording/Monitors/KSCrashMonitorType.h'
 
 
-  s.ios.frameworks = "SystemConfiguration",
-                 "MessageUI",
-                 "UIKit",
-                 "Foundation"
-  s.osx.frameworks = "SystemConfiguration",
-                 "Foundation"
-  s.libraries = "c++", "z"
+  s.ios.frameworks = 
+                "Foundation",
+                "SystemConfiguration",
+                "UIKit",
+                "MessageUI"
+  s.osx.frameworks = 
+                "Foundation",
+                "SystemConfiguration"
+  s.libraries = 
+                "c++", 
+                "z"
   s.requires_arc = true
+
 end

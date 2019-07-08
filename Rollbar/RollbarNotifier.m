@@ -322,33 +322,51 @@ static BOOL isNetworkReachable = YES;
     NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
     
 #if TARGET_OS_IPHONE
-    NSDictionary *osData = @{@"ios_version": [[UIDevice currentDevice] systemVersion],
-                              @"device_code": deviceCode,
-                              @"code_version": version ? version : @"",
-                              @"short_version": shortVersion ? shortVersion : @"",
-                              @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
-                              @"app_name": bundleName ? bundleName : @""};
-#else
-    NSDictionary *systemVersion = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-    NSDictionary *osData = @{@"os_version": [systemVersion objectForKey:@"ProductVersion"],
+    NSDictionary *osData = @{
+                             @"os": @"iOS",
+                             @"os_version": [[UIDevice currentDevice] systemVersion],
                              @"device_code": deviceCode,
                              @"code_version": version ? version : @"",
                              @"short_version": shortVersion ? shortVersion : @"",
                              @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
-                             @"app_name": bundleName ? bundleName : @""};
+                             @"app_name": bundleName ? bundleName : @""
+                             };
+#else
+//    NSDictionary *systemVersion = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+    NSOperatingSystemVersion osVer =
+    [[NSProcessInfo processInfo] operatingSystemVersion];
+
+    NSDictionary *osData = @{
+                             @"os": @"macOS",
+//                             @"os_version": [systemVersion objectForKey:@"ProductVersion"],
+                             @"os_version": [NSString stringWithFormat:@" %tu.%tu.%tu",
+                                             osVer.majorVersion,
+                                             osVer.minorVersion,
+                                             osVer.patchVersion
+                                             ],
+                             @"device_code": deviceCode,
+                             @"code_version": version ? version : @"",
+                             @"short_version": shortVersion ? shortVersion : @"",
+                             @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+                             @"app_name": bundleName ? bundleName : [[NSProcessInfo processInfo] processName]
+                             };
 #endif
 
     if (self.configuration.captureIp == CaptureIpFull) {
         return @{@"timestamp": timestamp,
-                 @"ios": osData,
+                 //@"ios": osData,
+                 @"os": osData,
                  @"user_ip": @"$remote_ip"};
     } else if (self.configuration.captureIp == CaptureIpAnonymize) {
         return @{@"timestamp": timestamp,
-                 @"ios": osData,
+                 //@"ios": osData,
+                 @"os": osData,
                  @"user_ip": @"$remote_ip_anonymize"};
     } else {
         return @{@"timestamp": timestamp,
-                 @"ios": osData};
+                 //@"ios": osData,
+                 @"os": osData
+                 };
     }
 }
 
@@ -381,13 +399,24 @@ static BOOL isNetworkReachable = YES;
                                                      extra:extra
                                                crashReport:crashReport
                           ];
+//    NSOperatingSystemVersion osVer =
+//    [[NSProcessInfo processInfo] operatingSystemVersion];
     
-#if TARGET_OS_IPHONE
-    NSString *platform = @"ios";
-#else
+//#if TARGET_OS_IPHONE
+//    NSString *platform = @"iOS";
+//    //float ver = [[[UIDevice currentDevice] systemVersion] floatValue];
+//#else
+//    NSString *platform = @"macOS";
+//#endif
+//
+//    platform =
+//    [platform stringByAppendingFormat:@" %tu.%tu.%tu",
+//     osVer.majorVersion,
+//     osVer.minorVersion,
+//     osVer.patchVersion
+//     ];
+    
     NSString *platform = @"client";
-#endif
-    
     NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
                                    @"level": level,
                                    @"language": @"objective-c",
@@ -635,8 +664,8 @@ static BOOL isNetworkReachable = YES;
                        error:(NSError*)error
                         data:(NSData*)data {
     
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSDictionary *httpHeaders = [httpResponse allHeaderFields];
+    //NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    //NSDictionary *httpHeaders = [httpResponse allHeaderFields];
     //TODO: lookup rate limiting headers and afjust reporting rate accordingly...
     
     
