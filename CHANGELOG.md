@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.8.1**
+- fix: ref #171: Fix build errors during cocoapods' trunk push
+
 **1.8.0**
 
 - feat: ref #168: add support for high sierra 
