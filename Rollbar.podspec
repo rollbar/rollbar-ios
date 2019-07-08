@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-  s.version                   = "1.8.0-alpha2"
+  s.version                   = "1.8.0-alpha3"
   s.name                      = "Rollbar"
   s.summary                   = "Objective-C library for crash reporting and logging with Rollbar."
   s.description               = <<-DESC
@@ -9,7 +9,6 @@ Pod::Spec.new do |s|
     Analyze, de-dupe, send alerts, and prepare the data for further analysis.
     Search, sort, and prioritize via the Rollbar dashboard.
                                 DESC
-  s.screenshot                = "https://github.com/rollbar/rollbar-ios/blob/master/rollbar-logo.png"
   s.homepage                  = "https://rollbar.com"
   s.license                   = { :type => "MIT", :file => "LICENSE" }
   s.author                    = { "Rollbar" => "support@rollbar.com" }
@@ -30,6 +29,7 @@ Pod::Spec.new do |s|
                           'Rollbar/RollbarConfiguration.h',
                           'Rollbar/RollbarLevel.h',
                           'Rollbar/RollbarJSONFriendlyProtocol.h',
+                          'Rollbar/RollbarJSONFriendlyObject.h',
                           'Rollbar/RollbarTelemetry.h',
                           'Rollbar/RollbarTelemetryType.h',
                           'Rollbar/RollbarKSCrashReportSink.h',
