@@ -6,6 +6,7 @@
 //  Copyright © 2019 Andrey Kornich (Wide Spectrum Computing LLC). All rights reserved.
 //
 
+#import <Rollbar/Rollbar.h>
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -16,11 +17,25 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    
+    // configure Rollbar:
+    RollbarConfiguration *config = [RollbarConfiguration configuration];
+    //config.crashLevel = @"critical";
+    config.environment = @"samples";
+    
+    [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
+    //[Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
+    
+    //
+    [Rollbar info:@"macOSAppWithRollbarCocoaPod: the app just launched..."];
+
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+
+    [Rollbar info:@"macOSAppWithRollbarCocoaPod: the app is about to terminate..."];
 }
 
 

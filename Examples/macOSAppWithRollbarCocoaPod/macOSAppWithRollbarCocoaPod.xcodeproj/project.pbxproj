@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,9 +12,11 @@
 		550647E322D4097500530813 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 550647E222D4097500530813 /* Assets.xcassets */; };
 		550647E622D4097500530813 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 550647E422D4097500530813 /* Main.storyboard */; };
 		550647E922D4097500530813 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 550647E822D4097500530813 /* main.m */; };
+		B315D3D7A0712B4A3965F794 /* Pods_macOSAppWithRollbarCocoaPod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EDAE1D35DD40EEDF287F370 /* Pods_macOSAppWithRollbarCocoaPod.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4EDAE1D35DD40EEDF287F370 /* Pods_macOSAppWithRollbarCocoaPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_macOSAppWithRollbarCocoaPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		550647D922D4097300530813 /* macOSAppWithRollbarCocoaPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macOSAppWithRollbarCocoaPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		550647DC22D4097300530813 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		550647DD22D4097300530813 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -25,6 +27,9 @@
 		550647E722D4097500530813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		550647E822D4097500530813 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		550647EA22D4097500530813 /* macOSAppWithRollbarCocoaPod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOSAppWithRollbarCocoaPod.entitlements; sourceTree = "<group>"; };
+		550647F022D40E6F00530813 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		6D6F4F79D3BE3D6FA25A13A2 /* Pods-macOSAppWithRollbarCocoaPod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macOSAppWithRollbarCocoaPod.release.xcconfig"; path = "Target Support Files/Pods-macOSAppWithRollbarCocoaPod/Pods-macOSAppWithRollbarCocoaPod.release.xcconfig"; sourceTree = "<group>"; };
+		DB7913F8E3D95330157E60EB /* Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig"; path = "Target Support Files/Pods-macOSAppWithRollbarCocoaPod/Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,17 +37,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B315D3D7A0712B4A3965F794 /* Pods_macOSAppWithRollbarCocoaPod.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3557153F461F7B97859D74DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4EDAE1D35DD40EEDF287F370 /* Pods_macOSAppWithRollbarCocoaPod.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		550647D022D4097300530813 = {
 			isa = PBXGroup;
 			children = (
 				550647DB22D4097300530813 /* macOSAppWithRollbarCocoaPod */,
 				550647DA22D4097300530813 /* Products */,
+				C96ED9DEF598F5C2270E57A2 /* Pods */,
+				3557153F461F7B97859D74DB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,8 +82,18 @@
 				550647E722D4097500530813 /* Info.plist */,
 				550647E822D4097500530813 /* main.m */,
 				550647EA22D4097500530813 /* macOSAppWithRollbarCocoaPod.entitlements */,
+				550647F022D40E6F00530813 /* Podfile */,
 			);
 			path = macOSAppWithRollbarCocoaPod;
+			sourceTree = "<group>";
+		};
+		C96ED9DEF598F5C2270E57A2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DB7913F8E3D95330157E60EB /* Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig */,
+				6D6F4F79D3BE3D6FA25A13A2 /* Pods-macOSAppWithRollbarCocoaPod.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +103,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 550647ED22D4097500530813 /* Build configuration list for PBXNativeTarget "macOSAppWithRollbarCocoaPod" */;
 			buildPhases = (
+				5C81AAC36AEAE945A0D0D279 /* [CP] Check Pods Manifest.lock */,
 				550647D522D4097300530813 /* Sources */,
 				550647D622D4097300530813 /* Frameworks */,
 				550647D722D4097300530813 /* Resources */,
+				80216CF3DE08C6DD0F061597 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -101,6 +129,11 @@
 				TargetAttributes = {
 					550647D822D4097300530813 = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -133,6 +166,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5C81AAC36AEAE945A0D0D279 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-macOSAppWithRollbarCocoaPod-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80216CF3DE08C6DD0F061597 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-macOSAppWithRollbarCocoaPod/Pods-macOSAppWithRollbarCocoaPod-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-macOSAppWithRollbarCocoaPod/Pods-macOSAppWithRollbarCocoaPod-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-macOSAppWithRollbarCocoaPod/Pods-macOSAppWithRollbarCocoaPod-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		550647D522D4097300530813 /* Sources */ = {
@@ -272,6 +347,7 @@
 		};
 		550647EE22D4097500530813 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB7913F8E3D95330157E60EB /* Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macOSAppWithRollbarCocoaPod/macOSAppWithRollbarCocoaPod.entitlements;
@@ -289,6 +365,7 @@
 		};
 		550647EF22D4097500530813 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D6F4F79D3BE3D6FA25A13A2 /* Pods-macOSAppWithRollbarCocoaPod.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macOSAppWithRollbarCocoaPod/macOSAppWithRollbarCocoaPod.entitlements;
