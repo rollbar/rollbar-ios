@@ -40,34 +40,46 @@ static BOOL isNetworkReachable = YES;
 - (id)initWithAccessToken:(NSString*)accessToken
             configuration:(RollbarConfiguration*)configuration
                    isRoot:(BOOL)isRoot {
-
+    
     if ((self = [super init])) {
         [self updateAccessToken:accessToken
                   configuration:configuration
                          isRoot:isRoot];
-
+        
         if (isRoot) {
             NSString *cachesDirectory = [RollbarCachesDirectory directory];
             if (nil != self.configuration.logPayloadFile
                 && self.configuration.logPayloadFile.length > 0) {
                 
                 payloadsFilePath =
-                    [cachesDirectory stringByAppendingPathComponent:self.configuration.logPayloadFile];
+                [cachesDirectory stringByAppendingPathComponent:self.configuration.logPayloadFile];
             }
             else {
                 
                 payloadsFilePath =
-                    [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
+                [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
             }
+            // create working cache directory:
+            if (![[NSFileManager defaultManager] fileExistsAtPath:cachesDirectory]) {
+                NSError *error;
+                BOOL result =
+                [[NSFileManager defaultManager] createDirectoryAtPath:cachesDirectory
+                                          withIntermediateDirectories:YES
+                                                           attributes:nil
+                                                                error:&error
+                 ];
+                NSLog(@"result %@", result);
+            }
+            
             queuedItemsFilePath =
-                [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
+            [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
             stateFilePath =
-                [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
-
+            [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
+            
             // either create or overwrite the payloads log file:
             [[NSFileManager defaultManager] createFileAtPath:payloadsFilePath
-                                                        contents:nil
-                                                      attributes:nil];
+                                                    contents:nil
+                                                  attributes:nil];
             
             // create the queued items file if does not exist already:
             if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
@@ -75,7 +87,7 @@ static BOOL isNetworkReachable = YES;
                                                         contents:nil
                                                       attributes:nil];
             }
-
+            
             // create state tracking file if does not exist already:
             if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
                 NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
@@ -92,31 +104,31 @@ static BOOL isNetworkReachable = YES;
                 queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
                                 @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
             }
-
+            
             // Deals with sending items that have been queued up
             rollbarThread = [[RollbarThread alloc] initWithNotifier:self reportingRate:configuration.maximumReportsPerMinute];
             [rollbarThread start];
-
+            
             // Listen for reachability status
             // so that items are only sent when the internet is available
             reachability = [RollbarReachability reachabilityForInternetConnection];
-
+            
             isNetworkReachable = [reachability isReachable];
-
+            
             reachability.reachableBlock = ^(RollbarReachability*reach) {
                 [self captureTelemetryDataForNetwork:true];
                 isNetworkReachable = YES;
             };
-
+            
             reachability.unreachableBlock = ^(RollbarReachability*reach) {
                 [self captureTelemetryDataForNetwork:false];
                 isNetworkReachable = NO;
             };
-
+            
             [reachability startNotifier];
         }
     }
-
+    
     return self;
 }
 

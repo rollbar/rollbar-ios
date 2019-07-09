@@ -25,13 +25,18 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
-**1.8.1**
-- fix: ref #171: Fix build errors during cocoapods' trunk push
-
+**1.8.0-alpha4**
+**1.8.0-alpha3**
+**1.8.0-alpha2**
+**1.8.0-alpha1**
 **1.8.0**
 
 - feat: ref #168: add support for high sierra 
 - feat: ref #45: How about support for macOS?
+- feat: resolve #176: Add sandboxing status detection to RollbarCachesDirectory.
+- fix: resolve #171: Fix build errors during cocoapods' trunk push
+- docs: resolve #175: Create a sample app - macOSAppWithRollbarCocoaPod.
+
 
 **1.7.0**
 
