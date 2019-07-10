@@ -16,17 +16,14 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // configure Rollbar:
         RollbarConfiguration *config = [RollbarConfiguration configuration];
-        //config.crashLevel = @"critical";
         config.environment = @"samples";
-        
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
-        //[Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
-        // insert code here...
+        
         NSLog(@"Hello, World!");
         
         int i = 100;
         while (0 < i--) {
-            [Rollbar info:@"Message from macOS"];
+            [Rollbar info:@"Message from macOScmdTool"];
             [NSThread sleepForTimeInterval:1.0f];
         }
     }
