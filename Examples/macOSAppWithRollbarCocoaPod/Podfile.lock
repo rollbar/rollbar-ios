@@ -1,16 +1,16 @@
 PODS:
-  - Rollbar (1.8.0-alpha3)
+  - Rollbar (1.8.0-alpha5)
 
 DEPENDENCIES:
-  - Rollbar (~> 1.8.0-alpha3)
+  - Rollbar (~> 1.8.0-alpha5)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Rollbar
 
 SPEC CHECKSUMS:
-  Rollbar: 1d1076fcba2cec0d5cbf196bf90ca1c758f96566
+  Rollbar: ff251b13dd4f16ae5baf965dc7efa23649e5b3e5
 
-PODFILE CHECKSUM: 0c381cdb31a09cd1da38fc2482515a4df1598e46
+PODFILE CHECKSUM: 52d76ddd9f574c6ea02c3a902d1f296e8bbb9945
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.7.4
