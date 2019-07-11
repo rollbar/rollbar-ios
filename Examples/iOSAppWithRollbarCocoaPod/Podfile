@@ -1,0 +1,6 @@
+platform :ios, '8.0'
+use_frameworks!
+
+target 'iOSAppWithRollbarCocoaPod' do
+pod 'Rollbar', '~> 1.8.0-alpha5'
+end
