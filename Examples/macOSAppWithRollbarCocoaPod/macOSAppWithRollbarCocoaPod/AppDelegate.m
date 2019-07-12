@@ -20,15 +20,11 @@
     
     // configure Rollbar:
     RollbarConfiguration *config = [RollbarConfiguration configuration];
-    //config.crashLevel = @"critical";
     config.environment = @"samples";
     
     [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
-    //[Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
     
-    //
     [Rollbar info:@"macOSAppWithRollbarCocoaPod: the app just launched..."];
-
 }
 
 
