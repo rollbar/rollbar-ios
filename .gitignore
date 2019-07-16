@@ -25,3 +25,5 @@ Pods
 Dist/
 
 *.swp
+
+build/
