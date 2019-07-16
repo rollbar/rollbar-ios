@@ -39,8 +39,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 - fix: resolve #171: Fix build errors during cocoapods' trunk push
 - docs: resolve #175: Create a sample app - macOSAppWithRollbarCocoaPod.
 - docs: resolve #179: Create a sample app - iOSAppWithRollbarCocoaPod.
-- chore: ref #181: Create Rollbar-iOS-UniversalDistribution aggregate build target.
-
+- chore: resolve #181: Create Rollbar-iOS-UniversalDistribution aggregate build target.
+- chore: resolve #182: Create RollbarKit-iOS-UniversalDistribution aggregate build target.
+- chore: resolve #183: Modify all the new build targets to produce build results based on $(PRODUCT_NAME) instead of $(TARGET_NAME).
 
 **1.7.0**
 
