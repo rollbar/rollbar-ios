@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "554549C222C68DBA00D4A414"
-               BuildableName = "libRollbar-iOS.a"
+               BuildableName = "libRollbar.a"
                BlueprintName = "Rollbar-iOS"
                ReferencedContainer = "container:Rollbar.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "554549C222C68DBA00D4A414"
-            BuildableName = "libRollbar-iOS.a"
+            BuildableName = "libRollbar.a"
             BlueprintName = "Rollbar-iOS"
             ReferencedContainer = "container:Rollbar.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "554549C222C68DBA00D4A414"
-            BuildableName = "libRollbar-iOS.a"
+            BuildableName = "libRollbar.a"
             BlueprintName = "Rollbar-iOS"
             ReferencedContainer = "container:Rollbar.xcodeproj">
          </BuildableReference>

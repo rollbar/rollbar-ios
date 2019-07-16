@@ -42,6 +42,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 - chore: resolve #181: Create Rollbar-iOS-UniversalDistribution aggregate build target.
 - chore: resolve #182: Create RollbarKit-iOS-UniversalDistribution aggregate build target.
 - chore: resolve #183: Modify all the new build targets to produce build results based on $(PRODUCT_NAME) instead of $(TARGET_NAME).
+- chore: resolve #184: Create RollbarSDKReleaseDistribution build target.
 
 **1.7.0**
 
