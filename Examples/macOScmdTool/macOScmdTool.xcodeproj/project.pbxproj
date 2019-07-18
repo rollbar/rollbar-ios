@@ -24,7 +24,7 @@
 		553CB62B22C6FEF000E0F4A4 /* RollbarTelemetry.h in Headers */ = {isa = PBXBuildFile; fileRef = 553CB61522C6FE9A00E0F4A4 /* RollbarTelemetry.h */; };
 		553CB62C22C6FEF000E0F4A4 /* RollbarTelemetryType.h in Headers */ = {isa = PBXBuildFile; fileRef = 553CB61622C6FE9A00E0F4A4 /* RollbarTelemetryType.h */; };
 		553CB63422CA87E300E0F4A4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 553CB63322CA87E300E0F4A4 /* libc++.tbd */; };
-		553CB63622CAAA5A00E0F4A4 /* libRollbar-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 553CB63522CAAA5900E0F4A4 /* libRollbar-macOS.a */; };
+		55E296AB22DE99D500A45D65 /* libRollbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E296AA22DE99D500A45D65 /* libRollbar.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,7 +58,7 @@
 		553CB61B22C6FE9A00E0F4A4 /* RollbarJSONFriendlyObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RollbarJSONFriendlyObject.h; path = "../libs/Rollbar-macOS/usr/local/include/RollbarJSONFriendlyObject.h"; sourceTree = "<group>"; };
 		553CB61C22C6FE9A00E0F4A4 /* RollbarKSCrashInstallation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RollbarKSCrashInstallation.h; path = "../libs/Rollbar-macOS/usr/local/include/RollbarKSCrashInstallation.h"; sourceTree = "<group>"; };
 		553CB63322CA87E300E0F4A4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		553CB63522CAAA5900E0F4A4 /* libRollbar-macOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libRollbar-macOS.a"; path = "../libs/Rollbar-macOS/libRollbar-macOS.a"; sourceTree = "<group>"; };
+		55E296AA22DE99D500A45D65 /* libRollbar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRollbar.a; path = "../libs/Release-macOS/libRollbar.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553CB63622CAAA5A00E0F4A4 /* libRollbar-macOS.a in Frameworks */,
+				55E296AB22DE99D500A45D65 /* libRollbar.a in Frameworks */,
 				553CB63422CA87E300E0F4A4 /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,7 +103,7 @@
 		553CB60B22C6FE0000E0F4A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				553CB63522CAAA5900E0F4A4 /* libRollbar-macOS.a */,
+				55E296AA22DE99D500A45D65 /* libRollbar.a */,
 				553CB63322CA87E300E0F4A4 /* libc++.tbd */,
 			);
 			name = Frameworks;
@@ -336,7 +336,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar-macOS";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar/Release-macOS/usr/local/include";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar/Release-macOS";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -348,7 +349,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar-macOS";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar/Release-macOS/usr/local/include";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar/Release-macOS";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

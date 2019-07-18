@@ -1,6 +1,0 @@
-framework module RollbarKit_macOS {
-  umbrella header "RollbarKit_macOS.h"
-
-  export *
-  module * { export * }
-}
