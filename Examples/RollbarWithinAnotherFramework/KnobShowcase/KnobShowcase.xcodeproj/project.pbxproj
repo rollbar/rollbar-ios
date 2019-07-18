@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55BD1D8322E1069D008324D5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD1D8222E1069D008324D5 /* libc++.tbd */; };
 		9A39AD9920A0A39500F54C68 /* KnobControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A39AD9320A0A09E00F54C68 /* KnobControl.framework */; };
 		9A39AD9A20A0A39500F54C68 /* KnobControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A39AD9320A0A09E00F54C68 /* KnobControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9AA5BDF320A09115009D5610 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5BDEB20A09115009D5610 /* AppDelegate.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		55BD1D8222E1069D008324D5 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		9A39AD8E20A0A09E00F54C68 /* KnobControl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KnobControl.xcodeproj; path = ../KnobControl/KnobControl.xcodeproj; sourceTree = "<group>"; };
 		9AA5BDEB20A09115009D5610 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AA5BDEC20A09115009D5610 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55BD1D8322E1069D008324D5 /* libc++.tbd in Frameworks */,
 				9A39AD9920A0A39500F54C68 /* KnobControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +73,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55BD1D8122E1069D008324D5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55BD1D8222E1069D008324D5 /* libc++.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9A39AD8F20A0A09E00F54C68 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +108,7 @@
 				9A39AD8E20A0A09E00F54C68 /* KnobControl.xcodeproj */,
 				9AA5BDEA20A09115009D5610 /* KnobShowcase */,
 				D2A5F2011F4A9144005CD714 /* Products */,
+				55BD1D8122E1069D008324D5 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -145,12 +157,11 @@
 					D2A5F1FF1F4A9144005CD714 = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
 					};
 				};
 			};
 			buildConfigurationList = D2A5F1FB1F4A9143005CD714 /* Build configuration list for PBXProject "KnobShowcase" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -334,7 +345,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -345,12 +357,16 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				INFOPLIST_FILE = KnobShowcase/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.KnobShowcase;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.KnobShowcase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -365,12 +381,16 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				INFOPLIST_FILE = KnobShowcase/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.KnobShowcase;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.KnobShowcase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;

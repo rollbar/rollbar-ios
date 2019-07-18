@@ -26,9 +26,9 @@ Integrated Rollbar-iOS notifier into the KnobControl framework, so that, when th
 ```          
 
 5. In the Project Navigator, unfold Products subfolder of the Rollbar project so that you can see Rollbar.framework within its content.
-6. In the Project Navigator, elect/click KnobControl project root. In the project configuration view (to the right of the Project Navigator), select KnobControl target and Genral settings for it. Down the General settings view there is the Linked Frameworks and Libraries section.
+6. In the Project Navigator, select/click KnobControl project root. In the project configuration view (to the right of the Project Navigator), select KnobControl target and Genral settings for it. Down the General settings view there is the Linked Frameworks and Libraries section.
 7. Drag Rollbar.framework item from the Rollbar project's Products subforlder of the Project Navigator and drop it within the Linked Frameworks and Libraries section of the General settings for KnobControl target.
-8. Locate (or create) the custom framework's bridge-header file. For the KnobControl framework project, it is the KnobControl.h and add following imprts at the top of the file:
+8. Locate (or create) the custom framework's bridge-header file. For the KnobControl framework project, it is the KnobControl.h and add following imports at the top of the file:
 ```
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <Rollbar/Rollbar.h>

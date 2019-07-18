@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		559E76FD2196795000181AF7 /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559E76FB2196792D00181AF7 /* Rollbar.framework */; };
+		55BD1D7E22E101BF008324D5 /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD1D7D22E101BE008324D5 /* Rollbar.framework */; };
+		55BD1D8022E105CC008324D5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55BD1D7F22E105CC008324D5 /* libc++.tbd */; };
 		9AA5BE0920A09553009D5610 /* KnobControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA5BE0720A09553009D5610 /* KnobControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AA5BE1420A09739009D5610 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5BE1320A09739009D5610 /* Knob.swift */; };
 		9AA5BE1620A09930009D5610 /* KnobRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5BE1520A09930009D5610 /* KnobRender.swift */; };
@@ -15,31 +16,61 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		559E76F62196792D00181AF7 /* PBXContainerItemProxy */ = {
+		5550CC1B22E03E3100AECEF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+			containerPortal = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 96D2220A18D8E40600933444;
-			remoteInfo = Rollbar;
+			remoteGlobalIDString = 554549C322C68DBA00D4A414;
+			remoteInfo = "Rollbar-iOS";
 		};
-		559E76F82196792D00181AF7 /* PBXContainerItemProxy */ = {
+		5550CC1D22E03E3100AECEF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+			containerPortal = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 96D2221A18D8E40600933444;
-			remoteInfo = RollbarTests;
+			remoteGlobalIDString = 554549DD22C68E8F00D4A414;
+			remoteInfo = "Rollbar-macOS";
 		};
-		559E76FA2196792D00181AF7 /* PBXContainerItemProxy */ = {
+		5550CC1F22E03E3100AECEF3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+			containerPortal = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 343AB4521CC9AAE600962943;
-			remoteInfo = RollbarFramework;
+			remoteGlobalIDString = 55454B9F22C6A97600D4A414;
+			remoteInfo = "RollbarKit-iOS";
+		};
+		5550CC2122E03E3100AECEF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55454BA722C6A97700D4A414;
+			remoteInfo = "RollbarKit-iOSTests";
+		};
+		5550CC2322E03E3100AECEF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55454BBB22C6A9CC00D4A414;
+			remoteInfo = "RollbarKit-macOS";
+		};
+		5550CC2522E03E3100AECEF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55454BC322C6A9CC00D4A414;
+			remoteInfo = "RollbarKit-macOSTests";
+		};
+		5550CC2822E03E8600AECEF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55454B9E22C6A97600D4A414;
+			remoteInfo = "RollbarKit-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rollbar.xcodeproj; path = ../../../Rollbar.xcodeproj; sourceTree = "<group>"; };
+		5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rollbar.xcodeproj; path = ../../../Rollbar.xcodeproj; sourceTree = "<group>"; };
+		55BD1D7D22E101BE008324D5 /* Rollbar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rollbar.framework; path = "../../../Dist/Rollbar/Release-iOS-Kit-universal/Rollbar.framework"; sourceTree = "<group>"; };
+		55BD1D7F22E105CC008324D5 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		9AA5BE0420A09553009D5610 /* KnobControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KnobControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA5BE0720A09553009D5610 /* KnobControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KnobControl.h; sourceTree = "<group>"; };
 		9AA5BE0820A09553009D5610 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,26 +84,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				559E76FD2196795000181AF7 /* Rollbar.framework in Frameworks */,
+				55BD1D8022E105CC008324D5 /* libc++.tbd in Frameworks */,
+				55BD1D7E22E101BF008324D5 /* Rollbar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		559E76F02196792C00181AF7 /* Products */ = {
+		5550CC1022E03E3000AECEF3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				559E76F72196792D00181AF7 /* libRollbar.a */,
-				559E76F92196792D00181AF7 /* RollbarTests.xctest */,
-				559E76FB2196792D00181AF7 /* Rollbar.framework */,
+				5550CC1C22E03E3100AECEF3 /* libRollbar.a */,
+				5550CC1E22E03E3100AECEF3 /* libRollbar.a */,
+				5550CC2022E03E3100AECEF3 /* Rollbar.framework */,
+				5550CC2222E03E3100AECEF3 /* RollbarKit-iOSTests.xctest */,
+				5550CC2422E03E3100AECEF3 /* Rollbar.framework */,
+				5550CC2622E03E3100AECEF3 /* RollbarKit-macOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		559E76FC2196795000181AF7 /* Frameworks */ = {
+		55BD1D7C22E101BE008324D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55BD1D7F22E105CC008324D5 /* libc++.tbd */,
+				55BD1D7D22E101BE008324D5 /* Rollbar.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -80,10 +117,10 @@
 		9AA5BDFA20A09553009D5610 = {
 			isa = PBXGroup;
 			children = (
-				559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */,
+				5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */,
 				9AA5BE0620A09553009D5610 /* KnobControl */,
 				9AA5BE0520A09553009D5610 /* Products */,
-				559E76FC2196795000181AF7 /* Frameworks */,
+				55BD1D7C22E101BE008324D5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,6 +170,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5550CC2922E03E8600AECEF3 /* PBXTargetDependency */,
 			);
 			name = KnobControl;
 			productName = KnobControl;
@@ -145,7 +183,7 @@
 		9AA5BDFB20A09553009D5610 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Razeware;
 				TargetAttributes = {
 					9AA5BE0320A09553009D5610 = {
@@ -155,19 +193,20 @@
 				};
 			};
 			buildConfigurationList = 9AA5BDFE20A09553009D5610 /* Build configuration list for PBXProject "KnobControl" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 9AA5BDFA20A09553009D5610;
 			productRefGroup = 9AA5BE0520A09553009D5610 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 559E76F02196792C00181AF7 /* Products */;
-					ProjectRef = 559E76EF2196792C00181AF7 /* Rollbar.xcodeproj */;
+					ProductGroup = 5550CC1022E03E3000AECEF3 /* Products */;
+					ProjectRef = 5550CC0F22E03E3000AECEF3 /* Rollbar.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -178,25 +217,46 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		559E76F72196792D00181AF7 /* libRollbar.a */ = {
+		5550CC1C22E03E3100AECEF3 /* libRollbar.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRollbar.a;
-			remoteRef = 559E76F62196792D00181AF7 /* PBXContainerItemProxy */;
+			remoteRef = 5550CC1B22E03E3100AECEF3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		559E76F92196792D00181AF7 /* RollbarTests.xctest */ = {
+		5550CC1E22E03E3100AECEF3 /* libRollbar.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RollbarTests.xctest;
-			remoteRef = 559E76F82196792D00181AF7 /* PBXContainerItemProxy */;
+			fileType = archive.ar;
+			path = libRollbar.a;
+			remoteRef = 5550CC1D22E03E3100AECEF3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		559E76FB2196792D00181AF7 /* Rollbar.framework */ = {
+		5550CC2022E03E3100AECEF3 /* Rollbar.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Rollbar.framework;
-			remoteRef = 559E76FA2196792D00181AF7 /* PBXContainerItemProxy */;
+			remoteRef = 5550CC1F22E03E3100AECEF3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5550CC2222E03E3100AECEF3 /* RollbarKit-iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "RollbarKit-iOSTests.xctest";
+			remoteRef = 5550CC2122E03E3100AECEF3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5550CC2422E03E3100AECEF3 /* Rollbar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Rollbar.framework;
+			remoteRef = 5550CC2322E03E3100AECEF3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5550CC2622E03E3100AECEF3 /* RollbarKit-macOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "RollbarKit-macOSTests.xctest";
+			remoteRef = 5550CC2522E03E3100AECEF3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -223,6 +283,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5550CC2922E03E8600AECEF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "RollbarKit-iOS";
+			targetProxy = 5550CC2822E03E8600AECEF3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9AA5BE0A20A09553009D5610 /* Debug */ = {
@@ -283,6 +351,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../**";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -339,6 +408,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../**";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -352,9 +422,11 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "../../../Dist/Rollbar/Release-iOS-Kit-universal/**";
 				INFOPLIST_FILE = KnobControl/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -362,12 +434,14 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.KnobControl;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.KnobControl;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -378,9 +452,11 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "../../../Dist/Rollbar/Release-iOS-Kit-universal/**";
 				INFOPLIST_FILE = KnobControl/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -388,11 +464,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.KnobControl;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.KnobControl;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
