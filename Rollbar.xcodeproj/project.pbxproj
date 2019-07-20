@@ -483,7 +483,6 @@
 		55454BA822C6A97700D4A414 /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55454B9F22C6A97600D4A414 /* Rollbar.framework */; };
 		55454BAD22C6A97700D4A414 /* RollbarKit_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55454BAC22C6A97700D4A414 /* RollbarKit_iOSTests.m */; };
 		55454BAF22C6A97700D4A414 /* RollbarKit_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 55454BA122C6A97600D4A414 /* RollbarKit_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55454BC422C6A9CC00D4A414 /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55454BBB22C6A9CC00D4A414 /* Rollbar.framework */; };
 		55454BC922C6A9CC00D4A414 /* RollbarKit_macOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55454BC822C6A9CC00D4A414 /* RollbarKit_macOSTests.m */; };
 		55454BCB22C6A9CC00D4A414 /* RollbarKit_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 55454BBD22C6A9CC00D4A414 /* RollbarKit_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55454BD222C6AB2500D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -918,6 +917,19 @@
 		55454D8122C6AEE500D4A414 /* LLVM.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F1A0D1FDA6CA600A6AB0C /* LLVM.h */; };
 		55454D8222C6AEF900D4A414 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B54F1A0E1FDA6CA600A6AB0C /* LICENSE.txt */; };
 		55454D8322C6AEFC00D4A414 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B54F1A0E1FDA6CA600A6AB0C /* LICENSE.txt */; };
+		554744DD22E27D4E00C687FC /* RollbarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C56861FD10FBF00E21661 /* RollbarTests.m */; };
+		554744DE22E27D7900C687FC /* RollbarDeploysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143DA02151A83D00761B20 /* RollbarDeploysTests.m */; };
+		554744DF22E27D7F00C687FC /* PayloadTruncationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D720F9560A00052D01 /* PayloadTruncationTests.m */; };
+		554744E022E27D8800C687FC /* RollbarTestUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C568C1FD14E5300E21661 /* RollbarTestUtil.m */; };
+		554744E122E27D8F00C687FC /* RollbarConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTests.m */; };
+		554744E222E27D9200C687FC /* RollbarTelemetryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B54D68531FD66E0A00735B8D /* RollbarTelemetryTests.m */; };
+		554744E322E281CB00C687FC /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55454BBB22C6A9CC00D4A414 /* Rollbar.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		554744E422E2826000C687FC /* RollbarTelemetryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B54D68531FD66E0A00735B8D /* RollbarTelemetryTests.m */; };
+		554744E522E2826600C687FC /* RollbarConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTests.m */; };
+		554744E622E2826B00C687FC /* RollbarTestUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C568C1FD14E5300E21661 /* RollbarTestUtil.m */; };
+		554744E722E2827700C687FC /* PayloadTruncationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D720F9560A00052D01 /* PayloadTruncationTests.m */; };
+		554744E822E2827D00C687FC /* RollbarDeploysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143DA02151A83D00761B20 /* RollbarDeploysTests.m */; };
+		554744E922E2828200C687FC /* RollbarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C56861FD10FBF00E21661 /* RollbarTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1268,7 +1280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55454BC422C6A9CC00D4A414 /* Rollbar.framework in Frameworks */,
+				554744E322E281CB00C687FC /* Rollbar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1452,14 +1464,14 @@
 		96D2222318D8E40600933444 /* RollbarTests */ = {
 			isa = PBXGroup;
 			children = (
-				55143DA02151A83D00761B20 /* RollbarDeploysTests.m */,
-				55B568D720F9560A00052D01 /* PayloadTruncationTests.m */,
-				96D2222418D8E40600933444 /* Supporting Files */,
-				B51C56861FD10FBF00E21661 /* RollbarTests.m */,
-				B51C568B1FD14E5300E21661 /* RollbarTestUtil.h */,
-				B51C568C1FD14E5300E21661 /* RollbarTestUtil.m */,
-				B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTests.m */,
 				B54D68531FD66E0A00735B8D /* RollbarTelemetryTests.m */,
+				B572132E1FD3A1EB00E3B21C /* RollbarConfigurationTests.m */,
+				B51C568C1FD14E5300E21661 /* RollbarTestUtil.m */,
+				B51C568B1FD14E5300E21661 /* RollbarTestUtil.h */,
+				55B568D720F9560A00052D01 /* PayloadTruncationTests.m */,
+				55143DA02151A83D00761B20 /* RollbarDeploysTests.m */,
+				B51C56861FD10FBF00E21661 /* RollbarTests.m */,
+				96D2222418D8E40600933444 /* Supporting Files */,
 			);
 			path = RollbarTests;
 			sourceTree = "<group>";
@@ -2878,6 +2890,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554744E922E2828200C687FC /* RollbarTests.m in Sources */,
+				554744E622E2826B00C687FC /* RollbarTestUtil.m in Sources */,
+				554744E822E2827D00C687FC /* RollbarDeploysTests.m in Sources */,
+				554744E422E2826000C687FC /* RollbarTelemetryTests.m in Sources */,
+				554744E522E2826600C687FC /* RollbarConfigurationTests.m in Sources */,
+				554744E722E2827700C687FC /* PayloadTruncationTests.m in Sources */,
 				55454BAD22C6A97700D4A414 /* RollbarKit_iOSTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2989,7 +3007,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554744DD22E27D4E00C687FC /* RollbarTests.m in Sources */,
+				554744E122E27D8F00C687FC /* RollbarConfigurationTests.m in Sources */,
+				554744DE22E27D7900C687FC /* RollbarDeploysTests.m in Sources */,
 				55454BC922C6A9CC00D4A414 /* RollbarKit_macOSTests.m in Sources */,
+				554744DF22E27D7F00C687FC /* PayloadTruncationTests.m in Sources */,
+				554744E022E27D8800C687FC /* RollbarTestUtil.m in Sources */,
+				554744E222E27D9200C687FC /* RollbarTelemetryTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3232,6 +3256,7 @@
 		55454BB422C6A97700D4A414 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BITCODE_GENERATION_MODE = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3241,7 +3266,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/$(CONFIGURATION)-iOS-Kit$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "RollbarKit-iOSTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -3262,6 +3288,7 @@
 		55454BB522C6A97700D4A414 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BITCODE_GENERATION_MODE = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3273,6 +3300,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/$(CONFIGURATION)-iOS-Kit$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "RollbarKit-iOSTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -3392,6 +3420,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/$(CONFIGURATION)-macOS-Kit";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "RollbarKit-macOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3422,6 +3451,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/$(CONFIGURATION)-macOS-Kit";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "RollbarKit-macOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

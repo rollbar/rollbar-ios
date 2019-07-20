@@ -577,7 +577,8 @@ static BOOL isNetworkReachable = YES;
 - (BOOL)sendItem:(NSDictionary*)payload
        nextOffset:(NSUInteger)nextOffset {
     
-    NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:payload];
+    NSMutableDictionary *newPayload =
+    [NSMutableDictionary dictionaryWithDictionary:payload];
     [RollbarPayloadTruncator truncatePayload:newPayload];
 
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload
@@ -587,9 +588,16 @@ static BOOL isNetworkReachable = YES;
     
     if (NSOrderedDescending != [nextSendTime compare: [[NSDate alloc] init] ]) {
         
-        if (YES == self.configuration.logPayload) {
+        NSUInteger retryCount =
+        [queueState[@"retry_count"] unsignedIntegerValue];
+
+        if (0 == retryCount && YES == self.configuration.logPayload) {
+            RollbarLog(@"About to send payload: %@", [[NSString alloc] initWithData:jsonPayload encoding:NSUTF8StringEncoding]);
+
             // append-save this jsonPayload into the payloads log file:
-            NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:payloadsFilePath];
+            NSFileHandle *fileHandle =
+            [NSFileHandle fileHandleForWritingAtPath:payloadsFilePath];
+            
             [fileHandle seekToEndOfFile];
             [fileHandle writeData:jsonPayload];
             [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -598,20 +606,22 @@ static BOOL isNetworkReachable = YES;
         
         BOOL success = [self sendPayload:jsonPayload];
         if (!success) {
-            NSUInteger retryCount = [queueState[@"retry_count"] unsignedIntegerValue];
-            
             if (retryCount < MAX_RETRY_COUNT) {
-                queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:retryCount + 1];
+                queueState[@"retry_count"] =
+                [NSNumber numberWithUnsignedInteger:retryCount + 1];
+                
                 [self saveQueueState];
                 
                 // Return NO so that the current batch will be retried next time
                 return NO;
             }
         }
-
     }
     else {
-        RollbarLog(@"Test");
+        RollbarLog(
+            @"Omitting payload until nextSendTime is reached: %@",
+            [[NSString alloc] initWithData:jsonPayload encoding:NSUTF8StringEncoding]
+        );
     }
     
     queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];

@@ -2,7 +2,7 @@
 
 #import <XCTest/XCTest.h>
 #import "RollbarPayloadTruncator.h"
-#import "Rollbar.h"
+#import "../Rollbar/Rollbar.h"
 #import "RollbarTestUtil.h"
 
 @interface PayloadTruncationTests : XCTestCase
