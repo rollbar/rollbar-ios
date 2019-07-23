@@ -1,7 +1,7 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "../RollbarJSONFriendlyObject.h"
+#import "RollbarJSONFriendlyObject.h"
 
 @interface Deployment : RollbarJSONFriendlyObject
 @property (readonly, retain) NSString *environment;
