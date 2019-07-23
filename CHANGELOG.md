@@ -25,6 +25,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.8.0-alpha7**
 **1.8.0-alpha6**
 **1.8.0-alpha5**
 **1.8.0-alpha4**
@@ -43,6 +44,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 - chore: resolve #182: Create RollbarKit-iOS-UniversalDistribution aggregate build target.
 - chore: resolve #183: Modify all the new build targets to produce build results based on $(PRODUCT_NAME) instead of $(TARGET_NAME).
 - chore: resolve #184: Create RollbarSDKReleaseDistribution build target.
+- feat: resolve #165: Make SDK to obey service-side enforced rate limits unless client-side RollbarConfig defines one
 
 **1.7.0**
 
