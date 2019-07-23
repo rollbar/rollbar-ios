@@ -1,10 +1,10 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "Deployment.h"
-#import "DeployApiCallResult.h"
-#import "RollbarDeploysManager.h"
-#import "RollbarDeploysProtocol.h"
+#import "../Rollbar/Deploys/Deployment.h"
+#import "../Rollbar/Deploys/DeployApiCallResult.h"
+#import "../Rollbar/Deploys/RollbarDeploysManager.h"
+#import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
 
 
 @interface RollbarDeploysObserver : NSObject

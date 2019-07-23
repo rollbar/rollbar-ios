@@ -21,6 +21,15 @@ static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 static NSString *PAYLOADS_FILE_NAME = @"rollbar.payloads";
 
+// Rollbar API Service inforced payload rate limit:
+static NSString *RESPONSE_HEADER_RATE_LIMIT = @"x-rate-limit-limit";
+// Rollbar API Service inforced remaining payload count until the limit is reached:
+static NSString *RESPONSE_HEADER_REMAINING_COUNT = @"x-rate-limit-remaining";
+// Rollbar API Service inforced rate limit reset time for the current limit window:
+static NSString *RESPONSE_HEADER_RESET_TIME = @"x-rate-limit-reset";
+// Rollbar API Service inforced rate limit remaining seconds of the current limit window:
+static NSString *RESPONSE_HEADER_REMAINING_SECONDS = @"x-rate-limit-remaining-seconds";
+
 static NSUInteger MAX_RETRY_COUNT = 5;
 
 static NSString *queuedItemsFilePath = nil;
@@ -35,7 +44,9 @@ static BOOL isNetworkReachable = YES;
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
 #define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
 
-@implementation RollbarNotifier
+@implementation RollbarNotifier {
+    NSDate *nextSendTime;
+}
 
 - (id)initWithAccessToken:(NSString*)accessToken
             configuration:(RollbarConfiguration*)configuration
@@ -128,6 +139,8 @@ static BOOL isNetworkReachable = YES;
             [reachability startNotifier];
         }
     }
+
+    nextSendTime = [[NSDate alloc] init];
     
     return self;
 }
@@ -564,7 +577,8 @@ static BOOL isNetworkReachable = YES;
 - (BOOL)sendItem:(NSDictionary*)payload
        nextOffset:(NSUInteger)nextOffset {
     
-    NSMutableDictionary *newPayload = [NSMutableDictionary dictionaryWithDictionary:payload];
+    NSMutableDictionary *newPayload =
+    [NSMutableDictionary dictionaryWithDictionary:payload];
     [RollbarPayloadTruncator truncatePayload:newPayload];
 
     NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:newPayload
@@ -572,26 +586,42 @@ static BOOL isNetworkReachable = YES;
                                                             error:nil
                                                              safe:true];
     
-    if (YES == self.configuration.logPayload) {
-        // append-save this jsonPayload into the payloads log file:
-        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:payloadsFilePath];
-        [fileHandle seekToEndOfFile];
-        [fileHandle writeData:jsonPayload];
-        [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [fileHandle closeFile];
-    }
-    
-    BOOL success = [self sendPayload:jsonPayload];
-    if (!success) {
-        NSUInteger retryCount = [queueState[@"retry_count"] unsignedIntegerValue];
+    if (NSOrderedDescending != [nextSendTime compare: [[NSDate alloc] init] ]) {
         
-        if (retryCount < MAX_RETRY_COUNT) {
-            queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:retryCount + 1];
-            [self saveQueueState];
+        NSUInteger retryCount =
+        [queueState[@"retry_count"] unsignedIntegerValue];
+
+        if (0 == retryCount && YES == self.configuration.logPayload) {
+            RollbarLog(@"About to send payload: %@", [[NSString alloc] initWithData:jsonPayload encoding:NSUTF8StringEncoding]);
+
+            // append-save this jsonPayload into the payloads log file:
+            NSFileHandle *fileHandle =
+            [NSFileHandle fileHandleForWritingAtPath:payloadsFilePath];
             
-            // Return NO so that the current batch will be retried next time
-            return NO;
+            [fileHandle seekToEndOfFile];
+            [fileHandle writeData:jsonPayload];
+            [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            [fileHandle closeFile];
         }
+        
+        BOOL success = [self sendPayload:jsonPayload];
+        if (!success) {
+            if (retryCount < MAX_RETRY_COUNT) {
+                queueState[@"retry_count"] =
+                [NSNumber numberWithUnsignedInteger:retryCount + 1];
+                
+                [self saveQueueState];
+                
+                // Return NO so that the current batch will be retried next time
+                return NO;
+            }
+        }
+    }
+    else {
+        RollbarLog(
+            @"Omitting payload until nextSendTime is reached: %@",
+            [[NSString alloc] initWithData:jsonPayload encoding:NSUTF8StringEncoding]
+        );
     }
     
     queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];
@@ -676,10 +706,18 @@ static BOOL isNetworkReachable = YES;
                        error:(NSError*)error
                         data:(NSData*)data {
     
-    //NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    //NSDictionary *httpHeaders = [httpResponse allHeaderFields];
-    //TODO: lookup rate limiting headers and afjust reporting rate accordingly...
-    
+    // Lookup rate limiting headers and afjust reporting rate accordingly:
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSDictionary *httpHeaders = [httpResponse allHeaderFields];
+    int rateLimit = [[httpHeaders valueForKey:RESPONSE_HEADER_RATE_LIMIT] intValue];
+    int rateLimitLeft = [[httpHeaders valueForKey:RESPONSE_HEADER_REMAINING_COUNT] intValue];
+    int rateLimitSeconds = [[httpHeaders valueForKey:RESPONSE_HEADER_REMAINING_SECONDS] intValue];
+    if (rateLimitLeft > 0) {
+        nextSendTime = [[NSDate alloc] init];
+    }
+    else {
+        nextSendTime = [[NSDate alloc] initWithTimeIntervalSinceNow:rateLimitSeconds];
+    }
     
     if (error) {
         RollbarLog(@"There was an error reporting to Rollbar");

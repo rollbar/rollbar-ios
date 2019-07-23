@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "Rollbar.h"
+#import "../Rollbar/Rollbar.h"
 #import "RollbarTestUtil.h"
 
 @interface RollbarTests : XCTestCase
@@ -16,10 +16,12 @@
     if (!Rollbar.currentConfiguration) {
         [Rollbar initWithAccessToken:@""];
         
-//        [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
-//        Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
-//        Rollbar.currentConfiguration.environment = @"unit-tests";
-//        Rollbar.currentConfiguration.transmit = YES;
+        [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
+        Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
+        Rollbar.currentConfiguration.environment = @"unit-tests";
+        Rollbar.currentConfiguration.transmit = YES;
+        Rollbar.currentConfiguration.logPayload = YES;
+        [Rollbar.currentConfiguration setReportingRate:5000];
 
     }
 }
@@ -47,6 +49,15 @@
     //Rollbar.currentConfiguration.enabled = NO;
     [Rollbar critical:@"Transmission test YES2"];
     [NSThread sleepForTimeInterval:2.0f];
+    
+    int count = 50;
+    while (count > 0) {
+        [Rollbar critical:[NSString stringWithFormat: @"Rate Limit Test %i", count]];
+         
+        [NSThread sleepForTimeInterval:1.0f];
+        
+        count--;
+    }
 }
 
 - (void)testNotification {

@@ -13,7 +13,7 @@ static NSString *FRAMEWORK = @"ios";
 static NSString *NOTIFIER_NAME = @"rollbar-macos";
 static NSString *FRAMEWORK = @"macos";
 #endif
-static NSString *NOTIFIER_VERSION = @"1.8.0-alpha6";
+static NSString *NOTIFIER_VERSION = @"1.8.0-alpha7";
 static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
 static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/item/";
 
@@ -60,14 +60,14 @@ static NSString *configurationFilePath = nil;
         
         _logLevel = @"info";
 
-        _enabled = true;
-        _transmit = true;
-        _logPayload = false;
+        _enabled = YES;
+        _transmit = YES;
+        _logPayload = NO;
         _logPayloadFile = @"rollbar.payloads";
         
-        self.telemetryEnabled = false;
+        self.telemetryEnabled = NO;
         _maximumReportsPerMinute = 60;
-        [self setCaptureLogAsTelemetryData:false];
+        [self setCaptureLogAsTelemetryData:NO];
         
         _httpProxyEnabled = NO;
         _httpProxy = @"";
