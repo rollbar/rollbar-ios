@@ -25,6 +25,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.8.0-alpha8**
 **1.8.0-alpha7**
 **1.8.0-alpha6**
 **1.8.0-alpha5**

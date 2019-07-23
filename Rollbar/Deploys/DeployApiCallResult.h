@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 
 #import "DeploymentDetails.h"
-#import "../RollbarJSONFriendlyObject.h"
+#import "RollbarJSONFriendlyObject.h"
 
 typedef NS_ENUM(NSInteger, DeployApiCallOutcome) {
     DeployApiCallSuccess,
