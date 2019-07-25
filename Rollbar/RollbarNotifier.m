@@ -21,13 +21,13 @@ static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 static NSString *STATE_FILE_NAME = @"rollbar.state";
 static NSString *PAYLOADS_FILE_NAME = @"rollbar.payloads";
 
-// Rollbar API Service inforced payload rate limit:
+// Rollbar API Service enforced payload rate limit:
 static NSString *RESPONSE_HEADER_RATE_LIMIT = @"x-rate-limit-limit";
-// Rollbar API Service inforced remaining payload count until the limit is reached:
+// Rollbar API Service enforced remaining payload count until the limit is reached:
 static NSString *RESPONSE_HEADER_REMAINING_COUNT = @"x-rate-limit-remaining";
-// Rollbar API Service inforced rate limit reset time for the current limit window:
+// Rollbar API Service enforced rate limit reset time for the current limit window:
 static NSString *RESPONSE_HEADER_RESET_TIME = @"x-rate-limit-reset";
-// Rollbar API Service inforced rate limit remaining seconds of the current limit window:
+// Rollbar API Service enforced rate limit remaining seconds of the current limit window:
 static NSString *RESPONSE_HEADER_REMAINING_SECONDS = @"x-rate-limit-remaining-seconds";
 
 static NSUInteger MAX_RETRY_COUNT = 5;
@@ -204,7 +204,8 @@ static BOOL isNetworkReachable = YES;
 
     NSUInteger startOffset = [queueState[@"offset"] unsignedIntegerValue];
 
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:queuedItemsFilePath];
+    NSFileHandle *fileHandle =
+    [NSFileHandle fileHandleForReadingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
     __block unsigned long long fileLength = [fileHandle offsetInFile];
     [fileHandle closeFile];
@@ -215,7 +216,10 @@ static BOOL isNetworkReachable = YES;
 
     // Empty out the queued item file if all items have been processed already
     if (startOffset == fileLength) {
-        [@"" writeToFile:queuedItemsFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        [@"" writeToFile:queuedItemsFilePath
+              atomically:YES
+                encoding:NSUTF8StringEncoding
+                   error:nil];
 
         queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
         queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
@@ -225,8 +229,9 @@ static BOOL isNetworkReachable = YES;
     }
 
     // Iterate through the items file and send the items in batches.
-    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath
-                                                                  andOffset:startOffset];
+    RollbarFileReader *reader =
+    [[RollbarFileReader alloc] initWithFilePath:queuedItemsFilePath
+                                      andOffset:startOffset];
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
         NSData *lineData = [line dataUsingEncoding:NSUTF8StringEncoding];
         if (!lineData) {
@@ -505,13 +510,20 @@ static BOOL isNetworkReachable = YES;
 
     NSMutableArray *frames = [NSMutableArray array];
     for (NSString *line in exception.callStackSymbols) {
-        NSMutableArray *components =  [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
+        NSMutableArray *components =
+        [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
         [components removeObject:@""];
         [components removeObjectAtIndex:0];
         if (components.count >= 4) {
             NSString *method = [self methodNameFromStackTrace:components];
             NSString *filename = [components componentsJoinedByString:@" "];
-            [frames addObject:@{@"library": components[0], @"filename": filename, @"address": components[1], @"lineno": components[components.count-1], @"method": method}];
+            [frames addObject:@{
+                                @"library": components[0],
+                                @"filename": filename,
+                                @"address": components[1],
+                                @"lineno": components[components.count-1],
+                                @"method": method
+                                }];
         }
     }
     
@@ -527,7 +539,9 @@ static BOOL isNetworkReachable = YES;
         } else if (start && [component isEqualToString:@"+"]) {
             break;
         } else if (start) {
-            buf = buf ? [NSString stringWithFormat:@"%@ %@", buf, component] : component;
+            buf =
+            buf ? [NSString stringWithFormat:@"%@ %@", buf, component]
+            : component;
         }
     }
     return buf ? buf : @"Unknown";
@@ -566,9 +580,13 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
+    NSFileHandle *fileHandle =
+    [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
-    [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload options:0 error:nil safe:true]];
+    [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload
+                                                          options:0
+                                                            error:nil
+                                                             safe:true]];
     [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandle closeFile];
     [[RollbarTelemetry sharedInstance] clearAllData];
@@ -592,7 +610,10 @@ static BOOL isNetworkReachable = YES;
         [queueState[@"retry_count"] unsignedIntegerValue];
 
         if (0 == retryCount && YES == self.configuration.logPayload) {
-            RollbarLog(@"About to send payload: %@", [[NSString alloc] initWithData:jsonPayload encoding:NSUTF8StringEncoding]);
+            RollbarLog(@"About to send payload: %@",
+                       [[NSString alloc] initWithData:jsonPayload
+                                             encoding:NSUTF8StringEncoding]
+                       );
 
             // append-save this jsonPayload into the payloads log file:
             NSFileHandle *fileHandle =
@@ -684,8 +705,13 @@ static BOOL isNetworkReachable = YES;
         
         NSURLSessionDataTask *dataTask =
             [session dataTaskWithRequest:request
-                       completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                result = [self checkPayloadResponse:response error:error data:data];
+                       completionHandler:^(
+                                           NSData * _Nullable data,
+                                           NSURLResponse * _Nullable response,
+                                           NSError * _Nullable error) {
+                result = [self checkPayloadResponse:response
+                                              error:error
+                                               data:data];
                 dispatch_semaphore_signal(sem);
             }];
         [dataTask resume];
@@ -695,8 +721,12 @@ static BOOL isNetworkReachable = YES;
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
         NSError *error;
         NSHTTPURLResponse *response;
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        result = [self checkPayloadResponse:response error:error data:data];
+        NSData *data = [NSURLConnection sendSynchronousRequest:request
+                                             returningResponse:&response
+                                                         error:&error];
+        result = [self checkPayloadResponse:response
+                                      error:error
+                                       data:data];
     }
     
     return result;
@@ -709,14 +739,17 @@ static BOOL isNetworkReachable = YES;
     // Lookup rate limiting headers and afjust reporting rate accordingly:
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     NSDictionary *httpHeaders = [httpResponse allHeaderFields];
-    int rateLimit = [[httpHeaders valueForKey:RESPONSE_HEADER_RATE_LIMIT] intValue];
-    int rateLimitLeft = [[httpHeaders valueForKey:RESPONSE_HEADER_REMAINING_COUNT] intValue];
-    int rateLimitSeconds = [[httpHeaders valueForKey:RESPONSE_HEADER_REMAINING_SECONDS] intValue];
+    //int rateLimit = [[httpHeaders valueForKey:RESPONSE_HEADER_RATE_LIMIT] intValue];
+    int rateLimitLeft =
+        [[httpHeaders valueForKey:RESPONSE_HEADER_REMAINING_COUNT] intValue];
+    int rateLimitSeconds =
+        [[httpHeaders valueForKey:RESPONSE_HEADER_REMAINING_SECONDS] intValue];
     if (rateLimitLeft > 0) {
         nextSendTime = [[NSDate alloc] init];
     }
     else {
-        nextSendTime = [[NSDate alloc] initWithTimeIntervalSinceNow:rateLimitSeconds];
+        nextSendTime =
+        [[NSDate alloc] initWithTimeIntervalSinceNow:rateLimitSeconds];
     }
     
     if (error) {
@@ -730,7 +763,11 @@ static BOOL isNetworkReachable = YES;
         } else {
             RollbarLog(@"There was a problem reporting to Rollbar");
             if (data) {
-                RollbarLog(@"Response: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                RollbarLog(
+                           @"Response: %@",
+                           [NSJSONSerialization JSONObjectWithData:data
+                                                           options:0
+                                                             error:nil]);
             }
         }
     }
@@ -739,7 +776,8 @@ static BOOL isNetworkReachable = YES;
 
 - (NSString*)generateUUID {
     CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
-    NSString *string = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, uuid);
+    NSString *string =
+    (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, uuid);
     CFRelease(uuid);
     return string;
 }
@@ -753,14 +791,20 @@ static BOOL isNetworkReachable = YES;
 
     for (int i=0; i<pathComponents.count; i++) {
         NSString *part = pathComponents[i];
-        currentPath = i == 0 ? part : [NSString stringWithFormat:@"%@.%@", currentPath, part];
+        currentPath = i == 0 ? part
+            : [NSString stringWithFormat:@"%@.%@", currentPath, part];
         id val = [data valueForKeyPath:currentPath];
         if (!val) return;
-        if ([val isKindOfClass:[NSArray class]] && ![val isKindOfClass:[NSMutableArray class]]) {
+        if ([val isKindOfClass:[NSArray class]]
+            && ![val isKindOfClass:[NSMutableArray class]]) {
+            
             NSMutableArray *newVal = [NSMutableArray arrayWithArray:val];
             [data setValue:newVal forKeyPath:currentPath];
-        } else if ([val isKindOfClass:[NSDictionary class]] && ![val isKindOfClass:[NSMutableDictionary class]]) {
-            NSMutableDictionary *newVal = [NSMutableDictionary dictionaryWithDictionary:val];
+        } else if ([val isKindOfClass:[NSDictionary class]]
+                   && ![val isKindOfClass:[NSMutableDictionary class]]) {
+            
+            NSMutableDictionary *newVal =
+            [NSMutableDictionary dictionaryWithDictionary:val];
             [data setValue:newVal forKeyPath:currentPath];
         }
     }
@@ -845,9 +889,12 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (void)updateConfiguration:(RollbarConfiguration *)configuration isRoot:(BOOL)isRoot {
+- (void)updateConfiguration:(RollbarConfiguration *)configuration
+                     isRoot:(BOOL)isRoot {
     NSString *currentAccessToken = self.configuration.accessToken;
-    [self updateAccessToken:currentAccessToken configuration:configuration isRoot:isRoot];
+    [self updateAccessToken:currentAccessToken
+              configuration:configuration
+                     isRoot:isRoot];
 }
 
 - (void)updateAccessToken:(NSString*)accessToken {
@@ -860,14 +907,17 @@ static BOOL isNetworkReachable = YES;
     }
     if (nil != rollbarThread) {
         [rollbarThread cancel];
-        rollbarThread = [[RollbarThread alloc] initWithNotifier:self reportingRate:maximumReportsPerMinute];
+        rollbarThread =
+        [[RollbarThread alloc] initWithNotifier:self
+                                  reportingRate:maximumReportsPerMinute];
         [rollbarThread start];
     }
 }
 #pragma mark - Network telemetry data
 
 - (void)captureTelemetryDataForNetwork:(BOOL)reachable {
-    if (self.configuration.shouldCaptureConnectivity && isNetworkReachable != reachable) {
+    if (self.configuration.shouldCaptureConnectivity
+        && isNetworkReachable != reachable) {
         NSString *status = reachable ? @"Connected" : @"Disconnected";
         NSString *networkType = @"Unknown";
         NetworkStatus networkStatus = [reachability currentReachabilityStatus];
@@ -877,10 +927,10 @@ static BOOL isNetworkReachable = YES;
         else if (networkStatus == ReachableViaWWAN) {
             networkType = @"Cellular";
         }
-        [[RollbarTelemetry sharedInstance] recordConnectivityEventForLevel:RollbarWarning
-                                                                    status:status
-                                                                 extraData:@{@"network": networkType}
-         ];
+        [[RollbarTelemetry sharedInstance]
+         recordConnectivityEventForLevel:RollbarWarning
+                                  status:status
+                               extraData:@{@"network": networkType}];
     }
 }
 
