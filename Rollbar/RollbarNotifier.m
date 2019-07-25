@@ -721,9 +721,13 @@ static BOOL isNetworkReachable = YES;
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
         NSError *error;
         NSHTTPURLResponse *response;
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSData *data = [NSURLConnection sendSynchronousRequest:request
                                              returningResponse:&response
                                                          error:&error];
+#pragma clang diagnostic pop
         result = [self checkPayloadResponse:response
                                       error:error
                                        data:data];
