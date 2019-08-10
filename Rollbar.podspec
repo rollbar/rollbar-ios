@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   s.version                   = "1.8.1"
   s.name                      = "Rollbar"
-  s.summary                   = "Objective-C library for crash reporting and logging with Rollbar."
+  s.summary                   = "Objective-C library for crash reporting and logging with Rollbar. It works on iOS and macOS."
   s.description               = <<-DESC
     Find, fix, and resolve errors with Rollbar.
     Easily send error data using Rollbar's API.

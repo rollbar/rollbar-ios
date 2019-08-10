@@ -1,9 +1,9 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-# Rollbar for iOS
+# Rollbar for iOS and macOS
 
-Objective-C & Swift library for crash reporting and logging with [Rollbar](https://rollbar.com).
+Objective-C & Swift library for crash reporting and logging with [Rollbar](https://rollbar.com). It works iOS and macOS.
 
 ## Setup Instructions
 

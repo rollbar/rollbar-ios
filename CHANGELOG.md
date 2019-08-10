@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.8.2**
+- chore: updated Readme.md, Changelog.md and Rollbar.podspec
+
 **1.8.1**
 **1.8.0-alpha8**
 **1.8.0-alpha7**
