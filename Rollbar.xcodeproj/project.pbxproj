@@ -2411,7 +2411,7 @@
 		96D2220218D8E40600933444 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Rollbar;
 				TargetAttributes = {
 					554549C222C68DBA00D4A414 = {
@@ -2570,7 +2570,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# define build configuration for this target\nCONFIGURATION=Release\n\n# build the macOS static lib:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-macOS -configuration ${CONFIGURATION} BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# build the macOS kit:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-macOS -configuration ${CONFIGURATION} BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# prepare Dist folder inside the ${SRCROOT}:\nDIST_DIR=\"${SRCROOT}/Dist\"\nrm -rf \"${DIST_DIR}\"\nmkdir -p \"${DIST_DIR}\"\n\nDIST_PRODUCT_DIR=\"${DIST_DIR}/${PRODUCT_NAME}\"\nmkdir -p \"${DIST_PRODUCT_DIR}\"\n\n# copy all the release build targets results intended for distribution: \n# 1. static libs for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 2. framework kits for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 3. static lib for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS\" \"${DIST_PRODUCT_DIR}/\"\n# 4. framework kit for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS-Kit\" \"${DIST_PRODUCT_DIR}/\"\n\n# Zip-up all the content of the ${DIST_PRODUCT_DIR}:\ncd \"${DIST_DIR}\"\nzip -yr \"${PRODUCT_NAME}.zip\" \"${PRODUCT_NAME}/\"\n";
+			shellScript = "# we are building for macOS only in this script:\nunset IPHONEOS_DEPLOYMENT_TARGET\nMACOSX_DEPLOYMENT_TARGET=10.10\n\n# define build configuration for this target\nCONFIGURATION=Release\n\n# build the macOS static lib:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-macOS -configuration ${CONFIGURATION} BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# build the macOS kit:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-macOS -configuration ${CONFIGURATION} BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# prepare Dist folder inside the ${SRCROOT}:\nDIST_DIR=\"${SRCROOT}/Dist\"\nrm -rf \"${DIST_DIR}\"\nmkdir -p \"${DIST_DIR}\"\n\nDIST_PRODUCT_DIR=\"${DIST_DIR}/${PRODUCT_NAME}\"\nmkdir -p \"${DIST_PRODUCT_DIR}\"\n\n# copy all the release build targets results intended for distribution: \n# 1. static libs for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 2. framework kits for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 3. static lib for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS\" \"${DIST_PRODUCT_DIR}/\"\n# 4. framework kit for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS-Kit\" \"${DIST_PRODUCT_DIR}/\"\n\n# Zip-up all the content of the ${DIST_PRODUCT_DIR}:\ncd \"${DIST_DIR}\"\nzip -yr \"${PRODUCT_NAME}.zip\" \"${PRODUCT_NAME}/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3197,7 +3197,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.$(PRODUCT_NAME)";
@@ -3240,7 +3240,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = "$(MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.$(PRODUCT_NAME)";
@@ -3343,7 +3343,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "RollbarKit-macOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = "$(IPHONEOS_DEPLOYMENT_TARGET)";
+				IPHONEOS_DEPLOYMENT_TARGET = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -3371,7 +3371,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-macOS-Kit";
@@ -3388,7 +3388,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "RollbarKit-macOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = "$(IPHONEOS_DEPLOYMENT_TARGET)";
+				IPHONEOS_DEPLOYMENT_TARGET = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -3553,7 +3553,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.8.0;
+				CURRENT_PROJECT_VERSION = 1.8.1;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3614,7 +3614,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.8.0;
+				CURRENT_PROJECT_VERSION = 1.8.1;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;

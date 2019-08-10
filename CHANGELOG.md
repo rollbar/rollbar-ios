@@ -25,6 +25,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.8.1**
 **1.8.0-alpha8**
 **1.8.0-alpha7**
 **1.8.0-alpha6**
@@ -35,8 +36,8 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 **1.8.0-alpha1**
 **1.8.0**
 
-- feat: ref #168: add support for high sierra 
-- feat: ref #45: How about support for macOS?
+- feat: resolve #168: add support for high sierra 
+- feat: resolve #45: How about support for macOS?
 - feat: resolve #176: Add sandboxing status detection to RollbarCachesDirectory.
 - fix: resolve #171: Fix build errors during cocoapods' trunk push
 - docs: resolve #175: Create a sample app - macOSAppWithRollbarCocoaPod.
@@ -46,6 +47,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 - chore: resolve #183: Modify all the new build targets to produce build results based on $(PRODUCT_NAME) instead of $(TARGET_NAME).
 - chore: resolve #184: Create RollbarSDKReleaseDistribution build target.
 - feat: resolve #165: Make SDK to obey service-side enforced rate limits unless client-side RollbarConfig defines one
+- chore: fixed a few build warnings and minor code clean-up
 
 **1.7.0**
 

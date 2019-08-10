@@ -88,7 +88,10 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
         NSURLSessionDataTask *dataTask =
         [session dataTaskWithRequest:request
                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                       result = [self checkResponse:response error:error data:data forRequest:request];
+                       result = [self checkResponse:response
+                                              error:error
+                                               data:data
+                                         forRequest:request];
                        dispatch_semaphore_signal(sem);
                    }];
         [dataTask resume];
@@ -98,8 +101,17 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
         NSError *error;
         NSHTTPURLResponse *response;
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        result = [self checkResponse:response error:error data:data forRequest:request];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        NSData *data = [NSURLConnection sendSynchronousRequest:request
+                                             returningResponse:&response
+                                                         error:&error];
+#pragma clang diagnostic pop
+
+        result = [self checkResponse:response
+                               error:error
+                                data:data
+                          forRequest:request];
     }
     
     return result;
@@ -144,8 +156,16 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
         NSError *error;
         NSHTTPURLResponse *response;
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        result = [self checkResponse:response error:error data:data forRequest:request];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        NSData *data = [NSURLConnection sendSynchronousRequest:request
+                                             returningResponse:&response
+                                                         error:&error];
+#pragma clang diagnostic pop
+        result = [self checkResponse:response
+                               error:error
+                                data:data
+                          forRequest:request];
     }
     
     return result;
