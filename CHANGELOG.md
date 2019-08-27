@@ -27,6 +27,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 **1.8.2**
 - chore: updated Readme.md, Changelog.md and Rollbar.podspec
+- docs: resolve #195: Add example of catching and reporting NSException.
 
 **1.8.1**
 **1.8.0-alpha8**
