@@ -26,6 +26,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 ## Release Notes
 
 **1.8.2**
+- fix: resolve #192: Carthage error when build framework
 - chore: updated Readme.md, Changelog.md and Rollbar.podspec
 - docs: resolve #195: Add example of catching and reporting NSException.
 
