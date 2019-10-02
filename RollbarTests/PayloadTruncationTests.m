@@ -236,11 +236,13 @@
                      data:@{@"extra_truncatable_data": simulatedLongString}
          ];
 
+        [NSThread sleepForTimeInterval:1.0f];
+
         // What is this doing?
-        [Rollbar.currentNotifier updateReportingRate:10];
-        [Rollbar.currentNotifier updateReportingRate:60];
-        [Rollbar.currentNotifier updateReportingRate:20];
-        [Rollbar.currentNotifier updateReportingRate:60];
+//        [Rollbar.currentNotifier updateReportingRate:10];
+//        [Rollbar.currentNotifier updateReportingRate:60];
+//        [Rollbar.currentNotifier updateReportingRate:20];
+//        [Rollbar.currentNotifier updateReportingRate:60];
     }
 }
 

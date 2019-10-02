@@ -12,6 +12,28 @@
 #import "../../../Rollbar/RollbarTelemetry.h"
 //#import <NSJSONSerialization+Rollbar.h>
 
+@interface BuggyClass : NSObject
+
+@end
+
+@implementation BuggyClass
+
++ (void) callTroubleMaker {
+    [self causeTrouble];
+}
+
++ (void) causeTrouble {
+    
+    NSArray *crew = [NSArray arrayWithObjects:
+                     @"Dave",
+                     @"Heywood",
+                     @"Frank", nil];
+    // This will throw an exception.
+    NSLog(@"%@", [crew objectAtIndex:10]);
+}
+
+@end
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // configure Rollbar:
@@ -21,6 +43,17 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"Hello, World!");
         
+        @try {
+            [BuggyClass callTroubleMaker];
+        }
+        @catch (NSException *exception) {
+            
+            [Rollbar critical:@"Caught an exception while invoking BuggyClass"
+                    exception:exception
+             ];
+        }
+
+        
         int i = 100;
         while (0 < i--) {
             [Rollbar info:@"Message from macOScmdTool"];
@@ -29,3 +62,4 @@ int main(int argc, const char * argv[]) {
     }
     return 0;
 }
+
