@@ -1001,6 +1001,8 @@
 		55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarJSONFriendlyObject.h; sourceTree = "<group>"; };
 		55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarJSONFriendlyObject.m; sourceTree = "<group>"; };
 		55143DA02151A83D00761B20 /* RollbarDeploysTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarDeploysTests.m; sourceTree = "<group>"; };
+		55250C012345686A0073ABB9 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		55250C022345686A0073ABB9 /* Rollbar.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rollbar.podspec; sourceTree = "<group>"; };
 		554549C322C68DBA00D4A414 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		554549C522C68DBA00D4A414 /* Rollbar_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rollbar_iOS.h; sourceTree = "<group>"; };
 		554549C622C68DBA00D4A414 /* Rollbar_iOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Rollbar_iOS.m; sourceTree = "<group>"; };
@@ -1022,7 +1024,6 @@
 		55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarPayloadTruncator.m; sourceTree = "<group>"; };
 		55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarPayloadTruncator.h; sourceTree = "<group>"; };
 		55B568D720F9560A00052D01 /* PayloadTruncationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayloadTruncationTests.m; sourceTree = "<group>"; };
-		55DEF2182345626800A05697 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		9630826318DCDDC000256154 /* RollbarConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarConfiguration.h; sourceTree = "<group>"; };
 		9630826418DCDDC000256154 /* RollbarConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarConfiguration.m; sourceTree = "<group>"; };
 		966CD46C18F4E4C3005A8F2D /* RollbarThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarThread.h; sourceTree = "<group>"; };
@@ -1370,6 +1371,8 @@
 		96D2220118D8E40600933444 = {
 			isa = PBXGroup;
 			children = (
+				55250C012345686A0073ABB9 /* CHANGELOG.md */,
+				55250C022345686A0073ABB9 /* Rollbar.podspec */,
 				96D2220F18D8E40600933444 /* Rollbar */,
 				96D2222318D8E40600933444 /* RollbarTests */,
 				343AB4531CC9AAE600962943 /* RollbarFramework */,
@@ -1414,7 +1417,6 @@
 		96D2220F18D8E40600933444 /* Rollbar */ = {
 			isa = PBXGroup;
 			children = (
-				55DEF2182345626800A05697 /* CHANGELOG.md */,
 				55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */,
 				55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */,
 				55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */,

@@ -25,6 +25,10 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.8.4**
+- fix: resolve #200: Correct the notifier version
+- refactor: resolve #201: Update KSCrash submodule to its v1.15.21 release
+
 **1.8.3**
 **1.8.2**
 - fix: resolve #192: Carthage error when build framework
