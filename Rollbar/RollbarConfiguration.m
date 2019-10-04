@@ -6,16 +6,19 @@
 #import "RollbarTelemetry.h"
 #import "RollbarCachesDirectory.h"
 
+static NSString * const NOTIFIER_VERSION = @"1.9.0";
+
+#define NOTIFIER_NAME_PREFIX = @"rollbar-";
 #if TARGET_OS_IPHONE
-static NSString *NOTIFIER_NAME = @"rollbar-ios";
-static NSString *FRAMEWORK = @"ios";
+static NSString * const OPERATING_SYSTEM = @"ios";
+static NSString * const NOTIFIER_NAME = @"rollbar-ios";
 #else
-static NSString *NOTIFIER_NAME = @"rollbar-macos";
-static NSString *FRAMEWORK = @"macos";
+static NSString * const OPERATING_SYSTEM = @"macos";
+static NSString * const NOTIFIER_NAME = @"rollbar-macos";
 #endif
-static NSString *NOTIFIER_VERSION = @"1.8.4";
-static NSString *CONFIGURATION_FILENAME = @"rollbar.config";
-static NSString *DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/item/";
+
+static NSString * const CONFIGURATION_FILENAME = @"rollbar.config";
+static NSString * const DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/item/";
 
 static NSString *configurationFilePath = nil;
 
@@ -55,7 +58,7 @@ static NSString *configurationFilePath = nil;
 
         _notifierName = NOTIFIER_NAME;
         _notifierVersion = NOTIFIER_VERSION;
-        _framework = FRAMEWORK;
+        _framework = OPERATING_SYSTEM;
         _captureIp = CaptureIpFull;
         
         _logLevel = @"info";
@@ -233,7 +236,7 @@ static NSString *configurationFilePath = nil;
 }
 
 - (void)setCodeFramework:(NSString *)framework {
-    _framework = framework ? framework : FRAMEWORK;
+    _framework = framework ? framework : OPERATING_SYSTEM;
     [self save];
 }
 
