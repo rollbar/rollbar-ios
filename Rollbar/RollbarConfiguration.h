@@ -1,7 +1,6 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "JSONModelLib.h"
 #import "RollbarLevel.h"
 
 typedef NS_ENUM(NSUInteger, CaptureIpType) {
@@ -10,7 +9,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
     CaptureIpNone
 };
 
-@interface RollbarConfiguration : JSONModel
+@interface RollbarConfiguration : NSObject
 
 + (RollbarConfiguration*)configuration;
 

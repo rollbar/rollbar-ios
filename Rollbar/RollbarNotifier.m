@@ -409,9 +409,7 @@ static BOOL isNetworkReachable = YES;
     
     NSDictionary *clientData = [self buildClientData];
     NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
-                                   @"version": self.configuration.notifierVersion,
-                                   @"configured_options": self.configuration
-    };
+                                   @"version": self.configuration.notifierVersion};
     
     NSMutableDictionary *customData =
         [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];
