@@ -930,6 +930,74 @@
 		554744E722E2827700C687FC /* PayloadTruncationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B568D720F9560A00052D01 /* PayloadTruncationTests.m */; };
 		554744E822E2827D00C687FC /* RollbarDeploysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143DA02151A83D00761B20 /* RollbarDeploysTests.m */; };
 		554744E922E2828200C687FC /* RollbarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B51C56861FD10FBF00E21661 /* RollbarTests.m */; };
+		55ECDE79234BE10200FC9B60 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC75234BE10000FC9B60 /* JSONValueTransformer.m */; };
+		55ECDE7A234BE10200FC9B60 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC75234BE10000FC9B60 /* JSONValueTransformer.m */; };
+		55ECDE7B234BE10200FC9B60 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC75234BE10000FC9B60 /* JSONValueTransformer.m */; };
+		55ECDE7C234BE10200FC9B60 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC75234BE10000FC9B60 /* JSONValueTransformer.m */; };
+		55ECDE7D234BE10200FC9B60 /* JSONKeyMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC76234BE10000FC9B60 /* JSONKeyMapper.h */; };
+		55ECDE7E234BE10200FC9B60 /* JSONKeyMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC76234BE10000FC9B60 /* JSONKeyMapper.h */; };
+		55ECDE7F234BE10200FC9B60 /* JSONKeyMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC76234BE10000FC9B60 /* JSONKeyMapper.h */; };
+		55ECDE80234BE10200FC9B60 /* JSONKeyMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC76234BE10000FC9B60 /* JSONKeyMapper.h */; };
+		55ECDE81234BE10200FC9B60 /* JSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC77234BE10000FC9B60 /* JSONValueTransformer.h */; };
+		55ECDE82234BE10200FC9B60 /* JSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC77234BE10000FC9B60 /* JSONValueTransformer.h */; };
+		55ECDE83234BE10200FC9B60 /* JSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC77234BE10000FC9B60 /* JSONValueTransformer.h */; };
+		55ECDE84234BE10200FC9B60 /* JSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC77234BE10000FC9B60 /* JSONValueTransformer.h */; };
+		55ECDE85234BE10200FC9B60 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC78234BE10000FC9B60 /* JSONKeyMapper.m */; };
+		55ECDE86234BE10200FC9B60 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC78234BE10000FC9B60 /* JSONKeyMapper.m */; };
+		55ECDE87234BE10200FC9B60 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC78234BE10000FC9B60 /* JSONKeyMapper.m */; };
+		55ECDE88234BE10200FC9B60 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC78234BE10000FC9B60 /* JSONKeyMapper.m */; };
+		55ECDE89234BE10200FC9B60 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7A234BE10100FC9B60 /* JSONModel.m */; };
+		55ECDE8A234BE10200FC9B60 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7A234BE10100FC9B60 /* JSONModel.m */; };
+		55ECDE8B234BE10200FC9B60 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7A234BE10100FC9B60 /* JSONModel.m */; };
+		55ECDE8C234BE10200FC9B60 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7A234BE10100FC9B60 /* JSONModel.m */; };
+		55ECDE8D234BE10200FC9B60 /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7B234BE10100FC9B60 /* JSONModelError.m */; };
+		55ECDE8E234BE10200FC9B60 /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7B234BE10100FC9B60 /* JSONModelError.m */; };
+		55ECDE8F234BE10200FC9B60 /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7B234BE10100FC9B60 /* JSONModelError.m */; };
+		55ECDE90234BE10200FC9B60 /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7B234BE10100FC9B60 /* JSONModelError.m */; };
+		55ECDE91234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7C234BE10100FC9B60 /* JSONModelClassProperty.h */; };
+		55ECDE92234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7C234BE10100FC9B60 /* JSONModelClassProperty.h */; };
+		55ECDE93234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7C234BE10100FC9B60 /* JSONModelClassProperty.h */; };
+		55ECDE94234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7C234BE10100FC9B60 /* JSONModelClassProperty.h */; };
+		55ECDE95234BE10200FC9B60 /* JSONModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7D234BE10100FC9B60 /* JSONModel.h */; };
+		55ECDE96234BE10200FC9B60 /* JSONModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7D234BE10100FC9B60 /* JSONModel.h */; };
+		55ECDE97234BE10200FC9B60 /* JSONModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7D234BE10100FC9B60 /* JSONModel.h */; };
+		55ECDE98234BE10200FC9B60 /* JSONModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7D234BE10100FC9B60 /* JSONModel.h */; };
+		55ECDE99234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7E234BE10100FC9B60 /* JSONModelClassProperty.m */; };
+		55ECDE9A234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7E234BE10100FC9B60 /* JSONModelClassProperty.m */; };
+		55ECDE9B234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7E234BE10100FC9B60 /* JSONModelClassProperty.m */; };
+		55ECDE9C234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC7E234BE10100FC9B60 /* JSONModelClassProperty.m */; };
+		55ECDE9D234BE10200FC9B60 /* JSONModelError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7F234BE10100FC9B60 /* JSONModelError.h */; };
+		55ECDE9E234BE10200FC9B60 /* JSONModelError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7F234BE10100FC9B60 /* JSONModelError.h */; };
+		55ECDE9F234BE10200FC9B60 /* JSONModelError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7F234BE10100FC9B60 /* JSONModelError.h */; };
+		55ECDEA0234BE10200FC9B60 /* JSONModelError.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC7F234BE10100FC9B60 /* JSONModelError.h */; };
+		55ECDEA3234BE10200FC9B60 /* JSONModelLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC82234BE10100FC9B60 /* JSONModelLib.h */; };
+		55ECDEA4234BE10200FC9B60 /* JSONModelLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC82234BE10100FC9B60 /* JSONModelLib.h */; };
+		55ECDEA5234BE10200FC9B60 /* JSONModelLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC82234BE10100FC9B60 /* JSONModelLib.h */; };
+		55ECDEA7234BE10200FC9B60 /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC84234BE10100FC9B60 /* JSONHTTPClient.m */; };
+		55ECDEA8234BE10200FC9B60 /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC84234BE10100FC9B60 /* JSONHTTPClient.m */; };
+		55ECDEA9234BE10200FC9B60 /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC84234BE10100FC9B60 /* JSONHTTPClient.m */; };
+		55ECDEAA234BE10200FC9B60 /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC84234BE10100FC9B60 /* JSONHTTPClient.m */; };
+		55ECDEAB234BE10200FC9B60 /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC85234BE10100FC9B60 /* JSONAPI.m */; };
+		55ECDEAC234BE10200FC9B60 /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC85234BE10100FC9B60 /* JSONAPI.m */; };
+		55ECDEAD234BE10200FC9B60 /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC85234BE10100FC9B60 /* JSONAPI.m */; };
+		55ECDEAE234BE10200FC9B60 /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC85234BE10100FC9B60 /* JSONAPI.m */; };
+		55ECDEAF234BE10200FC9B60 /* JSONModel+networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC86234BE10100FC9B60 /* JSONModel+networking.h */; };
+		55ECDEB0234BE10200FC9B60 /* JSONModel+networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC86234BE10100FC9B60 /* JSONModel+networking.h */; };
+		55ECDEB1234BE10200FC9B60 /* JSONModel+networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC86234BE10100FC9B60 /* JSONModel+networking.h */; };
+		55ECDEB2234BE10200FC9B60 /* JSONModel+networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC86234BE10100FC9B60 /* JSONModel+networking.h */; };
+		55ECDEB3234BE10200FC9B60 /* JSONHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC87234BE10100FC9B60 /* JSONHTTPClient.h */; };
+		55ECDEB4234BE10200FC9B60 /* JSONHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC87234BE10100FC9B60 /* JSONHTTPClient.h */; };
+		55ECDEB5234BE10200FC9B60 /* JSONHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC87234BE10100FC9B60 /* JSONHTTPClient.h */; };
+		55ECDEB6234BE10200FC9B60 /* JSONHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC87234BE10100FC9B60 /* JSONHTTPClient.h */; };
+		55ECDEB7234BE10200FC9B60 /* JSONAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC88234BE10100FC9B60 /* JSONAPI.h */; };
+		55ECDEB8234BE10200FC9B60 /* JSONAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC88234BE10100FC9B60 /* JSONAPI.h */; };
+		55ECDEB9234BE10200FC9B60 /* JSONAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC88234BE10100FC9B60 /* JSONAPI.h */; };
+		55ECDEBA234BE10200FC9B60 /* JSONAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC88234BE10100FC9B60 /* JSONAPI.h */; };
+		55ECDEBB234BE10200FC9B60 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC89234BE10100FC9B60 /* JSONModel+networking.m */; };
+		55ECDEBC234BE10200FC9B60 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC89234BE10100FC9B60 /* JSONModel+networking.m */; };
+		55ECDEBD234BE10200FC9B60 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC89234BE10100FC9B60 /* JSONModel+networking.m */; };
+		55ECDEBE234BE10200FC9B60 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECDC89234BE10100FC9B60 /* JSONModel+networking.m */; };
+		55ECDEC1234C013800FC9B60 /* JSONModelLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ECDC82234BE10100FC9B60 /* JSONModelLib.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1024,6 +1092,30 @@
 		55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarPayloadTruncator.m; sourceTree = "<group>"; };
 		55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarPayloadTruncator.h; sourceTree = "<group>"; };
 		55B568D720F9560A00052D01 /* PayloadTruncationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayloadTruncationTests.m; sourceTree = "<group>"; };
+		55ECDBD4234BE10000FC9B60 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		55ECDBD6234BE10000FC9B60 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55ECDBD7234BE10000FC9B60 /* JSONModel.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = JSONModel.podspec; sourceTree = "<group>"; };
+		55ECDBD9234BE10000FC9B60 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55ECDBDF234BE10000FC9B60 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55ECDC75234BE10000FC9B60 /* JSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONValueTransformer.m; sourceTree = "<group>"; };
+		55ECDC76234BE10000FC9B60 /* JSONKeyMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKeyMapper.h; sourceTree = "<group>"; };
+		55ECDC77234BE10000FC9B60 /* JSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueTransformer.h; sourceTree = "<group>"; };
+		55ECDC78234BE10000FC9B60 /* JSONKeyMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKeyMapper.m; sourceTree = "<group>"; };
+		55ECDC7A234BE10100FC9B60 /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
+		55ECDC7B234BE10100FC9B60 /* JSONModelError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelError.m; sourceTree = "<group>"; };
+		55ECDC7C234BE10100FC9B60 /* JSONModelClassProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelClassProperty.h; sourceTree = "<group>"; };
+		55ECDC7D234BE10100FC9B60 /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
+		55ECDC7E234BE10100FC9B60 /* JSONModelClassProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModelClassProperty.m; sourceTree = "<group>"; };
+		55ECDC7F234BE10100FC9B60 /* JSONModelError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelError.h; sourceTree = "<group>"; };
+		55ECDC80234BE10100FC9B60 /* JSONModel.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = JSONModel.modulemap; sourceTree = "<group>"; };
+		55ECDC81234BE10100FC9B60 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55ECDC82234BE10100FC9B60 /* JSONModelLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelLib.h; sourceTree = "<group>"; };
+		55ECDC84234BE10100FC9B60 /* JSONHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONHTTPClient.m; sourceTree = "<group>"; };
+		55ECDC85234BE10100FC9B60 /* JSONAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONAPI.m; sourceTree = "<group>"; };
+		55ECDC86234BE10100FC9B60 /* JSONModel+networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSONModel+networking.h"; sourceTree = "<group>"; };
+		55ECDC87234BE10100FC9B60 /* JSONHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONHTTPClient.h; sourceTree = "<group>"; };
+		55ECDC88234BE10100FC9B60 /* JSONAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONAPI.h; sourceTree = "<group>"; };
+		55ECDC89234BE10100FC9B60 /* JSONModel+networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSONModel+networking.m"; sourceTree = "<group>"; };
 		9630826318DCDDC000256154 /* RollbarConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarConfiguration.h; sourceTree = "<group>"; };
 		9630826418DCDDC000256154 /* RollbarConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarConfiguration.m; sourceTree = "<group>"; };
 		966CD46C18F4E4C3005A8F2D /* RollbarThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarThread.h; sourceTree = "<group>"; };
@@ -1368,6 +1460,93 @@
 			path = "RollbarKit-macOSTests";
 			sourceTree = "<group>";
 		};
+		55ECDBD2234BE10000FC9B60 /* jsonmodel */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDBD4234BE10000FC9B60 /* CHANGELOG.md */,
+				55ECDBD5234BE10000FC9B60 /* JSONModel-mac */,
+				55ECDBD7234BE10000FC9B60 /* JSONModel.podspec */,
+				55ECDBD8234BE10000FC9B60 /* JSONModel-watchOS */,
+				55ECDBDE234BE10000FC9B60 /* JSONModel-tvOS */,
+				55ECDC73234BE10000FC9B60 /* JSONModel */,
+			);
+			path = jsonmodel;
+			sourceTree = SOURCE_ROOT;
+		};
+		55ECDBD5234BE10000FC9B60 /* JSONModel-mac */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDBD6234BE10000FC9B60 /* Info.plist */,
+			);
+			path = "JSONModel-mac";
+			sourceTree = "<group>";
+		};
+		55ECDBD8234BE10000FC9B60 /* JSONModel-watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDBD9234BE10000FC9B60 /* Info.plist */,
+			);
+			path = "JSONModel-watchOS";
+			sourceTree = "<group>";
+		};
+		55ECDBDE234BE10000FC9B60 /* JSONModel-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDBDF234BE10000FC9B60 /* Info.plist */,
+			);
+			path = "JSONModel-tvOS";
+			sourceTree = "<group>";
+		};
+		55ECDC73234BE10000FC9B60 /* JSONModel */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDC74234BE10000FC9B60 /* JSONModelTransformations */,
+				55ECDC79234BE10100FC9B60 /* JSONModel */,
+				55ECDC80234BE10100FC9B60 /* JSONModel.modulemap */,
+				55ECDC81234BE10100FC9B60 /* Info.plist */,
+				55ECDC82234BE10100FC9B60 /* JSONModelLib.h */,
+				55ECDC83234BE10100FC9B60 /* JSONModelNetworking */,
+			);
+			path = JSONModel;
+			sourceTree = "<group>";
+		};
+		55ECDC74234BE10000FC9B60 /* JSONModelTransformations */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDC75234BE10000FC9B60 /* JSONValueTransformer.m */,
+				55ECDC76234BE10000FC9B60 /* JSONKeyMapper.h */,
+				55ECDC77234BE10000FC9B60 /* JSONValueTransformer.h */,
+				55ECDC78234BE10000FC9B60 /* JSONKeyMapper.m */,
+			);
+			path = JSONModelTransformations;
+			sourceTree = "<group>";
+		};
+		55ECDC79234BE10100FC9B60 /* JSONModel */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDC7A234BE10100FC9B60 /* JSONModel.m */,
+				55ECDC7B234BE10100FC9B60 /* JSONModelError.m */,
+				55ECDC7C234BE10100FC9B60 /* JSONModelClassProperty.h */,
+				55ECDC7D234BE10100FC9B60 /* JSONModel.h */,
+				55ECDC7E234BE10100FC9B60 /* JSONModelClassProperty.m */,
+				55ECDC7F234BE10100FC9B60 /* JSONModelError.h */,
+			);
+			path = JSONModel;
+			sourceTree = "<group>";
+		};
+		55ECDC83234BE10100FC9B60 /* JSONModelNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				55ECDC84234BE10100FC9B60 /* JSONHTTPClient.m */,
+				55ECDC85234BE10100FC9B60 /* JSONAPI.m */,
+				55ECDC86234BE10100FC9B60 /* JSONModel+networking.h */,
+				55ECDC87234BE10100FC9B60 /* JSONHTTPClient.h */,
+				55ECDC88234BE10100FC9B60 /* JSONAPI.h */,
+				55ECDC89234BE10100FC9B60 /* JSONModel+networking.m */,
+			);
+			path = JSONModelNetworking;
+			sourceTree = "<group>";
+		};
 		96D2220118D8E40600933444 = {
 			isa = PBXGroup;
 			children = (
@@ -1417,6 +1596,7 @@
 		96D2220F18D8E40600933444 /* Rollbar */ = {
 			isa = PBXGroup;
 			children = (
+				55ECDBD2234BE10000FC9B60 /* jsonmodel */,
 				55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */,
 				55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */,
 				55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */,
@@ -1813,11 +1993,13 @@
 				55454B9022C69E2B00D4A414 /* Malloc.h in Headers */,
 				55454A1C22C69B5200D4A414 /* RollbarKSCrashReportSink.h in Headers */,
 				55454A2422C69B8300D4A414 /* RollbarLogger.h in Headers */,
+				55ECDE96234BE10200FC9B60 /* JSONModel.h in Headers */,
 				55454B5E22C69DFE00D4A414 /* llvm-config.h in Headers */,
 				55454A7422C69D9700D4A414 /* NSMutableData+AppendUTF8.h in Headers */,
 				55454B0222C69DD100D4A414 /* KSSymbolicator.h in Headers */,
 				55454AC422C69DBC00D4A414 /* KSCrashMonitor_Zombie.h in Headers */,
 				55454B9422C69E2B00D4A414 /* Punycode.h in Headers */,
+				55ECDE7E234BE10200FC9B60 /* JSONKeyMapper.h in Headers */,
 				55454B5422C69DDE00D4A414 /* KSCrashReportFields.h in Headers */,
 				55454ABE22C69DBC00D4A414 /* KSCrashMonitor_System.h in Headers */,
 				55454A7622C69D9700D4A414 /* NSString+URLEncode.h in Headers */,
@@ -1842,6 +2024,7 @@
 				55454B9622C69E2B00D4A414 /* LLVM.h in Headers */,
 				55454B2D22C69DD100D4A414 /* KSFileUtils.h in Headers */,
 				55454A4022C69D4600D4A414 /* KSCrashReportFilterAppleFmt.h in Headers */,
+				55ECDEB4234BE10200FC9B60 /* JSONHTTPClient.h in Headers */,
 				55454B1022C69DD100D4A414 /* KSCPU.h in Headers */,
 				55454A0C22C69AE000D4A414 /* RollbarCachesDirectory.h in Headers */,
 				55454A8C22C69DA300D4A414 /* KSCrashReportSinkVictory.h in Headers */,
@@ -1850,6 +2033,7 @@
 				55454AC822C69DC400D4A414 /* KSCrashReportWriter.h in Headers */,
 				55454B5B22C69DF900D4A414 /* Optional.h in Headers */,
 				55454B2722C69DD100D4A414 /* NSError+SimpleConstructor.h in Headers */,
+				55ECDE9E234BE10200FC9B60 /* JSONModelError.h in Headers */,
 				55454ABD22C69DBC00D4A414 /* KSCrashMonitor_AppState.h in Headers */,
 				55454AAF22C69DBC00D4A414 /* KSCrashMonitorContext.h in Headers */,
 				554549F222C699FC00D4A414 /* DeployApiCallResult.h in Headers */,
@@ -1871,10 +2055,12 @@
 				55454B0622C69DD100D4A414 /* KSDebug.h in Headers */,
 				55454A2022C69B6900D4A414 /* RollbarLevel.h in Headers */,
 				55454B9322C69E2B00D4A414 /* Demangle.h in Headers */,
+				55ECDEB0234BE10200FC9B60 /* JSONModel+networking.h in Headers */,
 				55454B1F22C69DD100D4A414 /* KSJSONCodec.h in Headers */,
 				55454B0F22C69DD100D4A414 /* KSStackCursor_SelfThread.h in Headers */,
 				55454AC722C69DC400D4A414 /* KSCrashReport.h in Headers */,
 				55454B5522C69DDE00D4A414 /* KSCrashDoctor.h in Headers */,
+				55ECDEA4234BE10200FC9B60 /* JSONModelLib.h in Headers */,
 				55454B1722C69DD100D4A414 /* KSMach.h in Headers */,
 				55454B2C22C69DD100D4A414 /* KSObjC.h in Headers */,
 				554549F822C69A2A00D4A414 /* Deployment.h in Headers */,
@@ -1889,6 +2075,8 @@
 				55454B3922C69DD100D4A414 /* KSMachineContext.h in Headers */,
 				55454A5E22C69D5B00D4A414 /* KSCrashReportFilter.h in Headers */,
 				55454B6422C69E0500D4A414 /* AlignOf.h in Headers */,
+				55ECDEB8234BE10200FC9B60 /* JSONAPI.h in Headers */,
+				55ECDE82234BE10200FC9B60 /* JSONValueTransformer.h in Headers */,
 				554549F622C69A1F00D4A414 /* RollbarDeploysProtocol.h in Headers */,
 				55454B6622C69E0500D4A414 /* type_traits.h in Headers */,
 				55454B7D22C69E1300D4A414 /* KSCrashInstallationStandard.h in Headers */,
@@ -1917,6 +2105,7 @@
 				55454AB422C69DBC00D4A414 /* KSCrashMonitor_CPPException.h in Headers */,
 				55454B3722C69DD100D4A414 /* KSDynamicLinker.h in Headers */,
 				55454B4C22C69DDE00D4A414 /* KSCrashReportVersion.h in Headers */,
+				55ECDE92234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1936,6 +2125,8 @@
 				55454ADC22C69DD100D4A414 /* KSDemangle_CPP.h in Headers */,
 				55454A4F22C69D5B00D4A414 /* KSCrashReportFilterAlert.h in Headers */,
 				55454A5122C69D5B00D4A414 /* KSCrashReportFilterBasic.h in Headers */,
+				55ECDE7D234BE10200FC9B60 /* JSONKeyMapper.h in Headers */,
+				55ECDE91234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */,
 				55454A1B22C69B4F00D4A414 /* RollbarKSCrashReportSink.h in Headers */,
 				55454AA722C69DBB00D4A414 /* KSCrashMonitor_System.h in Headers */,
 				55454AFE22C69DD100D4A414 /* KSDynamicLinker.h in Headers */,
@@ -1947,13 +2138,16 @@
 				55454AA422C69DBB00D4A414 /* KSCrashMonitor_Deadlock.h in Headers */,
 				55454B7522C69E1300D4A414 /* KSCrashInstallation.h in Headers */,
 				55454A0722C69ABF00D4A414 /* Rollbar.h in Headers */,
+				55ECDEB3234BE10200FC9B60 /* JSONHTTPClient.h in Headers */,
 				55454A2F22C69C1000D4A414 /* RollbarTelemetry.h in Headers */,
 				55454A2322C69B8200D4A414 /* RollbarLogger.h in Headers */,
 				55454A0B22C69ADF00D4A414 /* RollbarCachesDirectory.h in Headers */,
 				55454AD922C69DD100D4A414 /* KSMemory.h in Headers */,
 				55454B6222C69E0500D4A414 /* type_traits.h in Headers */,
 				55454B7422C69E1300D4A414 /* KSCrashInstallation+Private.h in Headers */,
+				55ECDEAF234BE10200FC9B60 /* JSONModel+networking.h in Headers */,
 				55454B3B22C69DDD00D4A414 /* KSCrashC.h in Headers */,
+				55ECDE9D234BE10200FC9B60 /* JSONModelError.h in Headers */,
 				55454B4622C69DDD00D4A414 /* KSCrashReportFields.h in Headers */,
 				55454A8222C69DA300D4A414 /* KSCrashReportSinkVictory.h in Headers */,
 				55454B7322C69E1300D4A414 /* KSCrashInstallationVictory.h in Headers */,
@@ -1961,6 +2155,7 @@
 				55454ACF22C69DD100D4A414 /* KSLogger.h in Headers */,
 				55454A4D22C69D5B00D4A414 /* KSCrashReportFilterGZip.h in Headers */,
 				55454A3722C69C5100D4A414 /* RollbarThread.h in Headers */,
+				55ECDEA3234BE10200FC9B60 /* JSONModelLib.h in Headers */,
 				554549FF22C69A5E00D4A414 /* RollbarDeploysManager.h in Headers */,
 				55454AC922C69DD100D4A414 /* KSSymbolicator.h in Headers */,
 				55454A0F22C69AF400D4A414 /* RollbarConfiguration.h in Headers */,
@@ -1996,6 +2191,7 @@
 				55454AF822C69DD100D4A414 /* KSStackCursor_MachineContext.h in Headers */,
 				55454B8922C69E2A00D4A414 /* DemangleNodes.h in Headers */,
 				55454A6722C69D9700D4A414 /* KSHTTPRequestSender.h in Headers */,
+				55ECDEB7234BE10200FC9B60 /* JSONAPI.h in Headers */,
 				55454A9D22C69DBB00D4A414 /* KSCrashMonitor_CPPException.h in Headers */,
 				55454ADD22C69DD100D4A414 /* KSMachineContext_Apple.h in Headers */,
 				55454AC622C69DC300D4A414 /* KSCrashReportWriter.h in Headers */,
@@ -2012,6 +2208,7 @@
 				55454AD722C69DD100D4A414 /* KSCPU.h in Headers */,
 				55454A4B22C69D5B00D4A414 /* KSCrashReportFilterStringify.h in Headers */,
 				55454AD822C69DD100D4A414 /* KSDemangle_Swift.h in Headers */,
+				55ECDE95234BE10200FC9B60 /* JSONModel.h in Headers */,
 				55454AD122C69DD100D4A414 /* KSSignalInfo.h in Headers */,
 				55454A4322C69D5300D4A414 /* Container+DeepSearch.h in Headers */,
 				55454A3F22C69D4500D4A414 /* KSCrashReportFilterAppleFmt.h in Headers */,
@@ -2042,6 +2239,7 @@
 				55454A6922C69D9700D4A414 /* KSHTTPMultipartPostBody.h in Headers */,
 				55454A9922C69DBB00D4A414 /* KSCrashMonitorType.h in Headers */,
 				55454AFB22C69DD100D4A414 /* KSStackCursor.h in Headers */,
+				55ECDE81234BE10200FC9B60 /* JSONValueTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2066,9 +2264,11 @@
 				55454C8422C6AE7400D4A414 /* KSCrashC.h in Headers */,
 				55454D4622C6AEA400D4A414 /* llvm-config.h in Headers */,
 				55454CFD22C6AE8C00D4A414 /* KSStackCursor_MachineContext.h in Headers */,
+				55ECDEA5234BE10200FC9B60 /* JSONModelLib.h in Headers */,
 				55454C0B22C6ACC300D4A414 /* RollbarLogger.h in Headers */,
 				55454C5122C6AE4F00D4A414 /* NSMutableData+AppendUTF8.h in Headers */,
 				55454D7722C6AEE400D4A414 /* Punycode.h in Headers */,
+				55ECDE93234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */,
 				55454C8F22C6AE7400D4A414 /* KSCrashReportFields.h in Headers */,
 				55454CE522C6AE8C00D4A414 /* KSThread.h in Headers */,
 				55454C5322C6AE4F00D4A414 /* NSString+URLEncode.h in Headers */,
@@ -2085,6 +2285,7 @@
 				55454CD322C6AE8C00D4A414 /* KSCPU_Apple.h in Headers */,
 				55454CDD22C6AE8C00D4A414 /* KSDemangle_Swift.h in Headers */,
 				55454CE322C6AE8C00D4A414 /* KSMach.h in Headers */,
+				55ECDEB9234BE10200FC9B60 /* JSONAPI.h in Headers */,
 				55454BF222C6AC3C00D4A414 /* RollbarCachesDirectory.h in Headers */,
 				55454C8622C6AE7400D4A414 /* KSSystemCapabilities.h in Headers */,
 				55454BD822C6AB6200D4A414 /* DeployApiCallResult.h in Headers */,
@@ -2103,8 +2304,10 @@
 				55454C6B22C6AE5B00D4A414 /* KSCrashReportSinkVictory.h in Headers */,
 				55454BFF22C6AC7F00D4A414 /* RollbarKSCrashInstallation.h in Headers */,
 				55454C3322C6AE3800D4A414 /* KSCrashReportFilterJSON.h in Headers */,
+				55ECDEB1234BE10200FC9B60 /* JSONModel+networking.h in Headers */,
 				55454CDC22C6AE8C00D4A414 /* KSCPU.h in Headers */,
 				55454C2F22C6AE3800D4A414 /* KSCrashReportFilter.h in Headers */,
+				55ECDE83234BE10200FC9B60 /* JSONValueTransformer.h in Headers */,
 				55454D5422C6AED300D4A414 /* KSCrashInstallation+Alert.h in Headers */,
 				55454CCF22C6AE8C00D4A414 /* KSString.h in Headers */,
 				55454C8C22C6AE7400D4A414 /* KSCrashReportStore.h in Headers */,
@@ -2133,6 +2336,7 @@
 				55454C1722C6AD0500D4A414 /* RollbarTelemetry.h in Headers */,
 				55454BDC22C6AB7500D4A414 /* RollbarDeploysProtocol.h in Headers */,
 				55454CB422C6AE7F00D4A414 /* KSCrashMonitor_NSException.h in Headers */,
+				55ECDE97234BE10200FC9B60 /* JSONModel.h in Headers */,
 				55454C6A22C6AE5B00D4A414 /* KSCrashReportSinkEMail.h in Headers */,
 				55454BE622C6ABCF00D4A414 /* RollbarDeploysManager.h in Headers */,
 				55454C3022C6AE3800D4A414 /* KSCrashReportFilterBasic.h in Headers */,
@@ -2144,6 +2348,7 @@
 				552C3BF022D3E76D00F97C88 /* RollbarFramework.h in Headers */,
 				55454D4B22C6AEAD00D4A414 /* type_traits.h in Headers */,
 				55454D5922C6AED300D4A414 /* KSCrashInstallationStandard.h in Headers */,
+				55ECDE9F234BE10200FC9B60 /* JSONModelError.h in Headers */,
 				55454C8022C6AE6D00D4A414 /* KSCrashReport.h in Headers */,
 				55454BAF22C6A97700D4A414 /* RollbarKit_iOS.h in Headers */,
 				55454D4A22C6AEAD00D4A414 /* Compiler.h in Headers */,
@@ -2151,6 +2356,7 @@
 				55454D7022C6AEDB00D4A414 /* SwiftStrings.h in Headers */,
 				55454D6022C6AED300D4A414 /* KSCrashInstallation.h in Headers */,
 				55454BFA22C6AC6600D4A414 /* RollbarFileReader.h in Headers */,
+				55ECDE7F234BE10200FC9B60 /* JSONKeyMapper.h in Headers */,
 				55454D5522C6AED300D4A414 /* KSCrashInstallationQuincyHockey.h in Headers */,
 				55454CEB22C6AE8C00D4A414 /* KSJSONCodec.h in Headers */,
 				55454D5B22C6AED300D4A414 /* KSCrashInstallationEmail.h in Headers */,
@@ -2163,6 +2369,7 @@
 				55454C1322C6ACFC00D4A414 /* RollbarReachability.h in Headers */,
 				55454D5F22C6AED300D4A414 /* KSCrashInstallation+Private.h in Headers */,
 				55454CDE22C6AE8C00D4A414 /* KSMemory.h in Headers */,
+				55ECDEB5234BE10200FC9B60 /* JSONHTTPClient.h in Headers */,
 				55454CE122C6AE8C00D4A414 /* KSDemangle_CPP.h in Headers */,
 				55454C2A22C6AE3800D4A414 /* KSCrashReportFilterStringify.h in Headers */,
 				55454C5422C6AE4F00D4A414 /* KSCString.h in Headers */,
@@ -2196,6 +2403,7 @@
 				55454C0C22C6ACC400D4A414 /* RollbarLogger.h in Headers */,
 				55454C5D22C6AE5000D4A414 /* NSMutableData+AppendUTF8.h in Headers */,
 				55454D7F22C6AEE500D4A414 /* Punycode.h in Headers */,
+				55ECDE94234BE10200FC9B60 /* JSONModelClassProperty.h in Headers */,
 				55454C9D22C6AE7500D4A414 /* KSCrashReportFields.h in Headers */,
 				55454D1E22C6AE8D00D4A414 /* KSThread.h in Headers */,
 				55454C5F22C6AE5000D4A414 /* NSString+URLEncode.h in Headers */,
@@ -2212,6 +2420,7 @@
 				55454D0C22C6AE8D00D4A414 /* KSCPU_Apple.h in Headers */,
 				55454D1622C6AE8D00D4A414 /* KSDemangle_Swift.h in Headers */,
 				55454D1C22C6AE8D00D4A414 /* KSMach.h in Headers */,
+				55ECDEBA234BE10200FC9B60 /* JSONAPI.h in Headers */,
 				55454BF322C6AC3D00D4A414 /* RollbarCachesDirectory.h in Headers */,
 				55454C9422C6AE7500D4A414 /* KSSystemCapabilities.h in Headers */,
 				55454BD922C6AB6300D4A414 /* DeployApiCallResult.h in Headers */,
@@ -2225,13 +2434,16 @@
 				55454BE322C6ABBF00D4A414 /* DeploymentDetails.h in Headers */,
 				55454CC422C6AE8000D4A414 /* KSCrashMonitor_Deadlock.h in Headers */,
 				55454CC022C6AE8000D4A414 /* KSCrashMonitor.h in Headers */,
+				55ECDEC1234C013800FC9B60 /* JSONModelLib.h in Headers */,
 				55454D0722C6AE8D00D4A414 /* KSSymbolicator.h in Headers */,
 				55454D4422C6AE9F00D4A414 /* Optional.h in Headers */,
 				55454C7522C6AE5C00D4A414 /* KSCrashReportSinkVictory.h in Headers */,
 				55454C0022C6AC8000D4A414 /* RollbarKSCrashInstallation.h in Headers */,
 				55454C4122C6AE3900D4A414 /* KSCrashReportFilterJSON.h in Headers */,
+				55ECDEB2234BE10200FC9B60 /* JSONModel+networking.h in Headers */,
 				55454D1522C6AE8D00D4A414 /* KSCPU.h in Headers */,
 				55454C3D22C6AE3900D4A414 /* KSCrashReportFilter.h in Headers */,
+				55ECDE84234BE10200FC9B60 /* JSONValueTransformer.h in Headers */,
 				55454D6322C6AED400D4A414 /* KSCrashInstallation+Alert.h in Headers */,
 				55454D0822C6AE8D00D4A414 /* KSString.h in Headers */,
 				55454C9A22C6AE7500D4A414 /* KSCrashReportStore.h in Headers */,
@@ -2260,6 +2472,7 @@
 				55454C1822C6AD0600D4A414 /* RollbarTelemetry.h in Headers */,
 				55454BDD22C6AB7600D4A414 /* RollbarDeploysProtocol.h in Headers */,
 				55454CCB22C6AE8000D4A414 /* KSCrashMonitor_NSException.h in Headers */,
+				55ECDE98234BE10200FC9B60 /* JSONModel.h in Headers */,
 				55454C7422C6AE5C00D4A414 /* KSCrashReportSinkEMail.h in Headers */,
 				55454BE722C6ABD000D4A414 /* RollbarDeploysManager.h in Headers */,
 				55454C3E22C6AE3900D4A414 /* KSCrashReportFilterBasic.h in Headers */,
@@ -2271,6 +2484,7 @@
 				552C3BF122D3E76E00F97C88 /* RollbarFramework.h in Headers */,
 				55454D4F22C6AEAE00D4A414 /* type_traits.h in Headers */,
 				55454D6822C6AED400D4A414 /* KSCrashInstallationStandard.h in Headers */,
+				55ECDEA0234BE10200FC9B60 /* JSONModelError.h in Headers */,
 				55454C8222C6AE6E00D4A414 /* KSCrashReport.h in Headers */,
 				55454BCB22C6A9CC00D4A414 /* RollbarKit_macOS.h in Headers */,
 				55454D4E22C6AEAE00D4A414 /* Compiler.h in Headers */,
@@ -2278,6 +2492,7 @@
 				55454D7122C6AEDC00D4A414 /* SwiftStrings.h in Headers */,
 				55454D6F22C6AED400D4A414 /* KSCrashInstallation.h in Headers */,
 				55454BFB22C6AC6700D4A414 /* RollbarFileReader.h in Headers */,
+				55ECDE80234BE10200FC9B60 /* JSONKeyMapper.h in Headers */,
 				55454D6422C6AED400D4A414 /* KSCrashInstallationQuincyHockey.h in Headers */,
 				55454D2422C6AE8D00D4A414 /* KSJSONCodec.h in Headers */,
 				55454D6A22C6AED400D4A414 /* KSCrashInstallationEmail.h in Headers */,
@@ -2290,6 +2505,7 @@
 				55454C1422C6ACFD00D4A414 /* RollbarReachability.h in Headers */,
 				55454D6E22C6AED400D4A414 /* KSCrashInstallation+Private.h in Headers */,
 				55454D1722C6AE8D00D4A414 /* KSMemory.h in Headers */,
+				55ECDEB6234BE10200FC9B60 /* JSONHTTPClient.h in Headers */,
 				55454D1A22C6AE8D00D4A414 /* KSDemangle_CPP.h in Headers */,
 				55454C3822C6AE3900D4A414 /* KSCrashReportFilterStringify.h in Headers */,
 				55454C6022C6AE5000D4A414 /* KSCString.h in Headers */,
@@ -2585,14 +2801,18 @@
 			files = (
 				55454A5722C69D5B00D4A414 /* KSCrashReportFilterStringify.m in Sources */,
 				55454ADA22C69DD100D4A414 /* KSMachineContext.c in Sources */,
+				55ECDE85234BE10200FC9B60 /* JSONKeyMapper.m in Sources */,
 				55454AF022C69DD100D4A414 /* KSMemory.c in Sources */,
 				55454A6E22C69D9700D4A414 /* NSMutableData+AppendUTF8.m in Sources */,
 				554549F922C69A3400D4A414 /* Deployment.m in Sources */,
+				55ECDE79234BE10200FC9B60 /* JSONValueTransformer.m in Sources */,
 				55454A8722C69DA300D4A414 /* KSCrashReportSinkEMail.m in Sources */,
 				55454AE222C69DD100D4A414 /* KSJSONCodecObjC.m in Sources */,
 				55454B0122C69DD100D4A414 /* KSID.c in Sources */,
 				55454A2D22C69C0A00D4A414 /* RollbarReachability.m in Sources */,
 				55454AED22C69DD100D4A414 /* KSSignalInfo.c in Sources */,
+				55ECDEA7234BE10200FC9B60 /* JSONHTTPClient.m in Sources */,
+				55ECDE89234BE10200FC9B60 /* JSONModel.m in Sources */,
 				55454A4E22C69D5B00D4A414 /* KSCrashReportFilterJSON.m in Sources */,
 				55454AA322C69DBB00D4A414 /* KSCrashMonitorType.c in Sources */,
 				55454A3522C69C4C00D4A414 /* RollbarTelemetryType.m in Sources */,
@@ -2625,6 +2845,7 @@
 				55454A4422C69D5300D4A414 /* NSData+GZip.m in Sources */,
 				55454A3922C69C6300D4A414 /* RollbarThread.m in Sources */,
 				55454AA522C69DBB00D4A414 /* KSCrashMonitor_Signal.c in Sources */,
+				55ECDEAB234BE10200FC9B60 /* JSONAPI.m in Sources */,
 				55454A6F22C69D9700D4A414 /* KSHTTPRequestSender.m in Sources */,
 				55454AEC22C69DD100D4A414 /* KSLogger.c in Sources */,
 				55454ADF22C69DD100D4A414 /* KSDynamicLinker.c in Sources */,
@@ -2656,6 +2877,7 @@
 				55454A4122C69D5300D4A414 /* Container+DeepSearch.m in Sources */,
 				55454AD022C69DD100D4A414 /* KSCPU_x86_32.c in Sources */,
 				554549C722C68DBA00D4A414 /* Rollbar_iOS.m in Sources */,
+				55ECDE8D234BE10200FC9B60 /* JSONModelError.m in Sources */,
 				55454A2922C69BAF00D4A414 /* RollbarNotifier.m in Sources */,
 				55454A2522C69B8900D4A414 /* RollbarLogger.m in Sources */,
 				55454AE422C69DD100D4A414 /* KSStackCursor.c in Sources */,
@@ -2665,6 +2887,7 @@
 				55454A3122C69C1A00D4A414 /* RollbarTelemetry.m in Sources */,
 				55454A8622C69DA300D4A414 /* KSCrashReportSinkStandard.m in Sources */,
 				55454A0D22C69AE900D4A414 /* RollbarCachesDirectory.m in Sources */,
+				55ECDEBB234BE10200FC9B60 /* JSONModel+networking.m in Sources */,
 				55454AD522C69DD100D4A414 /* KSCPU_arm.c in Sources */,
 				55454B3C22C69DDD00D4A414 /* KSCrashCachedData.c in Sources */,
 				55454AF122C69DD100D4A414 /* KSCPU.c in Sources */,
@@ -2676,6 +2899,7 @@
 				55454A9C22C69DBB00D4A414 /* KSCrashMonitor_AppState.c in Sources */,
 				55454B4122C69DDD00D4A414 /* KSCrashReport.c in Sources */,
 				55454AAC22C69DBB00D4A414 /* KSCrashMonitor_CPPException.cpp in Sources */,
+				55ECDE99234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */,
 				55454AE822C69DD100D4A414 /* KSDemangle_CPP.cpp in Sources */,
 				554549F322C69A1400D4A414 /* DeployApiCallResult.m in Sources */,
 				55454AEB22C69DD100D4A414 /* KSSymbolicator.c in Sources */,
@@ -2689,14 +2913,18 @@
 			files = (
 				55454A6522C69D5B00D4A414 /* KSCrashReportFilterStringify.m in Sources */,
 				55454B1322C69DD100D4A414 /* KSMachineContext.c in Sources */,
+				55ECDE86234BE10200FC9B60 /* JSONKeyMapper.m in Sources */,
 				55454B2922C69DD100D4A414 /* KSMemory.c in Sources */,
 				55454A7A22C69D9700D4A414 /* NSMutableData+AppendUTF8.m in Sources */,
 				554549FA22C69A3500D4A414 /* Deployment.m in Sources */,
+				55ECDE7A234BE10200FC9B60 /* JSONValueTransformer.m in Sources */,
 				55454A9122C69DA300D4A414 /* KSCrashReportSinkEMail.m in Sources */,
 				55454B1B22C69DD100D4A414 /* KSJSONCodecObjC.m in Sources */,
 				55454B3A22C69DD100D4A414 /* KSID.c in Sources */,
 				55454A2E22C69C0A00D4A414 /* RollbarReachability.m in Sources */,
 				55454B2622C69DD100D4A414 /* KSSignalInfo.c in Sources */,
+				55ECDEA8234BE10200FC9B60 /* JSONHTTPClient.m in Sources */,
+				55ECDE8A234BE10200FC9B60 /* JSONModel.m in Sources */,
 				55454A5C22C69D5B00D4A414 /* KSCrashReportFilterJSON.m in Sources */,
 				55454ABA22C69DBC00D4A414 /* KSCrashMonitorType.c in Sources */,
 				55454A3622C69C4D00D4A414 /* RollbarTelemetryType.m in Sources */,
@@ -2729,6 +2957,7 @@
 				55454A4922C69D5400D4A414 /* NSData+GZip.m in Sources */,
 				55454A3A22C69C6400D4A414 /* RollbarThread.m in Sources */,
 				55454ABC22C69DBC00D4A414 /* KSCrashMonitor_Signal.c in Sources */,
+				55ECDEAC234BE10200FC9B60 /* JSONAPI.m in Sources */,
 				55454A7B22C69D9700D4A414 /* KSHTTPRequestSender.m in Sources */,
 				55454B2522C69DD100D4A414 /* KSLogger.c in Sources */,
 				55454B1822C69DD100D4A414 /* KSDynamicLinker.c in Sources */,
@@ -2760,6 +2989,7 @@
 				55454A4622C69D5400D4A414 /* Container+DeepSearch.m in Sources */,
 				55454B0922C69DD100D4A414 /* KSCPU_x86_32.c in Sources */,
 				554549E222C68E8F00D4A414 /* Rollbar_macOS.m in Sources */,
+				55ECDE8E234BE10200FC9B60 /* JSONModelError.m in Sources */,
 				55454A2A22C69BB000D4A414 /* RollbarNotifier.m in Sources */,
 				55454A2622C69B8A00D4A414 /* RollbarLogger.m in Sources */,
 				55454B1D22C69DD100D4A414 /* KSStackCursor.c in Sources */,
@@ -2769,6 +2999,7 @@
 				55454A3222C69C1B00D4A414 /* RollbarTelemetry.m in Sources */,
 				55454A9022C69DA300D4A414 /* KSCrashReportSinkStandard.m in Sources */,
 				55454A0E22C69AEA00D4A414 /* RollbarCachesDirectory.m in Sources */,
+				55ECDEBC234BE10200FC9B60 /* JSONModel+networking.m in Sources */,
 				55454B0E22C69DD100D4A414 /* KSCPU_arm.c in Sources */,
 				55454B4A22C69DDE00D4A414 /* KSCrashCachedData.c in Sources */,
 				55454B2A22C69DD100D4A414 /* KSCPU.c in Sources */,
@@ -2780,6 +3011,7 @@
 				55454AB322C69DBC00D4A414 /* KSCrashMonitor_AppState.c in Sources */,
 				55454B4F22C69DDE00D4A414 /* KSCrashReport.c in Sources */,
 				55454AC322C69DBC00D4A414 /* KSCrashMonitor_CPPException.cpp in Sources */,
+				55ECDE9A234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */,
 				55454B2122C69DD100D4A414 /* KSDemangle_CPP.cpp in Sources */,
 				554549F422C69A1500D4A414 /* DeployApiCallResult.m in Sources */,
 				55454B2422C69DD100D4A414 /* KSSymbolicator.c in Sources */,
@@ -2827,7 +3059,9 @@
 				55454CEE22C6AE8C00D4A414 /* KSString.c in Sources */,
 				55454CF722C6AE8C00D4A414 /* KSStackCursor_SelfThread.c in Sources */,
 				55454CAE22C6AE7F00D4A414 /* KSCrashMonitor_Signal.c in Sources */,
+				55ECDE8F234BE10200FC9B60 /* JSONModelError.m in Sources */,
 				55454BDA22C6AB6E00D4A414 /* DeployApiCallResult.m in Sources */,
+				55ECDE9B234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */,
 				55454BE822C6ABD900D4A414 /* RollbarDeploysManager.m in Sources */,
 				55454CA822C6AE7F00D4A414 /* KSCrashMonitor_NSException.m in Sources */,
 				55454C0922C6ACBA00D4A414 /* RollbarLevel.m in Sources */,
@@ -2838,11 +3072,14 @@
 				55454CAA22C6AE7F00D4A414 /* KSCrashMonitor_MachException.c in Sources */,
 				55454C5822C6AE4F00D4A414 /* KSHTTPRequestSender.m in Sources */,
 				55454C6E22C6AE5B00D4A414 /* KSCrashReportSinkVictory.m in Sources */,
+				55ECDEAD234BE10200FC9B60 /* JSONAPI.m in Sources */,
 				55454CB522C6AE7F00D4A414 /* KSCrashMonitor_CPPException.cpp in Sources */,
 				55454CED22C6AE8C00D4A414 /* KSDemangle_CPP.cpp in Sources */,
 				55454BE422C6ABC900D4A414 /* DeploymentDetails.m in Sources */,
 				55454CFC22C6AE8C00D4A414 /* KSJSONCodec.c in Sources */,
 				55454D0122C6AE8C00D4A414 /* KSStackCursor_Backtrace.c in Sources */,
+				55ECDEA9234BE10200FC9B60 /* JSONHTTPClient.m in Sources */,
+				55ECDE87234BE10200FC9B60 /* JSONKeyMapper.m in Sources */,
 				55454C3622C6AE3800D4A414 /* KSCrashReportFilterStringify.m in Sources */,
 				55454C4622C6AE4100D4A414 /* Container+DeepSearch.m in Sources */,
 				55454CB222C6AE7F00D4A414 /* KSCrashMonitor_User.c in Sources */,
@@ -2851,8 +3088,10 @@
 				55454D0422C6AE8C00D4A414 /* KSCPU_arm64.c in Sources */,
 				55454C4922C6AE4100D4A414 /* NSData+GZip.m in Sources */,
 				55454C0522C6ACA400D4A414 /* RollbarKSCrashReportSink.m in Sources */,
+				55ECDE7B234BE10200FC9B60 /* JSONValueTransformer.m in Sources */,
 				55454C3422C6AE3800D4A414 /* KSCrashReportFilterGZip.m in Sources */,
 				55454D5222C6AED300D4A414 /* KSCrashInstallationStandard.m in Sources */,
+				55ECDEBD234BE10200FC9B60 /* JSONModel+networking.m in Sources */,
 				55454D5D22C6AED300D4A414 /* KSCrashInstallation+Alert.m in Sources */,
 				55454BF022C6AC0600D4A414 /* Rollbar.m in Sources */,
 				55454CFA22C6AE8C00D4A414 /* KSSysCtl.c in Sources */,
@@ -2884,6 +3123,7 @@
 				55454C1522C6AD0100D4A414 /* RollbarReachability.m in Sources */,
 				55454C8E22C6AE7400D4A414 /* KSCrashC.c in Sources */,
 				55454D5C22C6AED300D4A414 /* KSCrashInstallationQuincyHockey.m in Sources */,
+				55ECDE8B234BE10200FC9B60 /* JSONModel.m in Sources */,
 				55454CDF22C6AE8C00D4A414 /* KSMachineContext.c in Sources */,
 				55454CD522C6AE8C00D4A414 /* KSCPU_x86_32.c in Sources */,
 				55454CD822C6AE8C00D4A414 /* KSFileUtils.c in Sources */,
@@ -2944,7 +3184,9 @@
 				55454D2722C6AE8D00D4A414 /* KSString.c in Sources */,
 				55454D3022C6AE8D00D4A414 /* KSStackCursor_SelfThread.c in Sources */,
 				55454CC522C6AE8000D4A414 /* KSCrashMonitor_Signal.c in Sources */,
+				55ECDE90234BE10200FC9B60 /* JSONModelError.m in Sources */,
 				55454BDB22C6AB6F00D4A414 /* DeployApiCallResult.m in Sources */,
+				55ECDE9C234BE10200FC9B60 /* JSONModelClassProperty.m in Sources */,
 				55454BE922C6ABDA00D4A414 /* RollbarDeploysManager.m in Sources */,
 				55454CBF22C6AE8000D4A414 /* KSCrashMonitor_NSException.m in Sources */,
 				55454C0A22C6ACBB00D4A414 /* RollbarLevel.m in Sources */,
@@ -2955,11 +3197,14 @@
 				55454CC122C6AE8000D4A414 /* KSCrashMonitor_MachException.c in Sources */,
 				55454C6422C6AE5000D4A414 /* KSHTTPRequestSender.m in Sources */,
 				55454C7822C6AE5C00D4A414 /* KSCrashReportSinkVictory.m in Sources */,
+				55ECDEAE234BE10200FC9B60 /* JSONAPI.m in Sources */,
 				55454CCC22C6AE8000D4A414 /* KSCrashMonitor_CPPException.cpp in Sources */,
 				55454D2622C6AE8D00D4A414 /* KSDemangle_CPP.cpp in Sources */,
 				55454BE522C6ABCA00D4A414 /* DeploymentDetails.m in Sources */,
 				55454D3522C6AE8D00D4A414 /* KSJSONCodec.c in Sources */,
 				55454D3A22C6AE8D00D4A414 /* KSStackCursor_Backtrace.c in Sources */,
+				55ECDEAA234BE10200FC9B60 /* JSONHTTPClient.m in Sources */,
+				55ECDE88234BE10200FC9B60 /* JSONKeyMapper.m in Sources */,
 				55454C4422C6AE3900D4A414 /* KSCrashReportFilterStringify.m in Sources */,
 				55454C4B22C6AE4200D4A414 /* Container+DeepSearch.m in Sources */,
 				55454CC922C6AE8000D4A414 /* KSCrashMonitor_User.c in Sources */,
@@ -2968,8 +3213,10 @@
 				55454D3D22C6AE8D00D4A414 /* KSCPU_arm64.c in Sources */,
 				55454C4E22C6AE4200D4A414 /* NSData+GZip.m in Sources */,
 				55454C0622C6ACA600D4A414 /* RollbarKSCrashReportSink.m in Sources */,
+				55ECDE7C234BE10200FC9B60 /* JSONValueTransformer.m in Sources */,
 				55454C4222C6AE3900D4A414 /* KSCrashReportFilterGZip.m in Sources */,
 				55454D6122C6AED400D4A414 /* KSCrashInstallationStandard.m in Sources */,
+				55ECDEBE234BE10200FC9B60 /* JSONModel+networking.m in Sources */,
 				55454D6C22C6AED400D4A414 /* KSCrashInstallation+Alert.m in Sources */,
 				55454BF122C6AC0700D4A414 /* Rollbar.m in Sources */,
 				55454D3322C6AE8D00D4A414 /* KSSysCtl.c in Sources */,
@@ -3001,6 +3248,7 @@
 				55454C1622C6AD0200D4A414 /* RollbarReachability.m in Sources */,
 				55454C9C22C6AE7500D4A414 /* KSCrashC.c in Sources */,
 				55454D6B22C6AED400D4A414 /* KSCrashInstallationQuincyHockey.m in Sources */,
+				55ECDE8C234BE10200FC9B60 /* JSONModel.m in Sources */,
 				55454D1822C6AE8D00D4A414 /* KSMachineContext.c in Sources */,
 				55454D0E22C6AE8D00D4A414 /* KSCPU_x86_32.c in Sources */,
 				55454D1122C6AE8D00D4A414 /* KSFileUtils.c in Sources */,
@@ -3208,6 +3456,7 @@
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -3251,6 +3500,7 @@
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -3478,6 +3728,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 			};
 			name = Debug;
 		};
@@ -3487,6 +3738,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 			};
 			name = Release;
 		};
@@ -3496,6 +3748,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				PRODUCT_NAME = Rollbar;
+				SUPPORTS_MACCATALYST = NO;
 			};
 			name = Debug;
 		};
@@ -3505,6 +3758,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				PRODUCT_NAME = Rollbar;
+				SUPPORTS_MACCATALYST = NO;
 			};
 			name = Release;
 		};
@@ -3513,7 +3767,11 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
+				SUPPORTS_MACCATALYST = NO;
+				TVOS_DEPLOYMENT_TARGET = "";
+				WATCHOS_DEPLOYMENT_TARGET = "";
 			};
 			name = Debug;
 		};
@@ -3522,7 +3780,11 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
+				SUPPORTS_MACCATALYST = NO;
+				TVOS_DEPLOYMENT_TARGET = "";
+				WATCHOS_DEPLOYMENT_TARGET = "";
 			};
 			name = Release;
 		};
