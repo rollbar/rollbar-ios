@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONSupport.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DataTransferObject : NSObject {
+@interface DataTransferObject : NSObject <JSONSupport> {
     //@private
         //...
     
@@ -21,7 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
         //...
 }
 
-- (void)log;
++ (BOOL)isTransferableObject:(id)obj;
+
+- (id)initWithJSONString: (NSString *)jsonString;
+- (id)initWithJSONData: (NSData *)jsonData;
 
 @end
 

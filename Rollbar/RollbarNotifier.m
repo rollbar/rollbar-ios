@@ -236,7 +236,7 @@ static BOOL isNetworkReachable = YES;
         NSData *lineData = [line dataUsingEncoding:NSUTF8StringEncoding];
         if (!lineData) {
             // All we can do is ignore this line
-            RollbarLog(@"Error converting file line to NSData");
+            RollbarLog(@"Error converting file line to NSData: %@", line);
             return;
         }
         NSError *error;
@@ -246,7 +246,7 @@ static BOOL isNetworkReachable = YES;
 
         if (!payload) {
             // Ignore this line if it isn't valid json and proceed to the next line
-            RollbarLog(@"Error restoring data from file to JSON");
+            RollbarLog(@"Error restoring data from file to JSON: %@", lineData);
             return;
         }
 
