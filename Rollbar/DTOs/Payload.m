@@ -7,18 +7,29 @@
 //
 
 #import "Payload.h"
+#import "DataTransferObject+Protected.h"
+
+static NSString * const DATAFIELD_ACCESSTOKEN = @"accessToken";
+static NSString * const DATAFIELD_DATA = @"data";
 
 @implementation Payload
 
-- (NSString *)accessToken {
-    return [self->_data valueForKey:@"accessToken"];
+- (NSMutableString *)accessToken {
+    return [self saflyGetStringByKey:DATAFIELD_ACCESSTOKEN];
 }
 
-- (void)setAccessToken:(NSString *)accessToken {
-    [self->_data setValue:accessToken forKey:@"accessToken"];
+- (void)setAccessToken:(NSMutableString *)accessToken {
+    [self setString:accessToken forKey:DATAFIELD_ACCESSTOKEN];
 }
 
--(void)testIt {
-    id data = self->_data;
+- (PayloadData *)data {
+    id data = [self saflyGetDictionaryByKey:DATAFIELD_DATA];
+    PayloadData *payloadData = [[PayloadData alloc] initWithDictionary:data];
+    return payloadData;
 }
+
+- (void)setData:(PayloadData *)payloadData {
+    [self setDictionary:payloadData.jsonFriendlyData forKey:DATAFIELD_DATA];
+}
+
 @end

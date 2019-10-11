@@ -7,14 +7,15 @@
 //
 
 #import "DataTransferObject.h"
+#import "PayloadData.h"
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Payload : DataTransferObject
 
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *environment;
+@property (nonatomic, copy) NSMutableString *accessToken;
+@property (nonatomic) PayloadData *data;
 
 @end
 

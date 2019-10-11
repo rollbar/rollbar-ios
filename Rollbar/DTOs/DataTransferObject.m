@@ -92,7 +92,11 @@
 
 #pragma mark de/serialization methods of JSONSupport protocol
 
-- (NSData *)serilaizeToJSONData {
+- (NSDictionary *)jsonFriendlyData {
+    return self->_data;
+}
+
+- (NSData *)serializeToJSONData {
     NSData *jsonData = [DataTransferObject dataWithJSONObject:self->_data
                                                       options:0
                                                         error:nil
@@ -100,8 +104,8 @@
     return jsonData;
 }
 
-- (NSString *)serializeToJSONString {
-    NSData *jsonData = [self serilaizeToJSONData];
+- (nonnull NSString *)serializeToJSONString {
+    NSData *jsonData = [self serializeToJSONData];
     NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     return result;
 }

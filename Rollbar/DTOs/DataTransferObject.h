@@ -12,12 +12,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DataTransferObject : NSObject <JSONSupport> {
-    //@private
+    @private
+        NSMutableDictionary *_data;
         //...
     
-    @protected
-        NSMutableDictionary *_data;
-    
+    //@protected
+        //...
+
     //@public
         //...
 }
