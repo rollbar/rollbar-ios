@@ -980,6 +980,14 @@
 		559270A723500C950087E01F /* DataTransferObject+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 559270A123500C950087E01F /* DataTransferObject+Protected.m */; };
 		559270A823500C950087E01F /* DataTransferObject+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 559270A123500C950087E01F /* DataTransferObject+Protected.m */; };
 		559270A923500C950087E01F /* DataTransferObject+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 559270A123500C950087E01F /* DataTransferObject+Protected.m */; };
+		559270AC2351A7B50087E01F /* RollbarConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 559270AA2351A7B50087E01F /* RollbarConfig.h */; };
+		559270AD2351A7B50087E01F /* RollbarConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 559270AA2351A7B50087E01F /* RollbarConfig.h */; };
+		559270AE2351A7B50087E01F /* RollbarConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 559270AA2351A7B50087E01F /* RollbarConfig.h */; };
+		559270AF2351A7B50087E01F /* RollbarConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 559270AA2351A7B50087E01F /* RollbarConfig.h */; };
+		559270B02351A7B50087E01F /* RollbarConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 559270AB2351A7B50087E01F /* RollbarConfig.m */; };
+		559270B12351A7B50087E01F /* RollbarConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 559270AB2351A7B50087E01F /* RollbarConfig.m */; };
+		559270B22351A7B50087E01F /* RollbarConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 559270AB2351A7B50087E01F /* RollbarConfig.m */; };
+		559270B32351A7B50087E01F /* RollbarConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 559270AB2351A7B50087E01F /* RollbarConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1084,6 +1092,8 @@
 		55927097234FC7D00087E01F /* RollbarData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarData.m; sourceTree = "<group>"; };
 		559270A023500C950087E01F /* DataTransferObject+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DataTransferObject+Protected.h"; sourceTree = "<group>"; };
 		559270A123500C950087E01F /* DataTransferObject+Protected.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "DataTransferObject+Protected.m"; sourceTree = "<group>"; };
+		559270AA2351A7B50087E01F /* RollbarConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarConfig.h; sourceTree = "<group>"; };
+		559270AB2351A7B50087E01F /* RollbarConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarConfig.m; sourceTree = "<group>"; };
 		55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarPayloadTruncator.m; sourceTree = "<group>"; };
 		55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarPayloadTruncator.h; sourceTree = "<group>"; };
 		55B568D720F9560A00052D01 /* PayloadTruncationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayloadTruncationTests.m; sourceTree = "<group>"; };
@@ -1392,6 +1402,8 @@
 				55178C3A234DACFC0081E84A /* RollbarPayload.m */,
 				55927096234FC7D00087E01F /* RollbarData.h */,
 				55927097234FC7D00087E01F /* RollbarData.m */,
+				559270AA2351A7B50087E01F /* RollbarConfig.h */,
+				559270AB2351A7B50087E01F /* RollbarConfig.m */,
 			);
 			path = DTOs;
 			sourceTree = "<group>";
@@ -1995,6 +2007,7 @@
 				55454A4A22C69D5400D4A414 /* KSVarArgs.h in Headers */,
 				55454B4D22C69DDE00D4A414 /* KSCrashReportFixer.h in Headers */,
 				55454A7E22C69D9700D4A414 /* KSReachabilityKSCrash.h in Headers */,
+				559270AD2351A7B50087E01F /* RollbarConfig.h in Headers */,
 				55454A1422C69B1700D4A414 /* RollbarFileReader.h in Headers */,
 				5592707D234E72600087E01F /* DataTransferObject+CustomData.h in Headers */,
 				55454A2C22C69BFF00D4A414 /* RollbarReachability.h in Headers */,
@@ -2094,6 +2107,7 @@
 				55454ADD22C69DD100D4A414 /* KSMachineContext_Apple.h in Headers */,
 				55454AC622C69DC300D4A414 /* KSCrashReportWriter.h in Headers */,
 				55454B8E22C69E2A00D4A414 /* LLVM.h in Headers */,
+				559270AC2351A7B50087E01F /* RollbarConfig.h in Headers */,
 				55454A1F22C69B6800D4A414 /* RollbarLevel.h in Headers */,
 				55454A6A22C69D9700D4A414 /* NSString+URLEncode.h in Headers */,
 				55927085234EE7EA0087E01F /* JSONSupport.h in Headers */,
@@ -2220,6 +2234,7 @@
 				55454C2022C6AD2A00D4A414 /* RollbarThread.h in Headers */,
 				55454C8722C6AE7400D4A414 /* KSCrashReportVersion.h in Headers */,
 				5592707E234E72600087E01F /* DataTransferObject+CustomData.h in Headers */,
+				559270AE2351A7B50087E01F /* RollbarConfig.h in Headers */,
 				55454CB122C6AE7F00D4A414 /* KSCrashMonitor_MachException.h in Headers */,
 				55454BEE22C6ABF000D4A414 /* Rollbar.h in Headers */,
 				55454CF922C6AE8C00D4A414 /* KSFileUtils.h in Headers */,
@@ -2354,6 +2369,7 @@
 				55454C2122C6AD2B00D4A414 /* RollbarThread.h in Headers */,
 				55454C9522C6AE7500D4A414 /* KSCrashReportVersion.h in Headers */,
 				5592707F234E72600087E01F /* DataTransferObject+CustomData.h in Headers */,
+				559270AF2351A7B50087E01F /* RollbarConfig.h in Headers */,
 				55454CC822C6AE8000D4A414 /* KSCrashMonitor_MachException.h in Headers */,
 				55454BEF22C6ABF200D4A414 /* Rollbar.h in Headers */,
 				55454D3222C6AE8D00D4A414 /* KSFileUtils.h in Headers */,
@@ -2712,6 +2728,7 @@
 				55454B8A22C69E2A00D4A414 /* Punycode.cpp in Sources */,
 				55454B6722C69E1300D4A414 /* KSCrashInstallationStandard.m in Sources */,
 				55454B4022C69DDD00D4A414 /* KSCrashDoctor.m in Sources */,
+				559270B02351A7B50087E01F /* RollbarConfig.m in Sources */,
 				55454A1122C69B0300D4A414 /* RollbarConfiguration.m in Sources */,
 				55454AFD22C69DD100D4A414 /* KSMach.c in Sources */,
 				55454AD422C69DD100D4A414 /* KSObjC.c in Sources */,
@@ -2821,6 +2838,7 @@
 				55454B9222C69E2B00D4A414 /* Punycode.cpp in Sources */,
 				55454B7622C69E1300D4A414 /* KSCrashInstallationStandard.m in Sources */,
 				55454B4E22C69DDE00D4A414 /* KSCrashDoctor.m in Sources */,
+				559270B12351A7B50087E01F /* RollbarConfig.m in Sources */,
 				55454A1222C69B0400D4A414 /* RollbarConfiguration.m in Sources */,
 				55454B3622C69DD100D4A414 /* KSMach.c in Sources */,
 				55454B0D22C69DD100D4A414 /* KSObjC.c in Sources */,
@@ -2965,6 +2983,7 @@
 				55454CED22C6AE8C00D4A414 /* KSDemangle_CPP.cpp in Sources */,
 				55454BE422C6ABC900D4A414 /* DeploymentDetails.m in Sources */,
 				55454CFC22C6AE8C00D4A414 /* KSJSONCodec.c in Sources */,
+				559270B22351A7B50087E01F /* RollbarConfig.m in Sources */,
 				55454D0122C6AE8C00D4A414 /* KSStackCursor_Backtrace.c in Sources */,
 				55178C41234DACFC0081E84A /* RollbarPayload.m in Sources */,
 				55454C3622C6AE3800D4A414 /* KSCrashReportFilterStringify.m in Sources */,
@@ -3088,6 +3107,7 @@
 				55454D2622C6AE8D00D4A414 /* KSDemangle_CPP.cpp in Sources */,
 				55454BE522C6ABCA00D4A414 /* DeploymentDetails.m in Sources */,
 				55454D3522C6AE8D00D4A414 /* KSJSONCodec.c in Sources */,
+				559270B32351A7B50087E01F /* RollbarConfig.m in Sources */,
 				55454D3A22C6AE8D00D4A414 /* KSStackCursor_Backtrace.c in Sources */,
 				55178C42234DACFC0081E84A /* RollbarPayload.m in Sources */,
 				55454C4422C6AE3900D4A414 /* KSCrashReportFilterStringify.m in Sources */,
