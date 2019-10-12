@@ -1,19 +1,19 @@
 //
-//  Payload.m
+//  RollbarPayload.m
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-08.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "Payload.h"
+#import "RollbarPayload.h"
 #import "DataTransferObject+Protected.h"
-#import "PayloadData.h"
+#import "RollbarData.h"
 
 static NSString * const DATAFIELD_ACCESSTOKEN = @"accessToken";
 static NSString * const DATAFIELD_DATA = @"data";
 
-@implementation Payload
+@implementation RollbarPayload
 
 - (NSMutableString *)accessToken {
     return [self saflyGetStringByKey:DATAFIELD_ACCESSTOKEN];
@@ -23,13 +23,13 @@ static NSString * const DATAFIELD_DATA = @"data";
     [self setString:accessToken forKey:DATAFIELD_ACCESSTOKEN];
 }
 
-- (PayloadData *)data {
+- (RollbarData *)data {
     id data = [self saflyGetDictionaryByKey:DATAFIELD_DATA];
-    PayloadData *payloadData = [[PayloadData alloc] initWithDictionary:data];
+    RollbarData *payloadData = [[RollbarData alloc] initWithDictionary:data];
     return payloadData;
 }
 
-- (void)setData:(PayloadData *)payloadData {
+- (void)setData:(RollbarData *)payloadData {
     [self setDictionary:payloadData.jsonFriendlyData forKey:DATAFIELD_DATA];
 }
 

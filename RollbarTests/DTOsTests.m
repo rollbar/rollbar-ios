@@ -7,7 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "../Rollbar/DTOs/Payload.h"
+#import "../Rollbar/DTOs/RollbarPayload.h"
+#import "../Rollbar/DTOs/RollbarData.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -40,7 +41,7 @@
     NSString *jsonPayload = @"{\"accessToken\":\"ACCESS_TOKEN\"}";
     NSString *jsonData = @"{\"environment\":\"ENV\"}";
 
-    Payload *payloadAtOnce = [[Payload alloc] initWithJSONString:jsonString];
+    RollbarPayload *payloadAtOnce = [[RollbarPayload alloc] initWithJSONString:jsonString];
     XCTAssertNotNil(payloadAtOnce,
                     @"Payload instance"
                     );
@@ -54,8 +55,8 @@
                   @"Environment field [%@] of payload: %@.", payloadAtOnce.data.environment, [payloadAtOnce serializeToJSONString]
                   );
 
-    Payload *payload = [[Payload alloc] initWithJSONString:jsonPayload];
-    PayloadData *payloadData = [[PayloadData alloc] initWithJSONString:jsonData];
+    RollbarPayload *payload = [[RollbarPayload alloc] initWithJSONString:jsonPayload];
+    RollbarData *payloadData = [[RollbarData alloc] initWithJSONString:jsonData];
     payload.data = payloadData;
     XCTAssertTrue([[payloadAtOnce serializeToJSONString] isEqualToString:[payload serializeToJSONString]],
                   @"payloadAtOnce [%@] must match payload: [%@].",

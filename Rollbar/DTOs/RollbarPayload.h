@@ -1,5 +1,5 @@
 //
-//  Payload.h
+//  RollbarPayload.h
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-08.
@@ -9,14 +9,14 @@
 #import "DataTransferObject.h"
 #import <Foundation/Foundation.h>
 
-@class PayloadData;
+@class RollbarData;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Payload : DataTransferObject
+@interface RollbarPayload : DataTransferObject
 
 @property (nonatomic, copy) NSMutableString *accessToken;
-@property (nonatomic) PayloadData *data;
+@property (nonatomic) RollbarData *data;
 
 @end
 

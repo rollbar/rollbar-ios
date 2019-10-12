@@ -1,5 +1,5 @@
 //
-//  PayloadData.h
+//  RollbarData.h
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-10.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PayloadData : DataTransferObject
+@interface RollbarData : DataTransferObject
 
 @property (nonatomic, copy) NSMutableString *environment;
 
