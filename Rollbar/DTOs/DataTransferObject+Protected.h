@@ -17,10 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableDictionary *)saflyGetDictionaryByKey:(NSString *)key;
 - (NSMutableArray *)saflyGetArrayByKey:(NSString *)key;
 - (NSMutableString *)saflyGetStringByKey:(NSString *)key;
+- (NSNumber *)saflyGetNumberByKey:(NSString *)key;
 
 - (void)setDictionary:(NSMutableDictionary *)data forKey:(NSString *)key;
 - (void)setArray:(NSMutableArray *)data forKey:(NSString *)key;
 - (void)setString:(NSMutableString *)data forKey:(NSString *)key;
+- (void)setNumber:(NSNumber *)data forKey:(NSString *)key;
 
 @end
 

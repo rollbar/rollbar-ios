@@ -92,7 +92,7 @@
 
 #pragma mark de/serialization methods of JSONSupport protocol
 
-- (NSDictionary *)jsonFriendlyData {
+- (NSMutableDictionary *)jsonFriendlyData {
     return self->_data;
 }
 
@@ -162,6 +162,10 @@
         self->_data = [[NSMutableDictionary alloc] initWithCapacity:10];
     }
     return self;
+}
+
+- (NSString *)description {
+    return [self serializeToJSONString];
 }
 
 @end

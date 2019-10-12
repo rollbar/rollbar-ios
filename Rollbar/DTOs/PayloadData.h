@@ -6,7 +6,6 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-//#import <Rollbar/Rollbar.h>
 #import "DataTransferObject.h"
 
 NS_ASSUME_NONNULL_BEGIN

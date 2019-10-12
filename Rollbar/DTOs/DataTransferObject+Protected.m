@@ -59,6 +59,16 @@
     return result;
 }
 
+- (NSNumber *)saflyGetNumberByKey:(NSString *)key {
+    NSNumber *result = [self->_data objectForKey:key];
+    if (nil == result) {
+        result = [[NSNumber alloc] init];
+        [self->_data setObject:result forKey:key];
+    }
+    return result;
+}
+
+
 - (void)setDictionary:(NSMutableDictionary *)data forKey:(NSString *)key {
     [self->_data setObject:data forKey:key];
 }
@@ -68,6 +78,10 @@
 }
 
 - (void)setString:(NSMutableString *)data forKey:(NSString *)key {
+    [self->_data setObject:data forKey:key];
+}
+
+- (void)setNumber:(NSNumber *)data forKey:(NSString *)key {
     [self->_data setObject:data forKey:key];
 }
 

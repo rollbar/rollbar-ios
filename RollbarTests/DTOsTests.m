@@ -35,20 +35,32 @@
     }];
 }
 
-- (void)testBasicPayloadDTO {
+- (void)testBasicDTOInitializationWithJSONString {
     NSString *jsonString = @"{\"accessToken\":\"ACCESS_TOKEN\", \"data\":{\"environment\":\"ENV\"}}";
-    Payload *payload = [[Payload alloc] initWithJSONString:jsonString];
-    XCTAssertNotNil(payload,
+    NSString *jsonPayload = @"{\"accessToken\":\"ACCESS_TOKEN\"}";
+    NSString *jsonData = @"{\"environment\":\"ENV\"}";
+
+    Payload *payloadAtOnce = [[Payload alloc] initWithJSONString:jsonString];
+    XCTAssertNotNil(payloadAtOnce,
                     @"Payload instance"
                     );
-    XCTAssertTrue([payload.accessToken isEqualToString:@"ACCESS_TOKEN"],
-                  @"Access token field [%@] of payload: %@.", payload.accessToken, [payload serializeToJSONString]
+    XCTAssertTrue([payloadAtOnce.accessToken isEqualToString:@"ACCESS_TOKEN"],
+                  @"Access token field [%@] of payload: %@.", payloadAtOnce.accessToken, [payloadAtOnce serializeToJSONString]
                   );
-    XCTAssertNotNil(payload.data,
-                    @"Data field of payload: %@.", [payload serializeToJSONString]
+    XCTAssertNotNil(payloadAtOnce.data,
+                    @"Data field of payload: %@.", [payloadAtOnce serializeToJSONString]
                     );
-    XCTAssertTrue([payload.data.environment isEqualToString:@"ENV"],
-                  @"Environment field [%@] of payload: %@.", payload.data.environment, [payload serializeToJSONString]
+    XCTAssertTrue([payloadAtOnce.data.environment isEqualToString:@"ENV"],
+                  @"Environment field [%@] of payload: %@.", payloadAtOnce.data.environment, [payloadAtOnce serializeToJSONString]
+                  );
+
+    Payload *payload = [[Payload alloc] initWithJSONString:jsonPayload];
+    PayloadData *payloadData = [[PayloadData alloc] initWithJSONString:jsonData];
+    payload.data = payloadData;
+    XCTAssertTrue([[payloadAtOnce serializeToJSONString] isEqualToString:[payload serializeToJSONString]],
+                  @"payloadAtOnce [%@] must match payload: [%@].",
+                  [payloadAtOnce serializeToJSONString],
+                  [payload serializeToJSONString]
                   );
 }
 

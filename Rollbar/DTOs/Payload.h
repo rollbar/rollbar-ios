@@ -7,8 +7,9 @@
 //
 
 #import "DataTransferObject.h"
-#import "PayloadData.h"
 #import <Foundation/Foundation.h>
+
+@class PayloadData;
 
 NS_ASSUME_NONNULL_BEGIN
 

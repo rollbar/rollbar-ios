@@ -8,6 +8,7 @@
 
 #import "Payload.h"
 #import "DataTransferObject+Protected.h"
+#import "PayloadData.h"
 
 static NSString * const DATAFIELD_ACCESSTOKEN = @"accessToken";
 static NSString * const DATAFIELD_DATA = @"data";

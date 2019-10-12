@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol JSONSupport <NSObject>
 
-@property (readonly) NSDictionary *jsonFriendlyData;
+@property (readonly) NSMutableDictionary *jsonFriendlyData;
 
 - (NSData *)serializeToJSONData;
 - (BOOL)deserializeFromJSONData:(NSData *)jsonData;
