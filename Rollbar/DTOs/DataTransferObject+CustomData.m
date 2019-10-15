@@ -14,7 +14,7 @@
     //TODO:...
 }
 
-- (void)addKeyed:(NSString *)aKey String:(NSString *)aValue {
+- (void)addKeyed:(NSString *)aKey String:(NSMutableString *)aValue {
     //TODO:...
 }
 
@@ -22,11 +22,11 @@
     //TODO:...
 }
 
-- (void)addKeyed:(NSString *)aKey Array:(NSArray *)aValue {
+- (void)addKeyed:(NSString *)aKey Array:(NSMutableArray *)aValue {
     //TODO:...
 }
 
-- (void)addKeyed:(NSString *)aKey Dictionary:(NSDictionary *)aValue {
+- (void)addKeyed:(NSString *)aKey Dictionary:(NSMutableDictionary *)aValue {
     //TODO:...
 }
 

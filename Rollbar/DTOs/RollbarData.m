@@ -15,7 +15,7 @@ static NSString * const DATAFIELD_BODY = @"body";
 @implementation RollbarData
 
 - (NSMutableString *)environment {
-    return [self saflyGetStringByKey:DATAFIELD_ENVIRONMENT];
+    return [self safelyGetStringByKey:DATAFIELD_ENVIRONMENT];
 }
 
 - (void)setEnvironment:(NSMutableString *)accessToken {

@@ -32,7 +32,16 @@
     return self;
 }
 
-- (NSMutableDictionary *)saflyGetDictionaryByKey:(NSString *)key {
+- (DataTransferObject *)safelyGetDataTransferObjectByKey:(NSString *)key {
+    DataTransferObject *result = [self->_data objectForKey:key];
+    if (nil == result) {
+        result = [[DataTransferObject alloc] init];
+        [self->_data setObject:result forKey:key];
+    }
+    return result;
+}
+
+- (NSMutableDictionary *)safelyGetDictionaryByKey:(NSString *)key {
     NSMutableDictionary *result = [self->_data objectForKey:key];
     if (nil == result) {
         result = [[NSMutableDictionary alloc] initWithCapacity:5];
@@ -41,7 +50,7 @@
     return result;
 }
 
-- (NSMutableArray *)saflyGetArrayByKey:(NSString *)key {
+- (NSMutableArray *)safelyGetArrayByKey:(NSString *)key {
     NSMutableArray *result = [self->_data objectForKey:key];
     if (nil == result) {
         result = [[NSMutableArray alloc] initWithCapacity:5];
@@ -50,7 +59,7 @@
     return result;
 }
 
-- (NSMutableString *)saflyGetStringByKey:(NSString *)key {
+- (NSMutableString *)safelyGetStringByKey:(NSString *)key {
     NSMutableString *result = [self->_data objectForKey:key];
     if (nil == result) {
         result = [[NSMutableString alloc] initWithCapacity:5];
@@ -59,7 +68,7 @@
     return result;
 }
 
-- (NSNumber *)saflyGetNumberByKey:(NSString *)key {
+- (NSNumber *)safelyGetNumberByKey:(NSString *)key {
     NSNumber *result = [self->_data objectForKey:key];
     if (nil == result) {
         result = [[NSNumber alloc] init];
@@ -68,6 +77,10 @@
     return result;
 }
 
+
+- (void)setDataTransferObject:(DataTransferObject *)data forKey:(NSString *)key {
+    [self->_data setObject:data forKey:key];
+}
 
 - (void)setDictionary:(NSMutableDictionary *)data forKey:(NSString *)key {
     [self->_data setObject:data forKey:key];

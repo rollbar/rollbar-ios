@@ -16,7 +16,7 @@ static NSString * const DATAFIELD_DATA = @"data";
 @implementation RollbarPayload
 
 - (NSMutableString *)accessToken {
-    return [self saflyGetStringByKey:DATAFIELD_ACCESSTOKEN];
+    return [self safelyGetStringByKey:DATAFIELD_ACCESSTOKEN];
 }
 
 - (void)setAccessToken:(NSMutableString *)accessToken {
@@ -24,7 +24,7 @@ static NSString * const DATAFIELD_DATA = @"data";
 }
 
 - (RollbarData *)data {
-    id data = [self saflyGetDictionaryByKey:DATAFIELD_DATA];
+    id data = [self safelyGetDictionaryByKey:DATAFIELD_DATA];
     RollbarData *payloadData = [[RollbarData alloc] initWithDictionary:data];
     return payloadData;
 }
