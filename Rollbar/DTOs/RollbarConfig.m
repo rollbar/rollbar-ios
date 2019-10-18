@@ -28,6 +28,9 @@ static NSString * const DATAFIELD_LOG_LEVEL = @"logLevel";
 static NSString * const DATAFIELD_MAX_REPORTS_PER_MINUTE = @"maximumReportsPerMinute";
 static NSString * const DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY = @"shouldCaptureConnectivity";
 
+static NSString * const DATAFIELD_SCRUB_FIELDS = @"scrubFields";
+static NSString * const DATAFIELD_SCRUB_FIELDS_WHITE_LIST = @"scrubFieldsWhiteList";
+static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
 
 @implementation RollbarConfig
 
@@ -167,6 +170,18 @@ static NSString * const DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY = @"shouldCaptureC
 
 #pragma -mark Payload Content Related
 
-
+//- (NSMutableString *)logLevel {
+//    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_LOG_LEVEL];
+//    return result;
+//}
+//
+//- (void)setLogLevel:(NSMutableString *)value {
+//    [self setString:value forKey:DATAFIELD_LOG_LEVEL];
+//}
+//
+//@property (nonatomic, strong) NSMutableSet *scrubFields;
+//@property (nonatomic, strong) NSMutableSet *scrubWhitelistFields;
+//@property (nonatomic) CaptureIpType captureIp;
+//
 
 @end

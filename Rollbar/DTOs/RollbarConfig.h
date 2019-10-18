@@ -7,12 +7,7 @@
 //
 
 #import "DataTransferObject.h"
-
-typedef NS_ENUM(NSUInteger, CaptureIpType) {
-    CaptureIpFull,
-    CaptureIpAnonymize,
-    CaptureIpNone
-};
+#import "CaptureIpType.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
