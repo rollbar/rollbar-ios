@@ -10,6 +10,8 @@
 #import "DataTransferObject+Protected.h"
 #import <Foundation/Foundation.h>
 
+#pragma mark - Data Fields
+
 static NSString * const DATAFIELD_ENABLED = @"enabled";
 static NSString * const DATAFIELD_TRANSMIT = @"transmit";
 static NSString * const DATAFIELD_LOGPAYLOAD = @"logPayload";
@@ -32,9 +34,32 @@ static NSString * const DATAFIELD_SCRUB_FIELDS = @"scrubFields";
 static NSString * const DATAFIELD_SCRUB_FIELDS_WHITE_LIST = @"scrubFieldsWhiteList";
 static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
 
+static NSString * const DATAFIELD_TELEMETRY_ENABLED = @"telemetryEnabled";
+static NSString * const DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS = @"scrubViewInputsTelemetry";
+static NSString * const DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS = @"telemetryViewInputsToScrub";
+
+static NSString * const DATAFIELD_CODE_VERSION = @"codeVersion";
+
+static NSString * const DATAFIELD_SERVER_HOST = @"serverHost";
+static NSString * const DATAFIELD_SERVER_ROOT = @"serverRoot";
+static NSString * const DATAFIELD_SERVER_BRANCH = @"serverBranch";
+static NSString * const DATAFIELD_SERVER_CODE_VERSION = @"serverCodeVersion";
+
+static NSString * const DATAFIELD_NOTIFIER_NAME = @"notifierName";
+static NSString * const DATAFIELD_NOTIFIER_VERSION = @"notifierVersion";
+static NSString * const DATAFIELD_FRAMEWORK = @"framework";
+
+static NSString * const DATAFIELD_PERSON_ID = @"personId";
+static NSString * const DATAFIELD_PERSON_USERNAME = @"personUsername";
+static NSString * const DATAFIELD_PERSON_EMAIL = @"personEmail";
+
+static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
+
+#pragma mark - RollbarConfig implementation
+
 @implementation RollbarConfig
 
-#pragma -mark Developer Options
+#pragma mark - Developer Options
 
 - (BOOL) enabled {
     NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_ENABLED];
@@ -72,7 +97,7 @@ static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
     [self setString:value forKey:DATAFIELD_LOGPAYLOADFILE];
 }
 
-#pragma -mark HTTP Proxy Settings
+#pragma mark - HTTP Proxy Settings
 
 - (BOOL)httpProxyEnabled {
     NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_HTTP_PROXY_ENABLED];
@@ -101,7 +126,7 @@ static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
     [self setNumber:value forKey:DATAFIELD_HTTP_PROXY_PORT];
 }
 
-#pragma -mark HTTPS Proxy Settings
+#pragma mark - HTTPS Proxy Settings
 
 - (BOOL)httpsProxyEnabled {
     NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_HTTPS_PROXY_ENABLED];
@@ -130,7 +155,7 @@ static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
     [self setNumber:value forKey:DATAFIELD_HTTPS_PROXY_PORT];
 }
 
-#pragma -mark Logging Options
+#pragma mark - Logging Options
 
 - (NSMutableString *)crashLevel {
     NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_CRASH_LEVEL];
@@ -168,20 +193,83 @@ static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
     [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY];
 }
 
-#pragma -mark Payload Content Related
+#pragma mark - Payload Content Related
 
-//- (NSMutableString *)logLevel {
-//    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_LOG_LEVEL];
-//    return result;
-//}
+- (NSMutableSet *)scrubFields {
+    NSMutableSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS];
+    return result;
+}
+
+- (void)setScrubFields:(NSMutableSet *)value {
+    [self setSet:value forKey:DATAFIELD_SCRUB_FIELDS];
+}
+
+- (NSMutableSet *)scrubWhitelistFields {
+    NSMutableSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS_WHITE_LIST];
+    return result;
+}
+
+- (void)setScrubWhitelistFields:(NSMutableSet *)value {
+    [self setSet:value forKey:DATAFIELD_SCRUB_FIELDS_WHITE_LIST];
+}
+
+- (CaptureIpType)captureIp {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_IP_CAPTURE_TYPE];
+    return [CaptureIpTypeUtil CaptureIpTypeFromString:result];
+}
+
+- (void)setCaptureIp:(CaptureIpType)value {
+    [self setSet:[[CaptureIpTypeUtil CaptureIpTypeToString:value] mutableCopy]
+          forKey:DATAFIELD_IP_CAPTURE_TYPE];
+}
+
+#pragma mark - Telemetry:
+
+- (BOOL)telemetryEnabled {
+    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_TELEMETRY_ENABLED];
+    return [result boolValue];
+}
+
+- (void)setTelemetryEnabled:(BOOL)value {
+    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_TELEMETRY_ENABLED];
+}
+
+- (BOOL)scrubViewInputsTelemetry {
+    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS];
+    return [result boolValue];
+}
+
+- (void)setScrubViewInputsTelemetry:(BOOL)value {
+    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS];
+}
+
+- (NSMutableSet *)telemetryViewInputsToScrub {
+    NSMutableSet *result = [self safelyGetSetByKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
+    return result;
+}
+
+- (void)setTelemetryViewInputsToScrub:(NSMutableSet *)value {
+    [self setSet:value forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
+}
+
+
+//@property (nonatomic, copy) NSString *codeVersion;
 //
-//- (void)setLogLevel:(NSMutableString *)value {
-//    [self setString:value forKey:DATAFIELD_LOG_LEVEL];
-//}
+//@property (nonatomic, copy) NSString *serverHost;
+//@property (nonatomic, copy) NSString *serverRoot;
+//@property (nonatomic, copy) NSString *serverBranch;
+//@property (nonatomic, copy) NSString *serverCodeVersion;
 //
-//@property (nonatomic, strong) NSMutableSet *scrubFields;
-//@property (nonatomic, strong) NSMutableSet *scrubWhitelistFields;
-//@property (nonatomic) CaptureIpType captureIp;
+//@property (nonatomic, copy) NSString *notifierName;
+//@property (nonatomic, copy) NSString *notifierVersion;
+//@property (nonatomic, copy) NSString *framework;
 //
+//// Person/user tracking:
+//@property (nonatomic, copy) NSString *personId;
+//@property (nonatomic, copy) NSString *personUsername;
+//@property (nonatomic, copy) NSString *personEmail;
+//
+//// ID to link request between client/server
+//@property (nonatomic, copy) NSString *requestId;
 
 @end

@@ -15,7 +15,7 @@
 
 }
 
-#pragma mark JSON processing routines
+#pragma mark - JSON processing routines
 
 + (BOOL)isTransferableObject:(id)obj {
     BOOL result = [NSJSONSerialization isValidJSONObject:obj];
@@ -90,7 +90,7 @@
     return jsonData.length;
 }
 
-#pragma mark de/serialization methods of JSONSupport protocol
+#pragma mark - de/serialization methods of JSONSupport protocol
 
 - (NSMutableDictionary *)jsonFriendlyData {
     return self->_data;
@@ -138,7 +138,7 @@
     return [self deserializeFromJSONData:jsonData];
 }
 
-#pragma mark initialization methods
+#pragma mark - initialization methods
 
 - (id)initWithJSONString: (NSString *)jsonString {
     self = [super init];

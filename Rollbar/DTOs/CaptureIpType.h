@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - CaptureIpType enum
+
 typedef NS_ENUM(NSUInteger, CaptureIpType) {
     CaptureIpFull,
     CaptureIpAnonymize,
     CaptureIpNone
 };
+
+#pragma mark - CaptureIpTypeUtil
 
 NS_ASSUME_NONNULL_BEGIN
 

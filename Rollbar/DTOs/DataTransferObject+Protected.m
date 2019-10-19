@@ -50,6 +50,15 @@
     return result;
 }
 
+- (NSMutableSet *)safelyGetSetByKey:(NSString *)key {
+    NSMutableSet *result = [self->_data objectForKey:key];
+    if (nil == result) {
+        result = [[NSMutableSet alloc] initWithCapacity:5];
+        [self->_data setObject:result forKey:key];
+    }
+    return result;
+}
+
 - (NSMutableArray *)safelyGetArrayByKey:(NSString *)key {
     NSMutableArray *result = [self->_data objectForKey:key];
     if (nil == result) {
@@ -83,6 +92,10 @@
 }
 
 - (void)setDictionary:(NSMutableDictionary *)data forKey:(NSString *)key {
+    [self->_data setObject:data forKey:key];
+}
+
+- (void)setSet:(NSMutableSet *)data forKey:(NSString *)key {
     [self->_data setObject:data forKey:key];
 }
 
