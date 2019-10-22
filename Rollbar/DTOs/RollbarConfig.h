@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarConfig : DataTransferObject
 
-- (NSDictionary *)customData;
+//- (NSDictionary *)customData;
 
 // Developer options:
 @property (nonatomic) BOOL enabled;
@@ -77,6 +77,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 // ID to link request between client/server
 @property (nonatomic, copy) NSString *requestId;
+
+#pragma mark - Convenience Methods
+
+- (void)setPersonId:(NSString*)personId
+           username:(NSString*)username
+              email:(NSString*)email;
+- (void)setServerHost:(NSString *)host
+                 root:(NSString*)root
+               branch:(NSString*)branch
+          codeVersion:(NSString*)codeVersion;
+- (void)setNotifierName:(NSString *)name
+                version:(NSString *)version;
 
 @end
 

@@ -252,24 +252,148 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
     [self setSet:value forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
 }
 
+#pragma mark - Code version
 
-//@property (nonatomic, copy) NSString *codeVersion;
-//
-//@property (nonatomic, copy) NSString *serverHost;
-//@property (nonatomic, copy) NSString *serverRoot;
-//@property (nonatomic, copy) NSString *serverBranch;
-//@property (nonatomic, copy) NSString *serverCodeVersion;
-//
-//@property (nonatomic, copy) NSString *notifierName;
-//@property (nonatomic, copy) NSString *notifierVersion;
-//@property (nonatomic, copy) NSString *framework;
-//
-//// Person/user tracking:
-//@property (nonatomic, copy) NSString *personId;
-//@property (nonatomic, copy) NSString *personUsername;
-//@property (nonatomic, copy) NSString *personEmail;
-//
-//// ID to link request between client/server
-//@property (nonatomic, copy) NSString *requestId;
+- (NSMutableString *)codeVersion {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_CODE_VERSION];
+    return result;
+}
+
+- (void)setCodeVersion:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_CODE_VERSION];
+}
+
+#pragma mark - Server
+
+- (NSMutableString *)serverHost {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_HOST];
+    return result;
+}
+
+- (void)setServerHost:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_SERVER_HOST];
+}
+
+- (NSMutableString *)serverRoot {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_ROOT];
+    return result;
+}
+
+- (void)setServerRoot:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_SERVER_ROOT];
+}
+
+- (NSMutableString *)serverBranch {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_BRANCH];
+    return result;
+}
+
+- (void)setServerBranch:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_SERVER_BRANCH];
+}
+
+- (NSMutableString *)serverCodeVersion {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_CODE_VERSION];
+    return result;
+}
+
+- (void)setServerCodeVersion:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_SERVER_CODE_VERSION];
+}
+
+#pragma mark - Notifier
+
+- (NSMutableString *)notifierName {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_NAME];
+    return result;
+}
+
+- (void)setNotifierName:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_NOTIFIER_NAME];
+}
+
+- (NSMutableString *)notifierVersion {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_VERSION];
+    return result;
+}
+
+- (void)setNotifierVersion:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_NOTIFIER_VERSION];
+}
+
+- (NSMutableString *)framework {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_FRAMEWORK];
+    return result;
+}
+
+- (void)setFramework:(NSMutableString *)value {
+   [self setString:value forKey:DATAFIELD_FRAMEWORK];
+}
+
+#pragma mark - Person
+
+- (NSMutableString *)personId {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_ID];
+    return result;
+}
+
+- (void)setPersonId:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_PERSON_ID];
+}
+
+- (NSMutableString *)personUsername {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_USERNAME];
+    return result;
+}
+
+- (void)setPersonUsername:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_PERSON_USERNAME];
+}
+
+- (NSMutableString *)personEmail {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_EMAIL];
+    return result;
+}
+
+- (void)setPersonEmail:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_PERSON_EMAIL];
+}
+
+#pragma mark - Request
+
+- (NSMutableString *)requestId {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_REQUEST_ID];
+    return result;
+}
+
+- (void)setRequestId:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_REQUEST_ID];
+}
+
+#pragma mark - Convenience Methods
+
+- (void)setPersonId:(NSString*)personId
+           username:(NSString*)username
+              email:(NSString*)email {
+    self.personId = personId;
+    self.personUsername = username;
+    self.personEmail = email;
+}
+
+- (void)setServerHost:(NSString *)host
+                 root:(NSString*)root
+               branch:(NSString*)branch
+          codeVersion:(NSString*)codeVersion {
+    self.serverHost = host;
+    self.serverRoot = root;
+    self.serverBranch = branch;
+    self.serverCodeVersion = codeVersion;
+}
+
+- (void)setNotifierName:(NSString *)name
+                version:(NSString *)version {
+    self.notifierName = name;
+    self.notifierVersion = version;
+}
 
 @end

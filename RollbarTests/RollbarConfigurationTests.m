@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "../Rollbar/Rollbar.h"
+#import "Rollbar.h"
 #import "RollbarTestUtil.h"
 
 @interface RollbarConfigurationTests : XCTestCase
@@ -25,7 +25,7 @@
 
 - (void)testScrubWhitelistFields {
     NSString *scrubedContent = @"*****";
-    NSArray *keys = @[@"client.ios.app_name", @"client.ios.ios_version", @"body.message.body"];
+    NSArray *keys = @[@"client.os.app_name", @"client.os.os_version", @"body.message.body"];
     
     // define scrub fields:
     for (NSString *key in keys) {
@@ -288,7 +288,7 @@
 
 - (void)testScrubField {
     NSString *scrubedContent = @"*****";
-    NSArray *keys = @[@"client.ios.app_name", @"client.ios.ios_version", @"body.message.body"];
+    NSArray *keys = @[@"client.os.app_name", @"client.os.os_version", @"body.message.body"];
 
     for (NSString *key in keys) {
         [Rollbar.currentConfiguration addScrubField:key];
