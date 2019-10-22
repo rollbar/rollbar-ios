@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "../Rollbar/DTOs/RollbarPayload.h"
 #import "../Rollbar/DTOs/RollbarData.h"
+#import "../Rollbar/DTOs/RollbarConfig.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -63,6 +64,19 @@
                   [payloadAtOnce serializeToJSONString],
                   [payload serializeToJSONString]
                   );
+}
+
+- (void)testRollbarConfigDTO {
+    RollbarConfig *rc = [[RollbarConfig alloc] init];
+    rc.accessToken = @"ACCESSTOKEN";
+    rc.environment = @"ENVIRONMNET";
+    rc.endpoint = @"ENDPOINT";
+    
+    [rc setPersonId:@"PERSONID" username:@"PERSONUSERNAME" email:@"PERSONEMAIL"];
+    [rc setServerHost:@"SERVERHOST" root:@"SERVERROOT" branch:@"SERVERBRANCH" codeVersion:@"SERVERCODEVERSION"];
+    [rc setNotifierName:@"NOTIFIERNAME" version:@"NOTIFIERVERSION"];
+
+    NSString *jsonString = [rc serializeToJSONString];
 }
 
 @end

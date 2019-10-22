@@ -12,6 +12,10 @@
 
 #pragma mark - Data Fields
 
+static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
+static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
+static NSString * const DATAFIELD_DESTINATION_ENDPOINT = @"endpoint";
+
 static NSString * const DATAFIELD_ENABLED = @"enabled";
 static NSString * const DATAFIELD_TRANSMIT = @"transmit";
 static NSString * const DATAFIELD_LOGPAYLOAD = @"logPayload";
@@ -58,6 +62,35 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 #pragma mark - RollbarConfig implementation
 
 @implementation RollbarConfig
+
+#pragma mark - Rollbar destination
+
+- (NSMutableString *)accessToken {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ACCESS_TOKEN];
+    return result;
+}
+
+- (void)setAccessToken:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_DESTINATION_ACCESS_TOKEN];
+}
+
+- (NSMutableString *)environment {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENVIRONMENT];
+    return result;
+}
+
+- (void)setEnvironment:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_DESTINATION_ENVIRONMENT];
+}
+
+- (NSMutableString *)endpoint {
+    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENDPOINT];
+    return result;
+}
+
+- (void)setEndpoint:(NSMutableString *)value {
+    [self setString:value forKey:DATAFIELD_DESTINATION_ENDPOINT];
+}
 
 #pragma mark - Developer Options
 
@@ -223,7 +256,7 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
           forKey:DATAFIELD_IP_CAPTURE_TYPE];
 }
 
-#pragma mark - Telemetry:
+#pragma mark - Telemetry
 
 - (BOOL)telemetryEnabled {
     NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_TELEMETRY_ENABLED];
@@ -359,7 +392,7 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
     [self setString:value forKey:DATAFIELD_PERSON_EMAIL];
 }
 
-#pragma mark - Request
+#pragma mark - Request (an ID to link request between client/server)
 
 - (NSMutableString *)requestId {
     NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_REQUEST_ID];

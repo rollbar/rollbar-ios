@@ -15,33 +15,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 //- (NSDictionary *)customData;
 
-// Developer options:
+#pragma mark - Rollbar destination
+@property (nonatomic, copy) NSMutableString *accessToken;
+@property (nonatomic, copy) NSMutableString *environment;
+@property (nonatomic, copy) NSMutableString *endpoint;
+
+#pragma mark - Developer Options
 @property (nonatomic) BOOL enabled;
 @property (nonatomic) BOOL transmit;
 @property (nonatomic) BOOL logPayload;
 @property (nonatomic, copy) NSMutableString *logPayloadFile;
 
-// Rollbar project endpoint/destination:
-@property (nonatomic, copy) NSMutableString *accessToken;
-@property (nonatomic, copy) NSMutableString *environment;
-@property (nonatomic, copy) NSMutableString *endpoint;
-
-// HTTP proxy:
+#pragma mark - HTTP Proxy Settings
 @property (nonatomic) BOOL httpProxyEnabled;
 @property (nonatomic, copy) NSMutableString *httpProxy;
 @property (nonatomic) NSNumber *httpProxyPort;
 
-// HTTPS proxy:
+#pragma mark - HTTPS Proxy Settings
 @property (nonatomic) BOOL httpsProxyEnabled;
 @property (nonatomic, copy) NSMutableString *httpsProxy;
 @property (nonatomic) NSNumber *httpsProxyPort;
 
-// Logging options:
+#pragma mark - Logging Options
 @property (nonatomic, copy) NSMutableString *crashLevel;
 @property (nonatomic, copy) NSMutableString *logLevel;
 @property (nonatomic) NSUInteger maximumReportsPerMinute;
 @property (nonatomic) BOOL shouldCaptureConnectivity;
 
+#pragma mark - Payload Content Related
 // Payload content related:
 // ========================
 // Decides whether or not to send payload. Returns true to ignore, false to send
@@ -54,32 +55,34 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableSet *scrubWhitelistFields;
 @property (nonatomic) CaptureIpType captureIp;
 
-// Telemetry:
+#pragma mark - Telemetry
 @property (nonatomic) BOOL telemetryEnabled;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
 @property (nonatomic, strong) NSMutableSet *telemetryViewInputsToScrub;
 
+#pragma mark - Code version
 @property (nonatomic, copy) NSString *codeVersion;
 
+#pragma mark - Server
 @property (nonatomic, copy) NSString *serverHost;
 @property (nonatomic, copy) NSString *serverRoot;
 @property (nonatomic, copy) NSString *serverBranch;
 @property (nonatomic, copy) NSString *serverCodeVersion;
 
+#pragma mark - Notifier
 @property (nonatomic, copy) NSString *notifierName;
 @property (nonatomic, copy) NSString *notifierVersion;
 @property (nonatomic, copy) NSString *framework;
 
-// Person/user tracking:
+#pragma mark - Person
 @property (nonatomic, copy) NSString *personId;
 @property (nonatomic, copy) NSString *personUsername;
 @property (nonatomic, copy) NSString *personEmail;
 
-// ID to link request between client/server
+#pragma mark - Request (an ID to link request between client/server)
 @property (nonatomic, copy) NSString *requestId;
 
 #pragma mark - Convenience Methods
-
 - (void)setPersonId:(NSString*)personId
            username:(NSString*)username
               email:(NSString*)email;
