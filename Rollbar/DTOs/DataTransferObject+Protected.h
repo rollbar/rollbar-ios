@@ -10,9 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Dfines the protected DTO interface
 @interface DataTransferObject (Protected)
 
-- (id)initWithDictionary: (NSMutableDictionary *)data;
+#pragma mark - Initializers
+
+/// Initializes a DTO with data from a dictionary
+/// @param data the dictionary
+- (id)initWithDictionary: (NSDictionary *)data;
+
+#pragma mark - safe data getters by key
 
 - (DataTransferObject *)safelyGetDataTransferObjectByKey:(NSString *)key;
 - (NSMutableDictionary *)safelyGetDictionaryByKey:(NSString *)key;
@@ -20,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray *)safelyGetArrayByKey:(NSString *)key;
 - (NSMutableString *)safelyGetStringByKey:(NSString *)key;
 - (NSNumber *)safelyGetNumberByKey:(NSString *)key;
+
+#pragma mark - data setters by key
 
 - (void)setDataTransferObject:(DataTransferObject *)data forKey:(NSString *)key;
 - (void)setDictionary:(NSMutableDictionary *)data forKey:(NSString *)key;

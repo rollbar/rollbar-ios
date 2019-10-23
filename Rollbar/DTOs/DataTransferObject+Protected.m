@@ -10,7 +10,7 @@
 
 @implementation DataTransferObject (Protected)
 
-- (id)initWithDictionary: (NSMutableDictionary *)data {
+- (id)initWithDictionary: (NSDictionary *)data {
     self = [super init];
     if (self) {
         if (!data) {
@@ -20,7 +20,7 @@
             return self;
         }
         else {
-            self->_data = data;
+            self->_data = data.mutableCopy;
         }
 //        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
 //            self->_data = (NSMutableDictionary *) data;

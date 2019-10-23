@@ -20,9 +20,15 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Utility class aiding with CaptureIpType conversions
 @interface CaptureIpTypeUtil : NSObject
 
+/// Convert CaptureIpType to a string
+/// @param value CaptureIpType value
 + (NSString *) CaptureIpTypeToString:(CaptureIpType)value;
+
+/// Convert CaptureIpType value from a string
+/// @param value string representation of a CaptureIpType value
 + (CaptureIpType) CaptureIpTypeFromString:(NSString *)value;
 
 @end

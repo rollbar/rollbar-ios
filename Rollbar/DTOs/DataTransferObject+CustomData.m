@@ -11,27 +11,27 @@
 @implementation DataTransferObject (CustomData)
 
 - (void)addKeyed:(NSString *)aKey DataTransferObject:(DataTransferObject *)aValue {
-    //TODO:...
+    [self->_data setValue:aValue forKey:aKey];
 }
 
-- (void)addKeyed:(NSString *)aKey String:(NSMutableString *)aValue {
-    //TODO:...
+- (void)addKeyed:(NSString *)aKey String:(NSString *)aValue {
+    [self->_data setValue:aValue.mutableCopy forKey:aKey];
 }
 
 - (void)addKeyed:(NSString *)aKey Number:(NSNumber *)aValue {
-    //TODO:...
+    [self->_data setValue:aValue forKey:aKey];
 }
 
-- (void)addKeyed:(NSString *)aKey Array:(NSMutableArray *)aValue {
-    //TODO:...
+- (void)addKeyed:(NSString *)aKey Array:(NSArray *)aValue {
+    [self->_data setValue:aValue.mutableCopy forKey:aKey];
 }
 
-- (void)addKeyed:(NSString *)aKey Dictionary:(NSMutableDictionary *)aValue {
-    //TODO:...
+- (void)addKeyed:(NSString *)aKey Dictionary:(NSDictionary *)aValue {
+    [self->_data setValue:aValue.mutableCopy forKey:aKey];
 }
 
 - (void)addKeyed:(NSString *)aKey Placeholder:(NSNull *)aValue {
-    //TODO:...
+    [self->_data setValue:aValue.mutableCopy forKey:aKey];
 }
 
 - (BOOL)tryAddKeyed:(NSString *)aKey Object:(NSObject *)aValue {

@@ -10,9 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// A protocol adding support for file-persistence
 @protocol Persistent <NSObject>
 
+/// Save to a file
+/// @param filePath file path to save to
 - (BOOL)saveToFile:(NSString *)filePath;
+
+/// Load object state/data from a file
+/// @param filePath file path to load from
 - (BOOL)loadFromFile:(NSString *)filePath;
 
 @end
