@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)initWithJSONString: (NSString *)jsonString;
 - (id)initWithJSONData: (NSData *)jsonData;
 
+- (NSArray *)getDefinedProperties;
+- (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO;
+
 @end
 
 NS_ASSUME_NONNULL_END

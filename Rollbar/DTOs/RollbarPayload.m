@@ -15,11 +15,11 @@ static NSString * const DATAFIELD_DATA = @"data";
 
 @implementation RollbarPayload
 
-- (NSMutableString *)accessToken {
+- (NSString *)accessToken {
     return [self safelyGetStringByKey:DATAFIELD_ACCESSTOKEN];
 }
 
-- (void)setAccessToken:(NSMutableString *)accessToken {
+- (void)setAccessToken:(NSString *)accessToken {
     [self setString:accessToken forKey:DATAFIELD_ACCESSTOKEN];
 }
 

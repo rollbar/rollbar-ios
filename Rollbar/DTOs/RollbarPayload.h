@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarPayload : DataTransferObject
 
-@property (nonatomic, copy) NSMutableString *accessToken;
+@property (nonatomic, copy) NSString *accessToken;
 @property (nonatomic) RollbarData *data;
 
 @end

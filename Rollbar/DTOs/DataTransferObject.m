@@ -10,6 +10,7 @@
 #import "RollbarLogger.h"
 
 #import <Foundation/NSObjCRuntime.h>
+#import "objc/runtime.h"
 
 @implementation DataTransferObject {
 
@@ -136,6 +137,62 @@
         return NO;
     }
     return [self deserializeFromJSONData:jsonData];
+}
+
+- (NSArray *)getDefinedProperties {
+    NSMutableArray *result = [NSMutableArray array];
+    
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
+    
+    for(i = 0; i < outCount; ++i) {
+        objc_property_t property = properties[i];
+        const char *propName = property_getName(property);
+        if(propName) {
+            NSString *propertyName = [NSString stringWithCString:propName
+                                                        encoding:[NSString defaultCStringEncoding]];
+            [result addObject:propertyName];
+        }
+    }
+    
+    free(properties);
+    
+    //[result addObjectsFromArray:_customData.allKeys];
+    
+    return result;
+}
+
+- (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO {
+    return [[self getDefinedProperties] isEqualToArray:[otherDTO getDefinedProperties]];
+}
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[DataTransferObject class]]) {
+        return NO;
+    }
+    DataTransferObject *otherDTO = object;
+    if(![self hasSameDefinedPropertiesAs:otherDTO]) {
+        return NO;
+    }
+    if (self->_data.count != otherDTO->_data.count) {
+        return NO;
+    }
+//    id thisKeys = self->_data.allKeys;
+//    id otherKeys = otherDTO->_data.allKeys;
+//    if(![thisKeys isEqualToArray:otherKeys]) {
+//        return NO;
+//    }
+    for (NSString *key in self->_data) {
+        id value = self->_data[key];
+        if (value != (id)[NSNull null]
+            && otherDTO->_data[key] == (id)[NSNull null]) {
+            return NO;
+        }
+        if (![value isEqual:otherDTO->_data[key]]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 #pragma mark - initialization methods

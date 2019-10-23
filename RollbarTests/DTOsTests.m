@@ -64,6 +64,24 @@
                   [payloadAtOnce serializeToJSONString],
                   [payload serializeToJSONString]
                   );
+
+    XCTAssertTrue(![payload hasSameDefinedPropertiesAs:payloadData],
+                  @"RollbarPayload and RollbarData DTOs do not have same defined properties"
+                  );
+    XCTAssertTrue([payload hasSameDefinedPropertiesAs:payloadAtOnce],
+                  @"Two RollbarPayload DTOs do not have same defined properties"
+                  );
+    
+    XCTAssertTrue([payloadAtOnce isEqual:payload],
+                  @"Two RollbarPayload DTOs are expected to be equal"
+                  );
+
+    payload.accessToken = @"SOME_OTHER_ONE";
+    XCTAssertTrue(![payloadAtOnce isEqual:payload],
+                  @"Two RollbarPayload DTOs are NOT expected to be equal"
+                  );
+
+    //id result = [payload getDefinedProperties];
 }
 
 - (void)testRollbarConfigDTO {
@@ -71,12 +89,32 @@
     rc.accessToken = @"ACCESSTOKEN";
     rc.environment = @"ENVIRONMNET";
     rc.endpoint = @"ENDPOINT";
+    rc.logLevel = RollbarDebug;
     
     [rc setPersonId:@"PERSONID" username:@"PERSONUSERNAME" email:@"PERSONEMAIL"];
     [rc setServerHost:@"SERVERHOST" root:@"SERVERROOT" branch:@"SERVERBRANCH" codeVersion:@"SERVERCODEVERSION"];
     [rc setNotifierName:@"NOTIFIERNAME" version:@"NOTIFIERVERSION"];
+    
+    RollbarConfig *rcClone = [[RollbarConfig alloc] initWithJSONString:[rc serializeToJSONString]];
+    XCTAssertTrue([rc isEqual:rcClone],
+                  @"Two DTOs are expected to be equal"
+                  );
+    XCTAssertTrue([[rc serializeToJSONString] isEqualToString:[rcClone serializeToJSONString]],
+                  @"DTO [%@] must match DTO: [%@].",
+                  [rc serializeToJSONString],
+                  [rcClone serializeToJSONString]
+                  );
 
-    NSString *jsonString = [rc serializeToJSONString];
+    rcClone.accessToken = @"SOME_OTHER_ONE";
+    XCTAssertTrue(![rc isEqual:rcClone],
+                  @"Two DTOs are NOT expected to be equal"
+                  );
+    XCTAssertTrue(![[rc serializeToJSONString] isEqualToString:[rcClone serializeToJSONString]],
+                  @"DTO [%@] must NOT match DTO: [%@].",
+                  [rc serializeToJSONString],
+                  [rcClone serializeToJSONString]
+                  );
+
 }
 
 @end

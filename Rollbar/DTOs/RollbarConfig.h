@@ -8,6 +8,7 @@
 
 #import "DataTransferObject.h"
 #import "CaptureIpType.h"
+#import "RollbarLevel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,29 +17,29 @@ NS_ASSUME_NONNULL_BEGIN
 //- (NSDictionary *)customData;
 
 #pragma mark - Rollbar destination
-@property (nonatomic, copy) NSMutableString *accessToken;
-@property (nonatomic, copy) NSMutableString *environment;
-@property (nonatomic, copy) NSMutableString *endpoint;
+@property (nonatomic, copy) NSString *accessToken;
+@property (nonatomic, copy) NSString *environment;
+@property (nonatomic, copy) NSString *endpoint;
 
 #pragma mark - Developer Options
 @property (nonatomic) BOOL enabled;
 @property (nonatomic) BOOL transmit;
 @property (nonatomic) BOOL logPayload;
-@property (nonatomic, copy) NSMutableString *logPayloadFile;
+@property (nonatomic, copy) NSString *logPayloadFile;
 
 #pragma mark - HTTP Proxy Settings
 @property (nonatomic) BOOL httpProxyEnabled;
-@property (nonatomic, copy) NSMutableString *httpProxy;
+@property (nonatomic, copy) NSString *httpProxy;
 @property (nonatomic) NSNumber *httpProxyPort;
 
 #pragma mark - HTTPS Proxy Settings
 @property (nonatomic) BOOL httpsProxyEnabled;
-@property (nonatomic, copy) NSMutableString *httpsProxy;
+@property (nonatomic, copy) NSString *httpsProxy;
 @property (nonatomic) NSNumber *httpsProxyPort;
 
 #pragma mark - Logging Options
-@property (nonatomic, copy) NSMutableString *crashLevel;
-@property (nonatomic, copy) NSMutableString *logLevel;
+@property (nonatomic, copy) NSString *crashLevel;
+@property (nonatomic) RollbarLevel logLevel;
 @property (nonatomic) NSUInteger maximumReportsPerMinute;
 @property (nonatomic) BOOL shouldCaptureConnectivity;
 
@@ -50,15 +51,15 @@ NS_ASSUME_NONNULL_BEGIN
 // Modify payload
 //@property (nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
 // Fields to scrub from the payload
-@property (nonatomic, strong) NSMutableSet *scrubFields;
+@property (nonatomic, strong) NSSet *scrubFields;
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (nonatomic, strong) NSMutableSet *scrubWhitelistFields;
+@property (nonatomic, strong) NSSet *scrubWhitelistFields;
 @property (nonatomic) CaptureIpType captureIp;
 
 #pragma mark - Telemetry
 @property (nonatomic) BOOL telemetryEnabled;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
-@property (nonatomic, strong) NSMutableSet *telemetryViewInputsToScrub;
+@property (nonatomic, strong) NSSet *telemetryViewInputsToScrub;
 
 #pragma mark - Code version
 @property (nonatomic, copy) NSString *codeVersion;

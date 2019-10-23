@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setDictionary:(NSMutableDictionary *)data forKey:(NSString *)key;
 - (void)setSet:(NSMutableSet *)data forKey:(NSString *)key;
 - (void)setArray:(NSMutableArray *)data forKey:(NSString *)key;
-- (void)setString:(NSMutableString *)data forKey:(NSString *)key;
+- (void)setString:(NSString *)data forKey:(NSString *)key;
 - (void)setNumber:(NSNumber *)data forKey:(NSString *)key;
 
 @end

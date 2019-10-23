@@ -103,8 +103,8 @@
     [self->_data setObject:data forKey:key];
 }
 
-- (void)setString:(NSMutableString *)data forKey:(NSString *)key {
-    [self->_data setObject:data forKey:key];
+- (void)setString:(NSString *)data forKey:(NSString *)key {
+    [self->_data setObject:data.mutableCopy forKey:key];
 }
 
 - (void)setNumber:(NSNumber *)data forKey:(NSString *)key {

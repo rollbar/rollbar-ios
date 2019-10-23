@@ -65,30 +65,30 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 
 #pragma mark - Rollbar destination
 
-- (NSMutableString *)accessToken {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ACCESS_TOKEN];
+- (NSString *)accessToken {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ACCESS_TOKEN];
     return result;
 }
 
-- (void)setAccessToken:(NSMutableString *)value {
+- (void)setAccessToken:(NSString *)value {
     [self setString:value forKey:DATAFIELD_DESTINATION_ACCESS_TOKEN];
 }
 
-- (NSMutableString *)environment {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENVIRONMENT];
+- (NSString *)environment {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENVIRONMENT];
     return result;
 }
 
-- (void)setEnvironment:(NSMutableString *)value {
+- (void)setEnvironment:(NSString *)value {
     [self setString:value forKey:DATAFIELD_DESTINATION_ENVIRONMENT];
 }
 
-- (NSMutableString *)endpoint {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENDPOINT];
+- (NSString *)endpoint {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENDPOINT];
     return result;
 }
 
-- (void)setEndpoint:(NSMutableString *)value {
+- (void)setEndpoint:(NSString *)value {
     [self setString:value forKey:DATAFIELD_DESTINATION_ENDPOINT];
 }
 
@@ -121,12 +121,12 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
     [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_LOGPAYLOAD];
 }
 
-- (NSMutableString *)logPayloadFile {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_LOGPAYLOAD];
+- (NSString *)logPayloadFile {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_LOGPAYLOAD];
     return result;
 }
 
-- (void)setLogPayloadFile:(NSMutableString *)value {
+- (void)setLogPayloadFile:(NSString *)value {
     [self setString:value forKey:DATAFIELD_LOGPAYLOADFILE];
 }
 
@@ -141,12 +141,12 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
     [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_HTTP_PROXY_ENABLED];
 }
 
-- (NSMutableString *)httpProxy {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_HTTP_PROXY];
+- (NSString *)httpProxy {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_HTTP_PROXY];
     return result;
 }
 
-- (void)setHttpProxy:(NSMutableString *)value {
+- (void)setHttpProxy:(NSString *)value {
     [self setString:value forKey:DATAFIELD_HTTP_PROXY];
 }
 
@@ -170,12 +170,12 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
     [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_HTTPS_PROXY_ENABLED];
 }
 
-- (NSMutableString *)httpsProxy {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_HTTPS_PROXY];
+- (NSString *)httpsProxy {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_HTTPS_PROXY];
     return result;
 }
 
-- (void)setHttpsProxy:(NSMutableString *)value {
+- (void)setHttpsProxy:(NSString *)value {
     [self setString:value forKey:DATAFIELD_HTTPS_PROXY];
 }
 
@@ -190,22 +190,23 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 
 #pragma mark - Logging Options
 
-- (NSMutableString *)crashLevel {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_CRASH_LEVEL];
+- (NSString *)crashLevel {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_CRASH_LEVEL];
     return result;
 }
 
-- (void)setCrashLevel:(NSMutableString *)value {
+- (void)setCrashLevel:(NSString *)value {
     [self setString:value forKey:DATAFIELD_CRASH_LEVEL];
 }
 
-- (NSMutableString *)logLevel {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_LOG_LEVEL];
-    return result;
+- (RollbarLevel)logLevel {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_LOG_LEVEL];
+    return [RollbarLevelUtil RollbarLevelFromString:result];
 }
 
-- (void)setLogLevel:(NSMutableString *)value {
-    [self setString:value forKey:DATAFIELD_LOG_LEVEL];
+- (void)setLogLevel:(RollbarLevel)value {
+    [self setString:[RollbarLevelUtil RollbarLevelToString:value]
+             forKey:DATAFIELD_LOG_LEVEL];
 }
 
 - (NSUInteger)maximumReportsPerMinute {
@@ -287,119 +288,119 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 
 #pragma mark - Code version
 
-- (NSMutableString *)codeVersion {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_CODE_VERSION];
+- (NSString *)codeVersion {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_CODE_VERSION];
     return result;
 }
 
-- (void)setCodeVersion:(NSMutableString *)value {
+- (void)setCodeVersion:(NSString *)value {
     [self setString:value forKey:DATAFIELD_CODE_VERSION];
 }
 
 #pragma mark - Server
 
-- (NSMutableString *)serverHost {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_HOST];
+- (NSString *)serverHost {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_HOST];
     return result;
 }
 
-- (void)setServerHost:(NSMutableString *)value {
+- (void)setServerHost:(NSString *)value {
     [self setString:value forKey:DATAFIELD_SERVER_HOST];
 }
 
-- (NSMutableString *)serverRoot {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_ROOT];
+- (NSString *)serverRoot {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_ROOT];
     return result;
 }
 
-- (void)setServerRoot:(NSMutableString *)value {
+- (void)setServerRoot:(NSString *)value {
     [self setString:value forKey:DATAFIELD_SERVER_ROOT];
 }
 
-- (NSMutableString *)serverBranch {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_BRANCH];
+- (NSString *)serverBranch {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_BRANCH];
     return result;
 }
 
-- (void)setServerBranch:(NSMutableString *)value {
+- (void)setServerBranch:(NSString *)value {
     [self setString:value forKey:DATAFIELD_SERVER_BRANCH];
 }
 
-- (NSMutableString *)serverCodeVersion {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_CODE_VERSION];
+- (NSString *)serverCodeVersion {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_CODE_VERSION];
     return result;
 }
 
-- (void)setServerCodeVersion:(NSMutableString *)value {
+- (void)setServerCodeVersion:(NSString *)value {
     [self setString:value forKey:DATAFIELD_SERVER_CODE_VERSION];
 }
 
 #pragma mark - Notifier
 
-- (NSMutableString *)notifierName {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_NAME];
+- (NSString *)notifierName {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_NAME];
     return result;
 }
 
-- (void)setNotifierName:(NSMutableString *)value {
+- (void)setNotifierName:(NSString *)value {
     [self setString:value forKey:DATAFIELD_NOTIFIER_NAME];
 }
 
-- (NSMutableString *)notifierVersion {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_VERSION];
+- (NSString *)notifierVersion {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_VERSION];
     return result;
 }
 
-- (void)setNotifierVersion:(NSMutableString *)value {
+- (void)setNotifierVersion:(NSString *)value {
     [self setString:value forKey:DATAFIELD_NOTIFIER_VERSION];
 }
 
-- (NSMutableString *)framework {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_FRAMEWORK];
+- (NSString *)framework {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_FRAMEWORK];
     return result;
 }
 
-- (void)setFramework:(NSMutableString *)value {
+- (void)setFramework:(NSString *)value {
    [self setString:value forKey:DATAFIELD_FRAMEWORK];
 }
 
 #pragma mark - Person
 
-- (NSMutableString *)personId {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_ID];
+- (NSString *)personId {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_ID];
     return result;
 }
 
-- (void)setPersonId:(NSMutableString *)value {
+- (void)setPersonId:(NSString *)value {
     [self setString:value forKey:DATAFIELD_PERSON_ID];
 }
 
-- (NSMutableString *)personUsername {
+- (NSString *)personUsername {
     NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_USERNAME];
     return result;
 }
 
-- (void)setPersonUsername:(NSMutableString *)value {
+- (void)setPersonUsername:(NSString *)value {
     [self setString:value forKey:DATAFIELD_PERSON_USERNAME];
 }
 
-- (NSMutableString *)personEmail {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_EMAIL];
+- (NSString *)personEmail {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_EMAIL];
     return result;
 }
 
-- (void)setPersonEmail:(NSMutableString *)value {
+- (void)setPersonEmail:(NSString *)value {
     [self setString:value forKey:DATAFIELD_PERSON_EMAIL];
 }
 
 #pragma mark - Request (an ID to link request between client/server)
 
-- (NSMutableString *)requestId {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_REQUEST_ID];
+- (NSString *)requestId {
+    NSString *result = [self safelyGetStringByKey:DATAFIELD_REQUEST_ID];
     return result;
 }
 
-- (void)setRequestId:(NSMutableString *)value {
+- (void)setRequestId:(NSString *)value {
     [self setString:value forKey:DATAFIELD_REQUEST_ID];
 }
 
