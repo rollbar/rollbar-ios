@@ -12,6 +12,7 @@
 
 @class RollbarDestination;
 @class RollbarDeveloperOptions;
+@class RollbarProxy;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,18 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - properties
 @property (nonatomic, strong) RollbarDestination *destination;
 @property (nonatomic, strong) RollbarDeveloperOptions *developerOptions;
+@property (nonatomic, strong) RollbarProxy *httpProxy;
+@property (nonatomic, strong) RollbarProxy *httpsProxy;
 
 #pragma mark - Developer Options
-
 #pragma mark - HTTP Proxy Settings
-@property (nonatomic) BOOL httpProxyEnabled;
-@property (nonatomic, copy) NSString *httpProxy;
-@property (nonatomic) NSNumber *httpProxyPort;
-
 #pragma mark - HTTPS Proxy Settings
-@property (nonatomic) BOOL httpsProxyEnabled;
-@property (nonatomic, copy) NSString *httpsProxy;
-@property (nonatomic) NSNumber *httpsProxyPort;
 
 #pragma mark - Logging Options
 @property (nonatomic, copy) NSString *crashLevel;

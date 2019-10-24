@@ -27,6 +27,9 @@
                                 options:(NSJSONWritingOptions)opt
                                   error:(NSError **)error
                                    safe:(BOOL)safe {
+#ifdef DEBUG
+    opt |= (NSJSONWritingPrettyPrinted | NSJSONWritingSortedKeys);
+#endif
     if (safe) {
         if ([obj isKindOfClass:[NSArray class]]) {
             NSMutableArray *newArr = [NSMutableArray array];

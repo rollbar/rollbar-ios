@@ -11,6 +11,7 @@
 #import "RollbarCachesDirectory.h"
 #import "RollbarDestination.h"
 #import "RollbarDeveloperOptions.h"
+#import "RollbarProxy.h"
 #import <Foundation/Foundation.h>
 
 #pragma mark - constants
@@ -36,22 +37,24 @@ static NSString *configurationFilePath = nil;
 
 static NSString * const DFK_DESTINATION = @"destination";
 static NSString * const DFK_DEVELOPER_OPTIONS = @"developerOptions";
+static NSString * const DFK_HTTP_PROXY = @"httpProxy";
+static NSString * const DFK_HTTPS_PROXY = @"httpsProxy";
 //static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
 //static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
 //static NSString * const DATAFIELD_DESTINATION_ENDPOINT = @"endpoint";
 
-static NSString * const DATAFIELD_ENABLED = @"enabled";
-static NSString * const DATAFIELD_TRANSMIT = @"transmit";
-static NSString * const DATAFIELD_LOGPAYLOAD = @"logPayload";
-static NSString * const DATAFIELD_LOGPAYLOADFILE = @"logPayloadFile";
+//static NSString * const DATAFIELD_ENABLED = @"enabled";
+//static NSString * const DATAFIELD_TRANSMIT = @"transmit";
+//static NSString * const DATAFIELD_LOGPAYLOAD = @"logPayload";
+//static NSString * const DATAFIELD_LOGPAYLOADFILE = @"logPayloadFile";
 
-static NSString * const DATAFIELD_HTTP_PROXY_ENABLED = @"httpProxyEnabled";
-static NSString * const DATAFIELD_HTTP_PROXY = @"httpProxy";
-static NSString * const DATAFIELD_HTTP_PROXY_PORT = @"httpProxyPort";
-
-static NSString * const DATAFIELD_HTTPS_PROXY_ENABLED = @"httpsProxyEnabled";
-static NSString * const DATAFIELD_HTTPS_PROXY = @"httpsProxy";
-static NSString * const DATAFIELD_HTTPS_PROXY_PORT = @"httpsProxyPort";
+//static NSString * const DATAFIELD_HTTP_PROXY_ENABLED = @"httpProxyEnabled";
+//static NSString * const DATAFIELD_HTTP_PROXY = @"httpProxy";
+//static NSString * const DATAFIELD_HTTP_PROXY_PORT = @"httpProxyPort";
+//
+//static NSString * const DATAFIELD_HTTPS_PROXY_ENABLED = @"httpsProxyEnabled";
+//static NSString * const DATAFIELD_HTTPS_PROXY = @"httpsProxy";
+//static NSString * const DATAFIELD_HTTPS_PROXY_PORT = @"httpsProxyPort";
 
 static NSString * const DATAFIELD_CRASH_LEVEL = @"crashLevel";
 static NSString * const DATAFIELD_LOG_LEVEL = @"logLevel";
@@ -101,11 +104,14 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
         //self.customData = [NSMutableDictionary dictionaryWithCapacity:10];
         self.destination = [RollbarDestination new];
         self.developerOptions = [RollbarDeveloperOptions new];
+        self.httpProxy = [RollbarProxy new];
+        self.httpsProxy = [RollbarProxy new];
+
 
         self.crashLevel = @"error";
-        self.scrubFields = @[@"one", @"two"]; //NSMutableSet setWithCapacity:3];
-        self.scrubWhitelistFields =  @[@"one", @"two"]; //[NSMutableSet setWithCapacity:3];
-        self.telemetryViewInputsToScrub = @[@"one", @"two"];//[NSMutableSet setWithCapacity:3];
+        //self.scrubFields = @[@"one", @"two"]; //NSMutableSet setWithCapacity:3];
+        //self.scrubWhitelistFields =  @[@"one", @"two"]; //[NSMutableSet setWithCapacity:3];
+        //self.telemetryViewInputsToScrub = @[@"one", @"two"];//[NSMutableSet setWithCapacity:3];
 
         self.notifierName = NOTIFIER_NAME;
         self.notifierVersion = NOTIFIER_VERSION;
@@ -118,13 +124,13 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
         self.maximumReportsPerMinute = 60;
         [self setCaptureLogAsTelemetryData:NO];
         
-        self.httpProxyEnabled = NO;
-        self.httpProxy = @"";
-        self.httpProxyPort = [NSNumber numberWithInteger:0];
-
-        self.httpsProxyEnabled = NO;
-        self.httpsProxy = @"";
-        self.httpsProxyPort = [NSNumber numberWithInteger:0];
+//        self.httpProxyEnabled = NO;
+//        self.httpProxy = @"";
+//        self.httpProxyPort = [NSNumber numberWithInteger:0];
+//
+//        self.httpsProxyEnabled = NO;
+//        self.httpsProxy = @"";
+//        self.httpsProxyPort = [NSNumber numberWithInteger:0];
 
         //[self save];
     }
@@ -136,7 +142,6 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 #pragma mark - Rollbar destination
 
 - (RollbarDestination *)destination {
-    //return (RollbarDestination *)[self safelyGetDataTransferObjectByKey:DFK_DESTINATION];
     id data = [self safelyGetDictionaryByKey:DFK_DESTINATION];
     id dto = [[RollbarDestination alloc] initWithDictionary:data];;
     return dto;
@@ -149,8 +154,6 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 #pragma mark - Developer options
 
 - (RollbarDeveloperOptions *)developerOptions {
-    //return (RollbarDeveloperOptions *)[self safelyGetDataTransferObjectByKey:DFK_DEVELOPER_OPTIONS];
-    
     id data = [self safelyGetDictionaryByKey:DFK_DEVELOPER_OPTIONS];
     return [[RollbarDeveloperOptions alloc] initWithDictionary:data];
 }
@@ -161,60 +164,24 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 #pragma mark - HTTP Proxy Settings
 
-- (BOOL)httpProxyEnabled {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_HTTP_PROXY_ENABLED];
-    return [result boolValue];
+- (RollbarProxy *)httpProxy {
+    id data = [self safelyGetDictionaryByKey:DFK_HTTP_PROXY];
+    return [[RollbarProxy alloc] initWithDictionary:data];
 }
 
-- (void)setHttpProxyEnabled:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_HTTP_PROXY_ENABLED];
-}
-
-- (NSString *)httpProxy {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_HTTP_PROXY];
-    return result;
-}
-
-- (void)setHttpProxy:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_HTTP_PROXY];
-}
-
-- (NSNumber *)httpProxyPort {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_HTTP_PROXY_PORT];
-    return result;
-}
-
-- (void)setHttpProxyPort:(NSNumber *)value {
-    [self setNumber:value forKey:DATAFIELD_HTTP_PROXY_PORT];
+- (void)setHttpProxy:(RollbarProxy *)value {
+    [self setDataTransferObject:value forKey:DFK_HTTP_PROXY];
 }
 
 #pragma mark - HTTPS Proxy Settings
 
-- (BOOL)httpsProxyEnabled {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_HTTPS_PROXY_ENABLED];
-    return [result boolValue];
+- (RollbarProxy *)httpsProxy {
+    id data = [self safelyGetDictionaryByKey:DFK_HTTPS_PROXY];
+    return [[RollbarProxy alloc] initWithDictionary:data];
 }
 
-- (void)setHttpsProxyEnabled:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_HTTPS_PROXY_ENABLED];
-}
-
-- (NSString *)httpsProxy {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_HTTPS_PROXY];
-    return result;
-}
-
-- (void)setHttpsProxy:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_HTTPS_PROXY];
-}
-
-- (NSNumber *)httpsProxyPort {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_HTTPS_PROXY_PORT];
-    return result;
-}
-
-- (void)setHttpsProxyPort:(NSNumber *)value {
-    [self setNumber:value forKey:DATAFIELD_HTTPS_PROXY_PORT];
+- (void)setHttpsProxy:(RollbarProxy *)value {
+    [self setDataTransferObject:value forKey:DFK_HTTPS_PROXY];
 }
 
 #pragma mark - Logging Options

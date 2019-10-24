@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
                                 options:(NSJSONWritingOptions)opt
                                   error:(NSError **)error
                                    safe:(BOOL)safe {
+#ifdef DEBUG
+    opt |= NSJSONWritingPrettyPrinted;
+#endif
     if (safe) {
         if ([obj isKindOfClass:[NSArray class]]) {
             NSMutableArray *newArr = [NSMutableArray array];
