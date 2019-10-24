@@ -286,19 +286,19 @@ static NSString *configurationFilePath = nil;
     _captureIp = captureIp;
 }
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-    if (value) {
-        _customData[key] = value;
-    } else {
-        [_customData removeObjectForKey:key];
-    }
-    
-    [self save];
-}
-
-- (id)valueForUndefinedKey:(NSString *)key {
-    return _customData[key];
-}
+//- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+//    if (value) {
+//        _customData[key] = value;
+//    } else {
+//        [_customData removeObjectForKey:key];
+//    }
+//    
+//    [self save];
+//}
+//
+//- (id)valueForUndefinedKey:(NSString *)key {
+//    return _customData[key];
+//}
 
 // Add a key value observer for all properties so that this object
 // is saved to disk every time a property is updated

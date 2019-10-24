@@ -10,6 +10,8 @@
 #import "../Rollbar/DTOs/RollbarPayload.h"
 #import "../Rollbar/DTOs/RollbarData.h"
 #import "../Rollbar/DTOs/RollbarConfig.h"
+#import "../Rollbar/DTOs/RollbarDestination.h"
+#import "../Rollbar/DTOs/RollbarDeveloperOptions.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -85,10 +87,11 @@
 }
 
 - (void)testRollbarConfigDTO {
-    RollbarConfig *rc = [[RollbarConfig alloc] init];
-    rc.accessToken = @"ACCESSTOKEN";
-    rc.environment = @"ENVIRONMNET";
-    rc.endpoint = @"ENDPOINT";
+    RollbarConfig *rc = [RollbarConfig new];
+    //id destination = rc.destination;
+    rc.destination.accessToken = @"ACCESSTOKEN";
+    rc.destination.environment = @"ENVIRONMNET";
+    rc.destination.endpoint = @"ENDPOINT";
     rc.logLevel = RollbarDebug;
     
     [rc setPersonId:@"PERSONID" username:@"PERSONUSERNAME" email:@"PERSONEMAIL"];
@@ -96,6 +99,10 @@
     [rc setNotifierName:@"NOTIFIERNAME" version:@"NOTIFIERVERSION"];
     
     RollbarConfig *rcClone = [[RollbarConfig alloc] initWithJSONString:[rc serializeToJSONString]];
+    
+    id scrubList = rc.scrubFields;
+    id scrubListClone = rcClone.scrubFields;
+    
     XCTAssertTrue([rc isEqual:rcClone],
                   @"Two DTOs are expected to be equal"
                   );
@@ -105,7 +112,7 @@
                   [rcClone serializeToJSONString]
                   );
 
-    rcClone.accessToken = @"SOME_OTHER_ONE";
+    rcClone.destination.accessToken = @"SOME_OTHER_ONE";
     XCTAssertTrue(![rc isEqual:rcClone],
                   @"Two DTOs are NOT expected to be equal"
                   );

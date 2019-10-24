@@ -10,6 +10,8 @@
 
 @implementation DataTransferObject (Protected)
 
+#pragma mark - Initializers
+
 - (id)initWithDictionary: (NSDictionary *)data {
     self = [super init];
     if (self) {
@@ -20,7 +22,13 @@
             return self;
         }
         else {
-            self->_data = data.mutableCopy;
+            if ([data isKindOfClass:[NSMutableDictionary class]]) {
+                self->_data = (NSMutableDictionary *)data;
+            }
+            else {
+                self->_data = data.mutableCopy;
+            }
+                
         }
 //        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
 //            self->_data = (NSMutableDictionary *) data;
@@ -32,12 +40,16 @@
     return self;
 }
 
+#pragma mark - safe data getters by key
+
 - (DataTransferObject *)safelyGetDataTransferObjectByKey:(NSString *)key {
-    DataTransferObject *result = [self->_data objectForKey:key];
-    if (nil == result) {
-        result = [[DataTransferObject alloc] init];
-        [self->_data setObject:result forKey:key];
-    }
+//    DataTransferObject *result = [self->_data objectForKey:key];
+//    if (nil == result) {
+//        result = [[DataTransferObject alloc] initWi];
+//        [self->_data setObject:result forKey:key];
+//    }
+    DataTransferObject *result = [[DataTransferObject alloc] initWithDictionary:[self->_data objectForKey:key]];
+
     return result;
 }
 
@@ -86,21 +98,22 @@
     return result;
 }
 
+#pragma mark - data setters by key
 
 - (void)setDataTransferObject:(DataTransferObject *)data forKey:(NSString *)key {
-    [self->_data setObject:data forKey:key];
+    [self->_data setObject:(data->_data) forKey:key];
 }
 
-- (void)setDictionary:(NSMutableDictionary *)data forKey:(NSString *)key {
-    [self->_data setObject:data forKey:key];
+- (void)setDictionary:(NSDictionary *)data forKey:(NSString *)key {
+    [self->_data setObject:data.mutableCopy forKey:key];
 }
 
-- (void)setSet:(NSMutableSet *)data forKey:(NSString *)key {
-    [self->_data setObject:data forKey:key];
+- (void)setSet:(NSSet *)data forKey:(NSString *)key {
+    [self->_data setObject:data.mutableCopy forKey:key];
 }
 
-- (void)setArray:(NSMutableArray *)data forKey:(NSString *)key {
-    [self->_data setObject:data forKey:key];
+- (void)setArray:(NSArray *)data forKey:(NSString *)key {
+    [self->_data setObject:data.mutableCopy forKey:key];
 }
 
 - (void)setString:(NSString *)data forKey:(NSString *)key {

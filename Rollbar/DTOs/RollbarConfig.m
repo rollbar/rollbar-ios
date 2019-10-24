@@ -8,13 +8,37 @@
 
 #import "RollbarConfig.h"
 #import "DataTransferObject+Protected.h"
+#import "RollbarCachesDirectory.h"
+#import "RollbarDestination.h"
+#import "RollbarDeveloperOptions.h"
 #import <Foundation/Foundation.h>
 
-#pragma mark - Data Fields
+#pragma mark - constants
 
-static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
-static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
-static NSString * const DATAFIELD_DESTINATION_ENDPOINT = @"endpoint";
+static NSString * const NOTIFIER_VERSION = @"1.9.0";
+
+#define NOTIFIER_NAME_PREFIX = @"rollbar-";
+#if TARGET_OS_IPHONE
+static NSString * const OPERATING_SYSTEM = @"ios";
+static NSString * const NOTIFIER_NAME = @"rollbar-ios";
+#else
+static NSString * const OPERATING_SYSTEM = @"macos";
+static NSString * const NOTIFIER_NAME = @"rollbar-macos";
+#endif
+
+static NSString * const CONFIGURATION_FILENAME = @"rollbar.config";
+
+#pragma mark - static data
+
+static NSString *configurationFilePath = nil;
+
+#pragma mark - data fields
+
+static NSString * const DFK_DESTINATION = @"destination";
+static NSString * const DFK_DEVELOPER_OPTIONS = @"developerOptions";
+//static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
+//static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
+//static NSString * const DATAFIELD_DESTINATION_ENDPOINT = @"endpoint";
 
 static NSString * const DATAFIELD_ENABLED = @"enabled";
 static NSString * const DATAFIELD_TRANSMIT = @"transmit";
@@ -59,75 +83,80 @@ static NSString * const DATAFIELD_PERSON_EMAIL = @"personEmail";
 
 static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 
-#pragma mark - RollbarConfig implementation
+static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
+
+#pragma mark - class implementation
 
 @implementation RollbarConfig
 
+#pragma mark - initializers
+
+- (id)init {
+    if (!configurationFilePath) {
+        NSString *cachesDirectory = [RollbarCachesDirectory directory];
+        configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
+    }
+
+    if (self = [super init]) {
+        //self.customData = [NSMutableDictionary dictionaryWithCapacity:10];
+        self.destination = [RollbarDestination new];
+        self.developerOptions = [RollbarDeveloperOptions new];
+
+        self.crashLevel = @"error";
+        self.scrubFields = @[@"one", @"two"]; //NSMutableSet setWithCapacity:3];
+        self.scrubWhitelistFields =  @[@"one", @"two"]; //[NSMutableSet setWithCapacity:3];
+        self.telemetryViewInputsToScrub = @[@"one", @"two"];//[NSMutableSet setWithCapacity:3];
+
+        self.notifierName = NOTIFIER_NAME;
+        self.notifierVersion = NOTIFIER_VERSION;
+        self.framework = OPERATING_SYSTEM;
+        self.captureIp = CaptureIpFull;
+        
+        self.logLevel = RollbarInfo;
+
+        self.telemetryEnabled = NO;
+        self.maximumReportsPerMinute = 60;
+        [self setCaptureLogAsTelemetryData:NO];
+        
+        self.httpProxyEnabled = NO;
+        self.httpProxy = @"";
+        self.httpProxyPort = [NSNumber numberWithInteger:0];
+
+        self.httpsProxyEnabled = NO;
+        self.httpsProxy = @"";
+        self.httpsProxyPort = [NSNumber numberWithInteger:0];
+
+        //[self save];
+    }
+
+    return self;
+}
+
+
 #pragma mark - Rollbar destination
 
-- (NSString *)accessToken {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ACCESS_TOKEN];
-    return result;
+- (RollbarDestination *)destination {
+    //return (RollbarDestination *)[self safelyGetDataTransferObjectByKey:DFK_DESTINATION];
+    id data = [self safelyGetDictionaryByKey:DFK_DESTINATION];
+    id dto = [[RollbarDestination alloc] initWithDictionary:data];;
+    return dto;
 }
 
-- (void)setAccessToken:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_DESTINATION_ACCESS_TOKEN];
+- (void)setDestination:(RollbarDestination *)destination {
+    [self setDataTransferObject:destination forKey:DFK_DESTINATION];
 }
 
-- (NSString *)environment {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENVIRONMENT];
-    return result;
+#pragma mark - Developer options
+
+- (RollbarDeveloperOptions *)developerOptions {
+    //return (RollbarDeveloperOptions *)[self safelyGetDataTransferObjectByKey:DFK_DEVELOPER_OPTIONS];
+    
+    id data = [self safelyGetDictionaryByKey:DFK_DEVELOPER_OPTIONS];
+    return [[RollbarDeveloperOptions alloc] initWithDictionary:data];
 }
 
-- (void)setEnvironment:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_DESTINATION_ENVIRONMENT];
-}
-
-- (NSString *)endpoint {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_DESTINATION_ENDPOINT];
-    return result;
-}
-
-- (void)setEndpoint:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_DESTINATION_ENDPOINT];
-}
-
-#pragma mark - Developer Options
-
-- (BOOL) enabled {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_ENABLED];
-    return [result boolValue];
-}
-
-- (void)setEnabled:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_ENABLED];
-}
-
-- (BOOL)transmit {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_TRANSMIT];
-    return [result boolValue];
-}
-
-- (void)setTransmit:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_TRANSMIT];
-}
-
-- (BOOL)logPayload {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_LOGPAYLOAD];
-    return [result boolValue];
-}
-
-- (void)setLogPayload:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_LOGPAYLOAD];
-}
-
-- (NSString *)logPayloadFile {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_LOGPAYLOAD];
-    return result;
-}
-
-- (void)setLogPayloadFile:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_LOGPAYLOADFILE];
+- (void)setDeveloperOptions:(RollbarDeveloperOptions *)developerOptions {
+    [self setDataTransferObject:developerOptions forKey:DFK_DEVELOPER_OPTIONS];
 }
 
 #pragma mark - HTTP Proxy Settings
@@ -229,21 +258,21 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 
 #pragma mark - Payload Content Related
 
-- (NSMutableSet *)scrubFields {
-    NSMutableSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS];
+- (NSSet *)scrubFields {
+    NSSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS];
     return result;
 }
 
-- (void)setScrubFields:(NSMutableSet *)value {
+- (void)setScrubFields:(NSSet *)value {
     [self setSet:value forKey:DATAFIELD_SCRUB_FIELDS];
 }
 
-- (NSMutableSet *)scrubWhitelistFields {
-    NSMutableSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS_WHITE_LIST];
+- (NSSet *)scrubWhitelistFields {
+    NSSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS_WHITE_LIST];
     return result;
 }
 
-- (void)setScrubWhitelistFields:(NSMutableSet *)value {
+- (void)setScrubWhitelistFields:(NSSet *)value {
     [self setSet:value forKey:DATAFIELD_SCRUB_FIELDS_WHITE_LIST];
 }
 
@@ -428,6 +457,17 @@ static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
                 version:(NSString *)version {
     self.notifierName = name;
     self.notifierVersion = version;
+}
+
+#pragma mark - Custom data
+
+- (NSDictionary *)customData {
+    NSMutableDictionary *result = [self safelyGetDictionaryByKey:DATAFIELD_CUSTOM_DATA];
+    return result;
+}
+
+- (void)setCustomData:(NSDictionary *)value {
+    [self setDictionary:value forKey:DATAFIELD_CUSTOM_DATA];
 }
 
 @end

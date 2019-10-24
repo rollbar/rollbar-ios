@@ -10,22 +10,17 @@
 #import "CaptureIpType.h"
 #import "RollbarLevel.h"
 
+@class RollbarDestination;
+@class RollbarDeveloperOptions;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarConfig : DataTransferObject
-
-//- (NSDictionary *)customData;
-
-#pragma mark - Rollbar destination
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *environment;
-@property (nonatomic, copy) NSString *endpoint;
+#pragma mark - properties
+@property (nonatomic, strong) RollbarDestination *destination;
+@property (nonatomic, strong) RollbarDeveloperOptions *developerOptions;
 
 #pragma mark - Developer Options
-@property (nonatomic) BOOL enabled;
-@property (nonatomic) BOOL transmit;
-@property (nonatomic) BOOL logPayload;
-@property (nonatomic, copy) NSString *logPayloadFile;
 
 #pragma mark - HTTP Proxy Settings
 @property (nonatomic) BOOL httpProxyEnabled;
@@ -58,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Telemetry
 @property (nonatomic) BOOL telemetryEnabled;
+@property (nonatomic) BOOL captureLogAsTelemetryData;
+@property (nonatomic) BOOL captureConnectivityAsTelemetryData;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
 @property (nonatomic, strong) NSSet *telemetryViewInputsToScrub;
 
@@ -93,6 +90,9 @@ NS_ASSUME_NONNULL_BEGIN
           codeVersion:(NSString*)codeVersion;
 - (void)setNotifierName:(NSString *)name
                 version:(NSString *)version;
+
+#pragma mark - Custom data
+@property (nonatomic, strong) NSDictionary *customData;
 
 @end
 
