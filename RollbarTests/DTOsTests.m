@@ -15,6 +15,7 @@
 #import "../Rollbar/DTOs/RollbarProxy.h"
 #import "../Rollbar/DTOs/RollbarScrubbingOptions.h"
 #import "../Rollbar/DTOs/RollbarServer.h"
+#import "../Rollbar/DTOs/RollbarPerson.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -146,6 +147,46 @@
     dto.codeVersion = @"3.2.5";
     XCTAssertTrue(NSOrderedSame == [dto.codeVersion compare:@"3.2.5"],
                   @"Proper new code version"
+                  );
+}
+
+- (void)testRollbarPersonDTO {
+    RollbarPerson *dto = [[RollbarPerson alloc] initWithID:@"ID"
+                                                  username:@"USERNAME"
+                                                     email:@"EMAIL"
+                          ];
+    XCTAssertTrue(NSOrderedSame == [dto.ID compare:@"ID"],
+                  @"Proper ID"
+                  );
+    XCTAssertTrue(NSOrderedSame == [dto.username compare:@"USERNAME"],
+                  @"Proper username"
+                  );
+    XCTAssertTrue(NSOrderedSame == [dto.email compare:@"EMAIL"],
+                  @"Proper email"
+                  );
+
+    dto.ID = @"ID1";
+    XCTAssertTrue(NSOrderedSame == [dto.ID compare:@"ID1"],
+                  @"Proper ID"
+                  );
+    dto.username = @"USERNAME1";
+    XCTAssertTrue(NSOrderedSame == [dto.username compare:@"USERNAME1"],
+                  @"Proper username"
+                  );
+    dto.email = @"EMAIL1";
+    XCTAssertTrue(NSOrderedSame == [dto.email compare:@"EMAIL1"],
+                  @"Proper email"
+                  );
+    
+    dto = [[RollbarPerson alloc] initWithID:@"ID007"];
+    XCTAssertTrue(NSOrderedSame == [dto.ID compare:@"ID007"],
+                  @"Proper ID"
+                  );
+    XCTAssertTrue([dto.username isEqualToString:@""],
+                  @"Proper default username"
+                  );
+    XCTAssertTrue([dto.email isEqualToString:@""],
+                  @"Proper default email"
                   );
 }
 
