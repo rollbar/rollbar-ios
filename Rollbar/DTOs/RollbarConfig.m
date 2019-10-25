@@ -13,6 +13,7 @@
 #import "RollbarDeveloperOptions.h"
 #import "RollbarProxy.h"
 #import "RollbarScrubbingOptions.h"
+#import "RollbarServer.h"
 #import <Foundation/Foundation.h>
 
 #pragma mark - constants
@@ -41,6 +42,7 @@ static NSString * const DFK_DEVELOPER_OPTIONS = @"developerOptions";
 static NSString * const DFK_DATA_SCRUBBER = @"dataScrubber";
 static NSString * const DFK_HTTP_PROXY = @"httpProxy";
 static NSString * const DFK_HTTPS_PROXY = @"httpsProxy";
+static NSString * const DFK_SERVER = @"server";
 
 //static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
 //static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
@@ -176,6 +178,17 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
     [self setDataTransferObject:value forKey:DFK_DATA_SCRUBBER];
 }
 
+#pragma mark - Server
+
+- (RollbarServer *)server {
+    id data = [self safelyGetDictionaryByKey:DFK_SERVER];
+    return [[RollbarServer alloc] initWithDictionary:data];
+}
+
+- (void)setServer:(RollbarServer *)value {
+    [self setDataTransferObject:value forKey:DFK_SERVER];
+}
+
 #pragma mark - HTTP Proxy Settings
 
 - (RollbarProxy *)httpProxy {
@@ -282,44 +295,6 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 - (void)setCodeVersion:(NSString *)value {
     [self setString:value forKey:DATAFIELD_CODE_VERSION];
-}
-
-#pragma mark - Server
-
-- (NSString *)serverHost {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_HOST];
-    return result;
-}
-
-- (void)setServerHost:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_SERVER_HOST];
-}
-
-- (NSString *)serverRoot {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_ROOT];
-    return result;
-}
-
-- (void)setServerRoot:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_SERVER_ROOT];
-}
-
-- (NSString *)serverBranch {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_BRANCH];
-    return result;
-}
-
-- (void)setServerBranch:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_SERVER_BRANCH];
-}
-
-- (NSString *)serverCodeVersion {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_SERVER_CODE_VERSION];
-    return result;
-}
-
-- (void)setServerCodeVersion:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_SERVER_CODE_VERSION];
 }
 
 #pragma mark - Notifier
