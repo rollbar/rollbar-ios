@@ -14,6 +14,7 @@
 #import "../Rollbar/DTOs/RollbarDeveloperOptions.h"
 #import "../Rollbar/DTOs/RollbarProxy.h"
 #import "../Rollbar/DTOs/RollbarScrubbingOptions.h"
+#import "../Rollbar/DTOs/RollbarServer.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -108,6 +109,43 @@
     dto.enabled = NO;
     XCTAssertTrue(!dto.enabled,
                   @"Expected to be disabled"
+                  );
+}
+
+- (void)testRollbarServerDTO {
+    RollbarServer *dto = [[RollbarServer alloc] initWithHost:@"HOST"
+                                                        root:@"ROOT"
+                                                      branch:@"BRANCH"
+                                                 codeVersion:@"1.2.3"
+                          ];
+    XCTAssertTrue(NSOrderedSame == [dto.host compare:@"HOST"],
+                  @"Proper host"
+                  );
+    XCTAssertTrue(NSOrderedSame == [dto.root compare:@"ROOT"],
+                  @"Proper root"
+                  );
+    XCTAssertTrue(NSOrderedSame == [dto.branch compare:@"BRANCH"],
+                  @"Proper branch"
+                  );
+    XCTAssertTrue(NSOrderedSame == [dto.codeVersion compare:@"1.2.3"],
+                  @"Proper code version"
+                  );
+
+    dto.host = @"h1";
+    XCTAssertTrue(NSOrderedSame == [dto.host compare:@"h1"],
+                  @"Proper new host"
+                  );
+    dto.root = @"r1";
+    XCTAssertTrue(NSOrderedSame == [dto.root compare:@"r1"],
+                  @"Proper new root"
+                  );
+    dto.branch = @"b1";
+    XCTAssertTrue(NSOrderedSame == [dto.branch compare:@"b1"],
+                  @"Proper new branch"
+                  );
+    dto.codeVersion = @"3.2.5";
+    XCTAssertTrue(NSOrderedSame == [dto.codeVersion compare:@"3.2.5"],
+                  @"Proper new code version"
                   );
 }
 
