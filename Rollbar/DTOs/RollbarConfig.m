@@ -380,10 +380,10 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
                  root:(NSString*)root
                branch:(NSString*)branch
           codeVersion:(NSString*)codeVersion {
-    self.serverHost = host;
-    self.serverRoot = root;
-    self.serverBranch = branch;
-    self.serverCodeVersion = codeVersion;
+    self.server.host = host;
+    self.server.root = root;
+    self.server.branch = branch;
+    self.server.codeVersion = codeVersion;
 }
 
 - (void)setNotifierName:(NSString *)name
