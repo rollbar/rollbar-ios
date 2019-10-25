@@ -26,6 +26,8 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 ## Release Notes
 
 **1.9.0**
+- feat: ref #203: Build JSON serializable base for Rollbar DTOs
+- feat: ref #205: Reimplement RollbarConfiguration as a Rollbar DTO
 - feat: ref #194: Capture relevant notifier config with every payload.
  - chore: bumped the version up
  
