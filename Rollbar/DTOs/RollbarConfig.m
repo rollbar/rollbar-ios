@@ -15,6 +15,7 @@
 #import "RollbarScrubbingOptions.h"
 #import "RollbarServer.h"
 #import "RollbarPerson.h"
+#import "RollbarModule.h"
 #import <Foundation/Foundation.h>
 
 #pragma mark - constants
@@ -45,31 +46,15 @@ static NSString * const DFK_HTTP_PROXY = @"httpProxy";
 static NSString * const DFK_HTTPS_PROXY = @"httpsProxy";
 static NSString * const DFK_SERVER = @"server";
 static NSString * const DFK_PERSON = @"person";
+static NSString * const DFK_NOTIFIER = @"notifier";
 
-//static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
-//static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
-//static NSString * const DATAFIELD_DESTINATION_ENDPOINT = @"endpoint";
 
-//static NSString * const DATAFIELD_ENABLED = @"enabled";
-//static NSString * const DATAFIELD_TRANSMIT = @"transmit";
-//static NSString * const DATAFIELD_LOGPAYLOAD = @"logPayload";
-//static NSString * const DATAFIELD_LOGPAYLOADFILE = @"logPayloadFile";
-
-//static NSString * const DATAFIELD_HTTP_PROXY_ENABLED = @"httpProxyEnabled";
-//static NSString * const DATAFIELD_HTTP_PROXY = @"httpProxy";
-//static NSString * const DATAFIELD_HTTP_PROXY_PORT = @"httpProxyPort";
-//
-//static NSString * const DATAFIELD_HTTPS_PROXY_ENABLED = @"httpsProxyEnabled";
-//static NSString * const DATAFIELD_HTTPS_PROXY = @"httpsProxy";
-//static NSString * const DATAFIELD_HTTPS_PROXY_PORT = @"httpsProxyPort";
 
 static NSString * const DATAFIELD_CRASH_LEVEL = @"crashLevel";
 static NSString * const DATAFIELD_LOG_LEVEL = @"logLevel";
 static NSString * const DATAFIELD_MAX_REPORTS_PER_MINUTE = @"maximumReportsPerMinute";
 static NSString * const DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY = @"shouldCaptureConnectivity";
 
-//static NSString * const DATAFIELD_SCRUB_FIELDS = @"scrubFields";
-//static NSString * const DATAFIELD_SCRUB_FIELDS_WHITE_LIST = @"scrubFieldsWhiteList";
 static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
 
 static NSString * const DATAFIELD_TELEMETRY_ENABLED = @"telemetryEnabled";
@@ -78,18 +63,7 @@ static NSString * const DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS = @"telemet
 
 static NSString * const DATAFIELD_CODE_VERSION = @"codeVersion";
 
-//static NSString * const DATAFIELD_SERVER_HOST = @"serverHost";
-//static NSString * const DATAFIELD_SERVER_ROOT = @"serverRoot";
-//static NSString * const DATAFIELD_SERVER_BRANCH = @"serverBranch";
-//static NSString * const DATAFIELD_SERVER_CODE_VERSION = @"serverCodeVersion";
-
-static NSString * const DATAFIELD_NOTIFIER_NAME = @"notifierName";
-static NSString * const DATAFIELD_NOTIFIER_VERSION = @"notifierVersion";
 static NSString * const DATAFIELD_FRAMEWORK = @"framework";
-
-//static NSString * const DATAFIELD_PERSON_ID = @"personId";
-//static NSString * const DATAFIELD_PERSON_USERNAME = @"personUsername";
-//static NSString * const DATAFIELD_PERSON_EMAIL = @"personEmail";
 
 static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 
@@ -120,8 +94,8 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
         //self.scrubWhitelistFields =  @[@"one", @"two"]; //[NSMutableSet setWithCapacity:3];
         //self.telemetryViewInputsToScrub = @[@"one", @"two"];//[NSMutableSet setWithCapacity:3];
 
-        self.notifierName = NOTIFIER_NAME;
-        self.notifierVersion = NOTIFIER_VERSION;
+        self.notifier.name = NOTIFIER_NAME;
+        self.notifier.version = NOTIFIER_VERSION;
         self.framework = OPERATING_SYSTEM;
         self.captureIp = CaptureIpFull;
         
@@ -167,6 +141,17 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 - (void)setDeveloperOptions:(RollbarDeveloperOptions *)developerOptions {
     [self setDataTransferObject:developerOptions forKey:DFK_DEVELOPER_OPTIONS];
+}
+
+#pragma mark - Notifier
+
+- (RollbarModule *)notifier {
+    id data = [self safelyGetDictionaryByKey:DFK_NOTIFIER];
+    return [[RollbarModule alloc] initWithDictionary:data];
+}
+
+- (void)setNotifier:(RollbarModule *)developerOptions {
+    [self setDataTransferObject:developerOptions forKey:DFK_NOTIFIER];
 }
 
 #pragma mark - Data scrubber
@@ -310,35 +295,6 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
     [self setString:value forKey:DATAFIELD_CODE_VERSION];
 }
 
-#pragma mark - Notifier
-
-- (NSString *)notifierName {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_NAME];
-    return result;
-}
-
-- (void)setNotifierName:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_NOTIFIER_NAME];
-}
-
-- (NSString *)notifierVersion {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_NOTIFIER_VERSION];
-    return result;
-}
-
-- (void)setNotifierVersion:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_NOTIFIER_VERSION];
-}
-
-- (NSString *)framework {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_FRAMEWORK];
-    return result;
-}
-
-- (void)setFramework:(NSString *)value {
-   [self setString:value forKey:DATAFIELD_FRAMEWORK];
-}
-
 #pragma mark - Request (an ID to link request between client/server)
 
 - (NSString *)requestId {
@@ -372,8 +328,8 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 - (void)setNotifierName:(NSString *)name
                 version:(NSString *)version {
-    self.notifierName = name;
-    self.notifierVersion = version;
+    self.notifier.name = name;
+    self.notifier.version = version;
 }
 
 #pragma mark - Custom data

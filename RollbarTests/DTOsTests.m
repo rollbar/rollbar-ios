@@ -16,6 +16,7 @@
 #import "../Rollbar/DTOs/RollbarScrubbingOptions.h"
 #import "../Rollbar/DTOs/RollbarServer.h"
 #import "../Rollbar/DTOs/RollbarPerson.h"
+#import "../Rollbar/DTOs/RollbarModule.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -187,6 +188,35 @@
                   );
     XCTAssertTrue([dto.email isEqualToString:@""],
                   @"Proper default email"
+                  );
+}
+
+- (void)testRollbarModuleDTO {
+    RollbarModule *dto = [[RollbarModule alloc] initWithName:@"ModuleName"
+                                                  version:@"v1.2.3"
+                          ];
+    XCTAssertTrue([dto.name isEqualToString:@"ModuleName"],
+                  @"Proper name"
+                  );
+    XCTAssertTrue([dto.version isEqualToString:@"v1.2.3"],
+                  @"Proper version"
+                  );
+
+    dto.name = @"MN1";
+    XCTAssertTrue([dto.name isEqualToString:@"MN1"],
+                  @"Proper name"
+                  );
+    dto.version = @"v3.2.1";
+    XCTAssertTrue([dto.version isEqualToString:@"v3.2.1"],
+                  @"Proper version"
+                  );
+
+    dto = [[RollbarModule alloc] initWithName:@"Module"];
+    XCTAssertTrue([dto.name isEqualToString:@"Module"],
+                  @"Proper name"
+                  );
+    XCTAssertTrue([dto.version isEqualToString:@""],
+                  @"Proper version"
                   );
 }
 
