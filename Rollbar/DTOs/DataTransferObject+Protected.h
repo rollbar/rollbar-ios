@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (DataTransferObject *)safelyGetDataTransferObjectByKey:(NSString *)key;
 - (NSMutableDictionary *)safelyGetDictionaryByKey:(NSString *)key;
-- (NSMutableSet *)safelyGetSetByKey:(NSString *)key;
 - (NSMutableArray *)safelyGetArrayByKey:(NSString *)key;
 - (NSMutableString *)safelyGetStringByKey:(NSString *)key;
 - (NSNumber *)safelyGetNumberByKey:(NSString *)key;
@@ -32,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setDataTransferObject:(DataTransferObject *)data forKey:(NSString *)key;
 - (void)setDictionary:(NSDictionary *)data forKey:(NSString *)key;
-- (void)setSet:(NSSet *)data forKey:(NSString *)key;
 - (void)setArray:(NSArray *)data forKey:(NSString *)key;
 - (void)setString:(NSString *)data forKey:(NSString *)key;
 - (void)setNumber:(NSNumber *)data forKey:(NSString *)key;
