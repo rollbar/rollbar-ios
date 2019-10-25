@@ -15,6 +15,7 @@
 @class RollbarProxy;
 @class RollbarScrubbingOptions;
 @class RollbarServer;
+@class RollbarPerson;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,11 +27,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) RollbarProxy *httpsProxy;
 @property (nonatomic, strong) RollbarScrubbingOptions *dataScrubber;
 @property (nonatomic, strong) RollbarServer *server;
+@property (nonatomic, strong) RollbarPerson *person;
 
 #pragma mark - Developer Options
 #pragma mark - HTTP Proxy Settings
 #pragma mark - HTTPS Proxy Settings
 #pragma mark - Server
+#pragma mark - Person
 
 #pragma mark - Logging Options
 @property (nonatomic, copy) NSString *crashLevel;
@@ -66,10 +69,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *notifierVersion;
 @property (nonatomic, copy) NSString *framework;
 
-#pragma mark - Person
-@property (nonatomic, copy) NSString *personId;
-@property (nonatomic, copy) NSString *personUsername;
-@property (nonatomic, copy) NSString *personEmail;
 
 #pragma mark - Request (an ID to link request between client/server)
 @property (nonatomic, copy) NSString *requestId;
