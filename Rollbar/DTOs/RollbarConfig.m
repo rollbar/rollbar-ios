@@ -14,6 +14,7 @@
 #import "RollbarProxy.h"
 #import "RollbarScrubbingOptions.h"
 #import "RollbarServer.h"
+#import "RollbarPerson.h"
 #import <Foundation/Foundation.h>
 
 #pragma mark - constants
@@ -43,6 +44,7 @@ static NSString * const DFK_DATA_SCRUBBER = @"dataScrubber";
 static NSString * const DFK_HTTP_PROXY = @"httpProxy";
 static NSString * const DFK_HTTPS_PROXY = @"httpsProxy";
 static NSString * const DFK_SERVER = @"server";
+static NSString * const DFK_PERSON = @"person";
 
 //static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
 //static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
@@ -76,18 +78,18 @@ static NSString * const DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS = @"telemet
 
 static NSString * const DATAFIELD_CODE_VERSION = @"codeVersion";
 
-static NSString * const DATAFIELD_SERVER_HOST = @"serverHost";
-static NSString * const DATAFIELD_SERVER_ROOT = @"serverRoot";
-static NSString * const DATAFIELD_SERVER_BRANCH = @"serverBranch";
-static NSString * const DATAFIELD_SERVER_CODE_VERSION = @"serverCodeVersion";
+//static NSString * const DATAFIELD_SERVER_HOST = @"serverHost";
+//static NSString * const DATAFIELD_SERVER_ROOT = @"serverRoot";
+//static NSString * const DATAFIELD_SERVER_BRANCH = @"serverBranch";
+//static NSString * const DATAFIELD_SERVER_CODE_VERSION = @"serverCodeVersion";
 
 static NSString * const DATAFIELD_NOTIFIER_NAME = @"notifierName";
 static NSString * const DATAFIELD_NOTIFIER_VERSION = @"notifierVersion";
 static NSString * const DATAFIELD_FRAMEWORK = @"framework";
 
-static NSString * const DATAFIELD_PERSON_ID = @"personId";
-static NSString * const DATAFIELD_PERSON_USERNAME = @"personUsername";
-static NSString * const DATAFIELD_PERSON_EMAIL = @"personEmail";
+//static NSString * const DATAFIELD_PERSON_ID = @"personId";
+//static NSString * const DATAFIELD_PERSON_USERNAME = @"personUsername";
+//static NSString * const DATAFIELD_PERSON_EMAIL = @"personEmail";
 
 static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
 
@@ -187,6 +189,17 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 - (void)setServer:(RollbarServer *)value {
     [self setDataTransferObject:value forKey:DFK_SERVER];
+}
+
+#pragma mark - Person
+
+- (RollbarPerson *)person {
+    id data = [self safelyGetDictionaryByKey:DFK_PERSON];
+    return [[RollbarPerson alloc] initWithDictionary:data];
+}
+
+- (void)setPerson:(RollbarPerson *)value {
+    [self setDataTransferObject:value forKey:DFK_PERSON];
 }
 
 #pragma mark - HTTP Proxy Settings
@@ -326,35 +339,6 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
    [self setString:value forKey:DATAFIELD_FRAMEWORK];
 }
 
-#pragma mark - Person
-
-- (NSString *)personId {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_ID];
-    return result;
-}
-
-- (void)setPersonId:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_PERSON_ID];
-}
-
-- (NSString *)personUsername {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_USERNAME];
-    return result;
-}
-
-- (void)setPersonUsername:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_PERSON_USERNAME];
-}
-
-- (NSString *)personEmail {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_PERSON_EMAIL];
-    return result;
-}
-
-- (void)setPersonEmail:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_PERSON_EMAIL];
-}
-
 #pragma mark - Request (an ID to link request between client/server)
 
 - (NSString *)requestId {
@@ -371,9 +355,9 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 - (void)setPersonId:(NSString*)personId
            username:(NSString*)username
               email:(NSString*)email {
-    self.personId = personId;
-    self.personUsername = username;
-    self.personEmail = email;
+    self.person.ID = personId;
+    self.person.username = username;
+    self.person.email = email;
 }
 
 - (void)setServerHost:(NSString *)host
