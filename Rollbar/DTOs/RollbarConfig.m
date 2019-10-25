@@ -12,6 +12,7 @@
 #import "RollbarDestination.h"
 #import "RollbarDeveloperOptions.h"
 #import "RollbarProxy.h"
+#import "RollbarScrubbingOptions.h"
 #import <Foundation/Foundation.h>
 
 #pragma mark - constants
@@ -37,8 +38,10 @@ static NSString *configurationFilePath = nil;
 
 static NSString * const DFK_DESTINATION = @"destination";
 static NSString * const DFK_DEVELOPER_OPTIONS = @"developerOptions";
+static NSString * const DFK_DATA_SCRUBBER = @"dataScrubber";
 static NSString * const DFK_HTTP_PROXY = @"httpProxy";
 static NSString * const DFK_HTTPS_PROXY = @"httpsProxy";
+
 //static NSString * const DATAFIELD_DESTINATION_ACCESS_TOKEN = @"accessToken";
 //static NSString * const DATAFIELD_DESTINATION_ENVIRONMENT = @"environment";
 //static NSString * const DATAFIELD_DESTINATION_ENDPOINT = @"endpoint";
@@ -61,8 +64,8 @@ static NSString * const DATAFIELD_LOG_LEVEL = @"logLevel";
 static NSString * const DATAFIELD_MAX_REPORTS_PER_MINUTE = @"maximumReportsPerMinute";
 static NSString * const DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY = @"shouldCaptureConnectivity";
 
-static NSString * const DATAFIELD_SCRUB_FIELDS = @"scrubFields";
-static NSString * const DATAFIELD_SCRUB_FIELDS_WHITE_LIST = @"scrubFieldsWhiteList";
+//static NSString * const DATAFIELD_SCRUB_FIELDS = @"scrubFields";
+//static NSString * const DATAFIELD_SCRUB_FIELDS_WHITE_LIST = @"scrubFieldsWhiteList";
 static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
 
 static NSString * const DATAFIELD_TELEMETRY_ENABLED = @"telemetryEnabled";
@@ -162,6 +165,17 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
     [self setDataTransferObject:developerOptions forKey:DFK_DEVELOPER_OPTIONS];
 }
 
+#pragma mark - Data scrubber
+
+- (RollbarScrubbingOptions *)dataScrubber {
+    id data = [self safelyGetDictionaryByKey:DFK_DATA_SCRUBBER];
+    return [[RollbarScrubbingOptions alloc] initWithDictionary:data];
+}
+
+- (void)setDataScrubber:(RollbarScrubbingOptions *)value {
+    [self setDataTransferObject:value forKey:DFK_DATA_SCRUBBER];
+}
+
 #pragma mark - HTTP Proxy Settings
 
 - (RollbarProxy *)httpProxy {
@@ -225,31 +239,8 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 #pragma mark - Payload Content Related
 
-- (NSSet *)scrubFields {
-    NSSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS];
-    return result;
-}
-
-- (void)setScrubFields:(NSSet *)value {
-    [self setSet:value forKey:DATAFIELD_SCRUB_FIELDS];
-}
-
-- (NSSet *)scrubWhitelistFields {
-    NSSet *result = [self safelyGetSetByKey:DATAFIELD_SCRUB_FIELDS_WHITE_LIST];
-    return result;
-}
-
-- (void)setScrubWhitelistFields:(NSSet *)value {
-    [self setSet:value forKey:DATAFIELD_SCRUB_FIELDS_WHITE_LIST];
-}
-
-- (CaptureIpType)captureIp {
-    NSMutableString *result = [self safelyGetStringByKey:DATAFIELD_IP_CAPTURE_TYPE];
-    return [CaptureIpTypeUtil CaptureIpTypeFromString:result];
-}
-
 - (void)setCaptureIp:(CaptureIpType)value {
-    [self setSet:[[CaptureIpTypeUtil CaptureIpTypeToString:value] mutableCopy]
+    [self setString:[[CaptureIpTypeUtil CaptureIpTypeToString:value] mutableCopy]
           forKey:DATAFIELD_IP_CAPTURE_TYPE];
 }
 
@@ -273,13 +264,13 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
     [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS];
 }
 
-- (NSMutableSet *)telemetryViewInputsToScrub {
-    NSMutableSet *result = [self safelyGetSetByKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
+- (NSArray *)telemetryViewInputsToScrub {
+    NSArray *result = [self safelyGetArrayByKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
     return result;
 }
 
-- (void)setTelemetryViewInputsToScrub:(NSMutableSet *)value {
-    [self setSet:value forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
+- (void)setTelemetryViewInputsToScrub:(NSArray *)value {
+    [self setArray:value forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
 }
 
 #pragma mark - Code version

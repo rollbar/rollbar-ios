@@ -13,6 +13,7 @@
 @class RollbarDestination;
 @class RollbarDeveloperOptions;
 @class RollbarProxy;
+@class RollbarScrubbingOptions;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) RollbarDeveloperOptions *developerOptions;
 @property (nonatomic, strong) RollbarProxy *httpProxy;
 @property (nonatomic, strong) RollbarProxy *httpsProxy;
+@property (nonatomic, strong) RollbarScrubbingOptions *dataScrubber;
 
 #pragma mark - Developer Options
 #pragma mark - HTTP Proxy Settings
@@ -41,9 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Modify payload
 //@property (nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
 // Fields to scrub from the payload
-@property (nonatomic, strong) NSSet *scrubFields;
+//@property (nonatomic, strong) NSSet *scrubFields;
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (nonatomic, strong) NSSet *scrubWhitelistFields;
+//@property (nonatomic, strong) NSSet *scrubWhitelistFields;
 @property (nonatomic) CaptureIpType captureIp;
 
 #pragma mark - Telemetry
@@ -51,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL captureLogAsTelemetryData;
 @property (nonatomic) BOOL captureConnectivityAsTelemetryData;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
-@property (nonatomic, strong) NSSet *telemetryViewInputsToScrub;
+@property (nonatomic, strong) NSArray *telemetryViewInputsToScrub;
 
 #pragma mark - Code version
 @property (nonatomic, copy) NSString *codeVersion;

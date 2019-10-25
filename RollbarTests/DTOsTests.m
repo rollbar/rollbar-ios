@@ -13,6 +13,7 @@
 #import "../Rollbar/DTOs/RollbarDestination.h"
 #import "../Rollbar/DTOs/RollbarDeveloperOptions.h"
 #import "../Rollbar/DTOs/RollbarProxy.h"
+#import "../Rollbar/DTOs/RollbarScrubbingOptions.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -85,6 +86,31 @@
                   );
 
     //id result = [payload getDefinedProperties];
+}
+
+- (void)testRollbarScrubbingOptionsDTO {
+    RollbarScrubbingOptions *dto = [[RollbarScrubbingOptions alloc] initWithScrubFields:@[@"field1", @"field2"]];
+    XCTAssertTrue(dto.enabled,
+                  @"Enabled by default"
+                  );
+    XCTAssertTrue(dto.scrubFields.count == 2,
+                  @"Has some scrub fields"
+                  );
+    XCTAssertTrue(dto.whitelistFields.count == 0,
+                  @"Has NO whitelist fields"
+                  );
+    
+    dto.whitelistFields = @[@"tf1", @"tf2", @"tf3"];
+    XCTAssertTrue(dto.whitelistFields.count == 3,
+                  @"Has some whitelist fields"
+                  );
+    
+    dto.enabled = NO;
+    XCTAssertTrue(!dto.enabled,
+                  @"Expected to be disabled"
+                  );
+
+
 }
 
 - (void)testRollbarConfigDTO {
