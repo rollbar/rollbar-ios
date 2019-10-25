@@ -109,8 +109,6 @@
     XCTAssertTrue(!dto.enabled,
                   @"Expected to be disabled"
                   );
-
-
 }
 
 - (void)testRollbarConfigDTO {
