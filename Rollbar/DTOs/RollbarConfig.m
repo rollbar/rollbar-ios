@@ -16,6 +16,8 @@
 #import "RollbarServer.h"
 #import "RollbarPerson.h"
 #import "RollbarModule.h"
+#import "RollbarTelemetryOptions.h"
+#import "RollbarTelemetryOptions.h"
 #import <Foundation/Foundation.h>
 
 #pragma mark - constants
@@ -47,6 +49,7 @@ static NSString * const DFK_HTTPS_PROXY = @"httpsProxy";
 static NSString * const DFK_SERVER = @"server";
 static NSString * const DFK_PERSON = @"person";
 static NSString * const DFK_NOTIFIER = @"notifier";
+static NSString * const DFK_TELEMETRY = @"telemetry";
 
 
 
@@ -56,10 +59,6 @@ static NSString * const DATAFIELD_MAX_REPORTS_PER_MINUTE = @"maximumReportsPerMi
 static NSString * const DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY = @"shouldCaptureConnectivity";
 
 static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
-
-static NSString * const DATAFIELD_TELEMETRY_ENABLED = @"telemetryEnabled";
-static NSString * const DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS = @"scrubViewInputsTelemetry";
-static NSString * const DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS = @"telemetryViewInputsToScrub";
 
 static NSString * const DATAFIELD_CODE_VERSION = @"codeVersion";
 
@@ -101,9 +100,9 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
         
         self.logLevel = RollbarInfo;
 
-        self.telemetryEnabled = NO;
+        self.telemetry.enabled = NO;
+        self.telemetry.captureLog = NO;
         self.maximumReportsPerMinute = 60;
-        [self setCaptureLogAsTelemetryData:NO];
         
 //        self.httpProxyEnabled = NO;
 //        self.httpProxy = @"";
@@ -124,7 +123,7 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 - (RollbarDestination *)destination {
     id data = [self safelyGetDictionaryByKey:DFK_DESTINATION];
-    id dto = [[RollbarDestination alloc] initWithDictionary:data];;
+    id dto = [[RollbarDestination alloc] initWithDictionary:data];
     return dto;
 }
 
@@ -209,6 +208,18 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
     [self setDataTransferObject:value forKey:DFK_HTTPS_PROXY];
 }
 
+#pragma mark - Telemetry
+
+- (RollbarTelemetryOptions *)telemetry {
+    id data = [self safelyGetDictionaryByKey:DFK_TELEMETRY];
+    return [[RollbarTelemetryOptions alloc] initWithDictionary:data];
+}
+
+- (void)setTelemetry:(RollbarTelemetryOptions *)value {
+    [self setDataTransferObject:value forKey:DFK_TELEMETRY];
+}
+
+
 #pragma mark - Logging Options
 
 - (NSString *)crashLevel {
@@ -253,35 +264,6 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 - (void)setCaptureIp:(CaptureIpType)value {
     [self setString:[[CaptureIpTypeUtil CaptureIpTypeToString:value] mutableCopy]
           forKey:DATAFIELD_IP_CAPTURE_TYPE];
-}
-
-#pragma mark - Telemetry
-
-- (BOOL)telemetryEnabled {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_TELEMETRY_ENABLED];
-    return [result boolValue];
-}
-
-- (void)setTelemetryEnabled:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_TELEMETRY_ENABLED];
-}
-
-- (BOOL)scrubViewInputsTelemetry {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS];
-    return [result boolValue];
-}
-
-- (void)setScrubViewInputsTelemetry:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS];
-}
-
-- (NSArray *)telemetryViewInputsToScrub {
-    NSArray *result = [self safelyGetArrayByKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
-    return result;
-}
-
-- (void)setTelemetryViewInputsToScrub:(NSArray *)value {
-    [self setArray:value forKey:DATAFIELD_TELEMETRY_SCRUB_VIEW_INPUTS_FIELDS];
 }
 
 #pragma mark - Code version

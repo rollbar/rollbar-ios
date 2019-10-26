@@ -17,6 +17,7 @@
 @class RollbarServer;
 @class RollbarPerson;
 @class RollbarModule;
+@class RollbarTelemetryOptions;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,19 +31,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) RollbarServer *server;
 @property (nonatomic, strong) RollbarPerson *person;
 @property (nonatomic, strong) RollbarModule *notifier;
+@property (nonatomic, strong) RollbarTelemetryOptions *telemetry;
 
-#pragma mark - Developer Options
-#pragma mark - HTTP Proxy Settings
-#pragma mark - HTTPS Proxy Settings
-#pragma mark - Server
-#pragma mark - Person
-#pragma mark - Notifier
+
 
 #pragma mark - Logging Options
 @property (nonatomic, copy) NSString *crashLevel;
 @property (nonatomic) RollbarLevel logLevel;
 @property (nonatomic) NSUInteger maximumReportsPerMinute;
 @property (nonatomic) BOOL shouldCaptureConnectivity;
+@property (nonatomic) CaptureIpType captureIp;
+
+@property (nonatomic, copy) NSString *codeVersion;
+@property (nonatomic, copy) NSString *framework;
+@property (nonatomic, copy) NSString *requestId;
+
+#pragma mark - Custom data
+@property (nonatomic, strong) NSDictionary *customData;
+
 
 #pragma mark - Payload Content Related
 // Payload content related:
@@ -51,27 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
 // Modify payload
 //@property (nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
-// Fields to scrub from the payload
-//@property (nonatomic, strong) NSSet *scrubFields;
-// Fields to not scrub from the payload even if they mention among scrubFields:
-//@property (nonatomic, strong) NSSet *scrubWhitelistFields;
-@property (nonatomic) CaptureIpType captureIp;
-
-#pragma mark - Telemetry
-@property (nonatomic) BOOL telemetryEnabled;
-@property (nonatomic) BOOL captureLogAsTelemetryData;
-@property (nonatomic) BOOL captureConnectivityAsTelemetryData;
-@property (nonatomic) BOOL scrubViewInputsTelemetry;
-@property (nonatomic, strong) NSArray *telemetryViewInputsToScrub;
-
-#pragma mark - Code version
-@property (nonatomic, copy) NSString *codeVersion;
-
-@property (nonatomic, copy) NSString *framework;
-
-
-#pragma mark - Request (an ID to link request between client/server)
-@property (nonatomic, copy) NSString *requestId;
 
 #pragma mark - Convenience Methods
 - (void)setPersonId:(NSString*)personId
@@ -84,8 +69,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setNotifierName:(NSString *)name
                 version:(NSString *)version;
 
-#pragma mark - Custom data
-@property (nonatomic, strong) NSDictionary *customData;
 
 @end
 
