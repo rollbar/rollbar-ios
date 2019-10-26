@@ -12,8 +12,6 @@
 #pragma mark - constants
 
 static BOOL const DEFAULT_ENABLED_FLAG = YES;
-static NSString *const DEFAULT_PSCRUB_FIELDSL = nil;
-static NSNumber *const DEFAULT_WHITELIST_FIELDS = nil;
 
 #pragma mark - data field keys
 
@@ -42,17 +40,17 @@ static NSString * const DFK_WHITELIST_FIELDS = @"whhitelistFields";
 
 - (id)initWithScrubFields:(NSArray *)scrubFields
           whitelistFields:(NSArray *)whitelistFields {
-    return [self initWithEnabled:DEFAULT_ENABLED_FLAG
+    return [self initWithEnabled:YES
                      scrubFields:scrubFields
-                 whitelistFields:whitelistFields];
+                 whitelistFields:whitelistFields
+            ];
 }
 - (id)initWithScrubFields:(NSArray *)scrubFields {
-    return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSNumber numberWithBool:DEFAULT_ENABLED_FLAG], DFK_ENABLED,
-                                     scrubFields, DFK_SCRUB_FIELDS,
-                                     DEFAULT_WHITELIST_FIELDS, DFK_WHITELIST_FIELDS,
-                                     nil]
-            ];
+    return [self initWithScrubFields:scrubFields whitelistFields:@[]];
+}
+
+- (id)init {
+    return [self initWithScrubFields:@[]];
 }
 
 #pragma mark - property accessors

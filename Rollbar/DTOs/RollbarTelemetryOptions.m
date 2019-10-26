@@ -14,7 +14,6 @@
 static BOOL const DEFAULT_ENABLED_FLAG = NO;
 static BOOL const DEFAULT_CAPTURE_LOG_FLAG = NO;
 static BOOL const DEFAULT_CAPTURE_CONNECTIVITY_FLAG = NO;
-static RollbarScrubbingOptions *const DEFAULT_VIEW_INPUTS_SCRUBBER = nil;
 
 #pragma mark - data field keys
 
@@ -48,23 +47,24 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
          captureLog:(BOOL)captureLog
   captureConnectivity:(BOOL)captureConnectivity {
     
-    return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSNumber numberWithBool:enabled], DFK_ENABLED_FLAG,
-                                     [NSNumber numberWithBool:captureLog], DFK_CAPTURE_LOG_FLAG,
-                                     [NSNumber numberWithBool:captureConnectivity], DFK_CAPTURE_CONNECTIVITY_FLAG,
-                                     nil, DFK_VIEW_INPUTS_SCRUBBER,
-                                     nil]
-            ];
+    return [self initWithEnabled:enabled
+                      captureLog:captureLog
+             captureConnectivity:captureConnectivity
+              viewInputsScrubber:[RollbarScrubbingOptions new]];
 }
+
 - (id)initWithEnabled:(BOOL)enabled {
     return [self initWithEnabled:enabled
                       captureLog:DEFAULT_CAPTURE_LOG_FLAG
              captureConnectivity:DEFAULT_CAPTURE_CONNECTIVITY_FLAG
-            ];
+              viewInputsScrubber:[RollbarScrubbingOptions new]];
 }
 
 - (id)init {
-    return [self initWithEnabled:DEFAULT_ENABLED_FLAG];
+    return [self initWithEnabled:DEFAULT_ENABLED_FLAG
+                      captureLog:DEFAULT_CAPTURE_LOG_FLAG
+             captureConnectivity:DEFAULT_CAPTURE_CONNECTIVITY_FLAG
+              viewInputsScrubber:[RollbarScrubbingOptions new]];
 }
 
 #pragma mark - property accessors

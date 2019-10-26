@@ -17,6 +17,7 @@
 #import "../Rollbar/DTOs/RollbarServer.h"
 #import "../Rollbar/DTOs/RollbarPerson.h"
 #import "../Rollbar/DTOs/RollbarModule.h"
+#import "../Rollbar/DTOs/RollbarTelemetryOptions.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -218,6 +219,58 @@
     XCTAssertTrue([dto.version isEqualToString:@""],
                   @"Proper version"
                   );
+}
+
+- (void)testRollbarTelemetryOptionsDTO {
+    RollbarScrubbingOptions *scrubber =
+    [[RollbarScrubbingOptions alloc] initWithEnabled:YES
+                                         scrubFields:@[@"one", @"two"]
+                                     whitelistFields:@[@"two", @"three", @"four"]
+     ];
+    RollbarTelemetryOptions *dto = [[RollbarTelemetryOptions alloc] initWithEnabled:YES
+                                                                         captureLog:YES
+                                                                captureConnectivity:YES
+                                                                 viewInputsScrubber:scrubber
+                                    ];
+    XCTAssertTrue(dto.enabled,
+                  @"Proper enabled"
+                  );
+    XCTAssertTrue(dto.captureLog,
+                  @"Proper capture log"
+                  );
+    XCTAssertTrue(dto.captureConnectivity,
+                  @"Proper capture connectivity"
+                  );
+    XCTAssertTrue(dto.viewInputsScrubber.enabled,
+                  @"Proper view inputs scrubber enabled"
+                  );
+    XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count == 2,
+                  @"Proper view inputs scrubber scrub fields count"
+                  );
+    XCTAssertTrue(dto.viewInputsScrubber.whitelistFields.count == 3,
+                  @"Proper view inputs scrubber white list fields count"
+                  );
+    
+    dto = [[RollbarTelemetryOptions alloc] init];
+    XCTAssertTrue(!dto.enabled,
+                  @"Proper enabled"
+                  );
+    XCTAssertTrue(!dto.captureLog,
+                  @"Proper capture log"
+                  );
+    XCTAssertTrue(!dto.captureConnectivity,
+                  @"Proper capture connectivity"
+                  );
+    XCTAssertTrue(dto.viewInputsScrubber.enabled,
+                  @"Proper view inputs scrubber enabled"
+                  );
+    XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count == 0,
+                  @"Proper view inputs scrubber scrub fields count"
+                  );
+    XCTAssertTrue(dto.viewInputsScrubber.whitelistFields.count == 0,
+                  @"Proper view inputs scrubber white list fields count"
+                  );
+
 }
 
 - (void)testRollbarConfigDTO {
