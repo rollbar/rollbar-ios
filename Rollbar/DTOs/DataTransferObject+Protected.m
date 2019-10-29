@@ -111,4 +111,25 @@
     [self->_data setObject:data forKey:key];
 }
 
+#pragma mark - Convenience API
+
+- (BOOL)safelyGetBoolByKey:(NSString *)key {
+    NSNumber *number = [self safelyGetNumberByKey:key];
+    return number.boolValue;
+}
+- (void)setBool:(BOOL)data forKey:(NSString *)key {
+    NSNumber *number = [NSNumber numberWithBool:data];
+    [self setNumber:number forKey:key];
+}
+
+- (NSUInteger)safelyGetUIntegerByKey:(NSString *)key {
+    NSNumber *value = [self safelyGetNumberByKey:key];
+    return value.unsignedIntegerValue;
+}
+
+- (void)setUInteger:(NSUInteger)data forKey:(NSString *)key {
+    NSNumber *number = @(data);
+    [self setNumber:number forKey:key];
+}
+
 @end

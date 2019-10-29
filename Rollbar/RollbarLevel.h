@@ -24,10 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END
-
 #pragma mark - deprecated
 
 NSString* RollbarStringFromLevel(RollbarLevel level);
 RollbarLevel RollbarLevelFromString(NSString *levelString);
+
+NS_ASSUME_NONNULL_END
 

@@ -18,6 +18,7 @@
 @class RollbarPerson;
 @class RollbarModule;
 @class RollbarTelemetryOptions;
+@class RollbarLoggingOptions;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - properties
 @property (nonatomic, strong) RollbarDestination *destination;
 @property (nonatomic, strong) RollbarDeveloperOptions *developerOptions;
+@property (nonatomic, strong) RollbarLoggingOptions *loggingOptions;
 @property (nonatomic, strong) RollbarProxy *httpProxy;
 @property (nonatomic, strong) RollbarProxy *httpsProxy;
 @property (nonatomic, strong) RollbarScrubbingOptions *dataScrubber;
@@ -32,19 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) RollbarPerson *person;
 @property (nonatomic, strong) RollbarModule *notifier;
 @property (nonatomic, strong) RollbarTelemetryOptions *telemetry;
-
-
-
-#pragma mark - Logging Options
-@property (nonatomic, copy) NSString *crashLevel;
-@property (nonatomic) RollbarLevel logLevel;
-@property (nonatomic) NSUInteger maximumReportsPerMinute;
-@property (nonatomic) BOOL shouldCaptureConnectivity;
-@property (nonatomic) CaptureIpType captureIp;
-
-@property (nonatomic, copy) NSString *codeVersion;
-@property (nonatomic, copy) NSString *framework;
-@property (nonatomic, copy) NSString *requestId;
 
 #pragma mark - Custom data
 @property (nonatomic, strong) NSDictionary *customData;
@@ -58,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Modify payload
 //@property (nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
 
-#pragma mark - Convenience Methods
+#pragma mark - Convenience Methods (remove from here and only keep them within RollbarConfiguration)
 - (void)setPersonId:(NSString*)personId
            username:(NSString*)username
               email:(NSString*)email;

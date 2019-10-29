@@ -6,8 +6,8 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 #import "RollbarTelemetryOptions.h"
-#import "DataTransferObject+Protected.h"
 #import "RollbarScrubbingOptions.h"
+#import "DataTransferObject+Protected.h"
 
 #pragma mark - constants
 

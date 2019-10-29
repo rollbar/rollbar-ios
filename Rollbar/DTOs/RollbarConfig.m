@@ -18,6 +18,7 @@
 #import "RollbarModule.h"
 #import "RollbarTelemetryOptions.h"
 #import "RollbarTelemetryOptions.h"
+#import "RollbarLoggingOptions.h"
 #import <Foundation/Foundation.h>
 
 #pragma mark - constants
@@ -43,6 +44,7 @@ static NSString *configurationFilePath = nil;
 
 static NSString * const DFK_DESTINATION = @"destination";
 static NSString * const DFK_DEVELOPER_OPTIONS = @"developerOptions";
+static NSString * const DFK_LOGGING_OPTIONS = @"loggingOptions";
 static NSString * const DFK_DATA_SCRUBBER = @"dataScrubber";
 static NSString * const DFK_HTTP_PROXY = @"httpProxy";
 static NSString * const DFK_HTTPS_PROXY = @"httpsProxy";
@@ -50,23 +52,7 @@ static NSString * const DFK_SERVER = @"server";
 static NSString * const DFK_PERSON = @"person";
 static NSString * const DFK_NOTIFIER = @"notifier";
 static NSString * const DFK_TELEMETRY = @"telemetry";
-
-
-
-static NSString * const DATAFIELD_CRASH_LEVEL = @"crashLevel";
-static NSString * const DATAFIELD_LOG_LEVEL = @"logLevel";
-static NSString * const DATAFIELD_MAX_REPORTS_PER_MINUTE = @"maximumReportsPerMinute";
-static NSString * const DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY = @"shouldCaptureConnectivity";
-
-static NSString * const DATAFIELD_IP_CAPTURE_TYPE = @"captureIp";
-
-static NSString * const DATAFIELD_CODE_VERSION = @"codeVersion";
-
-static NSString * const DATAFIELD_FRAMEWORK = @"framework";
-
-static NSString * const DATAFIELD_REQUEST_ID = @"requestId";
-
-static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
+static NSString * const DFK_CUSTOM = @"custom";
 
 #pragma mark - class implementation
 
@@ -81,36 +67,19 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
     }
 
     if (self = [super init]) {
-        //self.customData = [NSMutableDictionary dictionaryWithCapacity:10];
         self.destination = [RollbarDestination new];
         self.developerOptions = [RollbarDeveloperOptions new];
+        self.loggingOptions = [RollbarLoggingOptions new];
         self.httpProxy = [RollbarProxy new];
         self.httpsProxy = [RollbarProxy new];
-
-
-        self.crashLevel = @"error";
-        //self.scrubFields = @[@"one", @"two"]; //NSMutableSet setWithCapacity:3];
-        //self.scrubWhitelistFields =  @[@"one", @"two"]; //[NSMutableSet setWithCapacity:3];
-        //self.telemetryViewInputsToScrub = @[@"one", @"two"];//[NSMutableSet setWithCapacity:3];
-
+        self.dataScrubber = [RollbarScrubbingOptions new];
+        self.telemetry = [RollbarTelemetryOptions new];
         self.notifier.name = NOTIFIER_NAME;
         self.notifier.version = NOTIFIER_VERSION;
-        self.framework = OPERATING_SYSTEM;
-        self.captureIp = CaptureIpFull;
-        
-        self.logLevel = RollbarInfo;
+        //self.server = [RollbarServer new];
+        //self.person = [RollbarPerson new];
 
-        self.telemetry.enabled = NO;
-        self.telemetry.captureLog = NO;
-        self.maximumReportsPerMinute = 60;
-        
-//        self.httpProxyEnabled = NO;
-//        self.httpProxy = @"";
-//        self.httpProxyPort = [NSNumber numberWithInteger:0];
-//
-//        self.httpsProxyEnabled = NO;
-//        self.httpsProxy = @"";
-//        self.httpsProxyPort = [NSNumber numberWithInteger:0];
+        //self.customData = [NSMutableDictionary dictionaryWithCapacity:10];
 
         //[self save];
     }
@@ -140,6 +109,17 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 
 - (void)setDeveloperOptions:(RollbarDeveloperOptions *)developerOptions {
     [self setDataTransferObject:developerOptions forKey:DFK_DEVELOPER_OPTIONS];
+}
+
+#pragma mark - Logging options
+
+- (RollbarLoggingOptions *)loggingOptions {
+    id data = [self safelyGetDictionaryByKey:DFK_LOGGING_OPTIONS];
+    return [[RollbarLoggingOptions alloc] initWithDictionary:data];
+}
+
+- (void)setLoggingOptions:(RollbarLoggingOptions *)developerOptions {
+    [self setDataTransferObject:developerOptions forKey:DFK_LOGGING_OPTIONS];
 }
 
 #pragma mark - Notifier
@@ -219,75 +199,6 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
     [self setDataTransferObject:value forKey:DFK_TELEMETRY];
 }
 
-
-#pragma mark - Logging Options
-
-- (NSString *)crashLevel {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_CRASH_LEVEL];
-    return result;
-}
-
-- (void)setCrashLevel:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_CRASH_LEVEL];
-}
-
-- (RollbarLevel)logLevel {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_LOG_LEVEL];
-    return [RollbarLevelUtil RollbarLevelFromString:result];
-}
-
-- (void)setLogLevel:(RollbarLevel)value {
-    [self setString:[RollbarLevelUtil RollbarLevelToString:value]
-             forKey:DATAFIELD_LOG_LEVEL];
-}
-
-- (NSUInteger)maximumReportsPerMinute {
-    NSUInteger result = [[self safelyGetNumberByKey:DATAFIELD_MAX_REPORTS_PER_MINUTE] unsignedIntegerValue];
-    return result;
-}
-
-- (void)setMaximumReportsPerMinute:(NSUInteger)value {
-    [self setNumber:[[NSNumber alloc] initWithUnsignedInteger:value] forKey:DATAFIELD_MAX_REPORTS_PER_MINUTE];
-}
-
-- (BOOL)shouldCaptureConnectivity {
-    NSNumber *result = [self safelyGetNumberByKey:DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY];
-    return [result boolValue];
-}
-
-- (void)setShouldCaptureConnectivity:(BOOL)value {
-    [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DATAFIELD_SHOULD_CAPTURE_CONNECTIVITY];
-}
-
-#pragma mark - Payload Content Related
-
-- (void)setCaptureIp:(CaptureIpType)value {
-    [self setString:[[CaptureIpTypeUtil CaptureIpTypeToString:value] mutableCopy]
-          forKey:DATAFIELD_IP_CAPTURE_TYPE];
-}
-
-#pragma mark - Code version
-
-- (NSString *)codeVersion {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_CODE_VERSION];
-    return result;
-}
-
-- (void)setCodeVersion:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_CODE_VERSION];
-}
-
-#pragma mark - Request (an ID to link request between client/server)
-
-- (NSString *)requestId {
-    NSString *result = [self safelyGetStringByKey:DATAFIELD_REQUEST_ID];
-    return result;
-}
-
-- (void)setRequestId:(NSString *)value {
-    [self setString:value forKey:DATAFIELD_REQUEST_ID];
-}
-
 #pragma mark - Convenience Methods
 
 - (void)setPersonId:(NSString*)personId
@@ -317,12 +228,12 @@ static NSString * const DATAFIELD_CUSTOM_DATA = @"customData";
 #pragma mark - Custom data
 
 - (NSDictionary *)customData {
-    NSMutableDictionary *result = [self safelyGetDictionaryByKey:DATAFIELD_CUSTOM_DATA];
+    NSMutableDictionary *result = [self safelyGetDictionaryByKey:DFK_CUSTOM];
     return result;
 }
 
 - (void)setCustomData:(NSDictionary *)value {
-    [self setDictionary:value forKey:DATAFIELD_CUSTOM_DATA];
+    [self setDictionary:value forKey:DFK_CUSTOM];
 }
 
 @end

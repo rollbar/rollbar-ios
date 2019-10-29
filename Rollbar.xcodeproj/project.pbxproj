@@ -1036,6 +1036,14 @@
 		55A558922356474F00D8898A /* CaptureIpType.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A5588C2356474F00D8898A /* CaptureIpType.m */; };
 		55A558932356474F00D8898A /* CaptureIpType.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A5588C2356474F00D8898A /* CaptureIpType.m */; };
 		55A558942356474F00D8898A /* CaptureIpType.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A5588C2356474F00D8898A /* CaptureIpType.m */; };
+		55E275A6236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */; };
+		55E275A7236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */; };
+		55E275A8236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */; };
+		55E275A9236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */; };
+		55E275AA236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */; };
+		55E275AB236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */; };
+		55E275AC236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */; };
+		55E275AD236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */; };
 		55F10FE0236120190043ADC0 /* RollbarDestination.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F10FDE236120190043ADC0 /* RollbarDestination.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F10FE1236120190043ADC0 /* RollbarDestination.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F10FDE236120190043ADC0 /* RollbarDestination.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F10FE2236120190043ADC0 /* RollbarDestination.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F10FDE236120190043ADC0 /* RollbarDestination.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1181,6 +1189,8 @@
 		55B568D320F7E32200052D01 /* RollbarPayloadTruncator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarPayloadTruncator.m; sourceTree = "<group>"; };
 		55B568D520F7E37E00052D01 /* RollbarPayloadTruncator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarPayloadTruncator.h; sourceTree = "<group>"; };
 		55B568D720F9560A00052D01 /* PayloadTruncationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayloadTruncationTests.m; sourceTree = "<group>"; };
+		55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLoggingOptions.h; sourceTree = "<group>"; };
+		55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLoggingOptions.m; sourceTree = "<group>"; };
 		55F10FDE236120190043ADC0 /* RollbarDestination.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDestination.h; sourceTree = "<group>"; };
 		55F10FDF236120190043ADC0 /* RollbarDestination.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarDestination.m; sourceTree = "<group>"; };
 		55F10FE8236135EF0043ADC0 /* RollbarDeveloperOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeveloperOptions.h; sourceTree = "<group>"; };
@@ -1512,6 +1522,8 @@
 				5599052E236381FE003C41F3 /* RollbarModule.m */,
 				559905372363A4C6003C41F3 /* RollbarTelemetryOptions.h */,
 				559905382363A4C6003C41F3 /* RollbarTelemetryOptions.m */,
+				55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */,
+				55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */,
 			);
 			path = DTOs;
 			sourceTree = "<group>";
@@ -2080,6 +2092,7 @@
 				55454A0822C69AC000D4A414 /* Rollbar.h in Headers */,
 				55454B0622C69DD100D4A414 /* KSDebug.h in Headers */,
 				55454A2022C69B6900D4A414 /* RollbarLevel.h in Headers */,
+				55E275A7236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */,
 				55454B9322C69E2B00D4A414 /* Demangle.h in Headers */,
 				55454B1F22C69DD100D4A414 /* KSJSONCodec.h in Headers */,
 				55454B0F22C69DD100D4A414 /* KSStackCursor_SelfThread.h in Headers */,
@@ -2175,6 +2188,7 @@
 				55454A2F22C69C1000D4A414 /* RollbarTelemetry.h in Headers */,
 				55454A2322C69B8200D4A414 /* RollbarLogger.h in Headers */,
 				55454A0B22C69ADF00D4A414 /* RollbarCachesDirectory.h in Headers */,
+				55E275A6236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */,
 				55454AD922C69DD100D4A414 /* KSMemory.h in Headers */,
 				55454B6222C69E0500D4A414 /* type_traits.h in Headers */,
 				55454B7422C69E1300D4A414 /* KSCrashInstallation+Private.h in Headers */,
@@ -2313,6 +2327,7 @@
 				5599053B2363A4C6003C41F3 /* RollbarTelemetryOptions.h in Headers */,
 				55927087234EE7EA0087E01F /* JSONSupport.h in Headers */,
 				55454C5322C6AE4F00D4A414 /* NSString+URLEncode.h in Headers */,
+				55E275A8236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */,
 				55454C4722C6AE4100D4A414 /* NSData+GZip.h in Headers */,
 				55454CFE22C6AE8C00D4A414 /* KSJSONCodecObjC.h in Headers */,
 				55454C6C22C6AE5B00D4A414 /* KSCrashReportSinkQuincyHockey.h in Headers */,
@@ -2457,6 +2472,7 @@
 				5599053C2363A4C6003C41F3 /* RollbarTelemetryOptions.h in Headers */,
 				55927088234EE7EA0087E01F /* JSONSupport.h in Headers */,
 				55454C5F22C6AE5000D4A414 /* NSString+URLEncode.h in Headers */,
+				55E275A9236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */,
 				55454C4C22C6AE4200D4A414 /* NSData+GZip.h in Headers */,
 				55454D3722C6AE8D00D4A414 /* KSJSONCodecObjC.h in Headers */,
 				55454C7622C6AE5C00D4A414 /* KSCrashReportSinkQuincyHockey.h in Headers */,
@@ -2887,6 +2903,7 @@
 				55454A1522C69B1E00D4A414 /* RollbarFileReader.m in Sources */,
 				55454ACC22C69DD100D4A414 /* NSError+SimpleConstructor.m in Sources */,
 				55454B8722C69E2A00D4A414 /* Demangle.cpp in Sources */,
+				55E275AA236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */,
 				55454A6D22C69D9700D4A414 /* KSHTTPMultipartPostBody.m in Sources */,
 				55454A1D22C69B5D00D4A414 /* RollbarKSCrashReportSink.m in Sources */,
 				55454B6B22C69E1300D4A414 /* KSCrashInstallationEmail.m in Sources */,
@@ -3006,6 +3023,7 @@
 				55454A1622C69B1F00D4A414 /* RollbarFileReader.m in Sources */,
 				55454B0522C69DD100D4A414 /* NSError+SimpleConstructor.m in Sources */,
 				55454B8F22C69E2B00D4A414 /* Demangle.cpp in Sources */,
+				55E275AB236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */,
 				55454A7922C69D9700D4A414 /* KSHTTPMultipartPostBody.m in Sources */,
 				55454A1E22C69B5E00D4A414 /* RollbarKSCrashReportSink.m in Sources */,
 				55454B7A22C69E1300D4A414 /* KSCrashInstallationEmail.m in Sources */,
@@ -3176,6 +3194,7 @@
 				55454CE422C6AE8C00D4A414 /* KSDynamicLinker.c in Sources */,
 				55927082234E72600087E01F /* DataTransferObject+CustomData.m in Sources */,
 				55454CE922C6AE8C00D4A414 /* KSStackCursor.c in Sources */,
+				55E275AC236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */,
 				55454C2622C6AD4800D4A414 /* RollbarPayloadTruncator.m in Sources */,
 				55454CF622C6AE8C00D4A414 /* KSCPU.c in Sources */,
 				55454C1122C6ACF500D4A414 /* RollbarNotifier.m in Sources */,
@@ -3309,6 +3328,7 @@
 				55454D1D22C6AE8D00D4A414 /* KSDynamicLinker.c in Sources */,
 				55927083234E72600087E01F /* DataTransferObject+CustomData.m in Sources */,
 				55454D2222C6AE8D00D4A414 /* KSStackCursor.c in Sources */,
+				55E275AD236787A500BA9BDC /* RollbarLoggingOptions.m in Sources */,
 				55454C2722C6AD4900D4A414 /* RollbarPayloadTruncator.m in Sources */,
 				55454D2F22C6AE8D00D4A414 /* KSCPU.c in Sources */,
 				55454C1222C6ACF500D4A414 /* RollbarNotifier.m in Sources */,
