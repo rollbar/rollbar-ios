@@ -27,7 +27,6 @@ static NSString * const OPERATING_SYSTEM = @"macos";
 static NSString * const DFK_LOG_LEVEL = @"logLevel";
 static NSString * const DFK_CRASH_LEVEL = @"crashLevel";
 static NSString * const DFK_MAX_REPORTS_PER_MINUTE = @"maximumReportsPerMinute";
-static NSString * const DFK_SHOULD_CAPTURE_CONNECTIVITY = @"shouldCaptureConnectivity";
 static NSString * const DFK_IP_CAPTURE_TYPE = @"captureIp";
 static NSString * const DFK_CODE_VERSION = @"codeVersion";
 static NSString * const DFK_FRAMEWORK = @"framework";
@@ -96,13 +95,13 @@ maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute {
 }
 
 - (CaptureIpType)captureIp {
-    NSString *valueString = [self safelyGetStringByKey:DFK_SHOULD_CAPTURE_CONNECTIVITY];
+    NSString *valueString = [self safelyGetStringByKey:DFK_IP_CAPTURE_TYPE];
     return [CaptureIpTypeUtil CaptureIpTypeFromString:valueString];
 }
 
 - (void)setCaptureIp:(CaptureIpType)value {
     NSString *valueString = [CaptureIpTypeUtil CaptureIpTypeToString:value];
-    [self setString:valueString forKey:DFK_SHOULD_CAPTURE_CONNECTIVITY];
+    [self setString:valueString forKey:DFK_IP_CAPTURE_TYPE];
 }
 
 - (NSString *)codeVersion {

@@ -18,6 +18,10 @@
 #import "../Rollbar/DTOs/RollbarPerson.h"
 #import "../Rollbar/DTOs/RollbarModule.h"
 #import "../Rollbar/DTOs/RollbarTelemetryOptions.h"
+#import "../Rollbar/DTOs/RollbarLoggingOptions.h"
+#import "../Rollbar/DTOs/CaptureIpType.h"
+#import "../Rollbar/RollbarLevel.h"
+
 
 @interface DTOsTests : XCTestCase
 
@@ -273,13 +277,69 @@
 
 }
 
+- (void)testRollbarLoggingOptionsDTO {
+    RollbarLoggingOptions *dto = [[RollbarLoggingOptions alloc] initWithLogLevel:RollbarError
+                                                                          crashLevel:RollbarInfo
+                                                             maximumReportsPerMinute:45];
+    dto.captureIp = CaptureIpAnonymize;
+    dto.codeVersion = @"CODEVERSION";
+    dto.framework = @"FRAMEWORK";
+    dto.requestId = @"REQUESTID";
+    
+    XCTAssertTrue(dto.logLevel == RollbarError,
+                  @"Proper log level"
+                  );
+    XCTAssertTrue(dto.crashLevel == RollbarInfo,
+                  @"Proper crash level"
+                  );
+    XCTAssertTrue(dto.maximumReportsPerMinute == 45,
+                  @"Proper max reports per minute"
+                  );
+    XCTAssertTrue(dto.captureIp == CaptureIpAnonymize,
+                  @"Proper capture IP"
+                  );
+    XCTAssertTrue([dto.codeVersion isEqualToString:@"CODEVERSION"],
+                  @"Proper code version"
+                  );
+    XCTAssertTrue([dto.framework isEqualToString:@"FRAMEWORK"],
+                  @"Proper framework"
+                  );
+    XCTAssertTrue([dto.requestId isEqualToString:@"REQUESTID"],
+                  @"Proper request ID"
+                  );
+    
+    dto = [[RollbarLoggingOptions alloc] init];
+    XCTAssertTrue(dto.logLevel == RollbarInfo,
+                  @"Proper default log level"
+                  );
+    XCTAssertTrue(dto.crashLevel == RollbarError,
+                  @"Proper default crash level"
+                  );
+    XCTAssertTrue(dto.maximumReportsPerMinute == 60,
+                  @"Proper default max reports per minute"
+                  );
+    XCTAssertTrue(dto.captureIp == CaptureIpFull,
+                  @"Proper default capture IP"
+                  );
+    XCTAssertTrue([dto.codeVersion isEqualToString:@""],
+                  @"Proper default code version"
+                  );
+    XCTAssertTrue([dto.framework isEqualToString:@"macos"] || [dto.framework isEqualToString:@"ios"],
+                  @"Proper default framework"
+                  );
+    XCTAssertTrue([dto.requestId isEqualToString:@""],
+                  @"Proper request ID"
+                  );
+}
+
+
 - (void)testRollbarConfigDTO {
     RollbarConfig *rc = [RollbarConfig new];
     //id destination = rc.destination;
     rc.destination.accessToken = @"ACCESSTOKEN";
     rc.destination.environment = @"ENVIRONMENT";
     rc.destination.endpoint = @"ENDPOINT";
-    rc.logLevel = RollbarDebug;
+    //rc.logLevel = RollbarDebug;
     
     [rc setPersonId:@"PERSONID" username:@"PERSONUSERNAME" email:@"PERSONEMAIL"];
     [rc setServerHost:@"SERVERHOST" root:@"SERVERROOT" branch:@"SERVERBRANCH" codeVersion:@"SERVERCODEVERSION"];
