@@ -362,13 +362,9 @@ static BOOL isNetworkReachable = YES;
                              @"app_name": bundleName ? bundleName : @""
                              };
 #else
-//    NSDictionary *systemVersion = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-    NSOperatingSystemVersion osVer =
-    [[NSProcessInfo processInfo] operatingSystemVersion];
-
+    NSOperatingSystemVersion osVer = [[NSProcessInfo processInfo] operatingSystemVersion];
     NSDictionary *osData = @{
                              @"os": @"macOS",
-//                             @"os_version": [systemVersion objectForKey:@"ProductVersion"],
                              @"os_version": [NSString stringWithFormat:@" %tu.%tu.%tu",
                                              osVer.majorVersion,
                                              osVer.minorVersion,
@@ -384,17 +380,14 @@ static BOOL isNetworkReachable = YES;
 
     if (self.configuration.captureIp == CaptureIpFull) {
         return @{@"timestamp": timestamp,
-                 //@"ios": osData,
                  @"os": osData,
                  @"user_ip": @"$remote_ip"};
     } else if (self.configuration.captureIp == CaptureIpAnonymize) {
         return @{@"timestamp": timestamp,
-                 //@"ios": osData,
                  @"os": osData,
                  @"user_ip": @"$remote_ip_anonymize"};
     } else {
         return @{@"timestamp": timestamp,
-                 //@"ios": osData,
                  @"os": osData
                  };
     }
@@ -429,23 +422,6 @@ static BOOL isNetworkReachable = YES;
                                                      extra:extra
                                                crashReport:crashReport
                           ];
-//    NSOperatingSystemVersion osVer =
-//    [[NSProcessInfo processInfo] operatingSystemVersion];
-    
-//#if TARGET_OS_IPHONE
-//    NSString *platform = @"iOS";
-//    //float ver = [[[UIDevice currentDevice] systemVersion] floatValue];
-//#else
-//    NSString *platform = @"macOS";
-//#endif
-//
-//    platform =
-//    [platform stringByAppendingFormat:@" %tu.%tu.%tu",
-//     osVer.majorVersion,
-//     osVer.minorVersion,
-//     osVer.patchVersion
-//     ];
-    
     NSString *platform = @"client";
     NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
                                    @"level": level,
