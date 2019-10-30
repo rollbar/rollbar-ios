@@ -10,17 +10,17 @@
 
 - (id)initWithLoadedConfiguration;
 
+#pragma mark - Persistence
 - (void)_setRoot;
-
 - (void)save;
 
+#pragma mark - Custom data
 - (NSDictionary *)customData;
 
 #pragma mark - Rollbar project destination/endpoint
 @property (nonatomic, copy) NSString *accessToken;
 @property (nonatomic, copy) NSString *environment;
 @property (nonatomic, copy) NSString *endpoint;
-
 
 #pragma mark - Developer options
 @property (nonatomic) BOOL enabled;
@@ -42,7 +42,6 @@
 @property (nonatomic, copy) NSString *crashLevel;
 @property (nonatomic, copy) NSString *logLevel;
 @property (nonatomic) NSUInteger maximumReportsPerMinute;
-@property (nonatomic) BOOL shouldCaptureConnectivity;
 @property (nonatomic) CaptureIpType captureIp;
 @property (nonatomic, copy) NSString *codeVersion;
 @property (nonatomic, copy) NSString *framework;
@@ -51,11 +50,11 @@
 
 #pragma mark - Payload scrubbing options
 // Fields to scrub from the payload
-@property (readonly, nonatomic, strong) NSMutableSet *scrubFields;
+@property (readonly, nonatomic, strong) NSSet *scrubFields;
 - (void)addScrubField:(NSString *)field;
 - (void)removeScrubField:(NSString *)field;
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (readonly, nonatomic, strong) NSMutableSet *scrubWhitelistFields;
+@property (readonly, nonatomic, strong) NSSet *scrubWhitelistFields;
 - (void)addScrubWhitelistField:(NSString *)field;
 - (void)removeScrubWhitelistField:(NSString *)field;
 
@@ -76,6 +75,9 @@
 
 #pragma mark - Telemetry:
 @property (nonatomic) BOOL telemetryEnabled;
+@property (nonatomic) NSInteger maximumTelemetryData;
+@property (nonatomic) BOOL captureLogAsTelemetryData;
+@property (nonatomic) BOOL shouldCaptureConnectivity;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
 @property (nonatomic, strong) NSMutableSet *telemetryViewInputsToScrub;
 - (void)addTelemetryViewInputToScrub:(NSString *)input;

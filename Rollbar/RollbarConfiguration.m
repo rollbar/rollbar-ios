@@ -18,35 +18,31 @@
 #import "CaptureIpType.h"
 #import "RollbarLevel.h"
 
-static NSString * const NOTIFIER_VERSION = @"1.9.0";
-
-#define NOTIFIER_NAME_PREFIX = @"rollbar-";
-#if TARGET_OS_IPHONE
-static NSString * const OPERATING_SYSTEM = @"ios";
-static NSString * const NOTIFIER_NAME = @"rollbar-ios";
-#else
-static NSString * const OPERATING_SYSTEM = @"macos";
-static NSString * const NOTIFIER_NAME = @"rollbar-macos";
-#endif
+#pragma mark - Constants
 
 static NSString * const CONFIGURATION_FILENAME = @"rollbar.config";
-static NSString * const DEFAULT_ENDPOINT = @"https://api.rollbar.com/api/1/item/";
 
 static NSString *configurationFilePath = nil;
 
+#pragma mark - Private part of the RollbarConfiguration interface
+
 @interface RollbarConfiguration () {
-//    NSMutableDictionary *_customData;
     BOOL _isRootConfiguration;
     RollbarConfig *_configData;
 }
-
 @end
 
+#pragma mark - Implementation
+
 @implementation RollbarConfiguration
+
+#pragma mark - Factory methods
 
 + (RollbarConfiguration*)configuration {
     return [[RollbarConfiguration alloc] init];
 }
+
+#pragma mark - Initializers
 
 - (id)init {
     if (!configurationFilePath) {
@@ -56,44 +52,6 @@ static NSString *configurationFilePath = nil;
 
     if (self = [super init]) {
         _configData = [[RollbarConfig alloc] init];
-//        _customData = [NSMutableDictionary dictionaryWithCapacity:10];
-//        _endpoint = DEFAULT_ENDPOINT;
-
-//        #ifdef DEBUG
-//        _environment = @"development";
-//        #else
-//        _environment = @"unspecified";
-//        #endif
-//
-//        _crashLevel = @"error";
-//        _scrubFields = [NSMutableSet new];
-//        _scrubWhitelistFields = [NSMutableSet new];
-//        self.telemetryViewInputsToScrub = [NSMutableSet new];
-//
-//        _notifierName = NOTIFIER_NAME;
-//        _notifierVersion = NOTIFIER_VERSION;
-//        _framework = OPERATING_SYSTEM;
-//        _captureIp = CaptureIpFull;
-//
-//        _logLevel = @"info";
-//
-//        _enabled = YES;
-//        _transmit = YES;
-//        _logPayload = NO;
-//        _logPayloadFile = @"rollbar.payloads";
-//
-//        self.telemetryEnabled = NO;
-//        _maximumReportsPerMinute = 60;
-//        [self setCaptureLogAsTelemetryData:NO];
-//
-//        _httpProxyEnabled = NO;
-//        _httpProxy = @"";
-//        _httpProxyPort = [NSNumber numberWithInteger:0];
-//
-//        _httpsProxyEnabled = NO;
-//        _httpsProxy = @"";
-//        _httpsProxyPort = [NSNumber numberWithInteger:0];
-
         [self save];
     }
 
@@ -122,13 +80,44 @@ static NSString *configurationFilePath = nil;
     return self;
 }
 
+#pragma mark - Custom data
+
+- (NSDictionary *)customData {
+    return [NSDictionary dictionaryWithDictionary:self->_configData.customData];
+}
+
+#pragma mark - Rollbar project destination/endpoint
+
+- (NSString *)accessToken {
+    return self->_configData.destination.accessToken;
+}
+
+- (void)setAccessToken:(NSString *)value {
+    self->_configData.destination.accessToken = value;
+}
+- (NSString *)environment {
+    return self->_configData.destination.environment;
+}
+
+- (void)setEnvironment:(NSString *)value {
+    self->_configData.destination.environment = value;
+}
+- (NSString *)endpoint {
+    return self->_configData.destination.endpoint;
+}
+
+- (void)setEndpoint:(NSString *)value {
+    self->_configData.destination.endpoint = value;
+}
+
+#pragma mark - Developer options
+
 - (BOOL)enabled {
     return self->_configData.developerOptions.enabled;
 }
 
 - (void)setEnabled:(BOOL)enabled {
     self->_configData.developerOptions.enabled = enabled;
-    [self save];
 }
 
 - (BOOL)transmit {
@@ -137,7 +126,6 @@ static NSString *configurationFilePath = nil;
 
 - (void)setTransmit:(BOOL)transmit {
     self->_configData.developerOptions.transmit = transmit;
-    [self save];
 }
 
 - (BOOL)logPayload {
@@ -146,7 +134,6 @@ static NSString *configurationFilePath = nil;
 
 - (void)setLogPayload:(BOOL)logPayload {
     self->_configData.developerOptions.logPayload = logPayload;
-    [self save];
 }
 
 - (NSString *)logPayloadFile {
@@ -155,8 +142,9 @@ static NSString *configurationFilePath = nil;
 
 - (void)setLogPayloadFile:(NSString *)logPayloadFile {
     self->_configData.developerOptions.payloadLogFile = logPayloadFile;
-    [self save];
 }
+
+#pragma mark - HTTP proxy
 
 - (BOOL)httpProxyEnabled {
     return self->_configData.httpProxy.enabled;
@@ -164,7 +152,6 @@ static NSString *configurationFilePath = nil;
 
 - (void)setHttpProxyEnabled:(BOOL)httpProxyEnabled {
     self->_configData.httpProxy.enabled = httpProxyEnabled;
-    [self save];
 }
 
 - (NSString *)httpProxy {
@@ -173,7 +160,6 @@ static NSString *configurationFilePath = nil;
 
 - (void)setHttpProxy:(NSString *)proxy {
     self->_configData.httpProxy.proxyUrl = proxy;
-    [self save];
 }
 
 - (NSNumber *)httpProxyPort {
@@ -182,8 +168,9 @@ static NSString *configurationFilePath = nil;
 
 - (void)setHttpProxyPort:(NSNumber *)port {
     self->_configData.httpProxy.proxyPort = port.unsignedIntegerValue;
-    [self save];
 }
+
+#pragma mark - HTTPS proxy
 
 - (BOOL)httpsProxyEnabled {
     return self->_configData.httpsProxy.enabled;
@@ -191,7 +178,6 @@ static NSString *configurationFilePath = nil;
 
 - (void)setHttpsProxyEnabled:(BOOL)httpsProxyEnabled {
     self->_configData.httpsProxy.enabled = httpsProxyEnabled;
-    [self save];
 }
 
 - (NSString *)httpsProxy {
@@ -200,7 +186,6 @@ static NSString *configurationFilePath = nil;
 
 - (void)setHttpsProxy:(NSString *)proxy {
     self->_configData.httpsProxy.proxyUrl = proxy;
-    [self save];
 }
 
 - (NSNumber *)httpsProxyPort {
@@ -209,46 +194,24 @@ static NSString *configurationFilePath = nil;
 
 - (void)setHttpsProxyPort:(NSNumber *)port {
     self->_configData.httpsProxy.proxyPort = port.unsignedIntegerValue;
-    [self save];
 }
 
-- (BOOL)telemetryEnabled {
-    return self->_configData.telemetry.enabled;
+#pragma mark - Logging options
+
+- (NSString *)crashLevel {
+    return [RollbarLevelUtil RollbarLevelToString:self->_configData.loggingOptions.crashLevel];
 }
 
-- (void)setTelemetryEnabled:(BOOL)telemetryEnabled {
-    [RollbarTelemetry sharedInstance].enabled = telemetryEnabled;
-    self->_configData.telemetry.enabled = telemetryEnabled;
-    [self save];
+- (void)setCrashLevel:(NSString *)value {
+    self->_configData.loggingOptions.crashLevel = [RollbarLevelUtil RollbarLevelFromString:value];
 }
 
-- (BOOL)scrubViewInputsTelemetry {
-    return self->_configData.telemetry.viewInputsScrubber.enabled;
+- (NSString *)logLevel {
+    return [RollbarLevelUtil RollbarLevelToString:self->_configData.loggingOptions.logLevel];
 }
 
-- (void)setScrubViewInputsTelemetry:(BOOL)scrubViewInputsTelemetry {
-    [RollbarTelemetry sharedInstance].scrubViewInputs = scrubViewInputsTelemetry;
-    self->_configData.telemetry.viewInputsScrubber.enabled = scrubViewInputsTelemetry;
-    [self save];
-}
-
-- (void)addTelemetryViewInputToScrub:(NSString *)input {
-    [[RollbarTelemetry sharedInstance].viewInputsToScrub addObject:input];
-    
-    self->_configData.telemetry.viewInputsScrubber.scrubFields =
-    [self->_configData.telemetry.viewInputsScrubber.scrubFields arrayByAddingObject:input];
-    
-    [self save];
-}
-
-- (void)removeTelemetryViewInputToScrub:(NSString *)input {
-    [[RollbarTelemetry sharedInstance].viewInputsToScrub removeObject:input];
-
-    NSMutableArray *mutableCopy = self->_configData.telemetry.viewInputsScrubber.scrubFields.mutableCopy;
-    [mutableCopy removeObject:input];
-    self->_configData.telemetry.viewInputsScrubber.scrubFields = mutableCopy.copy;
-
-    [self save];
+- (void)setLogLevel:(NSString *)value {
+    self->_configData.loggingOptions.logLevel = [RollbarLevelUtil RollbarLevelFromString:value];
 }
 
 - (NSUInteger)maximumReportsPerMinute {
@@ -257,7 +220,161 @@ static NSString *configurationFilePath = nil;
 
 - (void)setMaximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute {
     self->_configData.loggingOptions.maximumReportsPerMinute = maximumReportsPerMinute;
-    [self save];
+}
+
+- (CaptureIpType)captureIpType:(CaptureIpType)captureIp {
+    return self->_configData.loggingOptions.captureIp ;
+}
+
+- (void)setCaptureIpType:(CaptureIpType)captureIp {
+    self->_configData.loggingOptions.captureIp = captureIp;
+}
+
+- (NSString *)codeVersion {
+    return self->_configData.loggingOptions.codeVersion;
+}
+
+- (void)setCodeVersion:(NSString *)codeVersion {
+    self->_configData.loggingOptions.codeVersion = codeVersion;
+}
+
+- (NSString *)framework {
+    return self->_configData.loggingOptions.framework;
+}
+
+- (void)setFramework:(NSString *)framework {
+    self->_configData.loggingOptions.framework = framework;// ? framework : OPERATING_SYSTEM;
+}
+
+- (NSString *)requestId {
+    return self->_configData.loggingOptions.requestId;
+}
+
+- (void)setRequestId:(NSString *)requestId {
+    self->_configData.loggingOptions.requestId = requestId;
+}
+
+#pragma mark - Payload scrubbing options
+
+- (NSSet *)scrubFields {
+    NSArray *fields = self->_configData.dataScrubber.scrubFields;
+    return [NSSet setWithArray:fields];
+}
+
+- (void)addScrubField:(NSString *)field {
+    self->_configData.dataScrubber.scrubFields =
+    [self->_configData.dataScrubber.scrubFields arrayByAddingObject:field];
+}
+
+- (void)removeScrubField:(NSString *)field {
+    NSMutableArray *mutableCopy = self->_configData.dataScrubber.scrubFields.mutableCopy;
+    [mutableCopy removeObject:field];
+    self->_configData.dataScrubber.scrubFields = mutableCopy.copy;
+}
+
+- (NSSet *)scrubWhitelistFields {
+    NSArray *fields = self->_configData.dataScrubber.whitelistFields;
+    return [NSSet setWithArray:fields];
+}
+
+- (void)addScrubWhitelistField:(NSString *)field {
+    self->_configData.dataScrubber.whitelistFields =
+    [self->_configData.dataScrubber.whitelistFields arrayByAddingObject:field];
+}
+
+- (void)removeScrubWhitelistField:(NSString *)field {
+    NSMutableArray *mutableCopy = self->_configData.dataScrubber.whitelistFields.mutableCopy;
+    [mutableCopy removeObject:field];
+    self->_configData.dataScrubber.whitelistFields = mutableCopy.copy;
+}
+
+#pragma mark - Server
+
+- (NSString *)serverHost {
+    return self->_configData.server.host;
+}
+
+- (void)setServerHost:(NSString *)value {
+    self->_configData.server.host = value;
+}
+
+- (NSString *)serverRoot {
+    return self->_configData.server.root;
+}
+
+- (void)setServerRoot:(NSString *)value {
+    self->_configData.server.root = value;
+}
+
+- (NSString *)serverBranch {
+    return self->_configData.server.branch;
+}
+
+- (void)setServerBranch:(NSString *)value {
+    self->_configData.server.branch = value;
+}
+
+- (NSString *)serverCodeVersion {
+    return self->_configData.server.codeVersion;
+}
+
+- (void)setServerCodeVersion:(NSString *)value {
+    self->_configData.server.codeVersion = value;
+}
+
+#pragma mark - Person/user tracking
+
+- (NSString *)personId {
+    return self->_configData.person.ID;
+}
+
+- (void)setPersonId:(NSString *)value {
+    self->_configData.person.ID = value;
+}
+
+- (NSString *)personUsername {
+    return self->_configData.person.username;
+}
+
+- (void)setPersonUsername:(NSString *)value {
+    self->_configData.person.username = value;
+}
+
+- (NSString *)personEmail {
+    return self->_configData.person.email;
+}
+
+- (void)setPersonEmail:(NSString *)value {
+    self->_configData.person.email = value;
+}
+
+#pragma mark - Notifier
+
+- (NSString *)notifierName {
+    return self->_configData.notifier.name;
+}
+
+- (void)setNotifierName:(NSString *)value {
+    self->_configData.notifier.name = value;
+}
+
+- (NSString *)notifierVersion {
+    return self->_configData.notifier.version;
+}
+
+- (void)setNotifierVersion:(NSString *)value {
+    self->_configData.notifier.version = value;
+}
+
+#pragma mark - Telemetry:
+ 
+- (BOOL)telemetryEnabled {
+    return self->_configData.telemetry.enabled;
+}
+
+- (void)setTelemetryEnabled:(BOOL)telemetryEnabled {
+    [RollbarTelemetry sharedInstance].enabled = telemetryEnabled;
+    self->_configData.telemetry.enabled = telemetryEnabled;
 }
 
 - (NSInteger)maximumTelemetryData {
@@ -267,33 +384,6 @@ static NSString *configurationFilePath = nil;
 - (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData {
     [[RollbarTelemetry sharedInstance] setDataLimit:maximumTelemetryData];
     self->_configData.telemetry.maximumTelemetryData = maximumTelemetryData;
-}
-
-- (NSString *)framework {
-    return self->_configData.loggingOptions.framework;
-}
-
-- (void)setFramework:(NSString *)framework {
-    self->_configData.loggingOptions.framework = framework ? framework : OPERATING_SYSTEM;
-    [self save];
-}
-
-- (NSString *)requestId {
-    return self->_configData.loggingOptions.requestId;
-}
-
-- (void)setRequestId:(NSString *)requestId {
-    self->_configData.loggingOptions.requestId = requestId;
-    [self save];
-}
-
-- (NSString *)codeVersion {
-    return self->_configData.loggingOptions.codeVersion;
-}
-
-- (void)setCodeVersion:(NSString *)codeVersion {
-    self->_configData.loggingOptions.codeVersion = codeVersion;
-    [self save];
 }
 
 - (BOOL)captureLogAsTelemetryData {
@@ -313,47 +403,31 @@ static NSString *configurationFilePath = nil;
     self->_configData.telemetry.captureConnectivity = captureConnectivity;
 }
 
-
-
-
-- (void)setCaptureIpType:(CaptureIpType)captureIp {
-    self->_configData.loggingOptions.captureIp = captureIp;
+- (BOOL)scrubViewInputsTelemetry {
+    return self->_configData.telemetry.viewInputsScrubber.enabled;
 }
 
-
-
-
-- (void)addScrubField:(NSString *)field {
-    self->_configData.dataScrubber.scrubFields =
-    [self->_configData.dataScrubber.scrubFields arrayByAddingObject:field];
+- (void)setScrubViewInputsTelemetry:(BOOL)scrubViewInputsTelemetry {
+    [RollbarTelemetry sharedInstance].scrubViewInputs = scrubViewInputsTelemetry;
+    self->_configData.telemetry.viewInputsScrubber.enabled = scrubViewInputsTelemetry;
 }
 
-- (void)removeScrubField:(NSString *)field {
-    NSMutableArray *mutableCopy = self->_configData.dataScrubber.scrubFields.mutableCopy;
-    [mutableCopy removeObject:field];
-    self->_configData.dataScrubber.scrubFields = mutableCopy.copy;
+- (void)addTelemetryViewInputToScrub:(NSString *)input {
+    [[RollbarTelemetry sharedInstance].viewInputsToScrub addObject:input];
+    
+    self->_configData.telemetry.viewInputsScrubber.scrubFields =
+    [self->_configData.telemetry.viewInputsScrubber.scrubFields arrayByAddingObject:input];
 }
 
-- (void)addScrubWhitelistField:(NSString *)field {
-    self->_configData.dataScrubber.whitelistFields =
-    [self->_configData.dataScrubber.whitelistFields arrayByAddingObject:field];
+- (void)removeTelemetryViewInputToScrub:(NSString *)input {
+    [[RollbarTelemetry sharedInstance].viewInputsToScrub removeObject:input];
+
+    NSMutableArray *mutableCopy = self->_configData.telemetry.viewInputsScrubber.scrubFields.mutableCopy;
+    [mutableCopy removeObject:input];
+    self->_configData.telemetry.viewInputsScrubber.scrubFields = mutableCopy.copy;
 }
 
-- (void)removeScrubWhitelistField:(NSString *)field {
-    NSMutableArray *mutableCopy = self->_configData.dataScrubber.whitelistFields.mutableCopy;
-    [mutableCopy removeObject:field];
-    self->_configData.dataScrubber.whitelistFields = mutableCopy.copy;
-}
-
-- (NSDictionary *)customData {
-    return [NSDictionary dictionaryWithDictionary:self->_configData.customData];
-}
-
-
-
-
-
-
+#pragma mark - Payload processing callbacks
 
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock {
     _payloadModification = payloadModificationBlock;
@@ -363,19 +437,69 @@ static NSString *configurationFilePath = nil;
     _checkIgnore = checkIgnoreBlock;
 }
 
-//- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-//    if (value) {
-//        _customData[key] = value;
-//    } else {
-//        [_customData removeObjectForKey:key];
-//    }
-//    
-//    [self save];
-//}
-//
-//- (id)valueForUndefinedKey:(NSString *)key {
-//    return _customData[key];
-//}
+#pragma mark - Convenience Methods
+
+- (void)setPersonId:(NSString *)personId
+           username:(NSString *)username
+              email:(NSString *)email {
+    self->_configData.person.ID = personId;
+    self->_configData.person.username = username;
+    self->_configData.person.email = email;
+}
+
+- (void)setServerHost:(NSString *)host
+                 root:(NSString*)root
+               branch:(NSString*)branch
+          codeVersion:(NSString*)codeVersion {
+    
+    self->_configData.server.host = host;
+    self->_configData.server.root = root ?
+        [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]
+        : root;
+    self->_configData.server.branch = branch;
+    self->_configData.server.codeVersion = codeVersion;
+}
+
+- (void)setNotifierName:(NSString *)name
+                version:(NSString *)version {
+    
+    self->_configData.notifier.name = name;// ? name : NOTIFIER_NAME;
+    self->_configData.notifier.version = version;// ? version : NOTIFIER_VERSION;
+}
+
+#pragma mark - Configuration rendering
+
+- (NSString *)description {
+    NSString *result = [self renderAsRollbarConfiguration];
+    result = [result stringByAppendingString:@"\nOR as DTO:\n"];
+    result = [result stringByAppendingString:[self renderAsDTO]];
+    return result;
+}
+
+- (NSString *)renderAsDTO {
+    return [self->_configData serializeToJSONString];
+}
+
+- (NSString *)renderAsRollbarConfiguration {
+    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    
+    for (NSString *propertyName in [self getProperties]) {
+        id value = [self valueForKey:propertyName];
+        if (value) {
+            [config setObject:value
+                       forKey:propertyName];
+        }
+    }
+
+    NSData *configJson = [NSJSONSerialization dataWithJSONObject:config
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil
+                                                            safe:true];
+    NSString *result = [[NSString alloc] initWithData:configJson encoding:NSUTF8StringEncoding];
+    return result;
+}
+
+#pragma mark - Persistence
 
 // Add a key value observer for all properties so that this object
 // is saved to disk every time a property is updated
@@ -445,93 +569,40 @@ static NSString *configurationFilePath = nil;
     return result;
 }
 
-- (NSString *)renderAsDTO {
-    return [self->_configData serializeToJSONString];
-}
-
-- (NSString *)renderAsRollbarConfiguration {
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
-    
-    for (NSString *propertyName in [self getProperties]) {
-        id value = [self valueForKey:propertyName];
-        if (value) {
-            [config setObject:value
-                       forKey:propertyName];
-        }
-    }
-
-    NSData *configJson = [NSJSONSerialization dataWithJSONObject:config
-                                                         options:NSJSONWritingPrettyPrinted
-                                                           error:nil
-                                                            safe:true];
-    NSString *result = [[NSString alloc] initWithData:configJson encoding:NSUTF8StringEncoding];
-    return result;
-}
-
-- (NSString *)description {
-    NSString *result = [self renderAsRollbarConfiguration];
-    result = [result stringByAppendingString:@"\nOR as DTO:\n"];
-    result = [result stringByAppendingString:[self renderAsDTO]];
-    return result;
-}
-
-#pragma mark - Convenience Methods
-
-- (void)setPersonId:(NSString *)personId
-           username:(NSString *)username
-              email:(NSString *)email {
-    self->_configData.person.ID = personId;
-    self->_configData.person.username = username;
-    self->_configData.person.email = email;
-    [self save];
-}
-
-- (void)setServerHost:(NSString *)host
-                 root:(NSString*)root
-               branch:(NSString*)branch
-          codeVersion:(NSString*)codeVersion {
-    
-    self->_configData.server.host = host;
-    self->_configData.server.root = root ?
-        [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]
-        : root;
-    self->_configData.server.branch = branch;
-    self->_configData.server.codeVersion = codeVersion;
-    [self save];
-}
-
-- (void)setNotifierName:(NSString *)name
-                version:(NSString *)version {
-    
-    self->_configData.notifier.name = name ? name : NOTIFIER_NAME;
-    self->_configData.notifier.version = version ? version : NOTIFIER_VERSION;
-    [self save];
-}
-
 #pragma mark - Deprecated
 
 - (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
     self->_configData.loggingOptions.maximumReportsPerMinute = maximumReportsPerMinute;
-    [self save];
 }
 
-- (RollbarLevel)rollbarLevel {
+- (RollbarLevel)getRollbarLevel {
     return self->_configData.loggingOptions.logLevel;
 }
 
 - (void)setRollbarLevel:(RollbarLevel)level {
     self->_configData.loggingOptions.logLevel = level;
-    [self save];
 }
 
 - (void)setCodeFramework:(NSString *)framework {
-    self->_configData.loggingOptions.framework = framework ? framework : OPERATING_SYSTEM;
-    [self save];
+    self->_configData.loggingOptions.framework = framework;// ? framework : OPERATING_SYSTEM;
 }
 
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity {
     self->_configData.telemetry.captureConnectivity = captureConnectivity;
 }
 
+//- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+//    if (value) {
+//        _customData[key] = value;
+//    } else {
+//        [_customData removeObjectForKey:key];
+//    }
+//
+//    [self save];
+//}
+//
+//- (id)valueForUndefinedKey:(NSString *)key {
+//    return _customData[key];
+//}
 
 @end

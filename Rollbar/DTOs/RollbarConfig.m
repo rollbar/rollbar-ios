@@ -78,7 +78,6 @@ static NSString * const DFK_CUSTOM = @"custom";
         self.notifier.version = NOTIFIER_VERSION;
         //self.server = [RollbarServer new];
         //self.person = [RollbarPerson new];
-
         //self.customData = [NSMutableDictionary dictionaryWithCapacity:10];
 
         //[self save];
