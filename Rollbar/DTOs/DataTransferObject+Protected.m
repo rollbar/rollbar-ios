@@ -82,10 +82,10 @@
 
 - (NSNumber *)safelyGetNumberByKey:(NSString *)key {
     NSNumber *result = [self->_data objectForKey:key];
-    if (nil == result) {
-        result = [[NSNumber alloc] init];
-        [self->_data setObject:result forKey:key];
-    }
+//    if (nil == result) {
+//        result = [[NSNumber alloc] init];
+//        [self->_data setObject:result forKey:key];
+//    }
     return result;
 }
 

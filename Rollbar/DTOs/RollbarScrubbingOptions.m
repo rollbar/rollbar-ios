@@ -17,7 +17,7 @@ static BOOL const DEFAULT_ENABLED_FLAG = YES;
 
 static NSString * const DFK_ENABLED = @"enabled";
 static NSString * const DFK_SCRUB_FIELDS = @"scrubFields";
-static NSString * const DFK_WHITELIST_FIELDS = @"whhitelistFields";
+static NSString * const DFK_WHITELIST_FIELDS = @"whitelistFields";
 
 #pragma mark - class implementation
 

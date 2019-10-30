@@ -3,6 +3,7 @@
 #import <XCTest/XCTest.h>
 #import "Rollbar.h"
 #import "RollbarTestUtil.h"
+#import "../Rollbar/RollbarConfiguration.h"
 
 @interface RollbarConfigurationTests : XCTestCase
 
@@ -21,6 +22,11 @@
 - (void)tearDown {
     [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
     [super tearDown];
+}
+
+- (void)testDefaultRollbarConfiguration {
+    RollbarConfiguration *rc = [[RollbarConfiguration alloc] init];
+    NSLog(@"%@", rc);
 }
 
 - (void)testScrubWhitelistFields {

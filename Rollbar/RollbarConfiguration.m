@@ -122,9 +122,17 @@ static NSString *configurationFilePath = nil;
     return self;
 }
 
+- (BOOL)enabled {
+    return self->_configData.developerOptions.enabled;
+}
+
 - (void)setEnabled:(BOOL)enabled {
     self->_configData.developerOptions.enabled = enabled;
     [self save];
+}
+
+- (BOOL)transmit {
+    return self->_configData.developerOptions.transmit;
 }
 
 - (void)setTransmit:(BOOL)transmit {
@@ -132,9 +140,17 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (BOOL)logPayload {
+    return self->_configData.developerOptions.logPayload;
+}
+
 - (void)setLogPayload:(BOOL)logPayload {
     self->_configData.developerOptions.logPayload = logPayload;
     [self save];
+}
+
+- (NSString *)logPayloadFile {
+    return self->_configData.developerOptions.payloadLogFile;
 }
 
 - (void)setLogPayloadFile:(NSString *)logPayloadFile {
@@ -142,9 +158,17 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (BOOL)httpProxyEnabled {
+    return self->_configData.httpProxy.enabled;
+}
+
 - (void)setHttpProxyEnabled:(BOOL)httpProxyEnabled {
     self->_configData.httpProxy.enabled = httpProxyEnabled;
     [self save];
+}
+
+- (NSString *)httpProxy {
+    return self->_configData.httpProxy.proxyUrl;
 }
 
 - (void)setHttpProxy:(NSString *)proxy {
@@ -152,9 +176,17 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (NSNumber *)httpProxyPort {
+    return [NSNumber numberWithUnsignedInteger: self->_configData.httpProxy.proxyPort];
+}
+
 - (void)setHttpProxyPort:(NSNumber *)port {
-    self->_configData.httpProxy.proxyPort = port;
+    self->_configData.httpProxy.proxyPort = port.unsignedIntegerValue;
     [self save];
+}
+
+- (BOOL)httpsProxyEnabled {
+    return self->_configData.httpsProxy.enabled;
 }
 
 - (void)setHttpsProxyEnabled:(BOOL)httpsProxyEnabled {
@@ -162,14 +194,26 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (NSString *)httpsProxy {
+    return self->_configData.httpsProxy.proxyUrl;
+}
+
 - (void)setHttpsProxy:(NSString *)proxy {
     self->_configData.httpsProxy.proxyUrl = proxy;
     [self save];
 }
 
+- (NSNumber *)httpsProxyPort {
+    return [NSNumber numberWithUnsignedInteger:self->_configData.httpsProxy.proxyPort];
+}
+
 - (void)setHttpsProxyPort:(NSNumber *)port {
-    self->_configData.httpsProxy.proxyPort = port;
+    self->_configData.httpsProxy.proxyPort = port.unsignedIntegerValue;
     [self save];
+}
+
+- (BOOL)telemetryEnabled {
+    return self->_configData.telemetry.enabled;
 }
 
 - (void)setTelemetryEnabled:(BOOL)telemetryEnabled {
@@ -178,19 +222,14 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
-- (BOOL)telemetryEnabled {
-    //return self->_configData.telemetry.enabled;
-    return [RollbarTelemetry sharedInstance].enabled;
+- (BOOL)scrubViewInputsTelemetry {
+    return self->_configData.telemetry.viewInputsScrubber.enabled;
 }
 
 - (void)setScrubViewInputsTelemetry:(BOOL)scrubViewInputsTelemetry {
     [RollbarTelemetry sharedInstance].scrubViewInputs = scrubViewInputsTelemetry;
     self->_configData.telemetry.viewInputsScrubber.enabled = scrubViewInputsTelemetry;
     [self save];
-}
-
-- (BOOL)scrubViewInputsTelemetry {
-    return self->_configData.telemetry.viewInputsScrubber.enabled;
 }
 
 - (void)addTelemetryViewInputToScrub:(NSString *)input {
@@ -212,18 +251,17 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
-- (void)setRollbarLevel:(RollbarLevel)level {
-    self->_configData.loggingOptions.logLevel = level;
-    [self save];
+- (NSUInteger)maximumReportsPerMinute {
+    return self->_configData.loggingOptions.maximumReportsPerMinute;
 }
 
-- (RollbarLevel)getRollbarLevel {
-    return self->_configData.loggingOptions.logLevel;
-}
-
-- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
+- (void)setMaximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute {
     self->_configData.loggingOptions.maximumReportsPerMinute = maximumReportsPerMinute;
     [self save];
+}
+
+- (NSInteger)maximumTelemetryData {
+    return self->_configData.telemetry.maximumTelemetryData;
 }
 
 - (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData {
@@ -231,40 +269,17 @@ static NSString *configurationFilePath = nil;
     self->_configData.telemetry.maximumTelemetryData = maximumTelemetryData;
 }
 
-- (void)setPersonId:(NSString *)personId
-           username:(NSString *)username
-              email:(NSString *)email {
-    self->_configData.person.ID = personId;
-    self->_configData.person.username = username;
-    self->_configData.person.email = email;
-    [self save];
+- (NSString *)framework {
+    return self->_configData.loggingOptions.framework;
 }
 
-- (void)setServerHost:(NSString *)host
-                 root:(NSString*)root
-               branch:(NSString*)branch
-          codeVersion:(NSString*)codeVersion {
-    
-    self->_configData.server.host = host;
-    self->_configData.server.root = root ?
-        [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]
-        : root;
-    self->_configData.server.branch = branch;
-    self->_configData.server.codeVersion = codeVersion;
-    [self save];
-}
-
-- (void)setNotifierName:(NSString *)name
-                version:(NSString *)version {
-    
-    self->_configData.notifier.name = name ? name : NOTIFIER_NAME;
-    self->_configData.notifier.version = version ? version : NOTIFIER_VERSION;
-    [self save];
-}
-
-- (void)setCodeFramework:(NSString *)framework {
+- (void)setFramework:(NSString *)framework {
     self->_configData.loggingOptions.framework = framework ? framework : OPERATING_SYSTEM;
     [self save];
+}
+
+- (NSString *)requestId {
+    return self->_configData.loggingOptions.requestId;
 }
 
 - (void)setRequestId:(NSString *)requestId {
@@ -272,13 +287,17 @@ static NSString *configurationFilePath = nil;
     [self save];
 }
 
+- (NSString *)codeVersion {
+    return self->_configData.loggingOptions.codeVersion;
+}
+
 - (void)setCodeVersion:(NSString *)codeVersion {
     self->_configData.loggingOptions.codeVersion = codeVersion;
     [self save];
 }
 
-- (void)setCaptureIpType:(CaptureIpType)captureIp {
-    self->_configData.loggingOptions.captureIp = captureIp;
+- (BOOL)captureLogAsTelemetryData {
+    return self->_configData.telemetry.captureLog;
 }
 
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog {
@@ -286,9 +305,23 @@ static NSString *configurationFilePath = nil;
     self->_configData.telemetry.captureLog = captureLog;
 }
 
-- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity {
+- (BOOL)shouldCaptureConnectivity {
+    return self->_configData.telemetry.captureConnectivity;
+}
+
+- (void)setShouldCaptureConnectivity:(BOOL)captureConnectivity {
     self->_configData.telemetry.captureConnectivity = captureConnectivity;
 }
+
+
+
+
+- (void)setCaptureIpType:(CaptureIpType)captureIp {
+    self->_configData.loggingOptions.captureIp = captureIp;
+}
+
+
+
 
 - (void)addScrubField:(NSString *)field {
     self->_configData.dataScrubber.scrubFields =
@@ -411,5 +444,94 @@ static NSString *configurationFilePath = nil;
     
     return result;
 }
+
+- (NSString *)renderAsDTO {
+    return [self->_configData serializeToJSONString];
+}
+
+- (NSString *)renderAsRollbarConfiguration {
+    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    
+    for (NSString *propertyName in [self getProperties]) {
+        id value = [self valueForKey:propertyName];
+        if (value) {
+            [config setObject:value
+                       forKey:propertyName];
+        }
+    }
+
+    NSData *configJson = [NSJSONSerialization dataWithJSONObject:config
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil
+                                                            safe:true];
+    NSString *result = [[NSString alloc] initWithData:configJson encoding:NSUTF8StringEncoding];
+    return result;
+}
+
+- (NSString *)description {
+    NSString *result = [self renderAsRollbarConfiguration];
+    result = [result stringByAppendingString:@"\nOR as DTO:\n"];
+    result = [result stringByAppendingString:[self renderAsDTO]];
+    return result;
+}
+
+#pragma mark - Convenience Methods
+
+- (void)setPersonId:(NSString *)personId
+           username:(NSString *)username
+              email:(NSString *)email {
+    self->_configData.person.ID = personId;
+    self->_configData.person.username = username;
+    self->_configData.person.email = email;
+    [self save];
+}
+
+- (void)setServerHost:(NSString *)host
+                 root:(NSString*)root
+               branch:(NSString*)branch
+          codeVersion:(NSString*)codeVersion {
+    
+    self->_configData.server.host = host;
+    self->_configData.server.root = root ?
+        [root stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]
+        : root;
+    self->_configData.server.branch = branch;
+    self->_configData.server.codeVersion = codeVersion;
+    [self save];
+}
+
+- (void)setNotifierName:(NSString *)name
+                version:(NSString *)version {
+    
+    self->_configData.notifier.name = name ? name : NOTIFIER_NAME;
+    self->_configData.notifier.version = version ? version : NOTIFIER_VERSION;
+    [self save];
+}
+
+#pragma mark - Deprecated
+
+- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
+    self->_configData.loggingOptions.maximumReportsPerMinute = maximumReportsPerMinute;
+    [self save];
+}
+
+- (RollbarLevel)rollbarLevel {
+    return self->_configData.loggingOptions.logLevel;
+}
+
+- (void)setRollbarLevel:(RollbarLevel)level {
+    self->_configData.loggingOptions.logLevel = level;
+    [self save];
+}
+
+- (void)setCodeFramework:(NSString *)framework {
+    self->_configData.loggingOptions.framework = framework ? framework : OPERATING_SYSTEM;
+    [self save];
+}
+
+- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity {
+    self->_configData.telemetry.captureConnectivity = captureConnectivity;
+}
+
 
 @end

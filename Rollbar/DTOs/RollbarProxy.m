@@ -12,8 +12,8 @@
 #pragma mark - constants
 
 static BOOL const DEFAULT_ENABLED_FLAG = NO;
-static NSString *const DEFAULT_PROXY_URL = nil;
-static NSNumber *const DEFAULT_PROXY_PORT = nil;
+static NSString *const DEFAULT_PROXY_URL = @"";
+static NSUInteger const DEFAULT_PROXY_PORT = 0;
 
 #pragma mark - data field keys
 
@@ -29,7 +29,7 @@ static NSString * const DFK_PROXY_PORT = @"proxyPort";
 
 - (id)initWithEnabled:(BOOL)enabled
              proxyUrl:(NSString *)proxyUrl
-            proxyPort:(NSNumber *)proxyPort {
+            proxyPort:(NSUInteger)proxyPort {
     
     self = [super init];
     if (self) {
@@ -69,13 +69,13 @@ static NSString * const DFK_PROXY_PORT = @"proxyPort";
     [self setString:value forKey:DFK_PROXY_URL];
 }
 
-- (NSNumber *)proxyPort {
-    NSNumber *result = [self safelyGetNumberByKey:DFK_PROXY_PORT];
+- (NSUInteger)proxyPort {
+    NSUInteger result = [self safelyGetUIntegerByKey:DFK_PROXY_PORT];
     return result;
 }
 
-- (void)setProxyPort:(NSNumber *)value {
-    [self setNumber:value forKey:DFK_PROXY_PORT];
+- (void)setProxyPort:(NSUInteger)value {
+    [self setUInteger:value forKey:DFK_PROXY_PORT];
 }
 
 @end

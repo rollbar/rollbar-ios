@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - properties
 @property (nonatomic) BOOL enabled;
 @property (nonatomic, copy) NSString *proxyUrl;
-@property (nonatomic) NSNumber *proxyPort;
+@property (nonatomic) NSUInteger proxyPort;
 
 #pragma mark - initializers
 - (id)initWithEnabled:(BOOL)enabled
              proxyUrl:(NSString *)proxyUrl
-            proxyPort:(NSNumber *)proxyPort;
+            proxyPort:(NSUInteger)proxyPort;
 
 @end
 
