@@ -14,12 +14,14 @@
 static BOOL const DEFAULT_ENABLED_FLAG = NO;
 static BOOL const DEFAULT_CAPTURE_LOG_FLAG = NO;
 static BOOL const DEFAULT_CAPTURE_CONNECTIVITY_FLAG = NO;
+static NSUInteger const DEFAULT_MAX_TELEMETRY_DATA = 10;
 
 #pragma mark - data field keys
 
 static NSString *const DFK_ENABLED_FLAG = @"enabled";
 static NSString *const DFK_CAPTURE_LOG_FLAG = @"captureLog";
 static NSString *const DFK_CAPTURE_CONNECTIVITY_FLAG = @"captureConnectivity";
+static NSString *const DFK_MAX_TELEMETRY_DATA = @"maximumTelemetryData";
 static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
 
 #pragma mark - class implementation
@@ -39,6 +41,7 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
         self.captureLog = captureLog;
         self.captureConnectivity = captureConnectivity;
         self.viewInputsScrubber = viewInputsScrubber;
+        self.maximumTelemetryData = DEFAULT_MAX_TELEMETRY_DATA;
     }
     return self;
 }
@@ -100,6 +103,15 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
     [self setNumber:[NSNumber numberWithBool:value]
              forKey:DFK_CAPTURE_CONNECTIVITY_FLAG
      ];
+}
+
+- (NSUInteger)maximumTelemetryData {
+    NSUInteger result = [self safelyGetUIntegerByKey:DFK_MAX_TELEMETRY_DATA];
+    return result;
+}
+
+- (void)setMaximumTelemetryData:(NSUInteger)value {
+    [self setUInteger:value forKey:DFK_MAX_TELEMETRY_DATA];
 }
 
 - (RollbarScrubbingOptions *)viewInputsScrubber {
