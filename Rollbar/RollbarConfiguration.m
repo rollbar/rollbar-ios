@@ -36,6 +36,10 @@ static NSString *configurationFilePath = nil;
 
 @implementation RollbarConfiguration
 
+- (RollbarConfig *)asRollbarConfig {
+    return self->_configData;
+}
+
 #pragma mark - Factory methods
 
 + (RollbarConfiguration*)configuration {

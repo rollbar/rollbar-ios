@@ -14,6 +14,7 @@
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
 #import "RollbarCachesDirectory.h"
+#import "RollbarConfig.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
@@ -402,7 +403,9 @@ static BOOL isNetworkReachable = YES;
     
     NSDictionary *clientData = [self buildClientData];
     NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
-                                   @"version": self.configuration.notifierVersion};
+                                   @"version": self.configuration.notifierVersion,
+                                   @"configured_options": self.configuration.asRollbarConfig.jsonFriendlyData
+    };
     
     NSMutableDictionary *customData =
         [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];

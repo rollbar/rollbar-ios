@@ -318,8 +318,9 @@
 - (void)testLogTelemetryAutoCapture {
     NSString *logMsg = @"log-message-testing";
     [[RollbarTelemetry sharedInstance] clearAllData];
+    //Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
     Rollbar.currentConfiguration.telemetryEnabled = YES;
-    [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:true];
+    [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:YES];
     // The following line ensures the captureLogAsTelemetryData setting is flushed through the internal queue
     [[RollbarTelemetry sharedInstance] getAllData];
     NSLog(logMsg);
@@ -335,6 +336,8 @@
                   telemetryMsg,
                   logMsg
                   );
+    
+    //[NSThread sleepForTimeInterval:3.0f];
 }
 
 @end

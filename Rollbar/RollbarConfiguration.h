@@ -4,11 +4,15 @@
 #import "RollbarLevel.h"
 #import "CaptureIpType.h"
 
+@class RollbarConfig;
+
 @interface RollbarConfiguration : NSObject
 
 + (RollbarConfiguration*)configuration;
 
 - (id)initWithLoadedConfiguration;
+
+- (RollbarConfig *)asRollbarConfig;
 
 #pragma mark - Persistence
 - (void)_setRoot;
