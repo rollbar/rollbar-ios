@@ -40,7 +40,7 @@ static NSString * const DFK_WHITELIST_FIELDS = @"whitelistFields";
 
 - (id)initWithScrubFields:(NSArray *)scrubFields
           whitelistFields:(NSArray *)whitelistFields {
-    return [self initWithEnabled:YES
+    return [self initWithEnabled:DEFAULT_ENABLED_FLAG
                      scrubFields:scrubFields
                  whitelistFields:whitelistFields
             ];

@@ -28,7 +28,12 @@
                                   error:(NSError **)error
                                    safe:(BOOL)safe {
 #ifdef DEBUG
-    opt |= (NSJSONWritingPrettyPrinted | NSJSONWritingSortedKeys);
+    opt |= NSJSONWritingPrettyPrinted;
+    if (@available(macOS 10.13, *)) {
+        opt |= NSJSONWritingSortedKeys;
+    } else {
+        // Fallback on earlier versions
+    }
 #endif
     if (safe) {
         if ([obj isKindOfClass:[NSArray class]]) {

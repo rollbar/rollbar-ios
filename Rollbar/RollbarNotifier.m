@@ -827,7 +827,7 @@ static BOOL isNetworkReachable = YES;
         return;
     }
 
-    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields;
+    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields.mutableCopy;
     if (self.configuration.scrubWhitelistFields.count > 0) {
         // actualFieldsToScrub =
         // self.configuration.scrubFields - self.configuration.scrubWhitelistFields
