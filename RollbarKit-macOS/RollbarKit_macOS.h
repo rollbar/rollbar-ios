@@ -16,4 +16,5 @@ FOUNDATION_EXPORT const unsigned char RollbarKit_macOSVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <RollbarKit_macOS/PublicHeader.h>
 
+#import <RollbarFramework/RollbarFramework.h>
 

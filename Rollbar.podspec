@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-  s.version                   = "1.8.4"
+  s.version                   = "1.9.0"
   s.name                      = "Rollbar"
   s.summary                   = "Objective-C library for crash reporting and logging with Rollbar. It works on iOS and macOS."
   s.description               = <<-DESC
@@ -28,17 +28,31 @@ Pod::Spec.new do |s|
                           'Rollbar/RollbarNotifier.h',
                           'Rollbar/RollbarConfiguration.h',
                           'Rollbar/RollbarLevel.h',
-                          'Rollbar/RollbarJSONFriendlyProtocol.h',
-                          'Rollbar/RollbarJSONFriendlyObject.h',
                           'Rollbar/RollbarTelemetry.h',
                           'Rollbar/RollbarTelemetryType.h',
                           'Rollbar/RollbarKSCrashReportSink.h',
-                          'Rollbar/RollbarKSCrashInstallation.h',                          
+                          'Rollbar/RollbarKSCrashInstallation.h',
                           'Rollbar/Deploys/RollbarDeploysProtocol.h',
                           'Rollbar/Deploys/RollbarDeploysManager.h',
+                          'Rollbar/RollbarJSONFriendlyProtocol.h',
+                          'Rollbar/RollbarJSONFriendlyObject.h',
                           'Rollbar/Deploys/Deployment.h',
                           'Rollbar/Deploys/DeploymentDetails.h',
                           'Rollbar/Deploys/DeployApiCallResult.h',
+                          'Rollbar/DTOs/DataTransferObject.h',
+                          'Rollbar/DTOs/DataTransferObject+CustomData.h',
+                          'Rollbar/DTOs/RollbarLevel.h',
+                          'Rollbar/DTOs/CaptureIpType.h',
+                          'Rollbar/DTOs/RollbarConfig.h',
+                          'Rollbar/DTOs/RollbarDestination.h',
+                          'Rollbar/DTOs/RollbarDeveloperOptions.h',
+                          'Rollbar/DTOs/RollbarProxy.h',
+                          'Rollbar/DTOs/RollbarScrubbingOptions.h',
+                          'Rollbar/DTOs/RollbarServer.h',
+                          'Rollbar/DTOs/RollbarPerson.h',
+                          'Rollbar/DTOs/RollbarModule.h',
+                          'Rollbar/DTOs/RollbarTelemetryOptions.h',
+                          'Rollbar/DTOs/RollbarLoggingOptions.h',
                           'KSCrash/Source/KSCrash/Recording/KSCrash.h',
                           'KSCrash/Source/KSCrash/Installations/KSCrashInstallation.h',
                           'KSCrash/Source/KSCrash/Installations/KSCrashInstallation+Private.h',
@@ -47,7 +61,6 @@ Pod::Spec.new do |s|
                           'KSCrash/Source/KSCrash/Recording/KSCrashReportWriter.h',
                           'KSCrash/Source/KSCrash/Reporting/Filters/KSCrashReportFilter.h',
                           'KSCrash/Source/KSCrash/Recording/Monitors/KSCrashMonitorType.h'
-
 
   s.ios.frameworks = 
                 "Foundation",

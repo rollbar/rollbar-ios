@@ -25,6 +25,12 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.9.0**
+- feat: ref #194: Capture relevant notifier config with every payload.
+- feat: ref #205: Reimplement RollbarConfiguration as a Rollbar DTO
+- feat: ref #204: Build JSON serializable base for Rollbar DTOs
+- chore: bumped the version up
+ 
 **1.8.4**
 - fix: resolve #200: Correct the notifier version
 - refactor: resolve #201: Update KSCrash submodule to its v1.15.21 release
