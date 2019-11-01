@@ -5,6 +5,7 @@
 #import "../Rollbar/Deploys/DeployApiCallResult.h"
 #import "../Rollbar/Deploys/RollbarDeploysManager.h"
 #import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
+#import "../Rollbar/RollbarJSONFriendlyObject.h"
 
 
 @interface RollbarDeploysObserver : NSObject
