@@ -6,7 +6,22 @@
  * Translates RollbarLevel to string. Default is "info".
  */
 NSString* RollbarStringFromLevel(RollbarLevel level) {
-    switch (level) {
+
+    return [RollbarLevelUtil RollbarLevelToString:level];
+}
+
+/**
+ * Translates given string to RollbarLevel. Default is RollbarInfo.
+ */
+RollbarLevel RollbarLevelFromString(NSString *levelString) {
+
+    return [RollbarLevelUtil RollbarLevelFromString:levelString];
+}
+
+@implementation RollbarLevelUtil
+
++ (NSString *) RollbarLevelToString:(RollbarLevel)value; {
+    switch (value) {
         case RollbarDebug:
             return @"debug";
         case RollbarWarning:
@@ -20,25 +35,25 @@ NSString* RollbarStringFromLevel(RollbarLevel level) {
     }
 }
 
-/**
- * Translates given string to RollbarLevel. Default is RollbarInfo.
- */
-RollbarLevel RollbarLevelFromString(NSString *levelString) {
-
-    if (NSOrderedSame == [levelString caseInsensitiveCompare:@"debug"]) {
++ (RollbarLevel) RollbarLevelFromString:(NSString *)value {
+    
+    if (NSOrderedSame == [value caseInsensitiveCompare:@"debug"]) {
         return RollbarDebug;
     }
-    else  if (NSOrderedSame == [levelString caseInsensitiveCompare:@"warning"]) {
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"warning"]) {
         return RollbarWarning;
     }
-    else  if (NSOrderedSame == [levelString caseInsensitiveCompare:@"critical"]) {
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"critical"]) {
         return RollbarCritical;
     }
-    else  if (NSOrderedSame == [levelString caseInsensitiveCompare:@"error"]) {
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"error"]) {
         return RollbarError;
     }
     else {
         return RollbarInfo; // default case...
     }
 }
+
+@end
+
 

@@ -14,6 +14,7 @@
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
 #import "RollbarCachesDirectory.h"
+#import "RollbarConfig.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
@@ -236,7 +237,7 @@ static BOOL isNetworkReachable = YES;
         NSData *lineData = [line dataUsingEncoding:NSUTF8StringEncoding];
         if (!lineData) {
             // All we can do is ignore this line
-            RollbarLog(@"Error converting file line to NSData");
+            RollbarLog(@"Error converting file line to NSData: %@", line);
             return;
         }
         NSError *error;
@@ -246,7 +247,7 @@ static BOOL isNetworkReachable = YES;
 
         if (!payload) {
             // Ignore this line if it isn't valid json and proceed to the next line
-            RollbarLog(@"Error restoring data from file to JSON");
+            RollbarLog(@"Error restoring data from file to JSON: %@", lineData);
             return;
         }
 
@@ -362,13 +363,9 @@ static BOOL isNetworkReachable = YES;
                              @"app_name": bundleName ? bundleName : @""
                              };
 #else
-//    NSDictionary *systemVersion = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-    NSOperatingSystemVersion osVer =
-    [[NSProcessInfo processInfo] operatingSystemVersion];
-
+    NSOperatingSystemVersion osVer = [[NSProcessInfo processInfo] operatingSystemVersion];
     NSDictionary *osData = @{
                              @"os": @"macOS",
-//                             @"os_version": [systemVersion objectForKey:@"ProductVersion"],
                              @"os_version": [NSString stringWithFormat:@" %tu.%tu.%tu",
                                              osVer.majorVersion,
                                              osVer.minorVersion,
@@ -384,17 +381,14 @@ static BOOL isNetworkReachable = YES;
 
     if (self.configuration.captureIp == CaptureIpFull) {
         return @{@"timestamp": timestamp,
-                 //@"ios": osData,
                  @"os": osData,
                  @"user_ip": @"$remote_ip"};
     } else if (self.configuration.captureIp == CaptureIpAnonymize) {
         return @{@"timestamp": timestamp,
-                 //@"ios": osData,
                  @"os": osData,
                  @"user_ip": @"$remote_ip_anonymize"};
     } else {
         return @{@"timestamp": timestamp,
-                 //@"ios": osData,
                  @"os": osData
                  };
     }
@@ -409,7 +403,9 @@ static BOOL isNetworkReachable = YES;
     
     NSDictionary *clientData = [self buildClientData];
     NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
-                                   @"version": self.configuration.notifierVersion};
+                                   @"version": self.configuration.notifierVersion,
+                                   @"configured_options": self.configuration.asRollbarConfig.jsonFriendlyData
+    };
     
     NSMutableDictionary *customData =
         [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];
@@ -429,23 +425,6 @@ static BOOL isNetworkReachable = YES;
                                                      extra:extra
                                                crashReport:crashReport
                           ];
-//    NSOperatingSystemVersion osVer =
-//    [[NSProcessInfo processInfo] operatingSystemVersion];
-    
-//#if TARGET_OS_IPHONE
-//    NSString *platform = @"iOS";
-//    //float ver = [[[UIDevice currentDevice] systemVersion] floatValue];
-//#else
-//    NSString *platform = @"macOS";
-//#endif
-//
-//    platform =
-//    [platform stringByAppendingFormat:@" %tu.%tu.%tu",
-//     osVer.majorVersion,
-//     osVer.minorVersion,
-//     osVer.patchVersion
-//     ];
-    
     NSString *platform = @"client";
     NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
                                    @"level": level,
@@ -848,7 +827,7 @@ static BOOL isNetworkReachable = YES;
         return;
     }
 
-    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields;
+    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields.mutableCopy;
     if (self.configuration.scrubWhitelistFields.count > 0) {
         // actualFieldsToScrub =
         // self.configuration.scrubFields - self.configuration.scrubWhitelistFields
