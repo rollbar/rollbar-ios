@@ -24,11 +24,13 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
     depending on what is more appropriate in each case.
 
 ## Release Notes
+**1.9.1**
+- feat: resolve #215: Change client.os element back to client.ios to fix dSYMs application
 
 **1.9.0**
-- feat: ref #194: Capture relevant notifier config with every payload.
-- feat: ref #205: Reimplement RollbarConfiguration as a Rollbar DTO
-- feat: ref #204: Build JSON serializable base for Rollbar DTOs
+- feat: resolve #194: Capture relevant notifier config with every payload.
+- feat: resolve #205: Reimplement RollbarConfiguration as a Rollbar DTO
+- feat: resolve #204: Build JSON serializable base for Rollbar DTOs
 - chore: bumped the version up
  
 **1.8.4**
