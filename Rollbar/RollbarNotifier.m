@@ -381,15 +381,15 @@ static BOOL isNetworkReachable = YES;
 
     if (self.configuration.captureIp == CaptureIpFull) {
         return @{@"timestamp": timestamp,
-                 @"os": osData,
+                 @"ios": osData,
                  @"user_ip": @"$remote_ip"};
     } else if (self.configuration.captureIp == CaptureIpAnonymize) {
         return @{@"timestamp": timestamp,
-                 @"os": osData,
+                 @"ios": osData,
                  @"user_ip": @"$remote_ip_anonymize"};
     } else {
         return @{@"timestamp": timestamp,
-                 @"os": osData
+                 @"ios": osData
                  };
     }
 }
