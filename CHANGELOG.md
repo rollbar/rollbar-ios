@@ -24,6 +24,10 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
     depending on what is more appropriate in each case.
 
 ## Release Notes
+
+**1.9.2**
+- feat: ref #217: Reimplement Deploys based on the DTOs 
+
 **1.9.1**
 - feat: resolve #215: Change client.os element back to client.ios to fix dSYMs application
 

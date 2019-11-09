@@ -3,6 +3,7 @@
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarDeploysManager.h"
+#include "Deployment.h"
 
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
 #define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
@@ -59,7 +60,7 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     NSString * const url =
         @"https://api.rollbar.com/api/1/deploy/";
     NSMutableDictionary *params =
-        [[NSMutableDictionary alloc] initWithDictionary:deployment.asJSONData];
+        [[NSMutableDictionary alloc] initWithDictionary:deployment.jsonFriendlyData];
     [params setObject:self.writeAccessToken
                forKey:@"access_token"
      ];

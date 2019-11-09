@@ -3,21 +3,19 @@
 #import <Foundation/Foundation.h>
 
 #import "DeploymentDetails.h"
-#import "RollbarJSONFriendlyObject.h"
+#import "DataTransferObject.h"
+#import "DeployApiCallOutcome.h"
 
-typedef NS_ENUM(NSInteger, DeployApiCallOutcome) {
-    DeployApiCallSuccess,
-    DeployApiCallError,
-};
-
-@interface DeployApiCallResult : RollbarJSONFriendlyObject
+@interface DeployApiCallResult : DataTransferObject
 @property (readonly) DeployApiCallOutcome outcome;
 @property (readonly, copy) NSString *description;
 
-- (id)initWithResponse:(NSHTTPURLResponse*)httpResponse
-                  data:(NSData*)data
-                 error:(NSError*)error
-            forRequest:(NSURLRequest*)request;
+- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                            data:(NSData*)data
+                           error:(NSError*)error
+                      forRequest:(NSURLRequest*)request
+NS_DESIGNATED_INITIALIZER;
+
 @end
 
 @interface DeploymentRegistrationResult : DeployApiCallResult
@@ -29,6 +27,6 @@ typedef NS_ENUM(NSInteger, DeployApiCallOutcome) {
 @end
 
 @interface DeploymentDetailsPageResult : DeployApiCallResult
-@property (readonly, retain) NSSet<DeploymentDetails *> *deployments;
-@property (readonly, copy) NSNumber *pageNumber;
+@property (readonly, retain) NSArray<DeploymentDetails *> *deployments;
+@property (readonly) NSUInteger pageNumber;
 @end

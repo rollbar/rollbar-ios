@@ -3,50 +3,53 @@
 #import <Foundation/Foundation.h>
 
 #import "DeploymentDetails.h"
+#import "DataTransferObject+Protected.h"
 
 @implementation DeploymentDetails
 
-static NSString * const PROPERTY_deployId = @"id";
-static NSString * const PROPERTY_projectId = @"project_id";
-static NSString * const PROPERTY_startTime = @"start_time";
-static NSString * const PROPERTY_endTime = @"finish_time";
-static NSString * const PROPERTY_status = @"status";
+#pragma mark - data field keys
+static NSString * const DFK_DEPLOY_ID = @"id";
+static NSString * const DFK_PROJECT_ID = @"project_id";
+static NSString * const DFK_START_TIME = @"start_time";
+static NSString * const DFK_END_TIME = @"finish_time";
+static NSString * const DFK_STATUS = @"status";
+
+#pragma mark - properties
 
 -(NSString *)deployId {
-    return [self.dataDictionary objectForKey:PROPERTY_deployId] ;
+    return [self safelyGetStringByKey:DFK_DEPLOY_ID] ;
 }
 -(NSString *)projectId {
-    return [self.dataDictionary objectForKey:PROPERTY_projectId] ;
+    return [self safelyGetStringByKey:DFK_PROJECT_ID] ;
 }
 -(NSString *)startTime {
-    return [self.dataDictionary objectForKey:PROPERTY_startTime] ;
+    return [self safelyGetStringByKey:DFK_START_TIME] ;
 }
 -(NSString *)endTime {
-    return [self.dataDictionary objectForKey:PROPERTY_endTime] ;
+    return [self safelyGetStringByKey:DFK_END_TIME] ;
 }
 -(NSString *)status {
-    return [self.dataDictionary objectForKey:PROPERTY_status] ;
+    return [self safelyGetStringByKey:DFK_STATUS] ;
 }
+
+#pragma mark - initializers
 
 - (id)initWithJSONData:(NSDictionary *)jsonData {
     self = [super initWithJSONData:jsonData];
     if (nil != self) {
-        NSNumber *deploy_id = jsonData[@"id"];
-        NSNumber *project_id = jsonData[@"project_id"];
-        NSNumber *start_time = jsonData[@"start_time"];
-        NSNumber *finish_time = jsonData[@"finish_time"];
-        NSString *status = jsonData[@"status"];
+        NSNumber *deploy_id = jsonData[DFK_DEPLOY_ID];
+        NSNumber *project_id = jsonData[DFK_PROJECT_ID];
+        NSNumber *start_time = jsonData[DFK_START_TIME];
+        NSNumber *finish_time = jsonData[DFK_END_TIME];
+        NSString *status = jsonData[DFK_STATUS];
         
-        [self.dataDictionary setObject:[deploy_id stringValue]
-                                forKey:PROPERTY_deployId];
-        [self.dataDictionary setObject:[project_id stringValue]
-                                forKey:PROPERTY_projectId];
-        [self.dataDictionary setObject:status
-                                forKey:PROPERTY_status];
-        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)start_time.doubleValue]
-                                forKey:PROPERTY_startTime];
-        [self.dataDictionary setObject:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)finish_time.doubleValue]
-                                forKey:PROPERTY_endTime];
+        [self setString:[deploy_id stringValue] forKey:DFK_DEPLOY_ID];
+        [self setString:[project_id stringValue] forKey:DFK_PROJECT_ID];
+        [self setString:status forKey:DFK_STATUS];
+        [self setString:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)start_time.doubleValue].description
+                                forKey:DFK_START_TIME];
+        [self setString:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)finish_time.doubleValue].description
+                                forKey:DFK_END_TIME];
     }
     return self;
 }

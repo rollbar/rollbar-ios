@@ -23,8 +23,9 @@ FOUNDATION_EXPORT const unsigned char RollbarFrameworkVersionString[];
 #import <RollbarFramework/RollbarDeploysProtocol.h>
 #import <RollbarFramework/RollbarDeploysManager.h>
 
-#import <RollbarFramework/RollbarJSONFriendlyProtocol.h>
-#import <RollbarFramework/RollbarJSONFriendlyObject.h>
+//#import <RollbarFramework/RollbarJSONFriendlyProtocol.h>
+//#import <RollbarFramework/RollbarJSONFriendlyObject.h>
+#import <RollbarFramework/DeployApiCallOutcome.h>
 #import <RollbarFramework/DeployApiCallResult.h>
 #import <RollbarFramework/Deployment.h>
 #import <RollbarFramework/DeploymentDetails.h>

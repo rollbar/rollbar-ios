@@ -1068,6 +1068,14 @@
 		55F10FF9236186780043ADC0 /* RollbarProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F10FF3236186770043ADC0 /* RollbarProxy.m */; };
 		55F10FFA236186780043ADC0 /* RollbarProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F10FF3236186770043ADC0 /* RollbarProxy.m */; };
 		55F10FFB236186780043ADC0 /* RollbarProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F10FF3236186770043ADC0 /* RollbarProxy.m */; };
+		55F7D9502375E81300F9932D /* DeployApiCallOutcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F7D94E2375E81300F9932D /* DeployApiCallOutcome.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F7D9512375E81300F9932D /* DeployApiCallOutcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F7D94E2375E81300F9932D /* DeployApiCallOutcome.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F7D9522375E81300F9932D /* DeployApiCallOutcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F7D94E2375E81300F9932D /* DeployApiCallOutcome.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F7D9532375E81300F9932D /* DeployApiCallOutcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F7D94E2375E81300F9932D /* DeployApiCallOutcome.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F7D9542375E81300F9932D /* DeployApiCallOutcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F7D94F2375E81300F9932D /* DeployApiCallOutcome.m */; };
+		55F7D9552375E81300F9932D /* DeployApiCallOutcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F7D94F2375E81300F9932D /* DeployApiCallOutcome.m */; };
+		55F7D9562375E81300F9932D /* DeployApiCallOutcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F7D94F2375E81300F9932D /* DeployApiCallOutcome.m */; };
+		55F7D9572375E81300F9932D /* DeployApiCallOutcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F7D94F2375E81300F9932D /* DeployApiCallOutcome.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1197,6 +1205,8 @@
 		55F10FE9236135EF0043ADC0 /* RollbarDeveloperOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarDeveloperOptions.m; sourceTree = "<group>"; };
 		55F10FF2236186770043ADC0 /* RollbarProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarProxy.h; sourceTree = "<group>"; };
 		55F10FF3236186770043ADC0 /* RollbarProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarProxy.m; sourceTree = "<group>"; };
+		55F7D94E2375E81300F9932D /* DeployApiCallOutcome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeployApiCallOutcome.h; sourceTree = "<group>"; };
+		55F7D94F2375E81300F9932D /* DeployApiCallOutcome.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeployApiCallOutcome.m; sourceTree = "<group>"; };
 		9630826318DCDDC000256154 /* RollbarConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarConfiguration.h; sourceTree = "<group>"; };
 		9630826418DCDDC000256154 /* RollbarConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollbarConfiguration.m; sourceTree = "<group>"; };
 		966CD46C18F4E4C3005A8F2D /* RollbarThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollbarThread.h; sourceTree = "<group>"; };
@@ -1474,6 +1484,8 @@
 		55143D7C214C5E2200761B20 /* Deploys */ = {
 			isa = PBXGroup;
 			children = (
+				55F7D94E2375E81300F9932D /* DeployApiCallOutcome.h */,
+				55F7D94F2375E81300F9932D /* DeployApiCallOutcome.m */,
 				55143D93214CB35F00761B20 /* DeployApiCallResult.h */,
 				55143D96214CB39000761B20 /* DeployApiCallResult.m */,
 				55143D7D214C5F4600761B20 /* RollbarDeploysProtocol.h */,
@@ -2101,6 +2113,7 @@
 				55454B1722C69DD100D4A414 /* KSMach.h in Headers */,
 				55454B2C22C69DD100D4A414 /* KSObjC.h in Headers */,
 				554549F822C69A2A00D4A414 /* Deployment.h in Headers */,
+				55F7D9512375E81300F9932D /* DeployApiCallOutcome.h in Headers */,
 				55A5588E2356474F00D8898A /* CaptureIpType.h in Headers */,
 				55454ABF22C69DBC00D4A414 /* KSCrashMonitor_MachException.h in Headers */,
 				55454B3122C69DD100D4A414 /* KSStackCursor_MachineContext.h in Headers */,
@@ -2191,6 +2204,7 @@
 				55E275A6236787A500BA9BDC /* RollbarLoggingOptions.h in Headers */,
 				55454AD922C69DD100D4A414 /* KSMemory.h in Headers */,
 				55454B6222C69E0500D4A414 /* type_traits.h in Headers */,
+				55F7D9502375E81300F9932D /* DeployApiCallOutcome.h in Headers */,
 				55454B7422C69E1300D4A414 /* KSCrashInstallation+Private.h in Headers */,
 				55454B3B22C69DDD00D4A414 /* KSCrashC.h in Headers */,
 				5599052F236381FE003C41F3 /* RollbarModule.h in Headers */,
@@ -2332,6 +2346,7 @@
 				55454CFE22C6AE8C00D4A414 /* KSJSONCodecObjC.h in Headers */,
 				55454C6C22C6AE5B00D4A414 /* KSCrashReportSinkQuincyHockey.h in Headers */,
 				55454BEA22C6ABE100D4A414 /* NSJSONSerialization+Rollbar.h in Headers */,
+				55F7D9522375E81300F9932D /* DeployApiCallOutcome.h in Headers */,
 				559270A423500C950087E01F /* DataTransferObject+Protected.h in Headers */,
 				55454D4222C6AE9D00D4A414 /* StringRef.h in Headers */,
 				55454D7822C6AEE400D4A414 /* Fallthrough.h in Headers */,
@@ -2477,6 +2492,7 @@
 				55454C4C22C6AE4200D4A414 /* NSData+GZip.h in Headers */,
 				55454D3722C6AE8D00D4A414 /* KSJSONCodecObjC.h in Headers */,
 				55454C7622C6AE5C00D4A414 /* KSCrashReportSinkQuincyHockey.h in Headers */,
+				55F7D9532375E81300F9932D /* DeployApiCallOutcome.h in Headers */,
 				55454BEB22C6ABE200D4A414 /* NSJSONSerialization+Rollbar.h in Headers */,
 				559270A523500C950087E01F /* DataTransferObject+Protected.h in Headers */,
 				55454D4522C6AE9F00D4A414 /* StringRef.h in Headers */,
@@ -2959,6 +2975,7 @@
 				55454AD022C69DD100D4A414 /* KSCPU_x86_32.c in Sources */,
 				554549C722C68DBA00D4A414 /* Rollbar_iOS.m in Sources */,
 				55454A2922C69BAF00D4A414 /* RollbarNotifier.m in Sources */,
+				55F7D9542375E81300F9932D /* DeployApiCallOutcome.m in Sources */,
 				55454A2522C69B8900D4A414 /* RollbarLogger.m in Sources */,
 				55454AE422C69DD100D4A414 /* KSStackCursor.c in Sources */,
 				557A4E1D236262460034BB55 /* RollbarScrubbingOptions.m in Sources */,
@@ -3079,6 +3096,7 @@
 				55454B0922C69DD100D4A414 /* KSCPU_x86_32.c in Sources */,
 				554549E222C68E8F00D4A414 /* Rollbar_macOS.m in Sources */,
 				55454A2A22C69BB000D4A414 /* RollbarNotifier.m in Sources */,
+				55F7D9552375E81300F9932D /* DeployApiCallOutcome.m in Sources */,
 				55454A2622C69B8A00D4A414 /* RollbarLogger.m in Sources */,
 				55454B1D22C69DD100D4A414 /* KSStackCursor.c in Sources */,
 				557A4E1E236262460034BB55 /* RollbarScrubbingOptions.m in Sources */,
@@ -3121,6 +3139,7 @@
 				55454C1922C6AD0E00D4A414 /* RollbarTelemetry.m in Sources */,
 				55454C0D22C6ACE600D4A414 /* RollbarLogger.m in Sources */,
 				55454C1E22C6AD2100D4A414 /* RollbarTelemetryType.m in Sources */,
+				55F7D9562375E81300F9932D /* DeployApiCallOutcome.m in Sources */,
 				55454CF222C6AE8C00D4A414 /* KSSignalInfo.c in Sources */,
 				55454C5722C6AE4F00D4A414 /* NSMutableData+AppendUTF8.m in Sources */,
 				55454CD922C6AE8C00D4A414 /* KSObjC.c in Sources */,
@@ -3255,6 +3274,7 @@
 				55454C1A22C6AD0F00D4A414 /* RollbarTelemetry.m in Sources */,
 				55454C0E22C6ACE700D4A414 /* RollbarLogger.m in Sources */,
 				55454C1F22C6AD2200D4A414 /* RollbarTelemetryType.m in Sources */,
+				55F7D9572375E81300F9932D /* DeployApiCallOutcome.m in Sources */,
 				55454D2B22C6AE8D00D4A414 /* KSSignalInfo.c in Sources */,
 				55454C6322C6AE5000D4A414 /* NSMutableData+AppendUTF8.m in Sources */,
 				55454D1222C6AE8D00D4A414 /* KSObjC.c in Sources */,
@@ -3911,7 +3931,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.9.1;
+				CURRENT_PROJECT_VERSION = 1.9.2;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3972,7 +3992,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.9.1;
+				CURRENT_PROJECT_VERSION = 1.9.2;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
