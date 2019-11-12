@@ -18,6 +18,7 @@ FOUNDATION_EXPORT const unsigned char RollbarFrameworkVersionString[];
 #import <RollbarFramework/RollbarKSCrashReportSink.h>
 #import <RollbarFramework/RollbarTelemetry.h>
 #import <RollbarFramework/RollbarTelemetryType.h>
+#import <RollbarFramework/RollbarLog.h>
 
 // Deploys API
 #import <RollbarFramework/RollbarDeploysProtocol.h>

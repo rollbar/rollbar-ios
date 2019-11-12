@@ -2,4 +2,4 @@
 
 #import <Foundation/Foundation.h>
 
-void RollbarLog(NSString *format, ...);
+void SdkLog(NSString *format, ...);

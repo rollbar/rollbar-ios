@@ -25,7 +25,8 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
-**1.9.2**
+**1.10.0**
+- feat: ref #206: Capture Log As Telemetry - Not working? Introducing RollbarLog(...)
 - feat: ref #217: Reimplement Deploys based on the DTOs 
 
 **1.9.1**

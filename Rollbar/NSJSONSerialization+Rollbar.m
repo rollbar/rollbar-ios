@@ -2,7 +2,7 @@
 
 #import "NSJSONSerialization+Rollbar.h"
 #import "Rollbar.h"
-#import "RollbarLogger.h"
+#import "SdkLog.h"
 
 @implementation NSJSONSerialization (Rollbar)
 
@@ -61,10 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
             if (error == nil) {
                 [safeData setObject:[[self class] safeDataFromJSONObject:json] forKey:key];
             } else {
-                RollbarLog(@"Error serializing NSData: %@", [error localizedDescription]);
+                SdkLog(@"Error serializing NSData: %@", [error localizedDescription]);
             }
         } else {
-            RollbarLog(@"Error serializing class '%@' using NSJSONSerialization",
+            SdkLog(@"Error serializing class '%@' using NSJSONSerialization",
                        NSStringFromClass([obj class]));
         }
     }];

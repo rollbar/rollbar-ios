@@ -3,6 +3,7 @@
 #import <XCTest/XCTest.h>
 #import "Rollbar.h"
 #import "RollbarTestUtil.h"
+#import "RollbarLog.h"
 
 @interface RollbarTelemetryTests : XCTestCase
 
@@ -99,6 +100,17 @@
 
     XCTAssertTrue([@"not-password" compare:[telemetryEvents[1] valueForKeyPath:@"body.element"]] == NSOrderedSame);
     XCTAssertTrue([@"My Password" compare:[telemetryEvents[1] valueForKeyPath:@"body.content"]] == NSOrderedSame);
+}
+
+- (void)testRollbarLog {
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
+    Rollbar.currentConfiguration.captureLogAsTelemetryData = YES;
+    
+    [RollbarTelemetry.sharedInstance clearAllData];
+    NSNumber *counter = [NSNumber numberWithInt:123];
+    RollbarLog(@"Logging with telemetry %@", counter);
+    NSArray *telemetryEvents = [RollbarTelemetry.sharedInstance getAllData];
+    XCTAssertEqual(telemetryEvents.count, 1);
 }
 
 @end

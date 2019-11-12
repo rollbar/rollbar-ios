@@ -7,7 +7,7 @@
 //
 
 #import "DataTransferObject.h"
-#import "RollbarLogger.h"
+#import "SdkLog.h"
 
 #import <Foundation/NSObjCRuntime.h>
 #import "objc/runtime.h"
@@ -84,10 +84,10 @@
             if (error == nil) {
                 [safeData setObject:[[self class] safeDataFromJSONObject:json] forKey:key];
             } else {
-                RollbarLog(@"Error serializing NSData: %@", [error localizedDescription]);
+                SdkLog(@"Error serializing NSData: %@", [error localizedDescription]);
             }
         } else {
-            RollbarLog(@"Error serializing class '%@' using NSJSONSerialization",
+            SdkLog(@"Error serializing class '%@' using NSJSONSerialization",
                        NSStringFromClass([obj class]));
         }
     }];
@@ -131,8 +131,8 @@
                                       error:&error];
     if (!self->_data) {
         self->_data = [[NSMutableDictionary alloc] initWithCapacity:10];
-        RollbarLog(@"Error restoring data from JSON NSData instance: %@", jsonData);
-        RollbarLog(@"Error details: %@", error);
+        SdkLog(@"Error restoring data from JSON NSData instance: %@", jsonData);
+        SdkLog(@"Error details: %@", error);
         return NO;
     }
     return YES;
@@ -141,7 +141,7 @@
 - (BOOL)deserializeFromJSONString:(NSString *)jsonString {
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     if (!jsonData) {
-        RollbarLog(@"Error converting an NSString instance to NSData: %@", jsonString);
+        SdkLog(@"Error converting an NSString instance to NSData: %@", jsonString);
         return NO;
     }
     return [self deserializeFromJSONData:jsonData];
