@@ -1,64 +1,61 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import "Deployment.h"
+#import "DataTransferObject+Protected.h"
 
 @implementation Deployment
 
-static NSString * const PROPERTY_environment = @"environment";
-static NSString * const PROPERTY_comment = @"comment";
-static NSString * const PROPERTY_revision = @"revision";
-static NSString * const PROPERTY_localUsername = @"local_username";
-static NSString * const PROPERTY_rollbarUsername = @"rollbar_username";
+#pragma mark - data field keys
+static NSString * const DFK_ENVIRONMENT = @"environment";
+static NSString * const DFK_COMMENT = @"comment";
+static NSString * const DFK_REVISION = @"revision";
+static NSString * const DFK_LOCAL_USERNAME = @"local_username";
+static NSString * const DFK_ROLLBAR_USERNAME = @"rollbar_username";
 
+#pragma mark - properties
 -(NSString *)environment {
-    return [self.dataDictionary objectForKey:PROPERTY_environment] ;
+    return [self safelyGetStringByKey:DFK_ENVIRONMENT] ;
 }
 -(NSString *)comment {
-    return [self.dataDictionary objectForKey:PROPERTY_comment] ;
+    return [self safelyGetStringByKey:DFK_COMMENT] ;
 }
 -(NSString *)revision {
-    return [self.dataDictionary objectForKey:PROPERTY_revision] ;
+    return [self safelyGetStringByKey:DFK_REVISION] ;
 }
 -(NSString *)localUsername {
-    return [self.dataDictionary objectForKey:PROPERTY_localUsername] ;
+    return [self safelyGetStringByKey:DFK_LOCAL_USERNAME] ;
 }
 -(NSString *)rollbarUsername {
-    return [self.dataDictionary objectForKey:PROPERTY_rollbarUsername] ;
+    return [self safelyGetStringByKey:DFK_ROLLBAR_USERNAME] ;
 }
 
-- (id)initWithEnvironment:(NSString *)environment
-                  comment:(NSString *)comment
-                 revision:(NSString *)revision
-            localUserName:(NSString *)localUserName
-          rollbarUserName:(NSString *)rollbarUserName {
-    self = [super init];
-    if (nil != self) {
-        [self.dataDictionary setObject:environment forKey:PROPERTY_environment];
-        [self.dataDictionary setObject:comment forKey:PROPERTY_comment];
-        [self.dataDictionary setObject:revision forKey:PROPERTY_revision];
-        [self.dataDictionary setObject:localUserName forKey:PROPERTY_localUsername];
-        [self.dataDictionary setObject:rollbarUserName forKey:PROPERTY_rollbarUsername];
-    }
+#pragma mark - initializers
+
+- (instancetype)initWithEnvironment:(NSString *)environment
+                            comment:(NSString *)comment
+                           revision:(NSString *)revision
+                      localUserName:(NSString *)localUserName
+                    rollbarUserName:(NSString *)rollbarUserName {
+    self = [super initWithDictionary:@{
+        DFK_ENVIRONMENT:environment,
+        DFK_COMMENT:comment,
+        DFK_REVISION:revision,
+        DFK_LOCAL_USERNAME:localUserName,
+        DFK_ROLLBAR_USERNAME:rollbarUserName,
+    }];
     return self;
 }
-- (id)initWithJSONData:(NSDictionary *)jsonData {
-    self = [super initWithJSONData:jsonData];
-    if (nil != self) {
-        NSString *revision = jsonData[@"revision"];
-        NSString *environment = jsonData[@"environment"];
-        NSString *user_id = jsonData[@"user_id"];
-        NSString *local_username = jsonData[@"local_username"];
-        NSString *comment = jsonData[@"comment"];
-        
-        [self.dataDictionary setObject:environment forKey:PROPERTY_environment];
-        [self.dataDictionary setObject:comment forKey:PROPERTY_comment];
-        [self.dataDictionary setObject:revision forKey:PROPERTY_revision];
-        [self.dataDictionary setObject:local_username forKey:PROPERTY_localUsername];
-        [self.dataDictionary setObject:user_id forKey:PROPERTY_rollbarUsername];
-    }
-    return self;
+
+- (instancetype)initWithJSONData:(NSDictionary *)jsonData {
+    return [self initWithEnvironment:jsonData[@"environment"]
+                             comment:jsonData[@"environment"]
+                            revision:jsonData[@"revision"]
+                       localUserName:jsonData[@"local_username"]
+                     rollbarUserName:jsonData[@"user_id"]
+            ];
 }
-- (id)init {
+
+- (instancetype)init {
     return [self initWithEnvironment:nil
                              comment:nil
                             revision:nil

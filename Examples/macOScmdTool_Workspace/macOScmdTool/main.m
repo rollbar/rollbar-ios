@@ -28,6 +28,7 @@
                      @"Dave",
                      @"Heywood",
                      @"Frank", nil];
+    NSLog(@"The crew: %@", crew);
     // This will throw an exception.
     NSLog(@"%@", [crew objectAtIndex:10]);
 }
@@ -39,10 +40,14 @@ int main(int argc, const char * argv[]) {
         // configure Rollbar:
         RollbarConfiguration *config = [RollbarConfiguration configuration];
         config.environment = @"samples";
+        config.telemetryEnabled = YES;
+        config.maximumTelemetryData = 20;
+        config.captureLogAsTelemetryData = YES;
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
         
         NSLog(@"Hello, World!");
-        
+        NSLog(@"See you in Telemetry!");
+
         @try {
             [BuggyClass callTroubleMaker];
         }
@@ -54,7 +59,7 @@ int main(int argc, const char * argv[]) {
         }
 
         
-        int i = 100;
+        int i = 10;
         while (0 < i--) {
             [Rollbar info:@"Message from macOScmdTool"];
             [NSThread sleepForTimeInterval:1.0f];

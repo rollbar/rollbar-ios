@@ -31,7 +31,7 @@
 
 - (void)testScrubWhitelistFields {
     NSString *scrubedContent = @"*****";
-    NSArray *keys = @[@"client.os.app_name", @"client.os.os_version", @"body.message.body"];
+    NSArray *keys = @[@"client.ios.app_name", @"client.ios.os_version", @"body.message.body"];
     
     // define scrub fields:
     for (NSString *key in keys) {
@@ -294,7 +294,7 @@
 
 - (void)testScrubField {
     NSString *scrubedContent = @"*****";
-    NSArray *keys = @[@"client.os.app_name", @"client.os.os_version", @"body.message.body"];
+    NSArray *keys = @[@"client.ios.app_name", @"client.ios.os_version", @"body.message.body"];
 
     for (NSString *key in keys) {
         [Rollbar.currentConfiguration addScrubField:key];

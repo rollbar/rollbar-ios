@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarThread.h"
-#import "RollbarLogger.h"
+#import "SdkLog.h"
 
 @implementation RollbarThread {
     @private RollbarNotifier *_notifier;

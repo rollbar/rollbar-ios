@@ -4,7 +4,7 @@
 #import "RollbarThread.h"
 #import "RollbarFileReader.h"
 #import "RollbarReachability.h"
-#import "RollbarLogger.h"
+#import "SdkLog.h"
 #if TARGET_OS_IPHONE
     #import <UIKit/UIKit.h>
 #endif
@@ -109,7 +109,7 @@ static BOOL isNetworkReachable = YES;
                                                                             error:nil];
                     queueState = [state mutableCopy];
                 } else {
-                    RollbarLog(@"There was an error restoring saved queue state");
+                    SdkLog(@"There was an error restoring saved queue state");
                 }
             }
             if (!queueState) {
@@ -192,7 +192,7 @@ static BOOL isNetworkReachable = YES;
                                                      error:&error
                                                       safe:true];
     if (error) {
-        RollbarLog(@"Error: %@", [error localizedDescription]);
+        SdkLog(@"Error: %@", [error localizedDescription]);
     }
     [data writeToFile:stateFilePath atomically:YES];
 }
@@ -237,7 +237,7 @@ static BOOL isNetworkReachable = YES;
         NSData *lineData = [line dataUsingEncoding:NSUTF8StringEncoding];
         if (!lineData) {
             // All we can do is ignore this line
-            RollbarLog(@"Error converting file line to NSData: %@", line);
+            SdkLog(@"Error converting file line to NSData: %@", line);
             return;
         }
         NSError *error;
@@ -247,7 +247,7 @@ static BOOL isNetworkReachable = YES;
 
         if (!payload) {
             // Ignore this line if it isn't valid json and proceed to the next line
-            RollbarLog(@"Error restoring data from file to JSON: %@", lineData);
+            SdkLog(@"Error restoring data from file to JSON: %@", lineData);
             return;
         }
 
@@ -589,7 +589,7 @@ static BOOL isNetworkReachable = YES;
         [queueState[@"retry_count"] unsignedIntegerValue];
 
         if (0 == retryCount && YES == self.configuration.logPayload) {
-            RollbarLog(@"About to send payload: %@",
+            SdkLog(@"About to send payload: %@",
                        [[NSString alloc] initWithData:jsonPayload
                                              encoding:NSUTF8StringEncoding]
                        );
@@ -618,7 +618,7 @@ static BOOL isNetworkReachable = YES;
         }
     }
     else {
-        RollbarLog(
+        SdkLog(
             @"Omitting payload until nextSendTime is reached: %@",
             [[NSString alloc] initWithData:jsonPayload encoding:NSUTF8StringEncoding]
         );
@@ -736,17 +736,17 @@ static BOOL isNetworkReachable = YES;
     }
     
     if (error) {
-        RollbarLog(@"There was an error reporting to Rollbar");
-        RollbarLog(@"Error: %@", [error localizedDescription]);
+        SdkLog(@"There was an error reporting to Rollbar");
+        SdkLog(@"Error: %@", [error localizedDescription]);
     } else {
         NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
         if ([httpResponse statusCode] == 200) {
-            RollbarLog(@"Success");
+            SdkLog(@"Success");
             return YES;
         } else {
-            RollbarLog(@"There was a problem reporting to Rollbar");
+            SdkLog(@"There was a problem reporting to Rollbar");
             if (data) {
-                RollbarLog(
+                SdkLog(
                            @"Response: %@",
                            [NSJSONSerialization JSONObjectWithData:data
                                                            options:0
@@ -810,7 +810,7 @@ static BOOL isNetworkReachable = YES;
         @try {
             shouldIgnore = self.configuration.checkIgnore(data);
         } @catch(NSException *e) {
-            RollbarLog(@"checkIgnore error: %@", e.reason);
+            SdkLog(@"checkIgnore error: %@", e.reason);
 
             // Remove checkIgnore to prevent future exceptions
             [self.configuration setCheckIgnoreBlock:nil];

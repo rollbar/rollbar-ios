@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)safelyGetUIntegerByKey:(NSString *)key;
 - (void)setUInteger:(NSUInteger)data forKey:(NSString *)key;
 
+- (NSInteger)safelyGetIntegerByKey:(NSString *)key;
+- (void)setInteger:(NSInteger)data forKey:(NSString *)key;
 
 @end
 
