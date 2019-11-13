@@ -132,4 +132,14 @@
     [self setNumber:number forKey:key];
 }
 
+- (NSInteger)safelyGetIntegerByKey:(NSString *)key {
+    NSNumber *value = [self safelyGetNumberByKey:key];
+    return value.integerValue;
+}
+
+- (void)setInteger:(NSInteger)data forKey:(NSString *)key {
+    NSNumber *number = @(data);
+    [self setNumber:number forKey:key];
+}
+
 @end

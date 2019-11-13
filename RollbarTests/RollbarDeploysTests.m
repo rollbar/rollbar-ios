@@ -15,6 +15,7 @@ DeploymentDetailsPageObserver>
 @end
 
 @implementation RollbarDeploysObserver
+
 - (void)onRegisterDeploymentCompleted:(DeployApiCallResult *)result {
     NSLog(@"%@", result);
 }

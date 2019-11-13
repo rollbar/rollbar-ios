@@ -1,8 +1,8 @@
 //  Copyright (c) 2018 Rollbar Inc. All rights reserved.
 
-#import "RollbarLogger.h"
+#import "SdkLog.h"
 
-void RollbarLog(NSString *format, ...) {
+void SdkLog(NSString *format, ...) {
 #ifdef DEBUG
     va_list args;
     va_start(args, format);

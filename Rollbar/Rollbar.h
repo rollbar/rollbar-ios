@@ -3,8 +3,8 @@
 #import <Foundation/Foundation.h>
 #import "RollbarConfiguration.h"
 #import "RollbarNotifier.h"
-#import "RollbarTelemetry.h"
 #import "RollbarLevel.h"
+#import "RollbarTelemetry.h"
 #import "RollbarTelemetryType.h"
 
 @interface Rollbar : NSObject

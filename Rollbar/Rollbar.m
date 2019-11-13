@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "Rollbar.h"
-#import "RollbarLogger.h"
+#import "SdkLog.h"
 #import "RollbarKSCrashInstallation.h"
 
 @implementation Rollbar
@@ -13,7 +13,7 @@ static RollbarNotifier *notifier = nil;
     [installation install];
     [installation sendAllReportsWithCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
         if (error) {
-            RollbarLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
+            SdkLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
         } else if (completed) {
             [notifier processSavedItems];
         }
@@ -37,7 +37,7 @@ static RollbarNotifier *notifier = nil;
 
     [RollbarTelemetry sharedInstance]; // Load saved data, if any
     if (notifier) {
-        RollbarLog(@"Rollbar has already been initialized.");
+        SdkLog(@"Rollbar has already been initialized.");
     } else {
         notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken
                                                   configuration:configuration
