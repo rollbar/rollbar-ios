@@ -13,7 +13,12 @@
 @property (readwrite, retain) NSString *readAccessToken;
 @end
 
-@implementation RollbarDeploysManager
+@implementation RollbarDeploysManager {
+    NSMutableData *responseData;
+    NSObject<DeploymentRegistrationObserver> *_deploymentRegistrationObserver;
+    NSObject<DeploymentDetailsObserver> *_deploymentDetailsObserver;
+    NSObject<DeploymentDetailsPageObserver> *_deploymentDetailsPageObserver;
+}
 
 - (id)initWithWriteAccessToken:(NSString *)writeAccessToken
                readAccessToken:(NSString *)readAccessToken

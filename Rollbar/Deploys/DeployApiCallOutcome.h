@@ -15,9 +15,15 @@ typedef NS_ENUM(NSInteger, DeployApiCallOutcome) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Enum to/from NSString conversion utility
 @interface DeployApiCallOutcomeUtil : NSObject
 
+/// Converts DeployApiCallOutcome value into a NSString
+/// @param value DeployApiCallOutcome value to convert
 + (NSString *) DeployApiCallOutcomeToString:(DeployApiCallOutcome)value;
+
+/// Converts NSString into a DeployApiCallOutcome value
+/// @param value NSString to convert
 + (DeployApiCallOutcome) DeployApiCallOutcomeFromString:(NSString *)value;
 
 @end

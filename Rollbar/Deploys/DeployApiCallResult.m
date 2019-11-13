@@ -1,9 +1,10 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import <Foundation/Foundation.h>
-
 #import "DeployApiCallResult.h"
 #import "DataTransferObject+Protected.h"
+
+#pragma mark - DeployApiCallResult
 
 @implementation DeployApiCallResult
 
@@ -61,6 +62,8 @@ static NSString * const DFK_DESCRIPTION = @"description";
 
 @end
 
+#pragma mark - DeploymentRegistrationResult
+
 @implementation DeploymentRegistrationResult
 
 static NSString * const DFK_DEPLOYMENT_ID = @"deploymentId";
@@ -69,29 +72,9 @@ static NSString * const DFK_DEPLOYMENT_ID = @"deploymentId";
     return [self safelyGetStringByKey:DFK_DEPLOYMENT_ID];
 }
 
-//- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-//                            data:(NSData*)data
-//                           error:(NSError*)error
-//                      forRequest:(NSURLRequest*)request {
-//    
-//    self = [super initWithResponse:httpResponse
-//                              data:data
-//                             error:error
-//                        forRequest:request
-//            ];
-////    if (nil != self) {
-////        if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
-////            NSDictionary *dataStruct = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-////            if (nil != dataStruct) {
-////                NSNumber *deploy_id = dataStruct[@"data"][@"deploy_id"];
-////                [self setString:[deploy_id stringValue] forKey:DFK_DEPLOYMENT_ID];
-////            }
-////        }
-////    }
-//    return self;
-//}
-
 @end
+
+#pragma mark - DeploymentDetailsResult
 
 @implementation DeploymentDetailsResult
 
@@ -103,32 +86,9 @@ static NSString * const DFK_DEPLOYMENT = @"deployment";
     return dto;
 }
 
-//- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-//                            data:(NSData*)data
-//                           error:(NSError*)error
-//                      forRequest:(NSURLRequest*)request {
-//
-//    self = [super initWithResponse:httpResponse
-//                              data:data
-//                             error:error
-//                        forRequest:request
-//            ];
-////    if (nil != self) {
-////        if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
-////            NSDictionary *dataStruct =
-////            [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-////            //NSLog(@"%@", dataStruct);
-////            if (nil != dataStruct) {
-////                DeploymentDetails *deploymentDetails =
-////                [[DeploymentDetails alloc] initWithJSONData:dataStruct[@"result"]];
-////                [self setDataTransferObject:deploymentDetails forKey:DFK_DEPLOYMENT];
-////            }
-////        }
-////    }
-//    return self;
-//}
-
 @end
+
+#pragma mark - DeploymentDetailsPageResult
 
 @implementation DeploymentDetailsPageResult
 
@@ -150,39 +110,5 @@ static NSString * const DFK_PAGE_NUMBER = @"page";
 - (NSUInteger)pageNumber {
     return [self safelyGetUIntegerByKey:DFK_PAGE_NUMBER];
 }
-
-//- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-//                            data:(NSData*)data
-//                           error:(NSError*)error
-//                      forRequest:(NSURLRequest*)request {
-//
-//    self = [super initWithResponse:httpResponse
-//                              data:data
-//                             error:error
-//                        forRequest:request
-//            ];
-////    if (nil != self) {
-////        if ((nil == error) && (nil != httpResponse) && (200 == httpResponse.statusCode)) {
-////            NSDictionary *dataStruct =
-////            [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-////            //NSLog(@"%@", dataStruct);
-////            if (nil != dataStruct) {
-////                NSNumber *pageNumber = dataStruct[@"result"][@"page"];
-////                [self setNumber:pageNumber forKey:DFK_PAGE_NUMBER];
-////
-////                NSArray *deploys = dataStruct[@"result"][@"deploys"];
-////                NSMutableArray<DeploymentDetails *> *deployments =
-////                [NSMutableArray<DeploymentDetails *> arrayWithCapacity:deploys.count];
-////                [deploys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-////                    DeploymentDetails *deploymentDetails =
-////                    [[DeploymentDetails alloc] initWithJSONData:obj];
-////                    [deployments addObject:deploymentDetails];
-////                }];
-////                [self setArray:deployments forKey:DFK_DEPLOYMENTS];
-////            }
-////        }
-////    }
-//    return self;
-//}
 
 @end
