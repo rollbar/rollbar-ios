@@ -27,6 +27,8 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 **1.10.1**
 - feat: ref #220: Reimplement payload data structure as a DTO.
+- fix: ref #221: Fix initialization DeployApiCallResult DTOs based on the HTTP responses.
+- chore: codebase cleanup, extra code comments, cleaning up #imports, etc.
 
 **1.10.0**
 - feat: resolve #206: Capture Log As Telemetry - Not working? Introducing RollbarLog(...)

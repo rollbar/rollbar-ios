@@ -72,6 +72,23 @@ static NSString * const DFK_DEPLOYMENT_ID = @"deploymentId";
     return [self safelyGetStringByKey:DFK_DEPLOYMENT_ID];
 }
 
+- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                            data:(NSData*)data
+                           error:(NSError*)error
+                      forRequest:(NSURLRequest*)request {
+    
+    self = [super initWithResponse:httpResponse
+                              data:data
+                             error:error
+                        forRequest:request];
+    if (self) {
+        id dataSeed = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        [self setString:[NSString stringWithFormat:@"%@", dataSeed[@"data"][@"deploy_id"]]
+                 forKey:DFK_DEPLOYMENT_ID];
+    }
+    return self;
+}
+
 @end
 
 #pragma mark - DeploymentDetailsResult
@@ -84,6 +101,21 @@ static NSString * const DFK_DEPLOYMENT = @"deployment";
     id data = [self safelyGetDictionaryByKey:DFK_DEPLOYMENT];
     id dto = [[DeploymentDetails alloc] initWithDictionary:data];
     return dto;
+}
+
+- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
+      data:(NSData*)data
+     error:(NSError*)error
+forRequest:(NSURLRequest*)request {
+    self = [super initWithResponse:httpResponse
+                              data:data
+                             error:error
+                        forRequest:request];
+    if (self) {
+        //TODO: implement...
+    }
+
+    return self;
 }
 
 @end
@@ -109,6 +141,21 @@ static NSString * const DFK_PAGE_NUMBER = @"page";
 
 - (NSUInteger)pageNumber {
     return [self safelyGetUIntegerByKey:DFK_PAGE_NUMBER];
+}
+
+- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
+      data:(NSData*)data
+     error:(NSError*)error
+forRequest:(NSURLRequest*)request {
+    self = [super initWithResponse:httpResponse
+                              data:data
+                             error:error
+                        forRequest:request];
+    if (self) {
+        //TODO: implement...
+    }
+
+    return self;
 }
 
 @end

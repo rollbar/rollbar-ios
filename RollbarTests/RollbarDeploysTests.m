@@ -2,6 +2,7 @@
 
 #import <XCTest/XCTest.h>
 #import "../Rollbar/Deploys/Deployment.h"
+#import "../Rollbar/Deploys/DeploymentDetails.h"
 #import "../Rollbar/Deploys/DeployApiCallResult.h"
 #import "../Rollbar/Deploys/RollbarDeploysManager.h"
 #import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
@@ -16,12 +17,17 @@ DeploymentDetailsPageObserver>
 
 @implementation RollbarDeploysObserver
 
-- (void)onRegisterDeploymentCompleted:(DeployApiCallResult *)result {
-    NSLog(@"%@", result);
+- (void)onRegisterDeploymentCompleted:(DeploymentRegistrationResult *)result {
+    NSLog(@"result: %@", result);
+    NSLog(@"result.description: %@", result.description);
+    NSLog(@"result.outcome: %li", result.outcome);
+    NSLog(@"result.deploymentId: %@", result.deploymentId);
 }
 
 - (void)onGetDeploymentDetailsCompleted:(DeploymentDetailsResult *)result {
-    NSLog(@"%@", result);
+    NSLog(@"result: %@", result);
+    NSLog(@"result.outcome: %li", result.outcome);
+    NSLog(@"result.deployment.deployId: %@", result.deployment.deployId);
 }
 
 - (void)onGetDeploymentDetailsPageCompleted:(DeploymentDetailsPageResult *)result {
