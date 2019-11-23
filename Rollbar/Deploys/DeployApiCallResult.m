@@ -24,6 +24,18 @@ static NSString * const DFK_DESCRIPTION = @"description";
                            error:(NSError*)error
                       forRequest:(NSURLRequest*)request {
     
+    self = [self initWithResponse:httpResponse
+                extraResponseData:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]
+                            error:error
+                       forRequest:request];
+    return self;
+}
+
+- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                extraResponseData:(id)extraResponseData
+                           error:(NSError*)error
+                      forRequest:(NSURLRequest*)request {
+    
     const NSUInteger dictionaryCapacity = 3;
     NSMutableDictionary *dataSeed = [NSMutableDictionary dictionaryWithCapacity:dictionaryCapacity];
     if (error) {
@@ -47,10 +59,8 @@ static NSString * const DFK_DESCRIPTION = @"description";
          (long)httpResponse.statusCode,
          [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]
          ];
-        if (data) {
-            [description appendFormat:@"\n\rResponse data:\n\r\%@",
-             [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]
-             ];
+        if (extraResponseData) {
+            [description appendFormat:@"\n\rResponse data:\n\r\%@", extraResponseData];
         }
         [dataSeed setObject:description forKey:DFK_DESCRIPTION];
     }
@@ -77,13 +87,24 @@ static NSString * const DFK_DEPLOYMENT_ID = @"deploymentId";
                            error:(NSError*)error
                       forRequest:(NSURLRequest*)request {
     
-    self = [super initWithResponse:httpResponse
-                              data:data
-                             error:error
-                        forRequest:request];
-    if (self) {
-        id dataSeed = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        [self setString:[NSString stringWithFormat:@"%@", dataSeed[@"data"][@"deploy_id"]]
+    id dataObj = nil;
+    if (data) {
+        dataObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    }
+    if (dataObj) {
+        self = [super initWithResponse:httpResponse
+                     extraResponseData:dataObj
+                                 error:error
+                            forRequest:request];
+    }
+    else {
+        self = [super initWithResponse:httpResponse
+                                  data:data
+                                 error:error
+                            forRequest:request];
+    }
+    if (self && dataObj) {
+        [self setString:[NSString stringWithFormat:@"%@", dataObj[@"data"][@"deploy_id"]]
                  forKey:DFK_DEPLOYMENT_ID];
     }
     return self;
@@ -104,17 +125,29 @@ static NSString * const DFK_DEPLOYMENT = @"deployment";
 }
 
 - (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-      data:(NSData*)data
-     error:(NSError*)error
-forRequest:(NSURLRequest*)request {
-    self = [super initWithResponse:httpResponse
-                              data:data
-                             error:error
-                        forRequest:request];
-    if (self) {
+                            data:(NSData*)data
+                           error:(NSError*)error
+                      forRequest:(NSURLRequest*)request {
+
+    id dataObj = nil;
+    if (data) {
+        dataObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    }
+    if (dataObj) {
+        self = [super initWithResponse:httpResponse
+                     extraResponseData:dataObj
+                                 error:error
+                            forRequest:request];
+    }
+    else {
+        self = [super initWithResponse:httpResponse
+                                  data:data
+                                 error:error
+                            forRequest:request];
+    }
+    if (self && dataObj) {
         //TODO: implement...
     }
-
     return self;
 }
 
@@ -144,17 +177,29 @@ static NSString * const DFK_PAGE_NUMBER = @"page";
 }
 
 - (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-      data:(NSData*)data
-     error:(NSError*)error
-forRequest:(NSURLRequest*)request {
-    self = [super initWithResponse:httpResponse
-                              data:data
-                             error:error
-                        forRequest:request];
-    if (self) {
+                            data:(NSData*)data
+                           error:(NSError*)error
+                      forRequest:(NSURLRequest*)request {
+
+    id dataObj = nil;
+    if (data) {
+        dataObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    }
+    if (dataObj) {
+        self = [super initWithResponse:httpResponse
+                     extraResponseData:dataObj
+                                 error:error
+                            forRequest:request];
+    }
+    else {
+        self = [super initWithResponse:httpResponse
+                                  data:data
+                                 error:error
+                            forRequest:request];
+    }
+    if (self && dataObj) {
         //TODO: implement...
     }
-
     return self;
 }
 

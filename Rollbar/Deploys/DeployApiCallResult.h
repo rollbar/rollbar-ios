@@ -18,14 +18,19 @@
 
 /// Designated initializer
 /// @param httpResponse HTTP response object
-/// @param data response data
+/// @param extraResponseData extra response info
 /// @param error error (if any)
 /// @param request corresponding HTTP request
 - (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-                            data:(NSData*)data
+               extraResponseData:(id)extraResponseData
                            error:(NSError*)error
                       forRequest:(NSURLRequest*)request
 NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
+                            data:(NSData*)data
+                           error:(NSError*)error
+                      forRequest:(NSURLRequest*)request;
 
 @end
 
