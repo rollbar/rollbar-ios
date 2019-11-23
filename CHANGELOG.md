@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.10.1**
+- feat: ref #220: Reimplement payload data structure as a DTO.
+
 **1.10.0**
 - feat: resolve #206: Capture Log As Telemetry - Not working? Introducing RollbarLog(...)
 - feat: resolve #217: Reimplement Deploys based on the DTOs 
