@@ -205,7 +205,7 @@
 
 #pragma mark - initialization methods
 
-- (id)initWithJSONString: (NSString *)jsonString {
+- (instancetype)initWithJSONString: (NSString *)jsonString {
     self = [super init];
     if (self) {
         [self deserializeFromJSONString:jsonString];
@@ -213,19 +213,29 @@
     return self;
 }
 
-- (id)initWithJSONData: (NSData *)jsonData {
+- (instancetype)initWithJSONData: (NSData *)data {
     self = [super init];
     if (self) {
-        [self deserializeFromJSONData:jsonData];
+        [self deserializeFromJSONData:data];
     }
     return self;
 }
 
-- (id)init {
+- (instancetype)initWithDictionary:(NSDictionary *)data;  {
     self = [super init];
     if (self) {
-        self->_data = [[NSMutableDictionary alloc] initWithCapacity:10];
+        self->_data = data.mutableCopy;
     }
+    return self;
+}
+
+- (instancetype)initWithArray:(NSArray *)data {
+    //TODO: implement...
+    return nil;
+}
+
+- (instancetype)init {
+    self = [self initWithDictionary:[[NSMutableDictionary alloc] initWithCapacity:10]];
     return self;
 }
 

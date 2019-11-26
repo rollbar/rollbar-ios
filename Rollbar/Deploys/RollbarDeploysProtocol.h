@@ -12,7 +12,7 @@
 @required
 /// Deployment reqistration observer's callback method
 /// @param result deployment registration result object
-- (void)onRegisterDeploymentCompleted:(DeployApiCallResult *)result;
+- (void)onRegisterDeploymentCompleted:(nonnull DeployApiCallResult *)result;
 @end
 
 /// Deployment details observer protocol
@@ -20,7 +20,7 @@
 @required
 /// Deployment details observer's callback method
 /// @param result result obect
-- (void)onGetDeploymentDetailsCompleted:(DeploymentDetailsResult *)result;
+- (void)onGetDeploymentDetailsCompleted:(nonnull DeploymentDetailsResult *)result;
 @end
 
 /// Deployment details page observer protocol
@@ -28,7 +28,7 @@
 @required
 /// Deployment details page observer's callback method
 /// @param result result object
-- (void)onGetDeploymentDetailsPageCompleted:(DeploymentDetailsPageResult *)result;
+- (void)onGetDeploymentDetailsPageCompleted:(nonnull DeploymentDetailsPageResult *)result;
 @end
 
 #pragma mark - Deploys Service Requests Protocol
@@ -40,11 +40,11 @@
 
 /// Register deployment API call
 /// @param deployment deployment registration result
-- (void) registerDeployment:(Deployment *)deployment;
+- (void) registerDeployment:(nonnull Deployment *)deployment;
 
 /// Individual deployment details API call
 /// @param deployId deployment ID
-- (void) getDeploymentWithDeployId:(NSString *)deployId;
+- (void) getDeploymentWithDeployId:(nonnull NSString *)deployId;
 
 /// Deployment details page request API call
 /// @param pageNumber requested page number

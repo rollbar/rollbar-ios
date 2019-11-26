@@ -17,43 +17,31 @@ static NSString * const DFK_STATUS = @"status";
 #pragma mark - properties
 
 -(NSString *)deployId {
-    return [self safelyGetStringByKey:DFK_DEPLOY_ID] ;
+    return [self safelyGetNumberByKey:DFK_DEPLOY_ID].description;
 }
 -(NSString *)projectId {
-    return [self safelyGetStringByKey:DFK_PROJECT_ID] ;
+    return [self safelyGetNumberByKey:DFK_PROJECT_ID].description;
 }
--(NSString *)startTime {
-    return [self safelyGetStringByKey:DFK_START_TIME] ;
+
+-(NSDate *)startTime {
+    NSNumber *dateNumber = [self safelyGetNumberByKey:DFK_START_TIME];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)dateNumber.doubleValue];
+    return date;
 }
--(NSString *)endTime {
-    return [self safelyGetStringByKey:DFK_END_TIME] ;
+
+-(NSDate *)endTime {
+    NSNumber *dateNumber = [self safelyGetNumberByKey:DFK_END_TIME];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)dateNumber.doubleValue];
+    return date;
 }
+
 -(NSString *)status {
     return [self safelyGetStringByKey:DFK_STATUS] ;
 }
 
 #pragma mark - initializers
 
-- (id)initWithJSONData:(NSDictionary *)jsonData {
-    self = [super initWithJSONData:jsonData];
-    if (nil != self) {
-        NSNumber *deploy_id = jsonData[DFK_DEPLOY_ID];
-        NSNumber *project_id = jsonData[DFK_PROJECT_ID];
-        NSNumber *start_time = jsonData[DFK_START_TIME];
-        NSNumber *finish_time = jsonData[DFK_END_TIME];
-        NSString *status = jsonData[DFK_STATUS];
-        
-        [self setString:[deploy_id stringValue] forKey:DFK_DEPLOY_ID];
-        [self setString:[project_id stringValue] forKey:DFK_PROJECT_ID];
-        [self setString:status forKey:DFK_STATUS];
-        [self setString:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)start_time.doubleValue].description
-                                forKey:DFK_START_TIME];
-        [self setString:[NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)finish_time.doubleValue].description
-                                forKey:DFK_END_TIME];
-    }
-    return self;
-}
-- (id)init {
+- (instancetype)init {
     return [self initWithEnvironment:nil
                              comment:nil
                             revision:nil

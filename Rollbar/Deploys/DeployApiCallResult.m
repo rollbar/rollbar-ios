@@ -103,7 +103,7 @@ static NSString * const DFK_DEPLOYMENT_ID = @"deploymentId";
                                  error:error
                             forRequest:request];
     }
-    if (self && dataObj) {
+    if (self && dataObj && !error && httpResponse && (200 == httpResponse.statusCode)) {
         [self setString:[NSString stringWithFormat:@"%@", dataObj[@"data"][@"deploy_id"]]
                  forKey:DFK_DEPLOYMENT_ID];
     }
@@ -145,8 +145,11 @@ static NSString * const DFK_DEPLOYMENT = @"deployment";
                                  error:error
                             forRequest:request];
     }
-    if (self && dataObj) {
-        //TODO: implement...
+    if (self && dataObj && !error && httpResponse && (200 == httpResponse.statusCode)) {
+        DeploymentDetails *deploymentDetails =
+        [[DeploymentDetails alloc] initWithDictionary:dataObj[@"result"]];
+        [self setDataTransferObject:deploymentDetails
+                             forKey:DFK_DEPLOYMENT];
     }
     return self;
 }
@@ -162,14 +165,7 @@ static NSString * const DFK_PAGE_NUMBER = @"page";
 
 - (NSArray<DeploymentDetails *> *)deployments {
     NSArray *deploys = [self safelyGetArrayByKey:DFK_DEPLOYMENTS];
-    NSMutableArray<DeploymentDetails *> *deployments =
-    [NSMutableArray<DeploymentDetails *> arrayWithCapacity:deploys.count];
-    [deploys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        DeploymentDetails *deploymentDetails =
-        [[DeploymentDetails alloc] initWithJSONData:obj];
-        [deployments addObject:deploymentDetails];
-    }];
-    return deployments;
+    return deploys;
 }
 
 - (NSUInteger)pageNumber {
@@ -197,10 +193,24 @@ static NSString * const DFK_PAGE_NUMBER = @"page";
                                  error:error
                             forRequest:request];
     }
-    if (self && dataObj) {
-        //TODO: implement...
+    if (self && dataObj && !error && httpResponse && (200 == httpResponse.statusCode)) {
+
+        NSNumber *pageNumber = dataObj[@"result"][@"page"];
+        [self setNumber:pageNumber forKey:DFK_PAGE_NUMBER];
+        
+        NSArray *deploys = dataObj[@"result"][@"deploys"];
+        NSMutableArray<DeploymentDetails *> *deployments =
+        [NSMutableArray<DeploymentDetails *> arrayWithCapacity:deploys.count];
+        
+        [deploys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            DeploymentDetails *deploymentDetails = [[DeploymentDetails alloc] initWithDictionary:obj];
+            [deployments addObject:deploymentDetails];
+        }];
+        
+        [self setArray:deployments forKey:DFK_DEPLOYMENTS];
     }
     return self;
 }
 
 @end
+

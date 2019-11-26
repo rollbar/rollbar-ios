@@ -8,30 +8,39 @@
 #import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
 #import "../Rollbar/RollbarJSONFriendlyObject.h"
 
-
 @interface RollbarDeploysObserver : NSObject
-<DeploymentRegistrationObserver,
-DeploymentDetailsObserver,
-DeploymentDetailsPageObserver>
+    <DeploymentRegistrationObserver,
+    DeploymentDetailsObserver,
+    DeploymentDetailsPageObserver>
 @end
 
 @implementation RollbarDeploysObserver
 
-- (void)onRegisterDeploymentCompleted:(DeploymentRegistrationResult *)result {
+- (void)onRegisterDeploymentCompleted:(nonnull DeploymentRegistrationResult *)result {
     NSLog(@"result: %@", result);
     NSLog(@"result.description: %@", result.description);
     NSLog(@"result.outcome: %li", result.outcome);
     NSLog(@"result.deploymentId: %@", result.deploymentId);
 }
 
-- (void)onGetDeploymentDetailsCompleted:(DeploymentDetailsResult *)result {
+- (void)onGetDeploymentDetailsCompleted:(nonnull DeploymentDetailsResult *)result {
     NSLog(@"result: %@", result);
+    NSLog(@"result.description: %@", result.description);
     NSLog(@"result.outcome: %li", result.outcome);
     NSLog(@"result.deployment.deployId: %@", result.deployment.deployId);
+    NSLog(@"result.deployment.projectId: %@", result.deployment.projectId);
+    NSLog(@"result.deployment.revision: %@", result.deployment.revision);
+    NSLog(@"result.deployment.startTime: %@", result.deployment.startTime);
+    NSLog(@"result.deployment.endTime: %@", result.deployment.endTime);
 }
 
-- (void)onGetDeploymentDetailsPageCompleted:(DeploymentDetailsPageResult *)result {
-    NSLog(@"%@", result);
+- (void)onGetDeploymentDetailsPageCompleted:(nonnull DeploymentDetailsPageResult *)result {
+    NSLog(@"result: %@", result);
+    NSLog(@"result.description: %@", result.description);
+    NSLog(@"result.outcome: %li", result.outcome);
+    NSLog(@"result.pageNumber: %li", result.pageNumber);
+    NSLog(@"result.deployments.count: %li", result.deployments.count);
+    NSLog(@"result.deployments[0].description: %@", result.deployments[0].description);
 }
 
 @end
