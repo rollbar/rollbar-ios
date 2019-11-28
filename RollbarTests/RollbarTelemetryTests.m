@@ -74,7 +74,9 @@
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"SomeConnectivityStatus"];
     [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"POST" url:@"www.myservice.com" statusCode:@"200"];
     [Rollbar recordErrorEventForLevel:RollbarDebug message:@"Some telemetry message..."];
-    [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"someExceptionName" reason:@"someExceptionReason" userInfo:nil]];
+    [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"someExceptionName"
+                                                                                     reason:@"someExceptionReason"
+                                                                                   userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"myTelemetryParameter": @"itsValue"}];
     [Rollbar debug:@"Demonstrate Telemetry capture"];
     [Rollbar debug:@"Demonstrate Telemetry capture once more..."];
