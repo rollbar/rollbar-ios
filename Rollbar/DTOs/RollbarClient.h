@@ -1,5 +1,5 @@
 //
-//  RollbarServer.h
+//  RollbarClient.h
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-12-02.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RollbarServer : DataTransferObject
+@interface RollbarClient : DataTransferObject
 
 @end
 
