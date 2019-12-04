@@ -1,36 +1,40 @@
 //
-//  OptionalBool.m
+//  TriStateFlag.m
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-12-02.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "OptionalBool.h"
+#import "TriStateFlag.h"
 
-@implementation OptionalBool {
-@protected NSNumber *value;
+@implementation TriStateFlagUtil
+
++ (NSString *) TriStateFlagToString:(TriStateFlag)value {
+    switch (value) {
+        case On:
+            return @"ON";
+        case Off:
+            return @"OFF";
+        case None:
+        default:
+            return @"NONE";
+    }
 }
 
-- (BOOL) hasValue {
-    return (self->value != nil);
-}
-
-- (void) removeValue {
-    self->value = nil;
-}
-
-@property (nonatomic) BOOL yesNo;
-
-- (instancetype)init {
-    self = [super init];
-    return self;
-}
-
-- (instancetype)initWithValue:(BOOL)yesNo {
-    self = [self init];
-    self->value = [NSNumber numberWithBool:yesNo];
-    return self;
++ (TriStateFlag) TriStateFlagFromString:(NSString *)value {
+    if (NSOrderedSame == [value caseInsensitiveCompare:@"ON"]) {
+        return On;
+    }
+    else if (NSOrderedSame == [value caseInsensitiveCompare:@"OFF"]) {
+        return Off;
+    }
+//    else if (NSOrderedSame == [value caseInsensitiveCompare:@"NONE"]) {
+//        return None;
+//    }
+    else {
+        return None; // default case...
+    }
 }
 
 @end

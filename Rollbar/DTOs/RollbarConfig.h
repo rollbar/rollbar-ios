@@ -14,7 +14,7 @@
 @class RollbarDeveloperOptions;
 @class RollbarProxy;
 @class RollbarScrubbingOptions;
-@class RollbarServer;
+@class RollbarServerConfig;
 @class RollbarPerson;
 @class RollbarModule;
 @class RollbarTelemetryOptions;
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) RollbarProxy *httpProxy;
 @property (nonatomic, strong) RollbarProxy *httpsProxy;
 @property (nonatomic, strong) RollbarScrubbingOptions *dataScrubber;
-@property (nonatomic, strong) RollbarServer *server;
+@property (nonatomic, strong) RollbarServerConfig *server;
 @property (nonatomic, strong) RollbarPerson *person;
 @property (nonatomic, strong) RollbarModule *notifier;
 @property (nonatomic, strong) RollbarTelemetryOptions *telemetry;

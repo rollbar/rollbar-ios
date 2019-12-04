@@ -10,7 +10,7 @@
 #import "RollbarDeveloperOptions.h"
 #import "RollbarProxy.h"
 #import "RollbarScrubbingOptions.h"
-#import "RollbarServer.h"
+#import "RollbarServerConfig.h"
 #import "RollbarPerson.h"
 #import "RollbarModule.h"
 #import "RollbarTelemetryOptions.h"

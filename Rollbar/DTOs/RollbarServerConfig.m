@@ -6,7 +6,7 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "RollbarServer.h"
+#import "RollbarServerConfig.h"
 #import "DataTransferObject+Protected.h"
 
 #pragma mark - constants
@@ -25,7 +25,7 @@ static NSString * const DFK_CODE_VERSION = @"codeVersion";
 
 #pragma mark - class implementation
 
-@implementation RollbarServer
+@implementation RollbarServerConfig
 
 #pragma mark - initializers
 

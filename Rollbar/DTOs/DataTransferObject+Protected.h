@@ -7,6 +7,7 @@
 //
 
 #import "DataTransferObject.h"
+#import "TriStateFlag.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -36,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setNumber:(NSNumber *)data forKey:(NSString *)key;
 
 #pragma mark - Convenience API
+
+- (TriStateFlag)safelyGetTriStateFlagByKey:(NSString *)key;
+- (void)setTriStateFlag:(TriStateFlag)data forKey:(NSString *)key;
 
 - (BOOL)safelyGetBoolByKey:(NSString *)key;
 - (void)setBool:(BOOL)data forKey:(NSString *)key;

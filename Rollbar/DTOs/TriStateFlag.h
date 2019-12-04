@@ -1,5 +1,5 @@
 //
-//  OptionalBool.h
+//  TriStateFlag.h
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-12-02.
@@ -8,28 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark - CaptureIpType enum
+#pragma mark - TriStateFlag enum
 
-typedef NS_ENUM(NSUInteger, OptionalBool) {
-    Unknown,
-    YES,
-    NO
+typedef NS_ENUM(NSUInteger, TriStateFlag) {
+    None,
+    On,
+    Off
 };
 
-#pragma mark - CaptureIpTypeUtil
+#pragma mark - TriStateFlagUtil
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Utility class aiding with CaptureIpType conversions
-@interface CaptureIpTypeUtil : NSObject
+/// Utility class aiding with TriStateFlag conversions
+@interface TriStateFlagUtil : NSObject
 
-/// Convert CaptureIpType to a string
+/// Convert TriStateFlag to a string
 /// @param value CaptureIpType value
-+ (NSString *) CaptureIpTypeToString:(CaptureIpType)value;
++ (NSString *) TriStateFlagToString:(TriStateFlag)value;
 
-/// Convert CaptureIpType value from a string
+/// Convert TriStateFlag value from a string
 /// @param value string representation of a CaptureIpType value
-+ (CaptureIpType) CaptureIpTypeFromString:(NSString *)value;
++ (TriStateFlag) TriStateFlagFromString:(NSString *)value;
 
 @end
 

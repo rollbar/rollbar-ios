@@ -8,6 +8,11 @@
 
 #import "RollbarClient.h"
 
+#pragma mark - data field keys
+
+static NSString *const DFK_CPU = @"cpu";
+static NSString *const DFK_JAVASCRIPT = @"javascript";
+
 @implementation RollbarClient
 
 @end

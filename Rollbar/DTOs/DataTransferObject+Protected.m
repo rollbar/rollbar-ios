@@ -113,6 +113,25 @@
 
 #pragma mark - Convenience API
 
+- (TriStateFlag)safelyGetTriStateFlagByKey:(NSString *)key {
+    NSString *result = [self->_data objectForKey:key];
+    if (result == nil) {
+        return None;
+    }
+    else {
+        return [TriStateFlagUtil TriStateFlagFromString:result];
+    }
+}
+- (void)setTriStateFlag:(TriStateFlag)data forKey:(NSString *)key{
+    if (data == None) {
+        [self->_data removeObjectForKey:key];
+    }
+    else {
+        [self->_data setObject:[TriStateFlagUtil TriStateFlagToString:data].mutableCopy
+                        forKey:key];
+    }
+}
+
 - (BOOL)safelyGetBoolByKey:(NSString *)key {
     NSNumber *number = [self safelyGetNumberByKey:key];
     return number.boolValue;

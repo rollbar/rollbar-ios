@@ -13,7 +13,7 @@
 #import "RollbarDeveloperOptions.h"
 #import "RollbarProxy.h"
 #import "RollbarScrubbingOptions.h"
-#import "RollbarServer.h"
+#import "RollbarServerConfig.h"
 #import "RollbarPerson.h"
 #import "RollbarModule.h"
 #import "RollbarTelemetryOptions.h"
@@ -145,12 +145,12 @@ static NSString * const DFK_CUSTOM = @"custom";
 
 #pragma mark - Server
 
-- (RollbarServer *)server {
+- (RollbarServerConfig *)server {
     id data = [self safelyGetDictionaryByKey:DFK_SERVER];
-    return [[RollbarServer alloc] initWithDictionary:data];
+    return [[RollbarServerConfig alloc] initWithDictionary:data];
 }
 
-- (void)setServer:(RollbarServer *)value {
+- (void)setServer:(RollbarServerConfig *)value {
     [self setDataTransferObject:value forKey:DFK_SERVER];
 }
 

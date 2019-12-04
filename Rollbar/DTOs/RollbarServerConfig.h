@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RollbarServer : DataTransferObject
+@interface RollbarServerConfig : DataTransferObject
 
 #pragma mark - properties
 
