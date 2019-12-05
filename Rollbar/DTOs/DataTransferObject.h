@@ -25,13 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)isTransferableObject:(id)obj;
 
-- (instancetype)initWithJSONString:(NSString *)jsonString NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithJSONData:(NSData *)data NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithDictionary:(NSDictionary *)data NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithArray:(NSArray *)data NS_DESIGNATED_INITIALIZER;
-
 - (NSArray *)getDefinedProperties;
 - (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO;
+
+#pragma mark - initializers
+
+- (instancetype)initWithJSONString:(NSString *)jsonString;
 
 @end
 

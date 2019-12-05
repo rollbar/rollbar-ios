@@ -27,11 +27,11 @@ static NSString * const DFK_VERSION = @"version";
 - (id)initWithName:(NSString *)name
         version:(NSString *)version {
     
-    self = [super init];
-    if (self) {
-        self.name = name;
-        self.version = version;
-    }
+    self = [super initWithDictionary:@{
+        DFK_NAME:name,
+        DFK_VERSION:version
+        
+    }];
     return self;
 }
 

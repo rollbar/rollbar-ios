@@ -41,25 +41,27 @@ static NSString * const DFK_REQUEST_ID = @"requestId";
 - (id)initWithLogLevel:(RollbarLevel)logLevel
             crashLevel:(RollbarLevel)crashLevel
 maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute {
-    self = [super init];
-    if (self) {
-        self.logLevel = logLevel;
-        self.crashLevel = crashLevel;
-        self.maximumReportsPerMinute = maximumReportsPerMinute;
-        self.captureIp = DEFAULT_IP_CAPTURE_TYPE;
-        self.framework = OPERATING_SYSTEM;
-    }
+    
+    self = [super initWithDictionary:@{
+        DFK_LOG_LEVEL:[RollbarLevelUtil RollbarLevelToString:logLevel],
+        DFK_CRASH_LEVEL:[RollbarLevelUtil RollbarLevelToString:crashLevel],
+        DFK_MAX_REPORTS_PER_MINUTE:[NSNumber numberWithUnsignedInteger:maximumReportsPerMinute],
+        DFK_IP_CAPTURE_TYPE:[CaptureIpTypeUtil CaptureIpTypeToString:DEFAULT_IP_CAPTURE_TYPE],
+        DFK_FRAMEWORK:OPERATING_SYSTEM
+    }];
     return self;
-
 }
+
 - (id)initWithLogLevel:(RollbarLevel)logLevel
             crashLevel:(RollbarLevel)crashLevel {
+    
     return [self initWithLogLevel:logLevel
                        crashLevel:crashLevel
           maximumReportsPerMinute:DEFAULT_MAX_REPORTS_PER_MINUTE];
 }
 
 - (id)init {
+    
     return [self initWithLogLevel:DEFAULT_LOG_LEVEL
                        crashLevel:DEFAULT_CRASH_LEVEL];
 }

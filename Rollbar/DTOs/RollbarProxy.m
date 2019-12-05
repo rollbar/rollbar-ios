@@ -31,12 +31,11 @@ static NSString * const DFK_PROXY_PORT = @"proxyPort";
              proxyUrl:(NSString *)proxyUrl
             proxyPort:(NSUInteger)proxyPort {
     
-    self = [super init];
-    if (self) {
-        self.enabled = enabled;
-        self.proxyUrl = proxyUrl;
-        self.proxyPort = proxyPort;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ENABLED:[NSNumber numberWithBool:enabled],
+        DFK_PROXY_URL:proxyUrl,
+        DFK_PROXY_PORT:[NSNumber numberWithUnsignedInteger:proxyPort]
+    }];
     return self;
 }
 

@@ -66,23 +66,20 @@ static NSString * const DFK_CUSTOM = @"custom";
         configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
     }
 
-    if (self = [super init]) {
-        self.destination = [RollbarDestination new];
-        self.developerOptions = [RollbarDeveloperOptions new];
-        self.loggingOptions = [RollbarLoggingOptions new];
-        self.httpProxy = [RollbarProxy new];
-        self.httpsProxy = [RollbarProxy new];
-        self.dataScrubber = [RollbarScrubbingOptions new];
-        self.telemetry = [RollbarTelemetryOptions new];
-        self.notifier.name = NOTIFIER_NAME;
-        self.notifier.version = NOTIFIER_VERSION;
-        //self.server = [RollbarServer new];
-        //self.person = [RollbarPerson new];
-        //self.customData = [NSMutableDictionary dictionaryWithCapacity:10];
-
-        //[self save];
-    }
-
+    self = [super initWithDictionary:@{
+        DFK_DESTINATION:[RollbarDestination new].jsonFriendlyData,
+        DFK_DEVELOPER_OPTIONS:[RollbarDeveloperOptions new].jsonFriendlyData,
+        DFK_LOGGING_OPTIONS:[RollbarLoggingOptions new].jsonFriendlyData,
+        DFK_HTTP_PROXY:[RollbarProxy new].jsonFriendlyData,
+        DFK_HTTPS_PROXY:[RollbarProxy new].jsonFriendlyData,
+        DFK_DATA_SCRUBBER:[RollbarScrubbingOptions new].jsonFriendlyData,
+        DFK_TELEMETRY:[RollbarTelemetryOptions new].jsonFriendlyData,
+        DFK_NOTIFIER:[[RollbarModule alloc] initWithName:NOTIFIER_NAME version:NOTIFIER_VERSION].jsonFriendlyData
+        //DFK_SERVER: ,
+        //DFK_PERSON: ,
+        //DFK_CUSTOM: ,
+    }];
+    //[self save];
     return self;
 }
 

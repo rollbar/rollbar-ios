@@ -30,12 +30,11 @@ static NSString * const DFK_EMAIL = @"email";
         username:(NSString *)username
            email:(NSString *)email {
     
-    self = [super init];
-    if (self) {
-        self.ID = ID;
-        self.username = username;
-        self.email = email;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ID:ID,
+        DFK_USERNAME:username,
+        DFK_EMAIL:email
+    }];
     return self;
 }
 

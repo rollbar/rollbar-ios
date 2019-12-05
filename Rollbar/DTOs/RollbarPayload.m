@@ -10,27 +10,63 @@
 #import "DataTransferObject+Protected.h"
 #import "RollbarData.h"
 
-static NSString * const DATAFIELD_ACCESSTOKEN = @"accessToken";
-static NSString * const DATAFIELD_DATA = @"data";
+#pragma mark - data field keys
+
+static NSString * const DFK_ACCESSTOKEN = @"accessToken";
+static NSString * const DFK_DATA = @"data";
 
 @implementation RollbarPayload
 
+#pragma mark - properties
+
 - (NSString *)accessToken {
-    return [self safelyGetStringByKey:DATAFIELD_ACCESSTOKEN];
+    return [self safelyGetStringByKey:DFK_ACCESSTOKEN];
 }
 
 - (void)setAccessToken:(NSString *)accessToken {
-    [self setString:accessToken forKey:DATAFIELD_ACCESSTOKEN];
+    [self setString:accessToken forKey:DFK_ACCESSTOKEN];
 }
 
 - (RollbarData *)data {
-    id data = [self safelyGetDictionaryByKey:DATAFIELD_DATA];
+    id data = [self safelyGetDictionaryByKey:DFK_DATA];
     RollbarData *payloadData = [[RollbarData alloc] initWithDictionary:data];
     return payloadData;
 }
 
 - (void)setData:(RollbarData *)payloadData {
-    [self setDictionary:payloadData.jsonFriendlyData forKey:DATAFIELD_DATA];
+    [self setDictionary:payloadData.jsonFriendlyData forKey:DFK_DATA];
+}
+
+#pragma mark - initializers
+
+-(instancetype)initWithAccessToken:(nonnull NSString *)token
+                           andData:(nonnull RollbarData *)data {
+    self = [super initWithDictionary:@{
+        DFK_ACCESSTOKEN : token,
+        DFK_DATA : data.jsonFriendlyData
+    }];
+    return self;
+}
+
+//-(instancetype)initWithJSONString:(NSString *)jsonString {
+//    self = [super initWithJSONString:jsonString];
+//    return self;
+//}
+//
+//-(instancetype)initWithJSONData:(NSData *)data {
+//    self = [super initWithJSONData:data];
+//    return self;
+//}
+//
+//-(instancetype)initWithDictionary:(NSDictionary *)data {
+//    self = [super initWithDictionary:data];
+//    return self;
+//}
+
+-(instancetype)initWithArray:(NSArray *)data {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"Must use initWithDictionary: instead."
+                                 userInfo:nil];
 }
 
 @end

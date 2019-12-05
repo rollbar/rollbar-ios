@@ -35,14 +35,13 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
   captureConnectivity:(BOOL)captureConnectivity
    viewInputsScrubber:(RollbarScrubbingOptions *)viewInputsScrubber {
     
-    self = [super init];
-    if (self) {
-        self.enabled = enabled;
-        self.captureLog = captureLog;
-        self.captureConnectivity = captureConnectivity;
-        self.viewInputsScrubber = viewInputsScrubber;
-        self.maximumTelemetryData = DEFAULT_MAX_TELEMETRY_DATA;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ENABLED_FLAG:[NSNumber numberWithBool:enabled],
+        DFK_CAPTURE_LOG_FLAG:[NSNumber numberWithBool:captureLog],
+        DFK_CAPTURE_CONNECTIVITY_FLAG:[NSNumber numberWithBool:captureConnectivity],
+        DFK_VIEW_INPUTS_SCRUBBER:viewInputsScrubber.jsonFriendlyData,
+        DFK_MAX_TELEMETRY_DATA:[NSNumber numberWithUnsignedInt:DEFAULT_MAX_TELEMETRY_DATA]
+    }];
     return self;
 }
 

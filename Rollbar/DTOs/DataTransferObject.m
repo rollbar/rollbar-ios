@@ -213,34 +213,4 @@
     return self;
 }
 
-- (instancetype)initWithJSONData: (NSData *)data {
-    self = [super init];
-    if (self) {
-        [self deserializeFromJSONData:data];
-    }
-    return self;
-}
-
-- (instancetype)initWithDictionary:(NSDictionary *)data;  {
-    self = [super init];
-    if (self) {
-        self->_data = data.mutableCopy;
-    }
-    return self;
-}
-
-- (instancetype)initWithArray:(NSArray *)data {
-    //TODO: implement...
-    return nil;
-}
-
-- (instancetype)init {
-    self = [self initWithDictionary:[[NSMutableDictionary alloc] initWithCapacity:10]];
-    return self;
-}
-
-- (NSString *)description {
-    return [self serializeToJSONString];
-}
-
 @end

@@ -33,14 +33,12 @@ static NSString * const DFK_CODE_VERSION = @"codeVersion";
               root:(NSString *)root
             branch:(NSString *)branch
        codeVersion:(NSString *)codeVersion {
-    
-    self = [super init];
-    if (self) {
-        self.host = host;
-        self.root = root;
-        self.branch = branch;
-        self.codeVersion = codeVersion;
-    }
+    self = [super initWithDictionary:@{
+        DFK_HOST:host,
+        DFK_ROOT:root,
+        DFK_BRANCH:branch,
+        DFK_CODE_VERSION:codeVersion
+    }];
     return self;
 }
 

@@ -35,12 +35,11 @@ static NSString * const DFK_ENVIRONMENT = @"environment";
            accessToken:(NSString *)accessToken
            environment:(NSString *)environment {
 
-    self = [super init];
-    if (self) {
-        self.endpoint = endpoint;
-        self.accessToken = accessToken;
-        self.environment = environment;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ENDPOINT:endpoint,
+        DFK_ACCESS_TOKEN:accessToken,
+        DFK_ENVIRONMENT:environment
+    }];
     return self;
 }
 

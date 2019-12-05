@@ -14,7 +14,7 @@
 #import "../Rollbar/DTOs/RollbarDeveloperOptions.h"
 #import "../Rollbar/DTOs/RollbarProxy.h"
 #import "../Rollbar/DTOs/RollbarScrubbingOptions.h"
-#import "../Rollbar/DTOs/RollbarServer.h"
+#import "../Rollbar/DTOs/RollbarServerConfig.h"
 #import "../Rollbar/DTOs/RollbarPerson.h"
 #import "../Rollbar/DTOs/RollbarModule.h"
 #import "../Rollbar/DTOs/RollbarTelemetryOptions.h"
@@ -119,12 +119,12 @@
                   );
 }
 
-- (void)testRollbarServerDTO {
-    RollbarServer *dto = [[RollbarServer alloc] initWithHost:@"HOST"
-                                                        root:@"ROOT"
-                                                      branch:@"BRANCH"
-                                                 codeVersion:@"1.2.3"
-                          ];
+- (void)testRollbarServerConfigDTO {
+    RollbarServerConfig *dto = [[RollbarServerConfig alloc] initWithHost:@"HOST"
+                                                                    root:@"ROOT"
+                                                                  branch:@"BRANCH"
+                                                             codeVersion:@"1.2.3"
+                                ];
     XCTAssertTrue(NSOrderedSame == [dto.host compare:@"HOST"],
                   @"Proper host"
                   );

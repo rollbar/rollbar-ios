@@ -28,14 +28,14 @@ static NSString * const DFK_WHITELIST_FIELDS = @"whitelistFields";
 - (id)initWithEnabled:(BOOL)enabled
           scrubFields:(NSArray *)scrubFields
       whitelistFields:(NSArray *)whitelistFields {
-    
-    self = [super init];
-    if (self) {
-        self.enabled = enabled;
-        self.scrubFields = scrubFields;
-        self.whitelistFields = whitelistFields;
-    }
+
+    self = [super initWithDictionary:@{
+        DFK_ENABLED:[NSNumber numberWithBool:enabled],
+        DFK_SCRUB_FIELDS:scrubFields,
+        DFK_WHITELIST_FIELDS:whitelistFields
+    }];
     return self;
+
 }
 
 - (id)initWithScrubFields:(NSArray *)scrubFields

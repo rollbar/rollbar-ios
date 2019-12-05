@@ -12,33 +12,59 @@
 
 #pragma mark - Initializers
 
-- (id)initWithDictionary: (NSDictionary *)data {
+- (instancetype)initWithJSONData: (NSData *)data {
     self = [super init];
     if (self) {
-        if (!data) {
-            return self;
-        }
-        else if (![DataTransferObject isTransferableObject:data]) {
-            return self;
-        }
-        else {
-            if ([data isKindOfClass:[NSMutableDictionary class]]) {
-                self->_data = (NSMutableDictionary *)data;
-            }
-            else {
-                self->_data = data.mutableCopy;
-            }
-                
-        }
-//        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
-//            self->_data = (NSMutableDictionary *) data;
-//        }
-//        else if ([data isKindOfClass:[NSDictionary class]]) {
-//            self->_data = [data mutableCopy];
-//        }
+        [self deserializeFromJSONData:data];
     }
     return self;
 }
+
+- (instancetype)initWithDictionary:(NSDictionary *)data;  {
+        self = [super init];
+        if (self) {
+            if (!data) {
+                return self;
+            }
+            else if (![DataTransferObject isTransferableObject:data]) {
+                return self;
+            }
+            else {
+                if ([data isKindOfClass:[NSMutableDictionary class]]) {
+                    self->_data = (NSMutableDictionary *)data;
+                }
+                else {
+                    self->_data = data.mutableCopy;
+                }
+                    
+            }
+    //        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
+    //            self->_data = (NSMutableDictionary *) data;
+    //        }
+    //        else if ([data isKindOfClass:[NSDictionary class]]) {
+    //            self->_data = [data mutableCopy];
+    //        }
+        }
+        return self;
+}
+
+- (instancetype)initWithArray:(NSArray *)data {
+    //TODO: implement...
+    return nil;
+}
+
+- (instancetype)init {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"Must use one of initWith...: instead."
+                                 userInfo:nil];
+}
+
+#pragma mark - Property overrides
+
+- (NSString *)description {
+    return [self serializeToJSONString];
+}
+
 
 #pragma mark - safe data getters by key
 

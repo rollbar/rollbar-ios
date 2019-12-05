@@ -16,9 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Initializers
 
-/// Initializes a DTO with data from a dictionary
-/// @param data the dictionary
-- (id)initWithDictionary: (NSDictionary *)data;
+- (instancetype)initWithJSONData:(NSData *)data;
+- (instancetype)initWithDictionary:(NSDictionary *)data;
+- (instancetype)initWithArray:(NSArray *)data;
 
 #pragma mark - Core API: safe data getters by key
 

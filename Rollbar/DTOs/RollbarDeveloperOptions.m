@@ -34,13 +34,12 @@ static NSString * const DFK_LOG_PAYLOAD_FILE = @"logPayloadFile";
            logPayload:(BOOL)logPayload
        payloadLogFile:(NSString *)payloadLogFile {
     
-    self = [super init];
-    if (self) {
-        self.enabled = enabled;
-        self.transmit = transmit;
-        self.logPayload = logPayload;
-        self.payloadLogFile = payloadLogFile;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ENABLED:[NSNumber numberWithBool:enabled],
+        DFK_TRANSMIT:[NSNumber numberWithBool:transmit],
+        DFK_LOG_PAYLOAD:[NSNumber numberWithBool:logPayload],
+        DFK_LOG_PAYLOAD_FILE:payloadLogFile
+    }];
     return self;
 }
 
