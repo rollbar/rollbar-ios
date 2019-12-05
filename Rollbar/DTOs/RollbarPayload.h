@@ -25,8 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nonnull) RollbarData *data;
 
 -(instancetype)initWithAccessToken:(nonnull NSString *)token
-                           andData:(nonnull RollbarData *)data;
-//NS_DESIGNATED_INITIALIZER;
+                              data:(nonnull RollbarData *)data;
 
 @end
 

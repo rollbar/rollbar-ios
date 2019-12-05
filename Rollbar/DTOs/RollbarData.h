@@ -129,6 +129,11 @@ NS_ASSUME_NONNULL_BEGIN
 // Describes the library used to send this event.
 @property (nonatomic) RollbarModule *notifier;
 
+#pragma mark - initialization
+
+-(instancetype)initWithEnvironment:(nonnull NSString *)environment
+                              body:(nonnull RollbarBody *)body;
+
 @end
 
 NS_ASSUME_NONNULL_END

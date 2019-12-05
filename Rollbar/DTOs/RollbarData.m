@@ -8,6 +8,9 @@
 
 #import "RollbarData.h"
 #import "DataTransferObject+Protected.h"
+#import "RollbarBody.h"
+
+#pragma mark - data field keys
 
 static NSString * const DFK_ENVIRONMENT = @"environment";
 static NSString * const DFK_BODY = @"body";
@@ -30,12 +33,33 @@ static NSString * const DFK_NOTIFIER = @"notifier";
 
 @implementation RollbarData
 
+#pragma mark - properties
+
 - (NSMutableString *)environment {
     return [self safelyGetStringByKey:DFK_ENVIRONMENT];
 }
 
 - (void)setEnvironment:(NSMutableString *)accessToken {
     [self setString:accessToken forKey:DFK_ENVIRONMENT];
+}
+
+#pragma mark - initialization
+
+-(instancetype)initWithEnvironment:(nonnull NSString *)environment
+                              body:(nonnull RollbarBody *)body {
+    
+    self = [super initWithDictionary:@{
+        DFK_ENVIRONMENT:environment.mutableCopy,
+        DFK_BODY:body.jsonFriendlyData
+    }];
+    return self;
+}
+
+-(instancetype)initWithArray:(NSArray *)data {
+    
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"Must use initWithDictionary: instead."
+                                 userInfo:nil];
 }
 
 @end

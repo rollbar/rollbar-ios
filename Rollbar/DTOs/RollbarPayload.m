@@ -40,7 +40,8 @@ static NSString * const DFK_DATA = @"data";
 #pragma mark - initializers
 
 -(instancetype)initWithAccessToken:(nonnull NSString *)token
-                           andData:(nonnull RollbarData *)data {
+                              data:(nonnull RollbarData *)data {
+    
     self = [super initWithDictionary:@{
         DFK_ACCESSTOKEN : token,
         DFK_DATA : data.jsonFriendlyData
@@ -48,22 +49,8 @@ static NSString * const DFK_DATA = @"data";
     return self;
 }
 
-//-(instancetype)initWithJSONString:(NSString *)jsonString {
-//    self = [super initWithJSONString:jsonString];
-//    return self;
-//}
-//
-//-(instancetype)initWithJSONData:(NSData *)data {
-//    self = [super initWithJSONData:data];
-//    return self;
-//}
-//
-//-(instancetype)initWithDictionary:(NSDictionary *)data {
-//    self = [super initWithDictionary:data];
-//    return self;
-//}
-
 -(instancetype)initWithArray:(NSArray *)data {
+    
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:@"Must use initWithDictionary: instead."
                                  userInfo:nil];
