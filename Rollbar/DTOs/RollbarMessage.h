@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 // "route": "home#index",
 // "time_elapsed": 15.23
 
+#pragma mark - Initializers
+
+-(instancetype)initWithBody:(nonnull NSString *)messageBody;
+
 @end
 
 NS_ASSUME_NONNULL_END

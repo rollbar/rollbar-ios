@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "../Rollbar/RollbarLevel.h"
 #import "../Rollbar/DTOs/RollbarPayload.h"
 #import "../Rollbar/DTOs/RollbarData.h"
 #import "../Rollbar/DTOs/RollbarConfig.h"
@@ -20,8 +21,13 @@
 #import "../Rollbar/DTOs/RollbarTelemetryOptions.h"
 #import "../Rollbar/DTOs/RollbarLoggingOptions.h"
 #import "../Rollbar/DTOs/CaptureIpType.h"
-#import "../Rollbar/RollbarLevel.h"
+#import "../Rollbar/DTOs/RollbarPayload.h"
+#import "../Rollbar/DTOs/RollbarData.h"
+#import "../Rollbar/DTOs/RollbarBody.h"
 
+#import "../Rollbar/DTOs/RollbarMessage.h"
+#import "../Rollbar/DTOs/RollbarCrashReport.h"
+#import "../Rollbar/DTOs/RollbarBody.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -377,6 +383,36 @@
     XCTAssertTrue([rcClone isEqual:[[RollbarConfig alloc] initWithJSONString:[rcClone serializeToJSONString]]],
                   @"Two DTOs (clone and its clone) are expected to be equal"
                   );
+}
+
+- (void)testRollbarMessageDTO {
+    NSString *messageBody = @"Test message";
+    RollbarMessage *dto = [[RollbarMessage alloc] initWithBody:messageBody];
+    XCTAssertEqual(messageBody, dto.body);
+}
+
+- (void)testMessageRollbarBodyDTO {
+    NSString *message = @"Test message";
+    RollbarBody *dto = [[RollbarBody alloc] initWithMessage:message];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.message);
+    XCTAssertNotNil(dto.message.body);
+    XCTAssertEqual(message, dto.message.body);
+    XCTAssertNil(dto.crashReport);
+    XCTAssertNil(dto.trace);
+    XCTAssertNil(dto.traceChain);
+}
+
+- (void)testCrashReportRollbarBodyDTO {
+    NSString *data = @"RAW_CRASH_REPORT_CONTENT";
+    RollbarBody *dto = [[RollbarBody alloc] initWithCrashReport:data];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.crashReport);
+    XCTAssertNotNil(dto.crashReport.rawCrashReport);
+    XCTAssertEqual(data, dto.crashReport.rawCrashReport);
+    XCTAssertNil(dto.message);
+    XCTAssertNil(dto.trace);
+    XCTAssertNil(dto.traceChain);
 }
 
 @end

@@ -46,7 +46,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Optional properties
 
 // Optional: "telemetry". Only applicable if you are sending telemetry data.
-@property (nonatomic, strong) RollbarTelemetry *telemetry;
+@property (nonatomic, strong, nullable) RollbarTelemetry *telemetry;
+
+#pragma mark - Initializers
+
+-(instancetype)initWithMessage:(nonnull NSString *)message;
+-(instancetype)initWithException:(nonnull NSException *)exception;
+-(instancetype)initWithError:(nonnull NSError *)error;
+-(instancetype)initWithCrashReport:(nonnull NSString *)crashReport;
 
 @end
 

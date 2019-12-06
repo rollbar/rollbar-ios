@@ -21,6 +21,7 @@
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)data;  {
+    
         self = [super init];
         if (self) {
             if (!data) {
@@ -65,6 +66,12 @@
     return [self serializeToJSONString];
 }
 
+#pragma mark - data getters by key
+
+- (id)getDataByKey:(NSString *)key {
+    id result = [self->_data objectForKey:key];
+    return result;
+}
 
 #pragma mark - safe data getters by key
 
