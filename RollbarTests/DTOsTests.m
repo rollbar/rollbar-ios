@@ -25,6 +25,7 @@
 #import "../Rollbar/DTOs/RollbarData.h"
 #import "../Rollbar/DTOs/RollbarBody.h"
 #import "../Rollbar/DTOs/RollbarJavascript.h"
+#import "../Rollbar/DTOs/RollbarClient.h"
 
 
 #import "../Rollbar/DTOs/RollbarMessage.h"
@@ -437,6 +438,29 @@
     dto.codeVersion = codeVersion;
     XCTAssertNotNil(dto.codeVersion);
     XCTAssertEqual(codeVersion, dto.codeVersion);
+}
+
+- (void)testRollbarClientDTO {
+    NSString *browser = @"BROWSER";
+    NSString *codeVersion = @"CODE_VERSION";
+    TriStateFlag sourceMapsEnabled = On;
+    TriStateFlag guessUncaughtExceptionFrames = Off;
+    
+    RollbarJavascript *dtoJavascript = [[RollbarJavascript alloc] initWithBrowser:browser
+                                                            codeVersion:codeVersion
+                                                       sourceMapEnabled:sourceMapsEnabled
+                                                    guessUncaughtFrames:guessUncaughtExceptionFrames];
+    NSString *cpu = @"CPU";
+    RollbarClient *dto = [[RollbarClient alloc] initWithCpu:cpu javaScript:dtoJavascript];
+    
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.cpu);
+    XCTAssertEqual(cpu, dto.cpu);
+    XCTAssertNotNil(dto.javaScript);
+    XCTAssertEqual(browser, dto.javaScript.browser);
+    XCTAssertEqual(sourceMapsEnabled, dto.javaScript.sourceMapEnabled);
+    XCTAssertEqual(guessUncaughtExceptionFrames, dto.javaScript.guessUncaughtFrames);
+    XCTAssertEqual(codeVersion, dto.javaScript.codeVersion);
 }
 
 @end

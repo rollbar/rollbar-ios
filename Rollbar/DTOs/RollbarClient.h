@@ -13,13 +13,20 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarClient : DataTransferObject
+
+#pragma mark - Properies
 // Can contain any arbitrary keys. Rollbar understands the following:
 
 // Optional: cpu
 // A string up to 255 characters
 @property (nonatomic, copy, nullable) NSString *cpu;
 
-@property (nonatomic, strong, nonnull) RollbarJavascript *javaScript;
+@property (nonatomic, strong, nullable) RollbarJavascript *javaScript;
+
+#pragma mark - Initializers
+
+-(instancetype)initWithCpu:(nullable NSString *)cpu
+                javaScript:(nullable RollbarJavascript *)javaScript;
 
 @end
 
