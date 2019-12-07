@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Required: body
 // The main data being sent. It can either be a message, an exception, or a crash report.
-@property (nonatomic) RollbarBody *body;
+@property (nonatomic, nonnull) RollbarBody *body;
 
 // Optional: level
 // The severity level. One of: "critical", "error", "warning", "info", "debug"

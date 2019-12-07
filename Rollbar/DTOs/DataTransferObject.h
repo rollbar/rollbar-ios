@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)isTransferableObject:(id)obj;
++ (BOOL)isTransferableDataValue:(id)obj;
 
 - (NSArray *)getDefinedProperties;
 - (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO;

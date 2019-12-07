@@ -24,11 +24,10 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
 
 - (RollbarMessage *)message {
     id data = [self getDataByKey:DFK_MESSAGE];
-    if (data == [NSNull null]) {
-        return nil;
+    if (data != nil) {
+        return [[RollbarMessage alloc] initWithDictionary:data];
     }
-    RollbarMessage *dto = [[RollbarMessage alloc] initWithDictionary:data];
-    return dto;
+    return nil;
 }
 
 - (void)setMessage:(RollbarMessage *)message {
@@ -37,11 +36,10 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
 
 - (RollbarCrashReport *)crashReport {
     id data = [self getDataByKey:DFK_CRASH_REPORT];
-    if (data == [NSNull null]) {
-        return nil;
+    if (data != nil) {
+        return [[RollbarCrashReport alloc] initWithDictionary:data];
     }
-    RollbarCrashReport *dto = [[RollbarCrashReport alloc] initWithDictionary:data];
-    return dto;
+    return nil;
 }
 
 - (void)setCrashReport:(RollbarCrashReport *)crashReport {

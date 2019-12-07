@@ -23,6 +23,21 @@
     return result;
 }
 
++ (BOOL)isTransferableDataValue:(id)obj {
+    if (obj == [NSNull null]
+        || [obj isKindOfClass:[NSString class]]
+        || [obj isKindOfClass:[NSNumber class]]
+        || [obj isKindOfClass:[NSArray class]]
+        || [obj isKindOfClass:[NSDictionary class]]
+        || [obj isKindOfClass:[NSNull class]]
+        ) {
+        return YES;
+    }
+    else {
+        return [DataTransferObject isTransferableObject:obj];
+    }
+}
+
 + (nullable NSData *)dataWithJSONObject:(id)obj
                                 options:(NSJSONWritingOptions)opt
                                   error:(NSError **)error

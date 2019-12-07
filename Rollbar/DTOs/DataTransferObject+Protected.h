@@ -20,9 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDictionary:(NSDictionary *)data;
 - (instancetype)initWithArray:(NSArray *)data;
 
-#pragma mark - Core API: data getters by key
+#pragma mark - Core API: transferable data getter/setter by key
 
-- (id)getDataByKey:(NSString *)key;
+/// Gets a transferrable data object (or nil) by its key.
+/// @param key the data key
+- (nullable id)getDataByKey:(nonnull NSString *)key;
+/// Sets transferrable data by its key
+/// @param data the transferable data (or nil)
+/// @param key the data key
+- (void)setData:(nullable id)data byKey:(nonnull NSString *)key;
 
 #pragma mark - Core API: safe data getters by key
 

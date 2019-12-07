@@ -66,11 +66,30 @@
     return [self serializeToJSONString];
 }
 
-#pragma mark - data getters by key
+#pragma mark - Core API: transferable data getter/setter by key
 
-- (id)getDataByKey:(NSString *)key {
+- (nullable id)getDataByKey:(nonnull NSString *)key {
     id result = [self->_data objectForKey:key];
+    if (result == [NSNull null]) {
+        return nil;
+    }
     return result;
+}
+
+- (void)setData:(nullable id)data byKey:(nonnull NSString *)key {
+    if (!data) {
+        // setting nil data is equivalent to removing its KV-pair (if any):
+        [self->_data removeObjectForKey:key];
+        return;
+    }
+    if ([DataTransferObject isTransferableDataValue:data]) {
+        [self->_data setObject:data forKey:key];
+    }
+    else {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"An attempt to set non-transferable data to self->_data!"
+                                     userInfo:nil];
+    }
 }
 
 #pragma mark - safe data getters by key

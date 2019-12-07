@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarJavascript : DataTransferObject
 
+#pragma mark - Properties
+
 // Optional: browser
 // The user agent string
 @property (nonatomic, nullable, copy) NSString *browser;
@@ -31,6 +33,13 @@ NS_ASSUME_NONNULL_BEGIN
 // Set to true to enable frame guessing
 // See the "Source Maps" guide for more details.
 @property (nonatomic) TriStateFlag guessUncaughtFrames;
+
+#pragma mark - Initializers
+
+-(instancetype)initWithBrowser:(nullable NSString *)browser
+                   codeVersion:(nullable NSString *)codeVersion
+              sourceMapEnabled:(TriStateFlag)sourceMapEnabled
+           guessUncaughtFrames:(TriStateFlag)guessUncaughtFrames;
 
 @end
 
