@@ -29,55 +29,51 @@ static NSString * const DFK_CODE_VERSION = @"codeVersion";
 
 #pragma mark - initializers
 
-- (id)initWithHost:(NSString *)host
-              root:(NSString *)root
-            branch:(NSString *)branch
-       codeVersion:(NSString *)codeVersion {
+- (instancetype)initWithHost:(nullable NSString *)host
+                        root:(nullable NSString *)root
+                      branch:(nullable NSString *)branch
+                 codeVersion:(nullable NSString *)codeVersion {
     self = [super initWithDictionary:@{
-        DFK_HOST:host,
-        DFK_ROOT:root,
-        DFK_BRANCH:branch,
-        DFK_CODE_VERSION:codeVersion
+        DFK_HOST: host ? host : [NSNull null],
+        DFK_ROOT: root ? root : [NSNull null],
+        DFK_BRANCH: branch ? branch : [NSNull null],
+        DFK_CODE_VERSION: codeVersion ? codeVersion : [NSNull null]
     }];
     return self;
 }
 
 #pragma mark - property accessors
 
-- (NSString *)host {
-    NSString *result = [self safelyGetStringByKey:DFK_HOST];
-    return result;
+- (nullable NSString *)host {
+    return [self getDataByKey:DFK_HOST];
 }
 
-- (void)setHost:(NSString *)value {
-    [self setString:value forKey:DFK_HOST];
+- (void)setHost:(nullable NSString *)value {
+    [self setData:value byKey:DFK_HOST];
 }
 
-- (NSString *)root {
-    NSString *result = [self safelyGetStringByKey:DFK_ROOT];
-    return result;
+- (nullable NSString *)root {
+    return [self getDataByKey:DFK_ROOT];
 }
 
-- (void)setRoot:(NSString *)value {
-    [self setString:value forKey:DFK_ROOT];
+- (void)setRoot:(nullable NSString *)value {
+    [self setData:value byKey:DFK_ROOT];
 }
 
-- (NSString *)branch {
-    NSString *result = [self safelyGetStringByKey:DFK_BRANCH];
-    return result;
+- (nullable NSString *)branch {
+    return [self getDataByKey:DFK_BRANCH];
 }
 
-- (void)setBranch:(NSString *)value {
-    [self setString:value forKey:DFK_BRANCH];
+- (void)setBranch:(nullable NSString *)value {
+    [self setData:value byKey:DFK_BRANCH];
 }
 
-- (NSString *)codeVersion {
-    NSString *result = [self safelyGetStringByKey:DFK_CODE_VERSION];
-    return result;
+- (nullable NSString *)codeVersion {
+    return [self getDataByKey:DFK_CODE_VERSION];
 }
 
-- (void)setCodeVersion:(NSString *)value {
-    [self setString:value forKey:DFK_CODE_VERSION];
+- (void)setCodeVersion:(nullable NSString *)value {
+    [self setData:value byKey:DFK_CODE_VERSION];
 }
 
 @end

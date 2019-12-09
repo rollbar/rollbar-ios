@@ -26,6 +26,7 @@
 #import "../Rollbar/DTOs/RollbarBody.h"
 #import "../Rollbar/DTOs/RollbarJavascript.h"
 #import "../Rollbar/DTOs/RollbarClient.h"
+#import "../Rollbar/DTOs/RollbarServer.h"
 
 
 #import "../Rollbar/DTOs/RollbarMessage.h"
@@ -461,6 +462,34 @@
     XCTAssertEqual(sourceMapsEnabled, dto.javaScript.sourceMapEnabled);
     XCTAssertEqual(guessUncaughtExceptionFrames, dto.javaScript.guessUncaughtFrames);
     XCTAssertEqual(codeVersion, dto.javaScript.codeVersion);
+}
+
+- (void)testRollbarServerDTO {
+    NSString *cpu = @"CPU";
+    NSString *host = @"HOST";
+    NSString *root = @"ROOT";
+    NSString *branch = @"BRANCH";
+    NSString *codeVersion = nil;
+
+    RollbarServer *dto = [[RollbarServer alloc] initWithCpu:cpu
+                                                       host:host
+                                                       root:root
+                                                     branch:branch
+                                                codeVersion:codeVersion];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.cpu);
+    XCTAssertNotNil(dto.host);
+    XCTAssertNotNil(dto.root);
+    XCTAssertNotNil(dto.branch);
+    XCTAssertNil(dto.codeVersion);
+
+    XCTAssertEqual(cpu, dto.cpu);
+    XCTAssertEqual(host, dto.host);
+    XCTAssertEqual(root, dto.root);
+    XCTAssertEqual(branch, dto.branch);
+    XCTAssertEqual(codeVersion, dto.codeVersion);
 }
 
 @end

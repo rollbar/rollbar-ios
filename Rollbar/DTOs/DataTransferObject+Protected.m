@@ -92,6 +92,12 @@
     }
 }
 
+- (void)mergeDataDictionary:(nonnull NSDictionary *)data {
+    if (data) {
+        [self->_data addEntriesFromDictionary:data];
+    }
+}
+
 #pragma mark - safe data getters by key
 
 - (DataTransferObject *)safelyGetDataTransferObjectByKey:(NSString *)key {

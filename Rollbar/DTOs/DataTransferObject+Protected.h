@@ -30,6 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param key the data key
 - (void)setData:(nullable id)data byKey:(nonnull NSString *)key;
 
+/// Merges given data dictionary into the underlaying data dictioanry
+/// @param data data dictionary to append
+- (void)mergeDataDictionary:(nonnull NSDictionary *)data;
+
 #pragma mark - Core API: safe data getters by key
 
 - (DataTransferObject *)safelyGetDataTransferObjectByKey:(NSString *)key;

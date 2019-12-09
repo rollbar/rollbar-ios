@@ -14,17 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - properties
 
-@property (nonatomic, copy) NSString *host;
-@property (nonatomic, copy) NSString *root;
-@property (nonatomic, copy) NSString *branch;
-@property (nonatomic, copy) NSString *codeVersion;
+@property (nonatomic, copy, nullable) NSString *host;
+@property (nonatomic, copy, nullable) NSString *root;
+@property (nonatomic, copy, nullable) NSString *branch;
+@property (nonatomic, copy, nullable) NSString *codeVersion;
 
 #pragma mark - initializers
 
-- (id)initWithHost:(NSString *)host
-              root:(NSString *)root
-            branch:(NSString *)branch
-       codeVersion:(NSString *)codeVersion;
+- (instancetype)initWithHost:(nullable NSString *)host
+                        root:(nullable NSString *)root
+                      branch:(nullable NSString *)branch
+                 codeVersion:(nullable NSString *)codeVersion;
 
 @end
 
