@@ -14,23 +14,52 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarLoggingOptions : DataTransferObject
 
-#pragma mark - properties
+#pragma mark - Properties
 
 @property (nonatomic) RollbarLevel logLevel;
 @property (nonatomic) RollbarLevel crashLevel;
 @property (nonatomic) NSUInteger maximumReportsPerMinute;
 @property (nonatomic) CaptureIpType captureIp;
-@property (nonatomic, copy) NSString *codeVersion;
-@property (nonatomic, copy) NSString *framework;
-@property (nonatomic, copy) NSString *requestId;
+@property (nonatomic, copy, nullable) NSString *codeVersion;
+@property (nonatomic, copy, nullable) NSString *framework;
+@property (nonatomic, copy, nullable) NSString *requestId;
 
-#pragma mark - initializers
+#pragma mark - Initializers
 
-- (id)initWithLogLevel:(RollbarLevel)logLevel
-            crashLevel:(RollbarLevel)crashLevel
-maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute;
-- (id)initWithLogLevel:(RollbarLevel)logLevel
-            crashLevel:(RollbarLevel)crashLevel;
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+         maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute
+                       captureIp:(CaptureIpType)captureIp
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId;
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+         maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId;
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+                       captureIp:(CaptureIpType)captureIp
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId;
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId;
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+         maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute;
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel;
 
 @end
 

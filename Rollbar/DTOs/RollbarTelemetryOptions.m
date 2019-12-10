@@ -30,10 +30,10 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
 
 #pragma mark - initializers
 
-- (id)initWithEnabled:(BOOL)enabled
-           captureLog:(BOOL)captureLog
-  captureConnectivity:(BOOL)captureConnectivity
-   viewInputsScrubber:(RollbarScrubbingOptions *)viewInputsScrubber {
+- (instancetype)initWithEnabled:(BOOL)enabled
+                     captureLog:(BOOL)captureLog
+            captureConnectivity:(BOOL)captureConnectivity
+             viewInputsScrubber:(RollbarScrubbingOptions *)viewInputsScrubber {
     
     self = [super initWithDictionary:@{
         DFK_ENABLED_FLAG:[NSNumber numberWithBool:enabled],
@@ -45,9 +45,9 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
     return self;
 }
 
-- (id)initWithEnabled:(BOOL)enabled
-         captureLog:(BOOL)captureLog
-  captureConnectivity:(BOOL)captureConnectivity {
+- (instancetype)initWithEnabled:(BOOL)enabled
+                     captureLog:(BOOL)captureLog
+            captureConnectivity:(BOOL)captureConnectivity {
     
     return [self initWithEnabled:enabled
                       captureLog:captureLog
@@ -55,14 +55,14 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
               viewInputsScrubber:[RollbarScrubbingOptions new]];
 }
 
-- (id)initWithEnabled:(BOOL)enabled {
+- (instancetype)initWithEnabled:(BOOL)enabled {
     return [self initWithEnabled:enabled
                       captureLog:DEFAULT_CAPTURE_LOG_FLAG
              captureConnectivity:DEFAULT_CAPTURE_CONNECTIVITY_FLAG
               viewInputsScrubber:[RollbarScrubbingOptions new]];
 }
 
-- (id)init {
+- (instancetype)init {
     return [self initWithEnabled:DEFAULT_ENABLED_FLAG
                       captureLog:DEFAULT_CAPTURE_LOG_FLAG
              captureConnectivity:DEFAULT_CAPTURE_CONNECTIVITY_FLAG

@@ -22,12 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - initializers
 
-- (id)initWithEnabled:(BOOL)enabled
-          scrubFields:(NSArray *)scrubFields
-      whitelistFields:(NSArray *)whitelistFields;
-- (id)initWithScrubFields:(NSArray *)scrubFields
-          whitelistFields:(NSArray *)whitelistFields;
-- (id)initWithScrubFields:(NSArray *)scrubFields;
+- (instancetype)initWithEnabled:(BOOL)enabled
+                    scrubFields:(NSArray *)scrubFields
+                whitelistFields:(NSArray *)whitelistFields;
+- (instancetype)initWithScrubFields:(NSArray *)scrubFields
+                    whitelistFields:(NSArray *)whitelistFields;
+- (instancetype)initWithScrubFields:(NSArray *)scrubFields;
 
 @end
 

@@ -29,10 +29,10 @@ static NSString * const DFK_LOG_PAYLOAD_FILE = @"logPayloadFile";
 
 #pragma mark - initializers
 
-- (id)initWithEnabled:(BOOL)enabled
-             transmit:(BOOL)transmit
-           logPayload:(BOOL)logPayload
-       payloadLogFile:(NSString *)payloadLogFile {
+- (instancetype)initWithEnabled:(BOOL)enabled
+                       transmit:(BOOL)transmit
+                     logPayload:(BOOL)logPayload
+                 payloadLogFile:(NSString *)payloadLogFile {
     
     self = [super initWithDictionary:@{
         DFK_ENABLED:[NSNumber numberWithBool:enabled],
@@ -43,9 +43,9 @@ static NSString * const DFK_LOG_PAYLOAD_FILE = @"logPayloadFile";
     return self;
 }
 
-- (id)initWithEnabled:(BOOL)enabled
-             transmit:(BOOL)transmit
-           logPayload:(BOOL)logPayload {
+- (instancetype)initWithEnabled:(BOOL)enabled
+                       transmit:(BOOL)transmit
+                     logPayload:(BOOL)logPayload {
     
     return [self initWithEnabled:enabled
                         transmit:transmit
@@ -53,14 +53,14 @@ static NSString * const DFK_LOG_PAYLOAD_FILE = @"logPayloadFile";
                   payloadLogFile:DEFAULT_PAYLOAD_LOG_FILE];
 }
 
-- (id)initWithEnabled:(BOOL)enabled {
+- (instancetype)initWithEnabled:(BOOL)enabled {
     
     return [self initWithEnabled:enabled
                         transmit:DEFAULT_TRANSMIT_FLAG
                       logPayload:DEFAULT_LOG_PAYLOADS_FLAG];
 }
 
-- (id)init {
+- (instancetype)init {
     return [self initWithEnabled:DEFAULT_ENABLED_FLAG];
 }
 

@@ -29,7 +29,7 @@ static NSString * const DFK_RAW = @"raw";
 -(instancetype)initWithRawCrashReport:(nonnull NSString *)rawCrashReport {
     
     self = [super initWithDictionary:@{
-        DFK_RAW:rawCrashReport
+        DFK_RAW:rawCrashReport ? rawCrashReport : [NSNull null]
     }];
     return self;
 }

@@ -60,7 +60,7 @@ static NSString * const DFK_CUSTOM = @"custom";
 
 #pragma mark - initializers
 
-- (id)init {
+- (instancetype)init {
     if (!configurationFilePath) {
         NSString *cachesDirectory = [RollbarCachesDirectory directory];
         configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];

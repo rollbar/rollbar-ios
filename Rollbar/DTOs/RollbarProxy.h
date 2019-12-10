@@ -18,9 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSUInteger proxyPort;
 
 #pragma mark - initializers
-- (id)initWithEnabled:(BOOL)enabled
-             proxyUrl:(NSString *)proxyUrl
-            proxyPort:(NSUInteger)proxyPort;
+
+- (instancetype)initWithEnabled:(BOOL)enabled
+                       proxyUrl:(NSString *)proxyUrl
+                      proxyPort:(NSUInteger)proxyPort;
 
 @end
 

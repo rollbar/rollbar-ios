@@ -332,15 +332,15 @@
     XCTAssertTrue(dto.captureIp == CaptureIpFull,
                   @"Proper default capture IP"
                   );
-    XCTAssertTrue([dto.codeVersion isEqualToString:@""],
-                  @"Proper default code version"
-                  );
+    XCTAssertNil(dto.codeVersion,
+                 @"Proper default code version"
+                 );
     XCTAssertTrue([dto.framework isEqualToString:@"macos"] || [dto.framework isEqualToString:@"ios"],
                   @"Proper default framework"
                   );
-    XCTAssertTrue([dto.requestId isEqualToString:@""],
-                  @"Proper request ID"
-                  );
+    XCTAssertNil(dto.requestId,
+                 @"Proper request ID"
+                 );
 }
 
 
