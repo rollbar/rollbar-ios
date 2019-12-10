@@ -28,6 +28,7 @@
 #import "../Rollbar/DTOs/RollbarClient.h"
 #import "../Rollbar/DTOs/RollbarServer.h"
 #import "../Rollbar/DTOs/RollbarRequest.h"
+#import "../Rollbar/DTOs/RollbarException.h"
 
 
 #import "../Rollbar/DTOs/RollbarMessage.h"
@@ -534,6 +535,26 @@
     XCTAssertEqual(dto.queryString, queryString);
     XCTAssertEqual(dto.postBody, postBody);
     XCTAssertEqual(dto.userIP, userIP);
+}
+
+- (void)testRollbarExceptionDTO {
+    NSString *exceptionClass = @"EXCEPTION_CLASS";
+    NSString *exceptionMessage = @"EXCEPTIION_MESSAGE";
+    NSString *exceptionDescription = nil;
+
+    RollbarException *dto = [[RollbarException alloc] initWithExceptionClass:exceptionClass
+                                                            exceptionMessage:exceptionMessage
+                                                        exceptionDescription:exceptionDescription];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.exceptionClass);
+    XCTAssertNotNil(dto.exceptionMessage);
+    XCTAssertNil(dto.exceptionDescription);
+
+    XCTAssertEqual(dto.exceptionClass, exceptionClass);
+    XCTAssertEqual(dto.exceptionMessage, exceptionMessage);
+    XCTAssertEqual(dto.exceptionDescription, exceptionDescription);
 }
 
 @end

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarException : DataTransferObject
 
+#pragma mark - Properties
+
 // Required: class
 // The exception class name.
 @property (nonatomic, copy, nonnull) NSString *exceptionClass;
@@ -25,6 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
 // Usually the original exception message will have been machine-generated;
 // you can use this to send something custom
 @property (nonatomic, copy, nullable) NSString *exceptionDescription;
+
+#pragma mark - Initializers
+
+- (instancetype)initWithExceptionClass:(nonnull NSString *)exceptionClass
+                      exceptionMessage:(nullable NSString *)exceptionMessage
+                  exceptionDescription:(nullable NSString *)exceptionDescription;
 
 @end
 
