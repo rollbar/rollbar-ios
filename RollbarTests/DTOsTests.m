@@ -27,6 +27,7 @@
 #import "../Rollbar/DTOs/RollbarJavascript.h"
 #import "../Rollbar/DTOs/RollbarClient.h"
 #import "../Rollbar/DTOs/RollbarServer.h"
+#import "../Rollbar/DTOs/RollbarRequest.h"
 
 
 #import "../Rollbar/DTOs/RollbarMessage.h"
@@ -198,12 +199,12 @@
     XCTAssertTrue(NSOrderedSame == [dto.ID compare:@"ID007"],
                   @"Proper ID"
                   );
-    XCTAssertTrue([dto.username isEqualToString:@""],
-                  @"Proper default username"
-                  );
-    XCTAssertTrue([dto.email isEqualToString:@""],
-                  @"Proper default email"
-                  );
+    XCTAssertNil(dto.username,
+                 @"Proper default username"
+                 );
+    XCTAssertNil(dto.email,
+                 @"Proper default email"
+                 );
 }
 
 - (void)testRollbarModuleDTO {
@@ -230,9 +231,9 @@
     XCTAssertTrue([dto.name isEqualToString:@"Module"],
                   @"Proper name"
                   );
-    XCTAssertTrue([dto.version isEqualToString:@""],
-                  @"Proper version"
-                  );
+    XCTAssertNil(dto.version,
+                 @"Proper version"
+                 );
 }
 
 - (void)testRollbarTelemetryOptionsDTO {
@@ -490,6 +491,49 @@
     XCTAssertEqual(root, dto.root);
     XCTAssertEqual(branch, dto.branch);
     XCTAssertEqual(codeVersion, dto.codeVersion);
+}
+
+- (void)testRollbarRequestDTO {
+    HttpMethod method = Get;
+    NSDictionary *headers = @{@"HEADER_1":@"HEADER1", @"HEADER_2":@"HEADER2"};
+    NSDictionary *params = @{@"PARAM_1":@"PARAM1", @"PARAM_2":@"PARAM2"};
+    NSDictionary *getParams = @{@"GET_PARAM_1":@"GETPARAM1", @"GET_PARAM_2":@"GETPARAM2"};
+    NSDictionary *postParams = nil;
+    NSString *url = @"URL";
+    NSString *queryString = @"QUERYSTRING";
+    NSString *postBody = nil;
+    NSString *userIP = @"USERIP";
+
+    RollbarRequest *dto = [[RollbarRequest alloc] initWithHttpMethod:method
+                                                                 url:url
+                                                             headers:headers
+                                                              params:params
+                                                         queryString:queryString
+                                                           getParams:getParams
+                                                          postParams:postParams
+                                                            postBody:postBody
+                                                              userIP:userIP];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.headers);
+    XCTAssertNotNil(dto.params);
+    XCTAssertNotNil(dto.getParams);
+    XCTAssertNil(dto.postParams);
+    XCTAssertNotNil(dto.url);
+    XCTAssertNotNil(dto.queryString);
+    XCTAssertNil(dto.postBody);
+    XCTAssertNotNil(dto.userIP);
+
+    XCTAssertEqual(dto.method, method);
+    XCTAssertEqual(dto.headers, headers);
+    XCTAssertEqual(dto.params, params);
+    XCTAssertEqual(dto.getParams, getParams);
+    XCTAssertEqual(dto.postParams, postParams);
+    XCTAssertEqual(dto.url, url);
+    XCTAssertEqual(dto.queryString, queryString);
+    XCTAssertEqual(dto.postBody, postBody);
+    XCTAssertEqual(dto.userIP, userIP);
 }
 
 @end

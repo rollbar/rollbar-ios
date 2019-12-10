@@ -14,20 +14,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - properties
 
-@property (nonatomic, copy) NSString *ID;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *email;
+// Required: id
+// A string up to 40 characters identifying this user in your system.
+@property (nonatomic, copy, nonnull) NSString *ID;
+
+// Optional: username
+// A string up to 255 characters
+@property (nonatomic, copy, nullable) NSString *username;
+
+// Optional: email
+// A string up to 255 characters
+@property (nonatomic, copy, nullable) NSString *email;
 
 #pragma mark - initializers
 
-- (id)initWithID:(NSString *)ID
-        username:(NSString *)username
-           email:(NSString *)email;
-- (id)initWithID:(NSString *)ID
-        username:(NSString *)username;
-- (id)initWithID:(NSString *)ID
-           email:(NSString *)email;
-- (id)initWithID:(NSString *)ID;
+- (instancetype)initWithID:(nonnull NSString *)ID
+                  username:(nullable NSString *)username
+                     email:(nullable NSString *)email;
+- (instancetype)initWithID:(nonnull NSString *)ID
+                  username:(nullable NSString *)username;
+- (instancetype)initWithID:(nonnull NSString *)ID
+                     email:(nullable NSString *)email;
+- (instancetype)initWithID:(nonnull NSString *)ID;
 
 @end
 
