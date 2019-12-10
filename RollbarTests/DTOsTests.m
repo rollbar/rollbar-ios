@@ -29,6 +29,7 @@
 #import "../Rollbar/DTOs/RollbarServer.h"
 #import "../Rollbar/DTOs/RollbarRequest.h"
 #import "../Rollbar/DTOs/RollbarException.h"
+#import "../Rollbar/DTOs/RollbarCallStackFrameContext.h"
 
 
 #import "../Rollbar/DTOs/RollbarMessage.h"
@@ -555,6 +556,23 @@
     XCTAssertEqual(dto.exceptionClass, exceptionClass);
     XCTAssertEqual(dto.exceptionMessage, exceptionMessage);
     XCTAssertEqual(dto.exceptionDescription, exceptionDescription);
+}
+
+- (void)testRollbarCallStackFrameContextDTO {
+    NSArray<NSString *> *pre = @[@"CODE_PR1", @"CODE_PR2"];
+    NSArray<NSString *> *post = nil;
+
+    RollbarCallStackFrameContext *dto = [[RollbarCallStackFrameContext alloc] initWitPreCodeLines:pre
+                                                                                    postCodeLines:post];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.preCodeLines);
+    XCTAssertNil(dto.postCodeLines);
+
+    XCTAssertEqual(dto.preCodeLines.count, 2);
+    XCTAssertTrue([dto.preCodeLines containsObject:pre[0]]);
+    XCTAssertTrue([dto.preCodeLines containsObject:pre[1]]);
 }
 
 @end
