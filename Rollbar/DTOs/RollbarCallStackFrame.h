@@ -71,18 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
 // can be found in locals.
 @property (nonatomic, nullable) NSDictionary *locals;
 
-//#pragma mark - Depricated properties
-//
-//// (Deprecated) Optional: args
-//// List of values of positional arguments to the method/function call
-//// NOTE: as this can contain sensitive data, you may want to scrub the values
-//@property (nonatomic, nullable) NSArray<NSString *> *args;
-//
-//// (Deprecated) Optional: kwargs
-//// Object of keyword arguments (name => value) to the method/function call
-//// NOTE: as this can contain sensitive data, you may want to scrub the values
-//@property (nonatomic, nullable) NSDictionary *kwargs;
-
 #pragma mark - Initializers
 
 -(instancetype)initWithFileName:(nonnull NSString *)filename;

@@ -21,9 +21,6 @@ static NSString * const DFK_ARGSPEC = @"argspec";
 static NSString * const DFK_VARARGSPEC = @"varargspec";
 static NSString * const DFK_KEYWORDSPEC = @"keywordspec";
 static NSString * const DFK_LOCALS = @"locals";
-//// depricated:
-//static NSString * const DFK_ARGS = @"args";
-//static NSString * const DFK_KWARGS = @"kwargs";
 
 @implementation RollbarCallStackFrame
 

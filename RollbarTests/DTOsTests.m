@@ -31,6 +31,7 @@
 #import "../Rollbar/DTOs/RollbarException.h"
 #import "../Rollbar/DTOs/RollbarCallStackFrameContext.h"
 #import "../Rollbar/DTOs/RollbarCallStackFrame.h"
+#import "../Rollbar/DTOs/RollbarTrace.h"
 
 
 #import "../Rollbar/DTOs/RollbarMessage.h"
@@ -661,6 +662,57 @@
     XCTAssertNotNil(dto.keywordspec);
     XCTAssertEqual(dto.keywordspec.count, keywordspec.count);
     
+}
+
+- (void)testRollbarTraceDTO {
+    
+    NSString *exceptionClass = @"EXCEPTION_CLASS";
+    NSString *exceptionMessage = @"EXCEPTIION_MESSAGE";
+    NSString *exceptionDescription = nil;
+
+    RollbarException *exceptionDto = [[RollbarException alloc] initWithExceptionClass:exceptionClass
+                                                                     exceptionMessage:exceptionMessage
+                                                                 exceptionDescription:exceptionDescription];
+
+    NSString *filename = @"FILENAME";
+    NSString *className = @"CLASSNAME";
+    NSString *code = @"CODE";
+    NSString *method = @"METHOD";
+    NSNumber *colno = @111;
+    NSNumber *lineno = @222;
+    NSArray<NSString *> *pre = @[@"CODE_PR1", @"CODE_PR2"];
+    NSArray<NSString *> *post = nil;
+    RollbarCallStackFrameContext *codeContext = [[RollbarCallStackFrameContext alloc] initWitPreCodeLines:pre
+                                                                                            postCodeLines:post];
+    NSDictionary *locals  = @{
+        @"VAR1": @"VAL1",
+        @"VAR2": @"VAL2",
+    };
+    NSArray<NSString *> *argspec = @[];
+    NSArray<NSString *> *varargspec = @[@"VARARG1"];
+    NSArray<NSString *> *keywordspec = @[@"KW1", @"KW2"];
+    
+    RollbarCallStackFrame *frameDto = [[RollbarCallStackFrame alloc] initWithFileName:filename];
+    frameDto.className = className;
+    frameDto.code = code;
+    frameDto.method = method;
+    frameDto.colno = colno;
+    frameDto.lineno = lineno;
+    frameDto.context = codeContext;
+    frameDto.locals = locals;
+    frameDto.argspec = argspec;
+    frameDto.varargspec = varargspec;
+    frameDto.keywordspec = keywordspec;
+    
+    RollbarTrace *dto = [[RollbarTrace alloc] initWithRollbarException:exceptionDto
+                                                rollbarCallStackFrames:@[frameDto, frameDto]];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.exception);
+    XCTAssertNotNil(dto.frames);
+    XCTAssertEqual(dto.exception.exceptionClass, exceptionClass);
+    XCTAssertEqual(dto.frames.count, 2);
+    XCTAssertEqual(dto.frames[0].filename, filename);
+    XCTAssertEqual(dto.frames[1].filename, filename);
 }
 
 @end
