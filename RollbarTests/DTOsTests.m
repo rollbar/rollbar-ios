@@ -30,6 +30,7 @@
 #import "../Rollbar/DTOs/RollbarRequest.h"
 #import "../Rollbar/DTOs/RollbarException.h"
 #import "../Rollbar/DTOs/RollbarCallStackFrameContext.h"
+#import "../Rollbar/DTOs/RollbarCallStackFrame.h"
 
 
 #import "../Rollbar/DTOs/RollbarMessage.h"
@@ -573,6 +574,93 @@
     XCTAssertEqual(dto.preCodeLines.count, 2);
     XCTAssertTrue([dto.preCodeLines containsObject:pre[0]]);
     XCTAssertTrue([dto.preCodeLines containsObject:pre[1]]);
+}
+
+- (void)testRollbarCallStackFrameDTO {
+    NSString *filename = @"FILENAME";
+
+    NSString *className = @"CLASSNAME";
+    NSString *code = @"CODE";
+    NSString *method = @"METHOD";
+
+    NSNumber *colno = @111;
+    NSNumber *lineno = @222;
+    
+    NSArray<NSString *> *pre = @[@"CODE_PR1", @"CODE_PR2"];
+    NSArray<NSString *> *post = nil;
+    RollbarCallStackFrameContext *codeContext = [[RollbarCallStackFrameContext alloc] initWitPreCodeLines:pre
+                                                                                            postCodeLines:post];
+    XCTAssertNotNil(codeContext);
+    XCTAssertNotNil(codeContext.preCodeLines);
+    XCTAssertNil(codeContext.postCodeLines);
+    XCTAssertEqual(codeContext.preCodeLines.count, 2);
+    XCTAssertTrue([codeContext.preCodeLines containsObject:pre[0]]);
+    XCTAssertTrue([codeContext.preCodeLines containsObject:pre[1]]);
+
+    NSDictionary *locals  = @{
+        @"VAR1": @"VAL1",
+        @"VAR2": @"VAL2",
+    };
+
+    NSArray<NSString *> *argspec = @[];
+    NSArray<NSString *> *varargspec = @[@"VARARG1"];
+    NSArray<NSString *> *keywordspec = @[@"KW1", @"KW2"];
+    
+    RollbarCallStackFrame *dto = [[RollbarCallStackFrame alloc] initWithFileName:filename];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.filename);
+    XCTAssertEqual(dto.filename, filename);
+
+    XCTAssertNil(dto.className);
+    XCTAssertNil(dto.code);
+    XCTAssertNil(dto.method);
+    dto.className = className;
+    dto.code = code;
+    dto.method = method;
+    XCTAssertNotNil(dto.className);
+    XCTAssertNotNil(dto.code);
+    XCTAssertNotNil(dto.method);
+    XCTAssertEqual(dto.className, className);
+    XCTAssertEqual(dto.code, code);
+    XCTAssertEqual(dto.method, method);
+
+    XCTAssertNil(dto.colno);
+    XCTAssertNil(dto.lineno);
+    dto.colno = colno;
+    dto.lineno = lineno;
+    XCTAssertNotNil(dto.colno);
+    XCTAssertNotNil(dto.lineno);
+    XCTAssertEqual(dto.colno, colno);
+    XCTAssertEqual(dto.lineno, lineno);
+
+    XCTAssertNil(dto.context);
+    dto.context = codeContext;
+    XCTAssertNotNil(dto.context);
+    XCTAssertEqual(dto.context.preCodeLines.count, codeContext.preCodeLines.count);
+    XCTAssertTrue([dto.context.preCodeLines containsObject:pre[0]]);
+    XCTAssertTrue([dto.context.preCodeLines containsObject:pre[1]]);
+    XCTAssertNil(dto.context.postCodeLines);
+    
+    XCTAssertNil(dto.locals);
+    dto.locals = locals;
+    XCTAssertNotNil(dto.locals);
+    XCTAssertEqual(dto.locals.count, locals.count);
+
+    XCTAssertNil(dto.argspec);
+    dto.argspec = argspec;
+    XCTAssertNotNil(dto.argspec);
+    XCTAssertEqual(dto.argspec.count, argspec.count);
+    
+    XCTAssertNil(dto.varargspec);
+    dto.varargspec = varargspec;
+    XCTAssertNotNil(dto.varargspec);
+    XCTAssertEqual(dto.varargspec.count, varargspec.count);
+
+    XCTAssertNil(dto.keywordspec);
+    dto.keywordspec = keywordspec;
+    XCTAssertNotNil(dto.keywordspec);
+    XCTAssertEqual(dto.keywordspec.count, keywordspec.count);
+    
 }
 
 @end
