@@ -8,6 +8,7 @@
 
 #import "RollbarTrace.h"
 #import "DataTransferObject+Protected.h"
+#import "DataTransferObject+CustomData.h"
 #import "RollbarCallStackFrame.h"
 #import "RollbarException.h"
 
@@ -68,6 +69,36 @@ static NSString * const DFK_EXCEPTION = @"exception";
     return self;
 }
 
+-(instancetype)initWithException:(nonnull NSException *)exception {
+    
+    RollbarException *exceptionDto =
+    [[RollbarException alloc] initWithExceptionClass:NSStringFromClass([exception class])
+                                    exceptionMessage:exception.reason
+                                exceptionDescription:exception.description];
+    [exceptionDto tryAddKeyed:@"user_info" Object:exception.userInfo];
+    
+    NSMutableArray<RollbarCallStackFrame *> *frames = [NSMutableArray array];
+    for (NSString *line in exception.callStackSymbols) {
+        NSMutableArray *components =
+        [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
+        [components removeObject:@""];
+        [components removeObjectAtIndex:0];
+        if (components.count >= 4) {
+            NSString *method = [self methodNameFromStackTrace:components];
+            NSString *filename = [components componentsJoinedByString:@" "];
+            RollbarCallStackFrame *frame = [[RollbarCallStackFrame alloc] initWithFileName:filename];
+            frame.method = method;
+            frame.lineno = components[components.count-1];
+            [frame tryAddKeyed:@"library" Object:components[0]];
+            [frame tryAddKeyed:@"address" Object:components[1]];
+
+            [frames addObject:frame];
+        }
+    }
+    
+    return [self initWithRollbarException:exceptionDto rollbarCallStackFrames:frames];
+}
+
 #pragma mark - Private methods
 
 -(NSArray *)getJsonFriendlyDataFromFrames:(NSArray<RollbarCallStackFrame *> *)frames {
@@ -83,6 +114,23 @@ static NSString * const DFK_EXCEPTION = @"exception";
     else {
         return nil;
     }
+}
+
+- (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
+    int start = false;
+    NSString *buf;
+    for (NSString *component in stackTraceComponents) {
+        if (!start && [component hasPrefix:@"0x"]) {
+            start = true;
+        } else if (start && [component isEqualToString:@"+"]) {
+            break;
+        } else if (start) {
+            buf =
+            buf ? [NSString stringWithFormat:@"%@ %@", buf, component]
+            : component;
+        }
+    }
+    return buf ? buf : @"Unknown";
 }
 
 @end

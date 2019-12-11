@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(instancetype)initWithRollbarException:(nonnull RollbarException *)exception
                  rollbarCallStackFrames:(nonnull NSArray<RollbarCallStackFrame *> *)frames;
 
+-(instancetype)initWithException:(nonnull NSException *)exception;
+
 @end
 
 NS_ASSUME_NONNULL_END
