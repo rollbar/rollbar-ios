@@ -398,6 +398,12 @@
     NSString *messageBody = @"Test message";
     RollbarMessage *dto = [[RollbarMessage alloc] initWithBody:messageBody];
     XCTAssertEqual(messageBody, dto.body);
+    
+    NSError *error = [NSError errorWithDomain:@"ERROR_DOMAIN" code:100 userInfo:nil];
+    dto = [[RollbarMessage alloc] initWithNSError:error];
+    XCTAssertNotNil(dto);
+    XCTAssertTrue([dto.body containsString:@"ERROR_DOMAIN"]);
+    XCTAssertTrue([dto.body containsString:@"100"]);
 }
 
 - (void)testMessageRollbarBodyDTO {

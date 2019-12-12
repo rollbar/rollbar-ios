@@ -80,7 +80,9 @@ static NSString * const DFK_EXCEPTION = @"exception";
     NSMutableArray<RollbarCallStackFrame *> *frames = [NSMutableArray array];
     for (NSString *line in exception.callStackSymbols) {
         NSMutableArray *components =
-        [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
+        [NSMutableArray arrayWithArray:
+         [line componentsSeparatedByCharactersInSet:
+          [NSCharacterSet characterSetWithCharactersInString:@" "]]];
         [components removeObject:@""];
         [components removeObjectAtIndex:0];
         if (components.count >= 4) {

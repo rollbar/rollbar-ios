@@ -426,16 +426,18 @@ static BOOL isNetworkReachable = YES;
                                                crashReport:crashReport
                           ];
     NSString *platform = @"client";
-    NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
-                                   @"level": level,
-                                   @"language": @"objective-c",
-                                   @"framework": self.configuration.framework,
-                                   @"platform": platform,
-                                   @"uuid": [self generateUUID],
-                                   @"client": clientData,
-                                   @"notifier": notifierData,
-                                   @"custom": customData,
-                                   @"body": body} mutableCopy];
+    NSMutableDictionary *data = [@{
+        @"environment": self.configuration.environment,
+        @"level": level,
+        @"language": @"objective-c",
+        @"framework": self.configuration.framework,
+        @"platform": platform,
+        @"uuid": [self generateUUID],
+        @"client": clientData,
+        @"notifier": notifierData,
+        @"custom": customData,
+        @"body": body
+    } mutableCopy];
     
     NSDictionary *personData = [self buildPersonData];
     

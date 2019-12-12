@@ -12,6 +12,7 @@
 #import "DataTransferObject+Protected.h"
 #import "RollbarMessage.h"
 #import "RollbarCrashReport.h"
+#import "RollbarTrace.h"
 
 static NSString * const DFK_TELEMETRY = @"telemetry";
 static NSString * const DFK_TRACE = @"trace";
@@ -62,16 +63,26 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
 
 -(instancetype)initWithException:(nonnull NSException *)exception {
     
-    @throw [NSException exceptionWithName:NSGenericException
-                                   reason:@"Initializer not implemented."
-                                 userInfo:nil];
+    self = [super initWithDictionary:@{
+        DFK_MESSAGE: [NSNull null],
+        DFK_CRASH_REPORT: [NSNull null],
+        DFK_TRACE: [[RollbarTrace alloc] initWithException:exception],
+        DFK_TRACE_CHAIN: [NSNull null],
+        DFK_TELEMETRY: [NSNull null],
+    }];
+    return self;
 }
 
 -(instancetype)initWithError:(nonnull NSError *)error {
     
-    @throw [NSException exceptionWithName:NSGenericException
-                                   reason:@"Initializer not implemented."
-                                 userInfo:nil];
+    self = [super initWithDictionary:@{
+        DFK_MESSAGE: [[RollbarMessage alloc] initWithNSError:error].jsonFriendlyData,
+        DFK_CRASH_REPORT: [NSNull null],
+        DFK_TRACE: [NSNull null],
+        DFK_TRACE_CHAIN: [NSNull null],
+        DFK_TELEMETRY: [NSNull null],
+    }];
+    return self;
 }
 
 -(instancetype)initWithCrashReport:(nonnull NSString *)crashReport {

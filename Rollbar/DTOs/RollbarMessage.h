@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Initializers
 
 -(instancetype)initWithBody:(nonnull NSString *)messageBody;
+-(instancetype)initWithNSError:(nonnull NSError *)error;
 
 @end
 
