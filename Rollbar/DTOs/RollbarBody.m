@@ -13,6 +13,7 @@
 #import "RollbarMessage.h"
 #import "RollbarCrashReport.h"
 #import "RollbarTrace.h"
+#import "../RollbarTelemetry.h"
 
 static NSString * const DFK_TELEMETRY = @"telemetry";
 static NSString * const DFK_TRACE = @"trace";
@@ -56,7 +57,7 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
         DFK_CRASH_REPORT: [NSNull null],
         DFK_TRACE: [NSNull null],
         DFK_TRACE_CHAIN: [NSNull null],
-        DFK_TELEMETRY: [NSNull null],
+        DFK_TELEMETRY: [self snapTelemetryData],
     }];
     return self;
 }
@@ -68,7 +69,7 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
         DFK_CRASH_REPORT: [NSNull null],
         DFK_TRACE: [[RollbarTrace alloc] initWithException:exception],
         DFK_TRACE_CHAIN: [NSNull null],
-        DFK_TELEMETRY: [NSNull null],
+        DFK_TELEMETRY: [self snapTelemetryData],
     }];
     return self;
 }
@@ -80,7 +81,7 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
         DFK_CRASH_REPORT: [NSNull null],
         DFK_TRACE: [NSNull null],
         DFK_TRACE_CHAIN: [NSNull null],
-        DFK_TELEMETRY: [NSNull null],
+        DFK_TELEMETRY: [self snapTelemetryData],
     }];
     return self;
 }
@@ -92,9 +93,22 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
         DFK_CRASH_REPORT: [[RollbarCrashReport alloc] initWithRawCrashReport:crashReport].jsonFriendlyData,
         DFK_TRACE: [NSNull null],
         DFK_TRACE_CHAIN: [NSNull null],
-        DFK_TELEMETRY: [NSNull null],
+        DFK_TELEMETRY: [self snapTelemetryData],
     }];
     return self;
+}
+
+#pragma mark - Private methods
+
+-(id)snapTelemetryData {
+    
+    NSArray *telemetryData = [[RollbarTelemetry sharedInstance] getAllData];
+    if (telemetryData && telemetryData.count > 0) {
+        return telemetryData;
+    }
+    else {
+        return [NSNull null];
+    }
 }
 
 @end
