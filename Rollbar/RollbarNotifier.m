@@ -14,7 +14,8 @@
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
 #import "RollbarCachesDirectory.h"
-#import "RollbarConfig.h"
+
+#import "RollbarPayloadDTOs.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
@@ -47,6 +48,9 @@ static BOOL isNetworkReachable = YES;
 
 @implementation RollbarNotifier {
     NSDate *nextSendTime;
+    
+    @private
+    NSDictionary *m_osData;
 }
 
 - (id)initWithAccessToken:(NSString*)accessToken
@@ -269,6 +273,125 @@ static BOOL isNetworkReachable = YES;
     }];
 }
 
+
+
+#pragma mark - Payload DTO builders
+
+-(RollbarPerson *)buildRollbarPerson {
+    
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.person && config.person.ID) {
+        return config.person;
+    }
+    else {
+        return nil;
+    }
+}
+
+-(RollbarServer *)buidRollbarServer {
+    
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.server && !config.server.isEmpty) {
+        return [[RollbarServer alloc] initWithCpu:nil
+                                     serverConfig:config.server];
+    }
+    else {
+        return nil;
+    }
+}
+
+-(NSDictionary *)buildOSData {
+    
+    if (self->m_osData) {
+        return self->m_osData;
+    }
+    
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    
+    NSString *version = nil;
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config
+        && config.loggingOptions
+        && config.loggingOptions.codeVersion
+        && config.loggingOptions.codeVersion.length > 0) {
+        
+        version = config.loggingOptions.codeVersion;
+    }
+    else {
+        version = [mainBundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+    }
+    
+    NSString *shortVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *bundleName = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
+    NSString *bundleIdentifier = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey];
+    
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    
+#if TARGET_OS_IPHONE
+    self->m_osData = @{
+        @"os": @"iOS",
+        @"os_version": [[UIDevice currentDevice] systemVersion],
+        @"device_code": deviceCode,
+        @"code_version": version ? version : @"",
+        @"short_version": shortVersion ? shortVersion : @"",
+        @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+        @"app_name": bundleName ? bundleName : @""
+    };
+#else
+    NSOperatingSystemVersion osVer = [[NSProcessInfo processInfo] operatingSystemVersion];
+    self->m_osData = @{
+        @"os": @"macOS",
+        @"os_version": [NSString stringWithFormat:@" %tu.%tu.%tu",
+                        osVer.majorVersion,
+                        osVer.minorVersion,
+                        osVer.patchVersion
+                        ],
+        @"device_code": deviceCode,
+        @"code_version": version ? version : @"",
+        @"short_version": shortVersion ? shortVersion : @"",
+        @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+        @"app_name": bundleName ? bundleName : [[NSProcessInfo processInfo] processName]
+    };
+#endif
+
+    return self->m_osData;
+}
+
+-(RollbarClient *)buildRollbarClient {
+    
+    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]];
+
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.loggingOptions) {
+        switch(config.loggingOptions.captureIp) {
+            case CaptureIpFull:
+                return [[RollbarClient alloc] initWithDictionary:@{
+                    @"timestamp": timestamp,
+                    @"ios": [self buildOSData],
+                    @"user_ip": @"$remote_ip"
+                }];
+            case CaptureIpAnonymize:
+                return [[RollbarClient alloc] initWithDictionary:@{
+                    @"timestamp": timestamp,
+                    @"ios": [self buildOSData],
+                    @"user_ip": @"$remote_ip_anonymize"
+                }];
+            case CaptureIpNone:
+                //no op
+                break;
+        }
+    }
+
+    return [[RollbarClient alloc] initWithDictionary:@{
+        @"timestamp": timestamp,
+        @"ios": [self buildOSData],
+    }];
+}
+
+#pragma mark - LEGACY payload data builders
+
 - (NSDictionary*)buildPersonData {
     NSMutableDictionary *personData = [NSMutableDictionary dictionary];
     
@@ -286,28 +409,6 @@ static BOOL isNetworkReachable = YES;
         return personData;
     }
     
-    return nil;
-}
-
-- (NSDictionary*)buildOptionalData {
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-
-    // Add client/server linking ID
-    if (self.configuration.requestId) {
-        [data setObject:self.configuration.requestId forKey:@"requestId"];
-    }
-
-    // Add server data
-    NSDictionary *serverData = [self buildServerData];
-
-    if (serverData) {
-        [data setObject:serverData forKey:@"server"];
-    }
-
-    if ([[data allKeys] count]) {
-        return data;
-    }
-
     return nil;
 }
 
@@ -335,8 +436,7 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (NSDictionary*)buildClientData {
-    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]]
-    ;
+    
     NSBundle *mainBundle = [NSBundle mainBundle];
     
     NSString *version = [mainBundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
@@ -379,6 +479,8 @@ static BOOL isNetworkReachable = YES;
                              };
 #endif
 
+    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]];
+
     if (self.configuration.captureIp == CaptureIpFull) {
         return @{@"timestamp": timestamp,
                  @"ios": osData,
@@ -392,6 +494,63 @@ static BOOL isNetworkReachable = YES;
                  @"ios": osData
                  };
     }
+}
+
+
+
+
+
+
+
+- (NSDictionary*)buildOptionalData {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+
+    // Add client/server linking ID
+    if (self.configuration.requestId) {
+        [data setObject:self.configuration.requestId forKey:@"requestId"];
+    }
+
+    // Add server data
+    NSDictionary *serverData = [self buildServerData];
+
+    if (serverData) {
+        [data setObject:serverData forKey:@"server"];
+    }
+
+    if ([[data allKeys] count]) {
+        return data;
+    }
+
+    return nil;
+}
+
+- (RollbarPayload *)buildPayloadWithLevel:(NSString*)level
+                                  message:(NSString*)message
+                                exception:(NSException*)exception
+                                    error:(NSError *)error
+                                    extra:(NSDictionary*)extra
+                              crashReport:(NSString*)crashReport
+                                  context:(NSString*)context {
+
+    RollbarBody *body = [RollbarBody alloc];
+    if (crashReport) {
+        body = [body initWithCrashReport:crashReport];
+    }
+    else if (error) {
+        body = [body initWithError:error];
+    }
+    else if (exception) {
+        body = [body initWithException:exception];
+    }
+    else if (message) {
+        body = [body initWithMessage:message];
+    }
+    else {
+        return nil;
+    }
+    
+    //TODO: complete...
+    return nil;
 }
 
 - (NSDictionary*)buildPayloadWithLevel:(NSString*)level

@@ -42,4 +42,25 @@ static NSString *const DFK_CPU = @"cpu";
     }
     return self;
 }
+
+- (instancetype)initWithCpu:(nullable NSString *)cpu
+               serverConfig:(nullable RollbarServerConfig *)serverConfig {
+    
+    if (serverConfig) {
+        self = [super initWithDictionary:serverConfig.jsonFriendlyData];
+    }
+    else {
+        self = [super init];
+    }
+    
+    if (self) {
+        [self mergeDataDictionary:@{
+            DFK_CPU: cpu ? cpu : [NSNull null]
+        }];
+    }
+    
+    return self;
+ }
+
+
 @end

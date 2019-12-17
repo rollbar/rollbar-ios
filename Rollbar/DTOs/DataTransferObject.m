@@ -218,6 +218,18 @@
     return YES;
 }
 
+#pragma mark - Properties
+
+-(BOOL)isEmpty {
+    //TODO: implement
+    // iterate through the deep underlying data structure and see if all the
+    // non-collection-like data elements (i.e NSString and NSNumber) are
+    // either empty/nil or [NSNull null]...
+    
+    // For now:
+    return NO;
+}
+
 #pragma mark - initialization methods
 
 - (instancetype)initWithJSONString: (NSString *)jsonString {

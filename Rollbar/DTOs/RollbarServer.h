@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
                      branch:(nullable NSString *)branch
                 codeVersion:(nullable NSString *)codeVersion;
 
+- (instancetype)initWithCpu:(nullable NSString *)cpu
+               serverConfig:(nullable RollbarServerConfig *)serverConfig;
+
 @end
 
 NS_ASSUME_NONNULL_END

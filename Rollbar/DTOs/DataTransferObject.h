@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)getDefinedProperties;
 - (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO;
 
+/// Signifies that this DTO doesn't carry any useful data and is just an empty transpot "shell"
+@property (nonatomic, readonly) BOOL isEmpty;
+
 #pragma mark - initializers
 
 - (instancetype)initWithJSONString:(NSString *)jsonString;
