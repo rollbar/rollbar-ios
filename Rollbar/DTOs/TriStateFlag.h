@@ -24,11 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TriStateFlagUtil : NSObject
 
 /// Convert TriStateFlag to a string
-/// @param value CaptureIpType value
+/// @param value TriStateFlag value
 + (NSString *) TriStateFlagToString:(TriStateFlag)value;
 
 /// Convert TriStateFlag value from a string
-/// @param value string representation of a CaptureIpType value
+/// @param value string representation of a TriStateFlag value
 + (TriStateFlag) TriStateFlagFromString:(NSString *)value;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "DataTransferObject.h"
 #import "RollbarLevel.h"
+#import "RollbarAppLanguage.h"
 
 @class RollbarBody;
 @class RollbarPerson;
@@ -26,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 // production environment.
 // You don't need to configure anything in the Rollbar UI for new environment names;
 // we'll detect them automatically.
-@property (nonatomic, copy) NSMutableString *environment;
+@property (nonatomic, copy) NSString *environment;
 
 // Required: body
 // The main data being sent. It can either be a message, an exception, or a crash report.
@@ -57,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 // The platform on which this occurred. Meaningful platform names:
 // "browser", "android", "ios", "flash", "client", "heroku", "google-app-engine"
 // If this is a client-side event, be sure to specify the platform and use a post_client_item access token.
-@property (nonatomic, copy) NSString *platform;
+@property (nonatomic, copy, nullable) NSString *platform;
 
 // Optional: language
 // The name of the language your code is written in.
@@ -65,55 +66,55 @@ NS_ASSUME_NONNULL_BEGIN
 // recent call first - 'ruby', 'javascript', 'php', 'java', 'objective-c', 'lua'
 // It will also change the way the individual frames are displayed, with what is most consistent with
 // users of the language.
-@property (nonatomic, copy) NSString *language; // ? enum: Objective-C or Swift (or C or C++ or Objective-C++)
+@property (nonatomic) RollbarAppLanguage language;
 
 // Optional: framework
 // The name of the framework your code uses
-@property (nonatomic, copy) NSString *framework;
+@property (nonatomic, copy, nullable) NSString *framework;
 
 // Optional: context
 // An identifier for which part of your application this event came from.
 // Items can be searched by context (prefix search)
 // For example, in a Rails app, this could be `controller#action`.
 // In a single-page javascript app, it could be the name of the current screen or route.
-@property (nonatomic, copy) NSString *context;
+@property (nonatomic, copy, nullable) NSString *context;
 
 // Optional: request
 // Data about the request this event occurred in.
-@property (nonatomic) RollbarRequest *request;
+@property (nonatomic, nullable) RollbarRequest *request;
 
 // Optional: person
 // The user affected by this event. Will be indexed by ID, username, and email.
 // People are stored in Rollbar keyed by ID. If you send a multiple different usernames/emails for the
 // same ID, the last received values will overwrite earlier ones.
-@property (nonatomic) RollbarPerson *person;
+@property (nonatomic, nullable) RollbarPerson *person;
 
 // Optional: server
 // Data about the server related to this event.
-@property (nonatomic) RollbarServer *server;
+@property (nonatomic, nullable) RollbarServer *server;
 
 // Optional: client
 // Data about the client device this event occurred on.
 // As there can be multiple client environments for a given event (i.e. Flash running inside
 // an HTML page), data should be namespaced by platform.
-@property (nonatomic) RollbarClient *client;
+@property (nonatomic, nullable) RollbarClient *client;
 
 // Optional: custom
 // Any arbitrary metadata you want to send. "custom" itself should be an object.
-@property (nonatomic) NSObject<JSONSupport> *custom;
+@property (nonatomic, nullable) NSObject<JSONSupport> *custom;
 
 // Optional: fingerprint
 // A string controlling how this occurrence should be grouped. Occurrences with the same
 // fingerprint are grouped together. See the "Grouping" guide for more information.
 // Should be a string up to 40 characters long; if longer than 40 characters, we'll use its SHA1 hash.
 // If omitted, we'll determine this on the backend.
-@property (nonatomic, copy) NSString *fingerprint;
+@property (nonatomic, copy, nullable) NSString *fingerprint;
 
 // Optional: title
 // A string that will be used as the title of the Item occurrences will be grouped into.
 // Max length 255 characters.
 // If omitted, we'll determine this on the backend.
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy, nullable) NSString *title;
 
 // Optional: uuid
 // A string, up to 36 characters, that uniquely identifies this occurrence.
@@ -123,11 +124,11 @@ NS_ASSUME_NONNULL_BEGIN
 // It is also used to detect duplicate requests. If you send the same UUID in two payloads, the second
 // one will be discarded.
 // While optional, it is recommended that all clients generate and provide this field
-@property (nonatomic) NSUUID *uuid;
+@property (nonatomic, nullable) NSUUID *uuid;
 
 // Optional: notifier
 // Describes the library used to send this event.
-@property (nonatomic) RollbarModule *notifier;
+@property (nonatomic, nullable) RollbarModule *notifier;
 
 #pragma mark - initialization
 
