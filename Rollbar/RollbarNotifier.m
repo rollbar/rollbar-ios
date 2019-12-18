@@ -15,6 +15,7 @@
 #import "RollbarPayloadTruncator.h"
 #import "RollbarCachesDirectory.h"
 
+#import "DataTransferObject+Protected.h"
 #import "RollbarPayloadDTOs.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
@@ -273,8 +274,6 @@ static BOOL isNetworkReachable = YES;
     }];
 }
 
-
-
 #pragma mark - Payload DTO builders
 
 -(RollbarPerson *)buildRollbarPerson {
@@ -288,7 +287,7 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
--(RollbarServer *)buidRollbarServer {
+-(RollbarServer *)buildRollbarServer {
     
     RollbarConfig *config = self.configuration.asRollbarConfig;
     if (config && config.server && !config.server.isEmpty) {
@@ -389,6 +388,133 @@ static BOOL isNetworkReachable = YES;
         @"ios": [self buildOSData],
     }];
 }
+
+-(RollbarModule *)buildRollbarNotifierModule {
+
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.notifier && !config.notifier.isEmpty) {
+        
+        RollbarModule *notifierModule =
+        [[RollbarModule alloc] initWithDictionary:config.notifier.jsonFriendlyData];
+        [notifierModule mergeDataDictionary:config.jsonFriendlyData];
+        return notifierModule;
+    }
+    
+    return nil;
+}
+
+-(RollbarPayload *)buildRollbarPayloadWithLevel:(RollbarLevel)level
+                                 message:(NSString*)message
+                               exception:(NSException*)exception
+                                   error:(NSError *)error
+                                   extra:(NSDictionary*)extra
+                             crashReport:(NSString*)crashReport
+                                 context:(NSString*)context {
+
+    // check critical config settings:
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (!config
+        || !config.destination
+        || !config.destination.environment
+        || config.destination.environment.length == 0) {
+        
+        return nil;
+    }
+
+    // compile payload data proper body:
+    RollbarBody *body = [RollbarBody alloc];
+    if (crashReport) {
+        body = [body initWithCrashReport:crashReport];
+    }
+    else if (error) {
+        body = [body initWithError:error];
+    }
+    else if (exception) {
+        body = [body initWithException:exception];
+    }
+    else if (message) {
+        body = [body initWithMessage:message];
+    }
+    else {
+        return nil;
+    }
+    
+    if (!body) {
+        return nil;
+    }
+    
+    // compile payload data:
+    RollbarData *data = [[RollbarData alloc] initWithEnvironment:config.destination.environment
+                                                            body:body];
+    if (!data) {
+        return nil;
+    }
+    
+    NSMutableDictionary *customData =
+        [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];
+    if (crashReport || exception) {
+        // neither crash report no exception payload objects have placeholders for any extra data
+        // or an extra message, let's preserve them as the custom data:
+        if (extra) {
+            customData[@"error.extra"] = extra;
+        }
+        if (message && message.length > 0) {
+            customData[@"error.message"] = message;
+        }
+    }
+
+    data.level = level;
+    data.language = ObjectiveC;
+    data.platform = @"client";
+    data.uuid = [NSUUID UUID];
+    data.custom = [[DataTransferObject alloc] initWithDictionary:customData];
+    data.notifier = [self buildRollbarNotifierModule];
+    data.person = [self buildRollbarPerson];
+    data.server = [self buildRollbarServer];
+    data.client = [self buildRollbarClient];
+    if (context && context.length > 0) {
+        data.context = context;
+    }
+    if (config.loggingOptions) {
+        data.framework = config.loggingOptions.framework;
+        if (config.loggingOptions.requestId
+            && (config.loggingOptions.requestId.length > 0)) {
+
+            [data mergeDataDictionary:@{@"requestId": config.loggingOptions.requestId}];
+        }
+    }
+    
+    // Transform payload data, if necessary
+    if ([self shouldIgnoreRollbarData:data]) {
+        return nil;
+    }
+    data = [self modifyRollbarData:data];
+    data = [self scrubRollbarData:data];
+
+    RollbarPayload *payload = [[RollbarPayload alloc] initWithAccessToken:config.destination.accessToken
+                                                                     data:data];
+
+    return payload;
+}
+
+-(RollbarData *)modifyRollbarData:(nonnull RollbarData *)incomingData {
+
+    //TODO: implement...
+    return incomingData;
+}
+
+-(RollbarData *)scrubRollbarData:(nonnull RollbarData *)incomingData {
+
+    //TODO: implement...
+    return incomingData;
+}
+
+-(BOOL)shouldIgnoreRollbarData:(nonnull RollbarData *)incomingData {
+
+    //TODO: implement...
+    return NO;
+}
+
 
 #pragma mark - LEGACY payload data builders
 
@@ -496,12 +622,6 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-
-
-
-
-
-
 - (NSDictionary*)buildOptionalData {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
 
@@ -521,35 +641,6 @@ static BOOL isNetworkReachable = YES;
         return data;
     }
 
-    return nil;
-}
-
-- (RollbarPayload *)buildPayloadWithLevel:(NSString*)level
-                                  message:(NSString*)message
-                                exception:(NSException*)exception
-                                    error:(NSError *)error
-                                    extra:(NSDictionary*)extra
-                              crashReport:(NSString*)crashReport
-                                  context:(NSString*)context {
-
-    RollbarBody *body = [RollbarBody alloc];
-    if (crashReport) {
-        body = [body initWithCrashReport:crashReport];
-    }
-    else if (error) {
-        body = [body initWithError:error];
-    }
-    else if (exception) {
-        body = [body initWithException:exception];
-    }
-    else if (message) {
-        body = [body initWithMessage:message];
-    }
-    else {
-        return nil;
-    }
-    
-    //TODO: complete...
     return nil;
 }
 
