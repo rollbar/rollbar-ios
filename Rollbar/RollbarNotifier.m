@@ -497,24 +497,108 @@ static BOOL isNetworkReachable = YES;
     return payload;
 }
 
+-(BOOL)shouldIgnoreRollbarData:(nonnull RollbarData *)incomingData {
+
+    BOOL shouldIgnore = NO;
+
+    // This block of code is using deprecated legacy implementation of payload check-ignore:
+    if (self.configuration.checkIgnore) {
+        @try {
+            shouldIgnore = self.configuration.checkIgnore(incomingData.jsonFriendlyData);
+            return shouldIgnore;
+        } @catch(NSException *e) {
+            SdkLog(@"checkIgnore error: %@", e.reason);
+
+            // Remove checkIgnore to prevent future exceptions
+            [self.configuration setCheckIgnoreBlock:nil];
+            return NO;
+        }
+    }
+
+    if (self.configuration.checkIgnoreRollbarData) {
+        @try {
+            shouldIgnore = self.configuration.checkIgnoreRollbarData(incomingData);
+            return shouldIgnore;
+        } @catch(NSException *e) {
+            SdkLog(@"checkIgnore error: %@", e.reason);
+
+            // Remove checkIgnore to prevent future exceptions
+            self.configuration.checkIgnoreRollbarData = nil;
+            return NO;
+        }
+    }
+
+    return shouldIgnore;
+}
+
 -(RollbarData *)modifyRollbarData:(nonnull RollbarData *)incomingData {
 
-    //TODO: implement...
+    // This block of code is using deprecated legacy implementation of payload modification:
+    if (self.configuration.payloadModification) {
+        NSMutableDictionary * jsonFriendlyMutableData = incomingData.jsonFriendlyData;
+        self.configuration.payloadModification(jsonFriendlyMutableData);
+        RollbarData *modifiedRollbarData = [[RollbarData alloc] initWithDictionary:jsonFriendlyMutableData];
+        return modifiedRollbarData;
+    }
+
+    if (self.configuration.modifyRollbarData) {
+        return self.configuration.modifyRollbarData(incomingData);
+    }
     return incomingData;
 }
 
 -(RollbarData *)scrubRollbarData:(nonnull RollbarData *)incomingData {
 
-    //TODO: implement...
-    return incomingData;
+    NSSet *scrubFieldsSet = [self getScrubFields];
+    if (!scrubFieldsSet || scrubFieldsSet.count == 0) {
+        return incomingData;
+    }
+    
+    NSMutableDictionary *mutableJsonFriendlyData = incomingData.jsonFriendlyData.mutableCopy;
+    for (NSString *key in scrubFieldsSet) {
+        if ([mutableJsonFriendlyData valueForKeyPath:key]) {
+            [self createMutablePayloadWithData:mutableJsonFriendlyData forPath:key];
+            [mutableJsonFriendlyData setValue:@"*****" forKeyPath:key];
+        }
+    }
+
+    return [[RollbarData alloc] initWithDictionary:mutableJsonFriendlyData];
 }
 
--(BOOL)shouldIgnoreRollbarData:(nonnull RollbarData *)incomingData {
-
-    //TODO: implement...
-    return NO;
+-(NSSet *)getScrubFields {
+    
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (!config
+        || !config.dataScrubber
+        || config.dataScrubber.isEmpty
+        || !config.dataScrubber.enabled
+        || !config.dataScrubber.scrubFields
+        || config.dataScrubber.scrubFields.count == 0) {
+        
+        return [NSSet set];
+    }
+    
+    NSMutableSet *actualFieldsToScrub = config.dataScrubber.scrubFields.mutableCopy;
+    if (config.dataScrubber.whitelistFields.count > 0) {
+        // actualFieldsToScrub =
+        // config.dataScrubber.scrubFields - config.dataScrubber.whitelistFields
+        // while using case insensitive field name comparison:
+        actualFieldsToScrub = [NSMutableSet new];
+        for(NSString *key in config.dataScrubber.scrubFields) {
+            BOOL isWhitelisted = false;
+            for (NSString *whiteKey in config.dataScrubber.whitelistFields) {
+                if (NSOrderedSame == [key caseInsensitiveCompare:whiteKey]) {
+                    isWhitelisted = true;
+                }
+            }
+            if (!isWhitelisted) {
+                [actualFieldsToScrub addObject:key];
+            }
+        }
+    }
+    
+    return actualFieldsToScrub;
 }
-
 
 #pragma mark - LEGACY payload data builders
 
