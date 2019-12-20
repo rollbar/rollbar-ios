@@ -65,8 +65,8 @@
 }
 
 - (void)testBasicDTOInitializationWithJSONString {
-    NSString *jsonString = @"{\"accessToken\":\"ACCESS_TOKEN\", \"data\":{\"environment\":\"ENV\"}}";
-    NSString *jsonPayload = @"{\"accessToken\":\"ACCESS_TOKEN\"}";
+    NSString *jsonString = @"{\"access_token\":\"ACCESS_TOKEN\", \"data\":{\"environment\":\"ENV\"}}";
+    NSString *jsonPayload = @"{\"access_token\":\"ACCESS_TOKEN\"}";
     NSString *jsonData = @"{\"environment\":\"ENV\"}";
 
     RollbarPayload *payloadAtOnce = [[RollbarPayload alloc] initWithJSONString:jsonString];
@@ -109,6 +109,22 @@
                   );
 
     //id result = [payload getDefinedProperties];
+}
+
+-(void)testRollbarProxyDTO {
+    BOOL proxyEnabled = NO;
+    NSUInteger proxyPort = 3000;
+    NSString *proxyUrl = @"PROXY_URL";
+    RollbarProxy *dto = [[RollbarProxy alloc] initWithEnabled:proxyEnabled proxyUrl:proxyUrl proxyPort:proxyPort];    
+    XCTAssertTrue(dto.enabled == proxyEnabled,
+                  @"Enabled."
+                  );
+    XCTAssertTrue(dto.proxyPort == proxyPort,
+                  @"Enabled."
+                  );
+    XCTAssertTrue(dto.proxyUrl == proxyUrl,
+                  @"Enabled."
+                  );
 }
 
 - (void)testRollbarScrubbingOptionsDTO {

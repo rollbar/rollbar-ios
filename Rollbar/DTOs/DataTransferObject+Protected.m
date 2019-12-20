@@ -37,7 +37,12 @@
                 else {
                     self->_data = data.mutableCopy;
                 }
-                    
+                 
+                for (NSString *key in self->_data.allKeys) {
+                    if (self->_data[key] == [NSNull null]) {
+                        [self->_data removeObjectForKey:key];
+                    }
+                }
             }
     //        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
     //            self->_data = (NSMutableDictionary *) data;
@@ -84,6 +89,7 @@
     }
     if ([DataTransferObject isTransferableDataValue:data]) {
         [self->_data setObject:data forKey:key];
+        //[self->_data setValue:data forKey:key];
     }
     else {
         @throw [NSException exceptionWithName:NSInvalidArgumentException

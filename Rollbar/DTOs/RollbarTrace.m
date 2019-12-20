@@ -98,7 +98,8 @@ static NSString * const DFK_EXCEPTION = @"exception";
         }
     }
     
-    return [self initWithRollbarException:exceptionDto rollbarCallStackFrames:frames];
+    self = [self initWithRollbarException:exceptionDto rollbarCallStackFrames:frames];
+    return self;
 }
 
 #pragma mark - Private methods

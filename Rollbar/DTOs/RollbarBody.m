@@ -64,10 +64,11 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
 
 -(instancetype)initWithException:(nonnull NSException *)exception {
     
+    RollbarTrace *trace = [[RollbarTrace alloc] initWithException:exception];
     self = [super initWithDictionary:@{
         DFK_MESSAGE: [NSNull null],
         DFK_CRASH_REPORT: [NSNull null],
-        DFK_TRACE: [[RollbarTrace alloc] initWithException:exception],
+        DFK_TRACE: trace.jsonFriendlyData,
         DFK_TRACE_CHAIN: [NSNull null],
         DFK_TELEMETRY: [self snapTelemetryData],
     }];

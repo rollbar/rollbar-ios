@@ -12,7 +12,7 @@
 
 #pragma mark - data field keys
 
-static NSString * const DFK_ACCESSTOKEN = @"accessToken";
+static NSString * const DFK_ACCESSTOKEN = @"access_token";
 static NSString * const DFK_DATA = @"data";
 
 @implementation RollbarPayload

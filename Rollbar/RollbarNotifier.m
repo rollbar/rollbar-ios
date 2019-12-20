@@ -152,14 +152,22 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)logCrashReport:(NSString*)crashReport {
-    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel
-                                                message:nil
-                                              exception:nil
-                                                  extra:nil
-                                            crashReport:crashReport
-                                                context:nil];
+//    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel
+//                                                message:nil
+//                                              exception:nil
+//                                                  extra:nil
+//                                            crashReport:crashReport
+//                                                context:nil];
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:config.loggingOptions.crashLevel
+                                                         message:nil
+                                                       exception:nil
+                                                           error:nil
+                                                           extra:nil
+                                                     crashReport:crashReport
+                                                         context:nil];
     if (payload) {
-        [self queuePayload:payload];
+        [self queuePayload:payload.jsonFriendlyData];
     }
 }
 
@@ -173,20 +181,34 @@ static BOOL isNetworkReachable = YES;
         return;
     }
     
+//    RollbarLevel rollbarLevel = RollbarLevelFromString(level);
+//    if (rollbarLevel < [self getRollbarLevel]) {
+//        return;
+//    }
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    
     RollbarLevel rollbarLevel = RollbarLevelFromString(level);
-    if (rollbarLevel < [self.configuration getRollbarLevel]) {
+    if (rollbarLevel < config.loggingOptions.logLevel) {
         return;
     }
 
-    NSDictionary *payload = [self buildPayloadWithLevel:level
-                                                message:message
-                                              exception:exception
-                                                  extra:data
-                                            crashReport:nil
-                                                context:context
-                             ];
+//    NSDictionary *payload = [self buildPayloadWithLevel:level
+//                                                message:message
+//                                              exception:exception
+//                                                  extra:data
+//                                            crashReport:nil
+//                                                context:context
+//                             ];
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:rollbarLevel
+                                                         message:message
+                                                       exception:exception
+                                                           error:nil
+                                                           extra:data
+                                                     crashReport:nil
+                                                         context:context
+                               ];
     if (payload) {
-        [self queuePayload:payload];
+        [self queuePayload:payload.jsonFriendlyData];
     }
 }
 
@@ -395,8 +417,8 @@ static BOOL isNetworkReachable = YES;
     if (config && config.notifier && !config.notifier.isEmpty) {
         
         RollbarModule *notifierModule =
-        [[RollbarModule alloc] initWithDictionary:config.notifier.jsonFriendlyData];
-        [notifierModule mergeDataDictionary:config.jsonFriendlyData];
+        [[RollbarModule alloc] initWithDictionary:config.notifier.jsonFriendlyData.copy];
+        [notifierModule setData:config.jsonFriendlyData byKey:@"configured_options"];
         return notifierModule;
     }
     
@@ -480,7 +502,7 @@ static BOOL isNetworkReachable = YES;
         if (config.loggingOptions.requestId
             && (config.loggingOptions.requestId.length > 0)) {
 
-            [data mergeDataDictionary:@{@"requestId": config.loggingOptions.requestId}];
+            [data setData:config.loggingOptions.requestId byKey:@"requestId"];
         }
     }
     
@@ -898,10 +920,14 @@ static BOOL isNetworkReachable = YES;
     NSFileHandle *fileHandle =
     [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
+    NSError *error = nil;
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload
                                                           options:0
-                                                            error:nil
+                                                            error:&error
                                                              safe:true]];
+    if (error) {
+        SdkLog(@"Error: %@", [error localizedDescription]);
+    }
     [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandle closeFile];
     [[RollbarTelemetry sharedInstance] clearAllData];

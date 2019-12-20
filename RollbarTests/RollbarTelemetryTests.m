@@ -29,6 +29,8 @@
 - (void)doNothing {}
 
 - (void)testTelemetryCapture {
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
+    
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"from" to:@"to"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"status"];
     [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"method" url:@"url" statusCode:@"status_code"];
@@ -70,6 +72,8 @@
 }
 
 - (void)testErrorReportingWithTelemetry {
+//    Rollbar.currentConfiguration.telemetryEnabled = YES;
+
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"SomeNavigationSource" to:@"SomeNavigationDestination"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"SomeConnectivityStatus"];
     [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"POST" url:@"www.myservice.com" statusCode:@"200"];
@@ -78,8 +82,41 @@
                                                                                      reason:@"someExceptionReason"
                                                                                    userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"myTelemetryParameter": @"itsValue"}];
+    
     [Rollbar debug:@"Demonstrate Telemetry capture"];
     [Rollbar debug:@"Demonstrate Telemetry capture once more..."];
+    
+//    NSArray *logItems = RollbarReadLogItemFromFile();
+//    NSDictionary *item = logItems[0];
+//    for (NSDictionary *item in logItems) {
+//        NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
+//
+//        for (NSDictionary *data in telemetryData) {
+//            NSDictionary *body = data[@"body"];
+//            NSString *type = data[@"type"];
+//            if ([type isEqualToString:@"error"]) {
+//                if ([data[@"level"] isEqualToString:@"debug"]) {
+//                    XCTAssertTrue([body[@"message"] isEqualToString:@"test"]);
+//                } else if ([data[@"level"] isEqualToString:@"error"]) {
+//                    XCTAssertTrue([body[@"class"] isEqualToString:NSStringFromClass([NSException class])]);
+//                    XCTAssertTrue([body[@"description"] isEqualToString:@"reason"]);
+//                    XCTAssertTrue([body[@"message"] isEqualToString:@"reason"]);
+//                }
+//            } else if ([type isEqualToString:@"navigation"]) {
+//                XCTAssertTrue([body[@"from"] isEqualToString:@"from"]);
+//                XCTAssertTrue([body[@"to"] isEqualToString:@"to"]);
+//            } else if ([type isEqualToString:@"connectivity"]) {
+//                XCTAssertTrue([body[@"change"] isEqualToString:@"status"]);
+//            } else if ([type isEqualToString:@"network"]) {
+//                XCTAssertTrue([body[@"method"] isEqualToString:@"method"]);
+//                XCTAssertTrue([body[@"status_code"] isEqualToString:@"status_code"]);
+//                XCTAssertTrue([body[@"url"] isEqualToString:@"url"]);
+//            } else if ([type isEqualToString:@"manual"]) {
+//                XCTAssertTrue([body[@"data"] isEqualToString:@"content"]);
+//            }
+//        }
+//    }
+
 }
 
 - (void)testTelemetryViewEventScrubbing {

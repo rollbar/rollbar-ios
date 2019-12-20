@@ -21,7 +21,7 @@ static NSString *const DEFAULT_CODE_VERSION = @"n.n.n";
 static NSString * const DFK_HOST = @"host";
 static NSString * const DFK_ROOT = @"root";
 static NSString * const DFK_BRANCH = @"branch";
-static NSString * const DFK_CODE_VERSION = @"codeVersion";
+static NSString * const DFK_CODE_VERSION = @"code_version";
 
 #pragma mark - class implementation
 
