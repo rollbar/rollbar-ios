@@ -10,9 +10,9 @@
 #import "RollbarDTOAbstraction.h"
 
 // app domain enums:
+#import "TriStateFlag.h"
 #import "CaptureIpType.h"
 #import "HttpMethod.h"
-#import "TriStateFlag.h"
 #import "RollbarAppLanguage.h"
 
 // DTO types:
@@ -39,5 +39,4 @@
 #import "RollbarServer.h"
 #import "RollbarClient.h"
 #import "RollbarJavascript.h"
-
 

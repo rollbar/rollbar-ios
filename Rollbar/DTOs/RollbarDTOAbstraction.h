@@ -9,5 +9,5 @@
 #import "JSONSupport.h"
 #import "Persistent.h"
 #import "DataTransferObject.h"
-
+#import "DataTransferObject+CustomData.h"
 

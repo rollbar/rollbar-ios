@@ -25,9 +25,10 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
-**1.10.1**
+**1.11.0**
 - feat: resolve #220: Implement payload data structure as a DTO.
 - feat: resolve #222: Integrate the new payload DTOs.
+- chore: resolve #223: Update SDK's public headers.
 - fix: ref #221: Fix initialization DeployApiCallResult DTOs based on the HTTP responses.
 - chore: codebase cleanup, extra code comments, cleaning up #imports, etc.
 
