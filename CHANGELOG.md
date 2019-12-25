@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.11.1**
+- fix: resolve #225: Fix cocopods' podspec
+
 **1.11.0**
 - feat: resolve #220: Implement payload data structure as a DTO.
 - feat: resolve #222: Integrate the new payload DTOs.
