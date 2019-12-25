@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "../Rollbar/RollbarLevel.h"
 #import "../Rollbar/DTOs/RollbarPayload.h"
 #import "../Rollbar/DTOs/RollbarData.h"
 #import "../Rollbar/DTOs/RollbarConfig.h"
@@ -14,14 +15,28 @@
 #import "../Rollbar/DTOs/RollbarDeveloperOptions.h"
 #import "../Rollbar/DTOs/RollbarProxy.h"
 #import "../Rollbar/DTOs/RollbarScrubbingOptions.h"
-#import "../Rollbar/DTOs/RollbarServer.h"
+#import "../Rollbar/DTOs/RollbarServerConfig.h"
 #import "../Rollbar/DTOs/RollbarPerson.h"
 #import "../Rollbar/DTOs/RollbarModule.h"
 #import "../Rollbar/DTOs/RollbarTelemetryOptions.h"
 #import "../Rollbar/DTOs/RollbarLoggingOptions.h"
 #import "../Rollbar/DTOs/CaptureIpType.h"
-#import "../Rollbar/RollbarLevel.h"
+#import "../Rollbar/DTOs/RollbarPayload.h"
+#import "../Rollbar/DTOs/RollbarData.h"
+#import "../Rollbar/DTOs/RollbarBody.h"
+#import "../Rollbar/DTOs/RollbarJavascript.h"
+#import "../Rollbar/DTOs/RollbarClient.h"
+#import "../Rollbar/DTOs/RollbarServer.h"
+#import "../Rollbar/DTOs/RollbarRequest.h"
+#import "../Rollbar/DTOs/RollbarException.h"
+#import "../Rollbar/DTOs/RollbarCallStackFrameContext.h"
+#import "../Rollbar/DTOs/RollbarCallStackFrame.h"
+#import "../Rollbar/DTOs/RollbarTrace.h"
 
+
+#import "../Rollbar/DTOs/RollbarMessage.h"
+#import "../Rollbar/DTOs/RollbarCrashReport.h"
+#import "../Rollbar/DTOs/RollbarBody.h"
 
 @interface DTOsTests : XCTestCase
 
@@ -50,8 +65,8 @@
 }
 
 - (void)testBasicDTOInitializationWithJSONString {
-    NSString *jsonString = @"{\"accessToken\":\"ACCESS_TOKEN\", \"data\":{\"environment\":\"ENV\"}}";
-    NSString *jsonPayload = @"{\"accessToken\":\"ACCESS_TOKEN\"}";
+    NSString *jsonString = @"{\"access_token\":\"ACCESS_TOKEN\", \"data\":{\"environment\":\"ENV\"}}";
+    NSString *jsonPayload = @"{\"access_token\":\"ACCESS_TOKEN\"}";
     NSString *jsonData = @"{\"environment\":\"ENV\"}";
 
     RollbarPayload *payloadAtOnce = [[RollbarPayload alloc] initWithJSONString:jsonString];
@@ -96,6 +111,22 @@
     //id result = [payload getDefinedProperties];
 }
 
+-(void)testRollbarProxyDTO {
+    BOOL proxyEnabled = NO;
+    NSUInteger proxyPort = 3000;
+    NSString *proxyUrl = @"PROXY_URL";
+    RollbarProxy *dto = [[RollbarProxy alloc] initWithEnabled:proxyEnabled proxyUrl:proxyUrl proxyPort:proxyPort];    
+    XCTAssertTrue(dto.enabled == proxyEnabled,
+                  @"Enabled."
+                  );
+    XCTAssertTrue(dto.proxyPort == proxyPort,
+                  @"Enabled."
+                  );
+    XCTAssertTrue(dto.proxyUrl == proxyUrl,
+                  @"Enabled."
+                  );
+}
+
 - (void)testRollbarScrubbingOptionsDTO {
     RollbarScrubbingOptions *dto = [[RollbarScrubbingOptions alloc] initWithScrubFields:@[@"field1", @"field2"]];
     XCTAssertTrue(dto.enabled,
@@ -119,12 +150,12 @@
                   );
 }
 
-- (void)testRollbarServerDTO {
-    RollbarServer *dto = [[RollbarServer alloc] initWithHost:@"HOST"
-                                                        root:@"ROOT"
-                                                      branch:@"BRANCH"
-                                                 codeVersion:@"1.2.3"
-                          ];
+- (void)testRollbarServerConfigDTO {
+    RollbarServerConfig *dto = [[RollbarServerConfig alloc] initWithHost:@"HOST"
+                                                                    root:@"ROOT"
+                                                                  branch:@"BRANCH"
+                                                             codeVersion:@"1.2.3"
+                                ];
     XCTAssertTrue(NSOrderedSame == [dto.host compare:@"HOST"],
                   @"Proper host"
                   );
@@ -188,12 +219,12 @@
     XCTAssertTrue(NSOrderedSame == [dto.ID compare:@"ID007"],
                   @"Proper ID"
                   );
-    XCTAssertTrue([dto.username isEqualToString:@""],
-                  @"Proper default username"
-                  );
-    XCTAssertTrue([dto.email isEqualToString:@""],
-                  @"Proper default email"
-                  );
+    XCTAssertNil(dto.username,
+                 @"Proper default username"
+                 );
+    XCTAssertNil(dto.email,
+                 @"Proper default email"
+                 );
 }
 
 - (void)testRollbarModuleDTO {
@@ -220,9 +251,9 @@
     XCTAssertTrue([dto.name isEqualToString:@"Module"],
                   @"Proper name"
                   );
-    XCTAssertTrue([dto.version isEqualToString:@""],
-                  @"Proper version"
-                  );
+    XCTAssertNil(dto.version,
+                 @"Proper version"
+                 );
 }
 
 - (void)testRollbarTelemetryOptionsDTO {
@@ -321,15 +352,15 @@
     XCTAssertTrue(dto.captureIp == CaptureIpFull,
                   @"Proper default capture IP"
                   );
-    XCTAssertTrue([dto.codeVersion isEqualToString:@""],
-                  @"Proper default code version"
-                  );
+    XCTAssertNil(dto.codeVersion,
+                 @"Proper default code version"
+                 );
     XCTAssertTrue([dto.framework isEqualToString:@"macos"] || [dto.framework isEqualToString:@"ios"],
                   @"Proper default framework"
                   );
-    XCTAssertTrue([dto.requestId isEqualToString:@""],
-                  @"Proper request ID"
-                  );
+    XCTAssertNil(dto.requestId,
+                 @"Proper request ID"
+                 );
 }
 
 
@@ -377,6 +408,333 @@
     XCTAssertTrue([rcClone isEqual:[[RollbarConfig alloc] initWithJSONString:[rcClone serializeToJSONString]]],
                   @"Two DTOs (clone and its clone) are expected to be equal"
                   );
+}
+
+- (void)testRollbarMessageDTO {
+    NSString *messageBody = @"Test message";
+    RollbarMessage *dto = [[RollbarMessage alloc] initWithBody:messageBody];
+    XCTAssertEqual(messageBody, dto.body);
+    
+    NSError *error = [NSError errorWithDomain:@"ERROR_DOMAIN" code:100 userInfo:nil];
+    dto = [[RollbarMessage alloc] initWithNSError:error];
+    XCTAssertNotNil(dto);
+    XCTAssertTrue([dto.body containsString:@"ERROR_DOMAIN"]);
+    XCTAssertTrue([dto.body containsString:@"100"]);
+}
+
+- (void)testMessageRollbarBodyDTO {
+    NSString *message = @"Test message";
+    RollbarBody *dto = [[RollbarBody alloc] initWithMessage:message];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.message);
+    XCTAssertNotNil(dto.message.body);
+    XCTAssertEqual(message, dto.message.body);
+    XCTAssertNil(dto.crashReport);
+    XCTAssertNil(dto.trace);
+    XCTAssertNil(dto.traceChain);
+}
+
+- (void)testCrashReportRollbarBodyDTO {
+    NSString *data = @"RAW_CRASH_REPORT_CONTENT";
+    RollbarBody *dto = [[RollbarBody alloc] initWithCrashReport:data];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.crashReport);
+    XCTAssertNotNil(dto.crashReport.rawCrashReport);
+    XCTAssertEqual(data, dto.crashReport.rawCrashReport);
+    XCTAssertNil(dto.message);
+    XCTAssertNil(dto.trace);
+    XCTAssertNil(dto.traceChain);
+}
+
+- (void)testRollbarJavascriptDTO {
+    NSString *browser = @"BROWSER";
+    NSString *codeVersion = @"CODE_VERSION";
+    TriStateFlag sourceMapsEnabled = On;
+    TriStateFlag guessUncaughtExceptionFrames = Off;
+    
+    RollbarJavascript *dto = [[RollbarJavascript alloc] initWithBrowser:browser
+                                                            codeVersion:nil
+                                                       sourceMapEnabled:sourceMapsEnabled
+                                                    guessUncaughtFrames:guessUncaughtExceptionFrames];    
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.browser);
+    XCTAssertNil(dto.codeVersion);
+    XCTAssertEqual(browser, dto.browser);
+    XCTAssertEqual(sourceMapsEnabled, dto.sourceMapEnabled);
+    XCTAssertEqual(guessUncaughtExceptionFrames, dto.guessUncaughtFrames);
+
+    dto.codeVersion = codeVersion;
+    XCTAssertNotNil(dto.codeVersion);
+    XCTAssertEqual(codeVersion, dto.codeVersion);
+}
+
+- (void)testRollbarClientDTO {
+    NSString *browser = @"BROWSER";
+    NSString *codeVersion = @"CODE_VERSION";
+    TriStateFlag sourceMapsEnabled = On;
+    TriStateFlag guessUncaughtExceptionFrames = Off;
+    
+    RollbarJavascript *dtoJavascript = [[RollbarJavascript alloc] initWithBrowser:browser
+                                                            codeVersion:codeVersion
+                                                       sourceMapEnabled:sourceMapsEnabled
+                                                    guessUncaughtFrames:guessUncaughtExceptionFrames];
+    NSString *cpu = @"CPU";
+    RollbarClient *dto = [[RollbarClient alloc] initWithCpu:cpu javaScript:dtoJavascript];
+    
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.cpu);
+    XCTAssertEqual(cpu, dto.cpu);
+    XCTAssertNotNil(dto.javaScript);
+    XCTAssertEqual(browser, dto.javaScript.browser);
+    XCTAssertEqual(sourceMapsEnabled, dto.javaScript.sourceMapEnabled);
+    XCTAssertEqual(guessUncaughtExceptionFrames, dto.javaScript.guessUncaughtFrames);
+    XCTAssertEqual(codeVersion, dto.javaScript.codeVersion);
+}
+
+- (void)testRollbarServerDTO {
+    NSString *cpu = @"CPU";
+    NSString *host = @"HOST";
+    NSString *root = @"ROOT";
+    NSString *branch = @"BRANCH";
+    NSString *codeVersion = nil;
+
+    RollbarServer *dto = [[RollbarServer alloc] initWithCpu:cpu
+                                                       host:host
+                                                       root:root
+                                                     branch:branch
+                                                codeVersion:codeVersion];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.cpu);
+    XCTAssertNotNil(dto.host);
+    XCTAssertNotNil(dto.root);
+    XCTAssertNotNil(dto.branch);
+    XCTAssertNil(dto.codeVersion);
+
+    XCTAssertEqual(cpu, dto.cpu);
+    XCTAssertEqual(host, dto.host);
+    XCTAssertEqual(root, dto.root);
+    XCTAssertEqual(branch, dto.branch);
+    XCTAssertEqual(codeVersion, dto.codeVersion);
+}
+
+- (void)testRollbarRequestDTO {
+    HttpMethod method = Get;
+    NSDictionary *headers = @{@"HEADER_1":@"HEADER1", @"HEADER_2":@"HEADER2"};
+    NSDictionary *params = @{@"PARAM_1":@"PARAM1", @"PARAM_2":@"PARAM2"};
+    NSDictionary *getParams = @{@"GET_PARAM_1":@"GETPARAM1", @"GET_PARAM_2":@"GETPARAM2"};
+    NSDictionary *postParams = nil;
+    NSString *url = @"URL";
+    NSString *queryString = @"QUERYSTRING";
+    NSString *postBody = nil;
+    NSString *userIP = @"USERIP";
+
+    RollbarRequest *dto = [[RollbarRequest alloc] initWithHttpMethod:method
+                                                                 url:url
+                                                             headers:headers
+                                                              params:params
+                                                         queryString:queryString
+                                                           getParams:getParams
+                                                          postParams:postParams
+                                                            postBody:postBody
+                                                              userIP:userIP];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.headers);
+    XCTAssertNotNil(dto.params);
+    XCTAssertNotNil(dto.getParams);
+    XCTAssertNil(dto.postParams);
+    XCTAssertNotNil(dto.url);
+    XCTAssertNotNil(dto.queryString);
+    XCTAssertNil(dto.postBody);
+    XCTAssertNotNil(dto.userIP);
+
+    XCTAssertEqual(dto.method, method);
+    XCTAssertEqual(dto.headers, headers);
+    XCTAssertEqual(dto.params, params);
+    XCTAssertEqual(dto.getParams, getParams);
+    XCTAssertEqual(dto.postParams, postParams);
+    XCTAssertEqual(dto.url, url);
+    XCTAssertEqual(dto.queryString, queryString);
+    XCTAssertEqual(dto.postBody, postBody);
+    XCTAssertEqual(dto.userIP, userIP);
+}
+
+- (void)testRollbarExceptionDTO {
+    NSString *exceptionClass = @"EXCEPTION_CLASS";
+    NSString *exceptionMessage = @"EXCEPTIION_MESSAGE";
+    NSString *exceptionDescription = nil;
+
+    RollbarException *dto = [[RollbarException alloc] initWithExceptionClass:exceptionClass
+                                                            exceptionMessage:exceptionMessage
+                                                        exceptionDescription:exceptionDescription];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.exceptionClass);
+    XCTAssertNotNil(dto.exceptionMessage);
+    XCTAssertNil(dto.exceptionDescription);
+
+    XCTAssertEqual(dto.exceptionClass, exceptionClass);
+    XCTAssertEqual(dto.exceptionMessage, exceptionMessage);
+    XCTAssertEqual(dto.exceptionDescription, exceptionDescription);
+}
+
+- (void)testRollbarCallStackFrameContextDTO {
+    NSArray<NSString *> *pre = @[@"CODE_PR1", @"CODE_PR2"];
+    NSArray<NSString *> *post = nil;
+
+    RollbarCallStackFrameContext *dto = [[RollbarCallStackFrameContext alloc] initWitPreCodeLines:pre
+                                                                                    postCodeLines:post];
+    
+    XCTAssertNotNil(dto);
+
+    XCTAssertNotNil(dto.preCodeLines);
+    XCTAssertNil(dto.postCodeLines);
+
+    XCTAssertEqual(dto.preCodeLines.count, 2);
+    XCTAssertTrue([dto.preCodeLines containsObject:pre[0]]);
+    XCTAssertTrue([dto.preCodeLines containsObject:pre[1]]);
+}
+
+- (void)testRollbarCallStackFrameDTO {
+    NSString *filename = @"FILENAME";
+
+    NSString *className = @"CLASSNAME";
+    NSString *code = @"CODE";
+    NSString *method = @"METHOD";
+
+    NSNumber *colno = @111;
+    NSNumber *lineno = @222;
+    
+    NSArray<NSString *> *pre = @[@"CODE_PR1", @"CODE_PR2"];
+    NSArray<NSString *> *post = nil;
+    RollbarCallStackFrameContext *codeContext = [[RollbarCallStackFrameContext alloc] initWitPreCodeLines:pre
+                                                                                            postCodeLines:post];
+    XCTAssertNotNil(codeContext);
+    XCTAssertNotNil(codeContext.preCodeLines);
+    XCTAssertNil(codeContext.postCodeLines);
+    XCTAssertEqual(codeContext.preCodeLines.count, 2);
+    XCTAssertTrue([codeContext.preCodeLines containsObject:pre[0]]);
+    XCTAssertTrue([codeContext.preCodeLines containsObject:pre[1]]);
+
+    NSDictionary *locals  = @{
+        @"VAR1": @"VAL1",
+        @"VAR2": @"VAL2",
+    };
+
+    NSArray<NSString *> *argspec = @[];
+    NSArray<NSString *> *varargspec = @[@"VARARG1"];
+    NSArray<NSString *> *keywordspec = @[@"KW1", @"KW2"];
+    
+    RollbarCallStackFrame *dto = [[RollbarCallStackFrame alloc] initWithFileName:filename];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.filename);
+    XCTAssertEqual(dto.filename, filename);
+
+    XCTAssertNil(dto.className);
+    XCTAssertNil(dto.code);
+    XCTAssertNil(dto.method);
+    dto.className = className;
+    dto.code = code;
+    dto.method = method;
+    XCTAssertNotNil(dto.className);
+    XCTAssertNotNil(dto.code);
+    XCTAssertNotNil(dto.method);
+    XCTAssertEqual(dto.className, className);
+    XCTAssertEqual(dto.code, code);
+    XCTAssertEqual(dto.method, method);
+
+    XCTAssertNil(dto.colno);
+    XCTAssertNil(dto.lineno);
+    dto.colno = colno;
+    dto.lineno = lineno;
+    XCTAssertNotNil(dto.colno);
+    XCTAssertNotNil(dto.lineno);
+    XCTAssertEqual(dto.colno, colno);
+    XCTAssertEqual(dto.lineno, lineno);
+
+    XCTAssertNil(dto.context);
+    dto.context = codeContext;
+    XCTAssertNotNil(dto.context);
+    XCTAssertEqual(dto.context.preCodeLines.count, codeContext.preCodeLines.count);
+    XCTAssertTrue([dto.context.preCodeLines containsObject:pre[0]]);
+    XCTAssertTrue([dto.context.preCodeLines containsObject:pre[1]]);
+    XCTAssertNil(dto.context.postCodeLines);
+    
+    XCTAssertNil(dto.locals);
+    dto.locals = locals;
+    XCTAssertNotNil(dto.locals);
+    XCTAssertEqual(dto.locals.count, locals.count);
+
+    XCTAssertNil(dto.argspec);
+    dto.argspec = argspec;
+    XCTAssertNotNil(dto.argspec);
+    XCTAssertEqual(dto.argspec.count, argspec.count);
+    
+    XCTAssertNil(dto.varargspec);
+    dto.varargspec = varargspec;
+    XCTAssertNotNil(dto.varargspec);
+    XCTAssertEqual(dto.varargspec.count, varargspec.count);
+
+    XCTAssertNil(dto.keywordspec);
+    dto.keywordspec = keywordspec;
+    XCTAssertNotNil(dto.keywordspec);
+    XCTAssertEqual(dto.keywordspec.count, keywordspec.count);
+    
+}
+
+- (void)testRollbarTraceDTO {
+    
+    NSString *exceptionClass = @"EXCEPTION_CLASS";
+    NSString *exceptionMessage = @"EXCEPTIION_MESSAGE";
+    NSString *exceptionDescription = nil;
+
+    RollbarException *exceptionDto = [[RollbarException alloc] initWithExceptionClass:exceptionClass
+                                                                     exceptionMessage:exceptionMessage
+                                                                 exceptionDescription:exceptionDescription];
+
+    NSString *filename = @"FILENAME";
+    NSString *className = @"CLASSNAME";
+    NSString *code = @"CODE";
+    NSString *method = @"METHOD";
+    NSNumber *colno = @111;
+    NSNumber *lineno = @222;
+    NSArray<NSString *> *pre = @[@"CODE_PR1", @"CODE_PR2"];
+    NSArray<NSString *> *post = nil;
+    RollbarCallStackFrameContext *codeContext = [[RollbarCallStackFrameContext alloc] initWitPreCodeLines:pre
+                                                                                            postCodeLines:post];
+    NSDictionary *locals  = @{
+        @"VAR1": @"VAL1",
+        @"VAR2": @"VAL2",
+    };
+    NSArray<NSString *> *argspec = @[];
+    NSArray<NSString *> *varargspec = @[@"VARARG1"];
+    NSArray<NSString *> *keywordspec = @[@"KW1", @"KW2"];
+    
+    RollbarCallStackFrame *frameDto = [[RollbarCallStackFrame alloc] initWithFileName:filename];
+    frameDto.className = className;
+    frameDto.code = code;
+    frameDto.method = method;
+    frameDto.colno = colno;
+    frameDto.lineno = lineno;
+    frameDto.context = codeContext;
+    frameDto.locals = locals;
+    frameDto.argspec = argspec;
+    frameDto.varargspec = varargspec;
+    frameDto.keywordspec = keywordspec;
+    
+    RollbarTrace *dto = [[RollbarTrace alloc] initWithRollbarException:exceptionDto
+                                                rollbarCallStackFrames:@[frameDto, frameDto]];
+    XCTAssertNotNil(dto);
+    XCTAssertNotNil(dto.exception);
+    XCTAssertNotNil(dto.frames);
+    XCTAssertEqual(dto.exception.exceptionClass, exceptionClass);
+    XCTAssertEqual(dto.frames.count, 2);
+    XCTAssertEqual(dto.frames[0].filename, filename);
+    XCTAssertEqual(dto.frames[1].filename, filename);
 }
 
 @end

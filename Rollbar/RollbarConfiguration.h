@@ -5,6 +5,7 @@
 #import "CaptureIpType.h"
 
 @class RollbarConfig;
+@class RollbarData;
 
 @interface RollbarConfiguration : NSObject
 
@@ -89,12 +90,15 @@
 
 
 #pragma mark - Payload processing callbacks
-// Decides whether or not to send payload. Returns true to ignore, false to send
-@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
-- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
-// Modify payload
-@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
-- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
+
+// Decides whether or not to send provided payload data. Returns true to ignore, false to send
+@property (nonatomic, copy) BOOL (^checkIgnoreRollbarData)(RollbarData *rollbarData);
+// Modify payload data
+@property (nonatomic, copy) RollbarData *(^modifyRollbarData)(RollbarData *rollbarData);
+
+#pragma mark - DEPRECATED Payload processing callbacks
+
+
 
 #pragma mark - Convenience Methods
 
@@ -110,9 +114,17 @@
 - (void)setNotifierName:(NSString *)name
                 version:(NSString *)version;
 
-#pragma mark - Deprecated
+#pragma mark - DEPRECATED
 
 /// START Deprecated
+
+// Decides whether or not to send payload. Returns true to ignore, false to send
+@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
+// Modify payload
+@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
+- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
+
 - (void)setRollbarLevel:(RollbarLevel)level;
 - (RollbarLevel)getRollbarLevel;
 

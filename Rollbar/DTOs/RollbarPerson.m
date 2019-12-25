@@ -26,78 +26,68 @@ static NSString * const DFK_EMAIL = @"email";
 
 #pragma mark - initializers
 
-- (id)initWithID:(NSString *)ID
-        username:(NSString *)username
-           email:(NSString *)email {
+- (instancetype)initWithID:(nonnull NSString *)ID
+        username:(nullable NSString *)username
+           email:(nullable NSString *)email {
     
-    self = [super init];
-    if (self) {
-        self.ID = ID;
-        self.username = username;
-        self.email = email;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ID:ID ? ID : [NSNull null],
+        DFK_USERNAME:username ? username : [NSNull null],
+        DFK_EMAIL:email ? email : [NSNull null]
+    }];
     return self;
 }
 
-- (id)initWithID:(NSString *)ID
+- (instancetype)initWithID:(nonnull NSString *)ID
         username:(NSString *)username {
     
-    return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     ID, DFK_ID,
-                                     username, DFK_USERNAME,
-                                     DEFAULT_EMAIL, DFK_EMAIL,
-                                     nil]
+    return [self initWithID:ID
+                   username:username
+                      email:DEFAULT_EMAIL
             ];
 }
 
-- (id)initWithID:(NSString *)ID
+- (instancetype)initWithID:(nonnull NSString *)ID
            email:(NSString *)email {
     
-    return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     ID, DFK_ID,
-                                     DEFAULT_USERNAME, DFK_USERNAME,
-                                     email, DFK_EMAIL,
-                                     nil]
+    return [self initWithID:ID
+                   username:DEFAULT_USERNAME
+                      email:email
             ];
 }
 
-- (id)initWithID:(NSString *)ID {
+- (instancetype)initWithID:(nonnull NSString *)ID {
     
-    return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     ID, DFK_ID,
-                                     DEFAULT_USERNAME, DFK_USERNAME,
-                                     DEFAULT_EMAIL, DFK_EMAIL,
-                                     nil]
+    return [self initWithID:ID
+                   username:DEFAULT_USERNAME
+                      email:DEFAULT_EMAIL
             ];
 }
 
 #pragma mark - property accessors
 
 - (NSString *)ID {
-    NSString *result = [self safelyGetStringByKey:DFK_ID];
-    return result;
+    return [self getDataByKey:DFK_ID];
 }
 
 - (void)setID:(NSString *)value {
-    [self setString:value forKey:DFK_ID];
+    [self setData:value byKey:DFK_ID];
 }
 
 - (NSString *)username {
-    NSString *result = [self safelyGetStringByKey:DFK_USERNAME];
-    return result;
+    return [self getDataByKey:DFK_USERNAME];
 }
 
 - (void)setUsername:(NSString *)value {
-    [self setString:value forKey:DFK_USERNAME];
+    [self setData:value byKey:DFK_USERNAME];
 }
 
 - (NSString *)email {
-    NSString *result = [self safelyGetStringByKey:DFK_EMAIL];
-    return result;
+    return [self getDataByKey:DFK_EMAIL];
 }
 
 - (void)setEmail:(NSString *)value {
-    [self setString:value forKey:DFK_EMAIL];
+    [self setData:value byKey:DFK_EMAIL];
 }
 
 @end

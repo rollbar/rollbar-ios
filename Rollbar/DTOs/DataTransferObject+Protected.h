@@ -7,6 +7,7 @@
 //
 
 #import "DataTransferObject.h"
+#import "TriStateFlag.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,9 +16,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Initializers
 
-/// Initializes a DTO with data from a dictionary
-/// @param data the dictionary
-- (id)initWithDictionary: (NSDictionary *)data;
+- (instancetype)initWithJSONData:(NSData *)data;
+- (instancetype)initWithDictionary:(NSDictionary *)data;
+- (instancetype)initWithArray:(NSArray *)data;
+
+#pragma mark - Core API: transferable data getter/setter by key
+
+/// Gets a transferrable data object (or nil) by its key.
+/// @param key the data key
+- (nullable id)getDataByKey:(nonnull NSString *)key;
+/// Sets transferrable data by its key
+/// @param data the transferable data (or nil)
+/// @param key the data key
+- (void)setData:(nullable id)data byKey:(nonnull NSString *)key;
+
+/// Merges given data dictionary into the underlaying data dictioanry
+/// @param data data dictionary to append
+- (void)mergeDataDictionary:(nonnull NSDictionary *)data;
 
 #pragma mark - Core API: safe data getters by key
 
@@ -36,6 +51,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setNumber:(NSNumber *)data forKey:(NSString *)key;
 
 #pragma mark - Convenience API
+
+- (TriStateFlag)safelyGetTriStateFlagByKey:(NSString *)key;
+- (void)setTriStateFlag:(TriStateFlag)data forKey:(NSString *)key;
 
 - (BOOL)safelyGetBoolByKey:(NSString *)key;
 - (void)setBool:(BOOL)data forKey:(NSString *)key;

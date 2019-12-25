@@ -2,84 +2,65 @@
 //  RollbarServer.m
 //  Rollbar
 //
-//  Created by Andrey Kornich on 2019-10-24.
+//  Created by Andrey Kornich on 2019-12-02.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
 #import "RollbarServer.h"
 #import "DataTransferObject+Protected.h"
 
-#pragma mark - constants
-
-static NSString *const DEFAULT_HOST = @"unknown";
-static NSString *const DEFAULT_ROOT = @"/";
-static NSString *const DEFAULT_BRANCH = @"unknown";
-static NSString *const DEFAULT_CODE_VERSION = @"n.n.n";
-
-#pragma mark - data field keys
-
-static NSString * const DFK_HOST = @"host";
-static NSString * const DFK_ROOT = @"root";
-static NSString * const DFK_BRANCH = @"branch";
-static NSString * const DFK_CODE_VERSION = @"codeVersion";
-
-#pragma mark - class implementation
+static NSString *const DFK_CPU = @"cpu";
 
 @implementation RollbarServer
 
-#pragma mark - initializers
+#pragma mark - Properies
 
-- (id)initWithHost:(NSString *)host
-              root:(NSString *)root
-            branch:(NSString *)branch
-       codeVersion:(NSString *)codeVersion {
+-(nullable NSString *)cpu {
+    return [self getDataByKey:DFK_CPU];
+}
+
+-(void)setCpu:(nullable NSString *)cpu {
+    [self setData:cpu byKey:DFK_CPU];
+}
+
+#pragma mark - Initializers
+
+- (instancetype)initWithCpu:(nullable NSString *)cpu
+                       host:(nullable NSString *)host
+                       root:(nullable NSString *)root
+                     branch:(nullable NSString *)branch
+                codeVersion:(nullable NSString *)codeVersion {
     
-    self = [super init];
+    self = [super initWithHost:host
+                          root:root
+                        branch:branch
+                   codeVersion:codeVersion];
     if (self) {
-        self.host = host;
-        self.root = root;
-        self.branch = branch;
-        self.codeVersion = codeVersion;
+        [self mergeDataDictionary:@{
+            DFK_CPU: cpu ? cpu : [NSNull null]
+        }];
     }
     return self;
 }
 
-#pragma mark - property accessors
+- (instancetype)initWithCpu:(nullable NSString *)cpu
+               serverConfig:(nullable RollbarServerConfig *)serverConfig {
+    
+    if (serverConfig) {
+        self = [super initWithDictionary:serverConfig.jsonFriendlyData];
+    }
+    else {
+        self = [super init];
+    }
+    
+    if (self) {
+        [self mergeDataDictionary:@{
+            DFK_CPU: cpu ? cpu : [NSNull null]
+        }];
+    }
+    
+    return self;
+ }
 
-- (NSString *)host {
-    NSString *result = [self safelyGetStringByKey:DFK_HOST];
-    return result;
-}
-
-- (void)setHost:(NSString *)value {
-    [self setString:value forKey:DFK_HOST];
-}
-
-- (NSString *)root {
-    NSString *result = [self safelyGetStringByKey:DFK_ROOT];
-    return result;
-}
-
-- (void)setRoot:(NSString *)value {
-    [self setString:value forKey:DFK_ROOT];
-}
-
-- (NSString *)branch {
-    NSString *result = [self safelyGetStringByKey:DFK_BRANCH];
-    return result;
-}
-
-- (void)setBranch:(NSString *)value {
-    [self setString:value forKey:DFK_BRANCH];
-}
-
-- (NSString *)codeVersion {
-    NSString *result = [self safelyGetStringByKey:DFK_CODE_VERSION];
-    return result;
-}
-
-- (void)setCodeVersion:(NSString *)value {
-    [self setString:value forKey:DFK_CODE_VERSION];
-}
 
 @end

@@ -38,28 +38,100 @@ static NSString * const DFK_REQUEST_ID = @"requestId";
 
 #pragma mark - initializers
 
-- (id)initWithLogLevel:(RollbarLevel)logLevel
-            crashLevel:(RollbarLevel)crashLevel
-maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute {
-    self = [super init];
-    if (self) {
-        self.logLevel = logLevel;
-        self.crashLevel = crashLevel;
-        self.maximumReportsPerMinute = maximumReportsPerMinute;
-        self.captureIp = DEFAULT_IP_CAPTURE_TYPE;
-        self.framework = OPERATING_SYSTEM;
-    }
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+         maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute
+                       captureIp:(CaptureIpType)captureIp
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId {
+    
+    self = [super initWithDictionary:@{
+        DFK_LOG_LEVEL: [RollbarLevelUtil RollbarLevelToString:logLevel],
+        DFK_CRASH_LEVEL: [RollbarLevelUtil RollbarLevelToString:crashLevel],
+        DFK_MAX_REPORTS_PER_MINUTE: [NSNumber numberWithUnsignedInteger:maximumReportsPerMinute],
+        DFK_IP_CAPTURE_TYPE: [CaptureIpTypeUtil CaptureIpTypeToString:DEFAULT_IP_CAPTURE_TYPE],
+        DFK_CODE_VERSION: codeVersion ? codeVersion : [NSNull null],
+        DFK_FRAMEWORK: framework ? framework : OPERATING_SYSTEM,
+        DFK_REQUEST_ID: requestId ? requestId : [NSNull null]
+    }];
     return self;
-
 }
-- (id)initWithLogLevel:(RollbarLevel)logLevel
-            crashLevel:(RollbarLevel)crashLevel {
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+         maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId {
+    
+    self = [self initWithLogLevel:logLevel
+                       crashLevel:crashLevel
+          maximumReportsPerMinute:maximumReportsPerMinute
+                        captureIp:DEFAULT_IP_CAPTURE_TYPE
+                      codeVersion:codeVersion
+                        framework:framework
+                        requestId:requestId];
+    return self;
+}
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+                       captureIp:(CaptureIpType)captureIp
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId {
+    
+    self = [self initWithLogLevel:logLevel
+                       crashLevel:crashLevel
+          maximumReportsPerMinute:DEFAULT_MAX_REPORTS_PER_MINUTE
+                        captureIp:captureIp
+                      codeVersion:codeVersion
+                        framework:framework
+                        requestId:requestId];
+    return self;
+}
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+                     codeVersion:(nullable NSString *)codeVersion
+                       framework:(nullable NSString *)framework
+                       requestId:(nullable NSString *)requestId {
+    
+    self = [self initWithLogLevel:logLevel
+                       crashLevel:crashLevel
+          maximumReportsPerMinute:DEFAULT_MAX_REPORTS_PER_MINUTE
+                        captureIp:DEFAULT_IP_CAPTURE_TYPE
+                      codeVersion:codeVersion
+                        framework:framework
+                        requestId:requestId];
+    return self;
+}
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel
+         maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute {
+    
+    self = [self initWithLogLevel:logLevel
+                       crashLevel:crashLevel
+          maximumReportsPerMinute:maximumReportsPerMinute
+                        captureIp:DEFAULT_IP_CAPTURE_TYPE
+                      codeVersion:nil
+                        framework:nil
+                        requestId:nil];
+    return self;
+}
+
+- (instancetype)initWithLogLevel:(RollbarLevel)logLevel
+                      crashLevel:(RollbarLevel)crashLevel {
+    
     return [self initWithLogLevel:logLevel
                        crashLevel:crashLevel
           maximumReportsPerMinute:DEFAULT_MAX_REPORTS_PER_MINUTE];
 }
 
-- (id)init {
+- (instancetype)init {
+    
     return [self initWithLogLevel:DEFAULT_LOG_LEVEL
                        crashLevel:DEFAULT_CRASH_LEVEL];
 }
@@ -104,28 +176,28 @@ maximumReportsPerMinute:(NSUInteger)maximumReportsPerMinute {
     [self setString:valueString forKey:DFK_IP_CAPTURE_TYPE];
 }
 
-- (NSString *)codeVersion {
-    return [self safelyGetStringByKey:DFK_CODE_VERSION];
+- (nullable NSString *)codeVersion {
+    return [self getDataByKey:DFK_CODE_VERSION];
 }
 
-- (void)setCodeVersion:(NSString *)value {
-    [self setString:value forKey:DFK_CODE_VERSION];
+- (void)setCodeVersion:(nullable NSString *)value {
+    [self setData:value byKey:DFK_CODE_VERSION];
 }
 
-- (NSString *)framework; {
-    return [self safelyGetStringByKey:DFK_FRAMEWORK];
+- (nullable NSString *)framework; {
+    return [self getDataByKey:DFK_FRAMEWORK];
 }
 
-- (void)setFramework:(NSString *)value {
-    [self setString:value forKey:DFK_FRAMEWORK];
+- (void)setFramework:(nullable NSString *)value {
+    [self setData:value byKey:DFK_FRAMEWORK];
 }
 
-- (NSString *)requestId {
-    return [self safelyGetStringByKey:DFK_REQUEST_ID];
+- (nullable NSString *)requestId {
+    return [self getDataByKey:DFK_REQUEST_ID];
 }
 
-- (void)setRequestId:(NSString *)value {
-    [self setString:value forKey:DFK_REQUEST_ID];
+- (void)setRequestId:(nullable NSString *)value {
+    [self setData:value byKey:DFK_REQUEST_ID];
 }
 
 @end

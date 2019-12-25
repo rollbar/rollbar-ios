@@ -19,8 +19,11 @@ FOUNDATION_EXPORT const unsigned char RollbarFrameworkVersionString[];
 #import <RollbarFramework/RollbarTelemetry.h>
 #import <RollbarFramework/RollbarTelemetryType.h>
 #import <RollbarFramework/RollbarLog.h>
+#import <RollbarFramework/RollbarPayloadDTOs.h>
+
 
 // Deploys API
+#import <RollbarFramework/RollbarDeploys.h>
 #import <RollbarFramework/RollbarDeploysProtocol.h>
 #import <RollbarFramework/RollbarDeploysManager.h>
 

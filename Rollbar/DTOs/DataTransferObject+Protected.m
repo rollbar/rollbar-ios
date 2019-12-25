@@ -12,32 +12,96 @@
 
 #pragma mark - Initializers
 
-- (id)initWithDictionary: (NSDictionary *)data {
+- (instancetype)initWithJSONData: (NSData *)data {
     self = [super init];
     if (self) {
-        if (!data) {
-            return self;
-        }
-        else if (![DataTransferObject isTransferableObject:data]) {
-            return self;
-        }
-        else {
-            if ([data isKindOfClass:[NSMutableDictionary class]]) {
-                self->_data = (NSMutableDictionary *)data;
-            }
-            else {
-                self->_data = data.mutableCopy;
-            }
-                
-        }
-//        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
-//            self->_data = (NSMutableDictionary *) data;
-//        }
-//        else if ([data isKindOfClass:[NSDictionary class]]) {
-//            self->_data = [data mutableCopy];
-//        }
+        [self deserializeFromJSONData:data];
     }
     return self;
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)data;  {
+    
+        self = [super init];
+        if (self) {
+            if (!data) {
+                return self;
+            }
+            else if (![DataTransferObject isTransferableObject:data]) {
+                return self;
+            }
+            else {
+                if ([data isKindOfClass:[NSMutableDictionary class]]) {
+                    self->_data = (NSMutableDictionary *)data;
+                }
+                else {
+                    self->_data = data.mutableCopy;
+                }
+                 
+                for (NSString *key in self->_data.allKeys) {
+                    if (self->_data[key] == [NSNull null]) {
+                        [self->_data removeObjectForKey:key];
+                    }
+                }
+            }
+    //        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
+    //            self->_data = (NSMutableDictionary *) data;
+    //        }
+    //        else if ([data isKindOfClass:[NSDictionary class]]) {
+    //            self->_data = [data mutableCopy];
+    //        }
+        }
+        return self;
+}
+
+- (instancetype)initWithArray:(NSArray *)data {
+    //TODO: implement...
+    return nil;
+}
+
+- (instancetype)init {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"Must use one of initWith...: instead."
+                                 userInfo:nil];
+}
+
+#pragma mark - Property overrides
+
+- (NSString *)description {
+    return [self serializeToJSONString];
+}
+
+#pragma mark - Core API: transferable data getter/setter by key
+
+- (nullable id)getDataByKey:(nonnull NSString *)key {
+    id result = [self->_data objectForKey:key];
+    if (result == [NSNull null]) {
+        return nil;
+    }
+    return result;
+}
+
+- (void)setData:(nullable id)data byKey:(nonnull NSString *)key {
+    if (!data) {
+        // setting nil data is equivalent to removing its KV-pair (if any):
+        [self->_data removeObjectForKey:key];
+        return;
+    }
+    if ([DataTransferObject isTransferableDataValue:data]) {
+        [self->_data setObject:data forKey:key];
+        //[self->_data setValue:data forKey:key];
+    }
+    else {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"An attempt to set non-transferable data to self->_data!"
+                                     userInfo:nil];
+    }
+}
+
+- (void)mergeDataDictionary:(nonnull NSDictionary *)data {
+    if (data) {
+        [self->_data addEntriesFromDictionary:data];
+    }
 }
 
 #pragma mark - safe data getters by key
@@ -112,6 +176,25 @@
 }
 
 #pragma mark - Convenience API
+
+- (TriStateFlag)safelyGetTriStateFlagByKey:(NSString *)key {
+    NSString *result = [self->_data objectForKey:key];
+    if (result == nil) {
+        return None;
+    }
+    else {
+        return [TriStateFlagUtil TriStateFlagFromString:result];
+    }
+}
+- (void)setTriStateFlag:(TriStateFlag)data forKey:(NSString *)key{
+    if (data == None) {
+        [self->_data removeObjectForKey:key];
+    }
+    else {
+        [self->_data setObject:[TriStateFlagUtil TriStateFlagToString:data].mutableCopy
+                        forKey:key];
+    }
+}
 
 - (BOOL)safelyGetBoolByKey:(NSString *)key {
     NSNumber *number = [self safelyGetNumberByKey:key];

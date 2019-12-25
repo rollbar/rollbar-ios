@@ -25,31 +25,35 @@ static NSString * const DFK_WHITELIST_FIELDS = @"whitelistFields";
 
 #pragma mark - initializers
 
-- (id)initWithEnabled:(BOOL)enabled
-          scrubFields:(NSArray *)scrubFields
-      whitelistFields:(NSArray *)whitelistFields {
-    
-    self = [super init];
-    if (self) {
-        self.enabled = enabled;
-        self.scrubFields = scrubFields;
-        self.whitelistFields = whitelistFields;
-    }
+- (instancetype)initWithEnabled:(BOOL)enabled
+                    scrubFields:(NSArray *)scrubFields
+                whitelistFields:(NSArray *)whitelistFields {
+
+    self = [super initWithDictionary:@{
+        DFK_ENABLED:[NSNumber numberWithBool:enabled],
+        DFK_SCRUB_FIELDS:scrubFields,
+        DFK_WHITELIST_FIELDS:whitelistFields
+    }];
     return self;
+
 }
 
-- (id)initWithScrubFields:(NSArray *)scrubFields
-          whitelistFields:(NSArray *)whitelistFields {
+- (instancetype)initWithScrubFields:(NSArray *)scrubFields
+                    whitelistFields:(NSArray *)whitelistFields {
+
     return [self initWithEnabled:DEFAULT_ENABLED_FLAG
                      scrubFields:scrubFields
                  whitelistFields:whitelistFields
             ];
 }
-- (id)initWithScrubFields:(NSArray *)scrubFields {
+
+- (instancetype)initWithScrubFields:(NSArray *)scrubFields {
+    
     return [self initWithScrubFields:scrubFields whitelistFields:@[]];
 }
 
-- (id)init {
+- (instancetype)init {
+
     return [self initWithScrubFields:@[]];
 }
 

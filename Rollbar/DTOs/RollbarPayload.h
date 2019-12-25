@@ -15,8 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarPayload : DataTransferObject
 
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic) RollbarData *data;
+// Required: access_token
+// An access token with scope "post_server_item" or "post_client_item".
+// A post_client_item token must be used if the "platform" is "browser", "android", "ios", "flash", or "client"
+// A post_server_item token should be used for other platforms.
+@property (nonatomic, copy, nonnull) NSString *accessToken;
+
+// Required: data
+@property (nonatomic, nonnull) RollbarData *data;
+
+-(instancetype)initWithAccessToken:(nonnull NSString *)token
+                              data:(nonnull RollbarData *)data;
 
 @end
 

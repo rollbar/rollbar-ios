@@ -87,7 +87,7 @@ static const unsigned long maxTraceFrames = 1;
 
 +(void)limitRawCrashReportInPayload:(NSMutableDictionary *)payload {
     id raw = [payload valueForKeyPath:pathToRaw];
-    if (!raw) {
+    if (!raw || raw == [NSNull null]) {
         return;
     }
     if ([raw isKindOfClass:[NSMutableString class]] && ![RollbarPayloadTruncator isMutable:raw]) {
@@ -110,16 +110,17 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
         return FALSE;  //payload is small enough, no need to truncate further...
     }
     
-    NSMutableArray *traces = [payload mutableArrayValueForKeyPath:pathToTraceChain];
-    if ((nil == traces) || (0 == traces.count))
+    id value = [payload valueForKeyPath:pathToTraceChain];
+    if (value == [NSNull null] || value == nil)
     {
-        traces = [NSMutableArray arrayWithObject:[payload valueForKeyPath:pathToTrace]];
+        value = [NSMutableArray arrayWithObject:[payload valueForKeyPath:pathToTrace]];
     }
     
-    if (nil == traces) {
+    if (value == nil || value == [NSNull null]) {
         return TRUE;
     }
     
+    NSMutableArray *traces = (NSMutableArray *) value;
     [traces enumerateObjectsUsingBlock:^(id item, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *exception = [item objectForKey:@"exception"];
         if (nil != exception) {
@@ -130,7 +131,9 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
             }
         }
         NSMutableArray *frames = [item objectForKey:@"frames"];
-        [frames removeObjectsInRange:NSMakeRange(traceFramesLimit, frames.count - traceFramesLimit)];
+        if (frames) {
+            [frames removeObjectsInRange:NSMakeRange(traceFramesLimit, frames.count - traceFramesLimit)];
+        }
     }];
     
     return TRUE;
@@ -206,13 +209,31 @@ withExceptionMessageLimit:(unsigned long)exeptionMessageLimit
         return FALSE;  //payload is small enough, no need to truncate further...
     }
     
-    NSMutableArray *items = [payload mutableArrayValueForKeyPath:pathToItems];
-    if (items.count <= (headsCount + tailsCount)) {
+//    NSMutableArray *items = [payload mutableArrayValueForKeyPath:pathToItems];
+//    if (items.count <= (headsCount + tailsCount)) {
+//        return TRUE;
+//    }
+//
+//    unsigned long totalItemsToRemove = items.count - headsCount - tailsCount;
+//    [items removeObjectsInRange:NSMakeRange(headsCount, totalItemsToRemove)];
+//
+//    return TRUE;
+
+    id value = [payload valueForKeyPath:pathToItems];
+    if (value == [NSNull null] || [value isKindOfClass:[NSNull class]]) {
         return TRUE;
     }
     
-    unsigned long totalItemsToRemove = items.count - headsCount - tailsCount;
-    [items removeObjectsInRange:NSMakeRange(headsCount, totalItemsToRemove)];
+    if ([value isKindOfClass:[NSArray class]]) {
+        NSMutableArray *items = ((NSArray *)value).mutableCopy;
+        if (items.count <= (headsCount + tailsCount)) {
+            return TRUE;
+        }
+        
+        unsigned long totalItemsToRemove = items.count - headsCount - tailsCount;
+        [items removeObjectsInRange:NSMakeRange(headsCount, totalItemsToRemove)];
+    }
+
     
     return TRUE;
 }

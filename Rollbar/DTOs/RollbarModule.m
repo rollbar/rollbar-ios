@@ -24,44 +24,37 @@ static NSString * const DFK_VERSION = @"version";
 
 #pragma mark - initializers
 
-- (id)initWithName:(NSString *)name
-        version:(NSString *)version {
+- (instancetype)initWithName:(nullable NSString *)name
+                     version:(nullable NSString *)version {
     
-    self = [super init];
-    if (self) {
-        self.name = name;
-        self.version = version;
-    }
+    self = [super initWithDictionary:@{
+        DFK_NAME:name ? name : [NSNull null],
+        DFK_VERSION:version ? version : [NSNull null]
+    }];
     return self;
 }
 
-- (id)initWithName:(NSString *)name {
+- (instancetype)initWithName:(nullable NSString *)name {
     
-    return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     name, DFK_NAME,
-                                     DEFAULT_VERSION, DFK_VERSION,
-                                     nil]
-            ];
+    return [self initWithName:name version:DEFAULT_VERSION];
 }
 
 #pragma mark - property accessors
 
-- (NSString *)name {
-    NSString *result = [self safelyGetStringByKey:DFK_NAME];
-    return result;
+- (nullable NSString *)name {
+   return [self getDataByKey:DFK_NAME];
 }
 
-- (void)setName:(NSString *)value {
-    [self setString:value forKey:DFK_NAME];
+- (void)setName:(nullable NSString *)value {
+    [self setData:value byKey:DFK_NAME];
 }
 
-- (NSString *)version {
-    NSString *result = [self safelyGetStringByKey:DFK_VERSION];
-    return result;
+- (nullable NSString *)version {
+    return [self getDataByKey:DFK_VERSION];
 }
 
-- (void)setVersion:(NSString *)value {
-    [self setString:value forKey:DFK_VERSION];
+- (void)setVersion:(nullable NSString *)value {
+    [self setData:value byKey:DFK_VERSION];
 }
 
 @end

@@ -24,14 +24,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - initializers
 
-- (id)initWithEnabled:(BOOL)enabled
-           captureLog:(BOOL)captureLog
-  captureConnectivity:(BOOL)captureConnectivity
-     viewInputsScrubber:(RollbarScrubbingOptions *)viewInputsScrubber;
-- (id)initWithEnabled:(BOOL)enabled
-         captureLog:(BOOL)captureLog
-  captureConnectivity:(BOOL)captureConnectivity;
-- (id)initWithEnabled:(BOOL)enabled;
+- (instancetype)initWithEnabled:(BOOL)enabled
+                     captureLog:(BOOL)captureLog
+            captureConnectivity:(BOOL)captureConnectivity
+             viewInputsScrubber:(RollbarScrubbingOptions *)viewInputsScrubber;
+- (instancetype)initWithEnabled:(BOOL)enabled
+                     captureLog:(BOOL)captureLog
+            captureConnectivity:(BOOL)captureConnectivity;
+- (instancetype)initWithEnabled:(BOOL)enabled;
 
 @end
 

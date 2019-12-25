@@ -14,7 +14,9 @@
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
 #import "RollbarCachesDirectory.h"
-#import "RollbarConfig.h"
+
+#import "DataTransferObject+Protected.h"
+#import "RollbarPayloadDTOs.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb
 
@@ -47,6 +49,9 @@ static BOOL isNetworkReachable = YES;
 
 @implementation RollbarNotifier {
     NSDate *nextSendTime;
+    
+    @private
+    NSDictionary *m_osData;
 }
 
 - (id)initWithAccessToken:(NSString*)accessToken
@@ -147,14 +152,22 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)logCrashReport:(NSString*)crashReport {
-    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel
-                                                message:nil
-                                              exception:nil
-                                                  extra:nil
-                                            crashReport:crashReport
-                                                context:nil];
+//    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel
+//                                                message:nil
+//                                              exception:nil
+//                                                  extra:nil
+//                                            crashReport:crashReport
+//                                                context:nil];
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:config.loggingOptions.crashLevel
+                                                         message:nil
+                                                       exception:nil
+                                                           error:nil
+                                                           extra:nil
+                                                     crashReport:crashReport
+                                                         context:nil];
     if (payload) {
-        [self queuePayload:payload];
+        [self queuePayload:payload.jsonFriendlyData];
     }
 }
 
@@ -168,20 +181,34 @@ static BOOL isNetworkReachable = YES;
         return;
     }
     
+//    RollbarLevel rollbarLevel = RollbarLevelFromString(level);
+//    if (rollbarLevel < [self getRollbarLevel]) {
+//        return;
+//    }
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    
     RollbarLevel rollbarLevel = RollbarLevelFromString(level);
-    if (rollbarLevel < [self.configuration getRollbarLevel]) {
+    if (rollbarLevel < config.loggingOptions.logLevel) {
         return;
     }
 
-    NSDictionary *payload = [self buildPayloadWithLevel:level
-                                                message:message
-                                              exception:exception
-                                                  extra:data
-                                            crashReport:nil
-                                                context:context
-                             ];
+//    NSDictionary *payload = [self buildPayloadWithLevel:level
+//                                                message:message
+//                                              exception:exception
+//                                                  extra:data
+//                                            crashReport:nil
+//                                                context:context
+//                             ];
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:rollbarLevel
+                                                         message:message
+                                                       exception:exception
+                                                           error:nil
+                                                           extra:data
+                                                     crashReport:nil
+                                                         context:context
+                               ];
     if (payload) {
-        [self queuePayload:payload];
+        [self queuePayload:payload.jsonFriendlyData];
     }
 }
 
@@ -269,6 +296,334 @@ static BOOL isNetworkReachable = YES;
     }];
 }
 
+#pragma mark - Payload DTO builders
+
+-(RollbarPerson *)buildRollbarPerson {
+    
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.person && config.person.ID) {
+        return config.person;
+    }
+    else {
+        return nil;
+    }
+}
+
+-(RollbarServer *)buildRollbarServer {
+    
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.server && !config.server.isEmpty) {
+        return [[RollbarServer alloc] initWithCpu:nil
+                                     serverConfig:config.server];
+    }
+    else {
+        return nil;
+    }
+}
+
+-(NSDictionary *)buildOSData {
+    
+    if (self->m_osData) {
+        return self->m_osData;
+    }
+    
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    
+    NSString *version = nil;
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config
+        && config.loggingOptions
+        && config.loggingOptions.codeVersion
+        && config.loggingOptions.codeVersion.length > 0) {
+        
+        version = config.loggingOptions.codeVersion;
+    }
+    else {
+        version = [mainBundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+    }
+    
+    NSString *shortVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *bundleName = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
+    NSString *bundleIdentifier = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey];
+    
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    
+#if TARGET_OS_IPHONE
+    self->m_osData = @{
+        @"os": @"iOS",
+        @"os_version": [[UIDevice currentDevice] systemVersion],
+        @"device_code": deviceCode,
+        @"code_version": version ? version : @"",
+        @"short_version": shortVersion ? shortVersion : @"",
+        @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+        @"app_name": bundleName ? bundleName : @""
+    };
+#else
+    NSOperatingSystemVersion osVer = [[NSProcessInfo processInfo] operatingSystemVersion];
+    self->m_osData = @{
+        @"os": @"macOS",
+        @"os_version": [NSString stringWithFormat:@" %tu.%tu.%tu",
+                        osVer.majorVersion,
+                        osVer.minorVersion,
+                        osVer.patchVersion
+                        ],
+        @"device_code": deviceCode,
+        @"code_version": version ? version : @"",
+        @"short_version": shortVersion ? shortVersion : @"",
+        @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+        @"app_name": bundleName ? bundleName : [[NSProcessInfo processInfo] processName]
+    };
+#endif
+
+    return self->m_osData;
+}
+
+-(RollbarClient *)buildRollbarClient {
+    
+    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]];
+
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.loggingOptions) {
+        switch(config.loggingOptions.captureIp) {
+            case CaptureIpFull:
+                return [[RollbarClient alloc] initWithDictionary:@{
+                    @"timestamp": timestamp,
+                    @"ios": [self buildOSData],
+                    @"user_ip": @"$remote_ip"
+                }];
+            case CaptureIpAnonymize:
+                return [[RollbarClient alloc] initWithDictionary:@{
+                    @"timestamp": timestamp,
+                    @"ios": [self buildOSData],
+                    @"user_ip": @"$remote_ip_anonymize"
+                }];
+            case CaptureIpNone:
+                //no op
+                break;
+        }
+    }
+
+    return [[RollbarClient alloc] initWithDictionary:@{
+        @"timestamp": timestamp,
+        @"ios": [self buildOSData],
+    }];
+}
+
+-(RollbarModule *)buildRollbarNotifierModule {
+
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (config && config.notifier && !config.notifier.isEmpty) {
+        
+        RollbarModule *notifierModule =
+        [[RollbarModule alloc] initWithDictionary:config.notifier.jsonFriendlyData.copy];
+        [notifierModule setData:config.jsonFriendlyData byKey:@"configured_options"];
+        return notifierModule;
+    }
+    
+    return nil;
+}
+
+-(RollbarPayload *)buildRollbarPayloadWithLevel:(RollbarLevel)level
+                                 message:(NSString*)message
+                               exception:(NSException*)exception
+                                   error:(NSError *)error
+                                   extra:(NSDictionary*)extra
+                             crashReport:(NSString*)crashReport
+                                 context:(NSString*)context {
+
+    // check critical config settings:
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (!config
+        || !config.destination
+        || !config.destination.environment
+        || config.destination.environment.length == 0) {
+        
+        return nil;
+    }
+
+    // compile payload data proper body:
+    RollbarBody *body = [RollbarBody alloc];
+    if (crashReport) {
+        body = [body initWithCrashReport:crashReport];
+    }
+    else if (error) {
+        body = [body initWithError:error];
+    }
+    else if (exception) {
+        body = [body initWithException:exception];
+    }
+    else if (message) {
+        body = [body initWithMessage:message];
+    }
+    else {
+        return nil;
+    }
+    
+    if (!body) {
+        return nil;
+    }
+    
+    // compile payload data:
+    RollbarData *data = [[RollbarData alloc] initWithEnvironment:config.destination.environment
+                                                            body:body];
+    if (!data) {
+        return nil;
+    }
+    
+    NSMutableDictionary *customData =
+        [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];
+    if (crashReport || exception) {
+        // neither crash report no exception payload objects have placeholders for any extra data
+        // or an extra message, let's preserve them as the custom data:
+        if (extra) {
+            customData[@"error.extra"] = extra;
+        }
+        if (message && message.length > 0) {
+            customData[@"error.message"] = message;
+        }
+    }
+
+    data.level = level;
+    data.language = ObjectiveC;
+    data.platform = @"client";
+    data.uuid = [NSUUID UUID];
+    data.custom = [[DataTransferObject alloc] initWithDictionary:customData];
+    data.notifier = [self buildRollbarNotifierModule];
+    data.person = [self buildRollbarPerson];
+    data.server = [self buildRollbarServer];
+    data.client = [self buildRollbarClient];
+    if (context && context.length > 0) {
+        data.context = context;
+    }
+    if (config.loggingOptions) {
+        data.framework = config.loggingOptions.framework;
+        if (config.loggingOptions.requestId
+            && (config.loggingOptions.requestId.length > 0)) {
+
+            [data setData:config.loggingOptions.requestId byKey:@"requestId"];
+        }
+    }
+    
+    // Transform payload data, if necessary
+    if ([self shouldIgnoreRollbarData:data]) {
+        return nil;
+    }
+    data = [self modifyRollbarData:data];
+    data = [self scrubRollbarData:data];
+
+    RollbarPayload *payload = [[RollbarPayload alloc] initWithAccessToken:config.destination.accessToken
+                                                                     data:data];
+
+    return payload;
+}
+
+-(BOOL)shouldIgnoreRollbarData:(nonnull RollbarData *)incomingData {
+
+    BOOL shouldIgnore = NO;
+
+    // This block of code is using deprecated legacy implementation of payload check-ignore:
+    if (self.configuration.checkIgnore) {
+        @try {
+            shouldIgnore = self.configuration.checkIgnore(incomingData.jsonFriendlyData);
+            return shouldIgnore;
+        } @catch(NSException *e) {
+            SdkLog(@"checkIgnore error: %@", e.reason);
+
+            // Remove checkIgnore to prevent future exceptions
+            [self.configuration setCheckIgnoreBlock:nil];
+            return NO;
+        }
+    }
+
+    if (self.configuration.checkIgnoreRollbarData) {
+        @try {
+            shouldIgnore = self.configuration.checkIgnoreRollbarData(incomingData);
+            return shouldIgnore;
+        } @catch(NSException *e) {
+            SdkLog(@"checkIgnore error: %@", e.reason);
+
+            // Remove checkIgnore to prevent future exceptions
+            self.configuration.checkIgnoreRollbarData = nil;
+            return NO;
+        }
+    }
+
+    return shouldIgnore;
+}
+
+-(RollbarData *)modifyRollbarData:(nonnull RollbarData *)incomingData {
+
+    // This block of code is using deprecated legacy implementation of payload modification:
+    if (self.configuration.payloadModification) {
+        NSMutableDictionary * jsonFriendlyMutableData = incomingData.jsonFriendlyData;
+        self.configuration.payloadModification(jsonFriendlyMutableData);
+        RollbarData *modifiedRollbarData = [[RollbarData alloc] initWithDictionary:jsonFriendlyMutableData];
+        return modifiedRollbarData;
+    }
+
+    if (self.configuration.modifyRollbarData) {
+        return self.configuration.modifyRollbarData(incomingData);
+    }
+    return incomingData;
+}
+
+-(RollbarData *)scrubRollbarData:(nonnull RollbarData *)incomingData {
+
+    NSSet *scrubFieldsSet = [self getScrubFields];
+    if (!scrubFieldsSet || scrubFieldsSet.count == 0) {
+        return incomingData;
+    }
+    
+    NSMutableDictionary *mutableJsonFriendlyData = incomingData.jsonFriendlyData.mutableCopy;
+    for (NSString *key in scrubFieldsSet) {
+        if ([mutableJsonFriendlyData valueForKeyPath:key]) {
+            [self createMutablePayloadWithData:mutableJsonFriendlyData forPath:key];
+            [mutableJsonFriendlyData setValue:@"*****" forKeyPath:key];
+        }
+    }
+
+    return [[RollbarData alloc] initWithDictionary:mutableJsonFriendlyData];
+}
+
+-(NSSet *)getScrubFields {
+    
+    RollbarConfig *config = self.configuration.asRollbarConfig;
+    if (!config
+        || !config.dataScrubber
+        || config.dataScrubber.isEmpty
+        || !config.dataScrubber.enabled
+        || !config.dataScrubber.scrubFields
+        || config.dataScrubber.scrubFields.count == 0) {
+        
+        return [NSSet set];
+    }
+    
+    NSMutableSet *actualFieldsToScrub = config.dataScrubber.scrubFields.mutableCopy;
+    if (config.dataScrubber.whitelistFields.count > 0) {
+        // actualFieldsToScrub =
+        // config.dataScrubber.scrubFields - config.dataScrubber.whitelistFields
+        // while using case insensitive field name comparison:
+        actualFieldsToScrub = [NSMutableSet new];
+        for(NSString *key in config.dataScrubber.scrubFields) {
+            BOOL isWhitelisted = false;
+            for (NSString *whiteKey in config.dataScrubber.whitelistFields) {
+                if (NSOrderedSame == [key caseInsensitiveCompare:whiteKey]) {
+                    isWhitelisted = true;
+                }
+            }
+            if (!isWhitelisted) {
+                [actualFieldsToScrub addObject:key];
+            }
+        }
+    }
+    
+    return actualFieldsToScrub;
+}
+
+#pragma mark - LEGACY payload data builders
+
 - (NSDictionary*)buildPersonData {
     NSMutableDictionary *personData = [NSMutableDictionary dictionary];
     
@@ -286,28 +641,6 @@ static BOOL isNetworkReachable = YES;
         return personData;
     }
     
-    return nil;
-}
-
-- (NSDictionary*)buildOptionalData {
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-
-    // Add client/server linking ID
-    if (self.configuration.requestId) {
-        [data setObject:self.configuration.requestId forKey:@"requestId"];
-    }
-
-    // Add server data
-    NSDictionary *serverData = [self buildServerData];
-
-    if (serverData) {
-        [data setObject:serverData forKey:@"server"];
-    }
-
-    if ([[data allKeys] count]) {
-        return data;
-    }
-
     return nil;
 }
 
@@ -335,8 +668,7 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (NSDictionary*)buildClientData {
-    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]]
-    ;
+    
     NSBundle *mainBundle = [NSBundle mainBundle];
     
     NSString *version = [mainBundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
@@ -379,6 +711,8 @@ static BOOL isNetworkReachable = YES;
                              };
 #endif
 
+    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]];
+
     if (self.configuration.captureIp == CaptureIpFull) {
         return @{@"timestamp": timestamp,
                  @"ios": osData,
@@ -392,6 +726,28 @@ static BOOL isNetworkReachable = YES;
                  @"ios": osData
                  };
     }
+}
+
+- (NSDictionary*)buildOptionalData {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+
+    // Add client/server linking ID
+    if (self.configuration.requestId) {
+        [data setObject:self.configuration.requestId forKey:@"requestId"];
+    }
+
+    // Add server data
+    NSDictionary *serverData = [self buildServerData];
+
+    if (serverData) {
+        [data setObject:serverData forKey:@"server"];
+    }
+
+    if ([[data allKeys] count]) {
+        return data;
+    }
+
+    return nil;
 }
 
 - (NSDictionary*)buildPayloadWithLevel:(NSString*)level
@@ -426,16 +782,18 @@ static BOOL isNetworkReachable = YES;
                                                crashReport:crashReport
                           ];
     NSString *platform = @"client";
-    NSMutableDictionary *data = [@{@"environment": self.configuration.environment,
-                                   @"level": level,
-                                   @"language": @"objective-c",
-                                   @"framework": self.configuration.framework,
-                                   @"platform": platform,
-                                   @"uuid": [self generateUUID],
-                                   @"client": clientData,
-                                   @"notifier": notifierData,
-                                   @"custom": customData,
-                                   @"body": body} mutableCopy];
+    NSMutableDictionary *data = [@{
+        @"environment": self.configuration.environment,
+        @"level": level,
+        @"language": @"objective-c",
+        @"framework": self.configuration.framework,
+        @"platform": platform,
+        @"uuid": [self generateUUID],
+        @"client": clientData,
+        @"notifier": notifierData,
+        @"custom": customData,
+        @"body": body
+    } mutableCopy];
     
     NSDictionary *personData = [self buildPersonData];
     
@@ -562,10 +920,14 @@ static BOOL isNetworkReachable = YES;
     NSFileHandle *fileHandle =
     [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
     [fileHandle seekToEndOfFile];
+    NSError *error = nil;
     [fileHandle writeData:[NSJSONSerialization dataWithJSONObject:payload
                                                           options:0
-                                                            error:nil
+                                                            error:&error
                                                              safe:true]];
+    if (error) {
+        SdkLog(@"Error: %@", [error localizedDescription]);
+    }
     [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandle closeFile];
     [[RollbarTelemetry sharedInstance] clearAllData];

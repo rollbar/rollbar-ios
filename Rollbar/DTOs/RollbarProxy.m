@@ -27,20 +27,19 @@ static NSString * const DFK_PROXY_PORT = @"proxyPort";
 
 #pragma mark - initializers
 
-- (id)initWithEnabled:(BOOL)enabled
-             proxyUrl:(NSString *)proxyUrl
-            proxyPort:(NSUInteger)proxyPort {
+- (instancetype)initWithEnabled:(BOOL)enabled
+                       proxyUrl:(NSString *)proxyUrl
+                      proxyPort:(NSUInteger)proxyPort {
     
-    self = [super init];
-    if (self) {
-        self.enabled = enabled;
-        self.proxyUrl = proxyUrl;
-        self.proxyPort = proxyPort;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ENABLED:[NSNumber numberWithBool:enabled],
+        DFK_PROXY_URL:proxyUrl,
+        DFK_PROXY_PORT:[NSNumber numberWithUnsignedInteger:proxyPort]
+    }];
     return self;
 }
 
-- (id)init {
+- (instancetype)init {
     return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
                                      [NSNumber numberWithBool:DEFAULT_ENABLED_FLAG], DFK_ENABLED,
                                      DEFAULT_PROXY_URL, DFK_PROXY_URL,

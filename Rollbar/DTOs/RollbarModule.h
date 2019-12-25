@@ -14,14 +14,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - properties
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *version;
+// Optional: name
+// Name of the library
+@property (nonatomic, copy, nullable) NSString *name;
+
+// Optional: version
+// Library version string
+@property (nonatomic, copy, nullable) NSString *version;
 
 #pragma mark - initializers
 
-- (id)initWithName:(NSString *)name
-           version:(NSString *)version;
-- (id)initWithName:(NSString *)name;
+- (instancetype)initWithName:(nullable NSString *)name
+                     version:(nullable NSString *)version;
+
+- (instancetype)initWithName:(nullable NSString *)name;
 
 @end
 

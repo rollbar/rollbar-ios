@@ -24,12 +24,17 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)isTransferableObject:(id)obj;
-
-- (id)initWithJSONString: (NSString *)jsonString;
-- (id)initWithJSONData: (NSData *)jsonData;
++ (BOOL)isTransferableDataValue:(id)obj;
 
 - (NSArray *)getDefinedProperties;
 - (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO;
+
+/// Signifies that this DTO doesn't carry any useful data and is just an empty transpot "shell"
+@property (nonatomic, readonly) BOOL isEmpty;
+
+#pragma mark - initializers
+
+- (instancetype)initWithJSONString:(NSString *)jsonString;
 
 @end
 

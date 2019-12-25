@@ -2,29 +2,34 @@
 //  RollbarServer.h
 //  Rollbar
 //
-//  Created by Andrey Kornich on 2019-10-24.
+//  Created by Andrey Kornich on 2019-12-02.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "DataTransferObject.h"
+#import <Foundation/Foundation.h>
+#import "RollbarServerConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RollbarServer : DataTransferObject
+@interface RollbarServer : RollbarServerConfig
+// Can contain any arbitrary keys. Rollbar understands the following:
 
-#pragma mark - properties
+#pragma mark - Properties
 
-@property (nonatomic, copy) NSString *host;
-@property (nonatomic, copy) NSString *root;
-@property (nonatomic, copy) NSString *branch;
-@property (nonatomic, copy) NSString *codeVersion;
+// Optional: cpu
+// A string up to 255 characters
+@property (nonatomic, copy, nullable) NSString *cpu;
 
-#pragma mark - initializers
+#pragma mark - Initializers
 
-- (id)initWithHost:(NSString *)host
-              root:(NSString *)root
-            branch:(NSString *)branch
-       codeVersion:(NSString *)codeVersion;
+- (instancetype)initWithCpu:(nullable NSString *)cpu
+                       host:(nullable NSString *)host
+                       root:(nullable NSString *)root
+                     branch:(nullable NSString *)branch
+                codeVersion:(nullable NSString *)codeVersion;
+
+- (instancetype)initWithCpu:(nullable NSString *)cpu
+               serverConfig:(nullable RollbarServerConfig *)serverConfig;
 
 @end
 

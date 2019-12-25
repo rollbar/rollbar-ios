@@ -10,7 +10,7 @@
 #import "RollbarDeveloperOptions.h"
 #import "RollbarProxy.h"
 #import "RollbarScrubbingOptions.h"
-#import "RollbarServer.h"
+#import "RollbarServerConfig.h"
 #import "RollbarPerson.h"
 #import "RollbarModule.h"
 #import "RollbarTelemetryOptions.h"
@@ -431,16 +431,6 @@ static NSString *configurationFilePath = nil;
     self->_configData.telemetry.viewInputsScrubber.scrubFields = mutableCopy.copy;
 }
 
-#pragma mark - Payload processing callbacks
-
-- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock {
-    _payloadModification = payloadModificationBlock;
-}
-
-- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary *))checkIgnoreBlock {
-    _checkIgnore = checkIgnoreBlock;
-}
-
 #pragma mark - Convenience Methods
 
 - (void)setPersonId:(NSString *)personId
@@ -573,7 +563,15 @@ static NSString *configurationFilePath = nil;
     return result;
 }
 
-#pragma mark - Deprecated
+#pragma mark - DEPRECATED
+
+- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock {
+    _payloadModification = payloadModificationBlock;
+}
+
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary *))checkIgnoreBlock {
+    _checkIgnore = checkIgnoreBlock;
+}
 
 - (void)setReportingRate:(NSUInteger)maximumReportsPerMinute {
     self->_configData.loggingOptions.maximumReportsPerMinute = maximumReportsPerMinute;

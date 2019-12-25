@@ -23,6 +23,21 @@
     return result;
 }
 
++ (BOOL)isTransferableDataValue:(id)obj {
+    if (obj == [NSNull null]
+        || [obj isKindOfClass:[NSString class]]
+        || [obj isKindOfClass:[NSNumber class]]
+        || [obj isKindOfClass:[NSArray class]]
+        || [obj isKindOfClass:[NSDictionary class]]
+        || [obj isKindOfClass:[NSNull class]]
+        ) {
+        return YES;
+    }
+    else {
+        return [DataTransferObject isTransferableObject:obj];
+    }
+}
+
 + (nullable NSData *)dataWithJSONObject:(id)obj
                                 options:(NSJSONWritingOptions)opt
                                   error:(NSError **)error
@@ -62,7 +77,11 @@
     [obj enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[NSDictionary class]]) {
             [safeData setObject:[[self class] safeDataFromJSONObject:obj] forKey:key];
-        } else if ([NSJSONSerialization isValidJSONObject:@{key:obj}]) {
+        } else if ([obj isKindOfClass:[NSArray class]]) {
+            [safeData setObject:((NSArray *)obj).mutableCopy forKey:key];
+        } else if ([obj isKindOfClass:[NSNumber class]]) {
+            [safeData setObject:obj forKey:key];
+        } else if ([obj isKindOfClass:[NSString class]]) {
             [safeData setObject:obj forKey:key];
         } else if ([obj isKindOfClass:[NSDate class]]) {
             [safeData setObject:[obj description] forKey:key];
@@ -86,6 +105,8 @@
             } else {
                 SdkLog(@"Error serializing NSData: %@", [error localizedDescription]);
             }
+        } else if ([NSJSONSerialization isValidJSONObject:@{key:obj}]) {
+                [safeData setObject:obj forKey:key];
         } else {
             SdkLog(@"Error serializing class '%@' using NSJSONSerialization",
                        NSStringFromClass([obj class]));
@@ -106,10 +127,29 @@
 }
 
 - (NSData *)serializeToJSONData {
-    NSData *jsonData = [DataTransferObject dataWithJSONObject:self->_data
-                                                      options:0
-                                                        error:nil
-                                                         safe:true];
+//    NSData *jsonData = [DataTransferObject dataWithJSONObject:self->_data
+//                                                      options:0
+//                                                        error:nil
+//                                                         safe:true];
+    BOOL hasValidData = [NSJSONSerialization isValidJSONObject:self->_data];
+    if (!hasValidData) {
+        SdkLog(@"JSON-invalid internal data.");
+    }
+    
+    NSJSONWritingOptions opt = 0;
+    #ifdef DEBUG
+        opt |= NSJSONWritingPrettyPrinted;
+        if (@available(macOS 10.13, *)) {
+            opt |= NSJSONWritingSortedKeys;
+        } else {
+            // Fallback on earlier versions
+        }
+    #endif
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self->_data options:opt error:&error];
+    if (error) {
+        SdkLog(@"Error serializing NSData: %@", [error localizedDescription]);
+    }
     return jsonData;
 }
 
@@ -203,34 +243,26 @@
     return YES;
 }
 
+#pragma mark - Properties
+
+-(BOOL)isEmpty {
+    //TODO: implement
+    // iterate through the deep underlying data structure and see if all the
+    // non-collection-like data elements (i.e NSString and NSNumber) are
+    // either empty/nil or [NSNull null]...
+    
+    // For now:
+    return NO;
+}
+
 #pragma mark - initialization methods
 
-- (id)initWithJSONString: (NSString *)jsonString {
+- (instancetype)initWithJSONString: (NSString *)jsonString {
     self = [super init];
     if (self) {
         [self deserializeFromJSONString:jsonString];
     }
     return self;
-}
-
-- (id)initWithJSONData: (NSData *)jsonData {
-    self = [super init];
-    if (self) {
-        [self deserializeFromJSONData:jsonData];
-    }
-    return self;
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        self->_data = [[NSMutableDictionary alloc] initWithCapacity:10];
-    }
-    return self;
-}
-
-- (NSString *)description {
-    return [self serializeToJSONString];
 }
 
 @end

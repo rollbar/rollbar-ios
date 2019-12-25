@@ -31,34 +31,33 @@ static NSString * const DFK_ENVIRONMENT = @"environment";
 
 #pragma mark - initializers
 
-- (id)initWithEndpoint:(NSString *)endpoint
-           accessToken:(NSString *)accessToken
-           environment:(NSString *)environment {
-
-    self = [super init];
-    if (self) {
-        self.endpoint = endpoint;
-        self.accessToken = accessToken;
-        self.environment = environment;
-    }
+- (instancetype)initWithEndpoint:(NSString *)endpoint
+                     accessToken:(NSString *)accessToken
+                     environment:(NSString *)environment {
+    
+    self = [super initWithDictionary:@{
+        DFK_ENDPOINT:endpoint,
+        DFK_ACCESS_TOKEN:accessToken,
+        DFK_ENVIRONMENT:environment
+    }];
     return self;
 }
 
-- (id)initWithAccessToken:(NSString *)accessToken
-              environment:(NSString *)environment {
+- (instancetype)initWithAccessToken:(NSString *)accessToken
+                        environment:(NSString *)environment {
     
     return [self initWithEndpoint:DEFAULT_ENDPOINT
                       accessToken:accessToken
                       environment:environment];
 }
 
-- (id)initWithAccessToken:(NSString *)accessToken {
+- (instancetype)initWithAccessToken:(NSString *)accessToken {
     
     return [self initWithAccessToken:accessToken
                          environment:DEFAULT_ENVIRONMENT];
 }
 
-- (id)init {
+- (instancetype)init {
     
     return [self initWithAccessToken:DEFAULT_ACCCESS_TOKEN];
 }

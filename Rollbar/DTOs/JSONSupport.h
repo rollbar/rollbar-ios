@@ -34,6 +34,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param jsonString JSON string
 - (BOOL)deserializeFromJSONString:(NSString *)jsonString;
 
+#pragma mark - Initializers
+
+- (instancetype)initWithJSONData:(NSData *)data;
+- (instancetype)initWithDictionary:(NSDictionary *)data;
+- (instancetype)initWithArray:(NSArray *)data;
+
 @end
 
 NS_ASSUME_NONNULL_END

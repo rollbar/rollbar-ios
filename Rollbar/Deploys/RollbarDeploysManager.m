@@ -3,7 +3,7 @@
 #include <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarDeploysManager.h"
-#include "Deployment.h"
+#import "Deployment.h"
 
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
 #define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
@@ -45,7 +45,7 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
             ];
 }
 
-- (void)getDeploymentWithDeployId:(NSString *)deployId {
+- (void)getDeploymentWithDeployId:(nonnull NSString *)deployId {
     NSString * const url =
         @"https://api.rollbar.com/api/1/deploy/";
     NSString * const getUrl =
@@ -61,7 +61,7 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     [self sendGetRequestToUrl:getUrl];
 }
 
-- (void)registerDeployment:(Deployment *)deployment {
+- (void)registerDeployment:(nonnull Deployment *)deployment {
     NSString * const url =
         @"https://api.rollbar.com/api/1/deploy/";
     NSMutableDictionary *params =

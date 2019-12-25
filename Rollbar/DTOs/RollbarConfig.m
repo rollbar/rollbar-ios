@@ -13,7 +13,7 @@
 #import "RollbarDeveloperOptions.h"
 #import "RollbarProxy.h"
 #import "RollbarScrubbingOptions.h"
-#import "RollbarServer.h"
+#import "RollbarServerConfig.h"
 #import "RollbarPerson.h"
 #import "RollbarModule.h"
 #import "RollbarTelemetryOptions.h"
@@ -23,7 +23,7 @@
 
 #pragma mark - constants
 
-static NSString * const NOTIFIER_VERSION = @"1.10.0";
+static NSString * const NOTIFIER_VERSION = @"1.11.0";
 
 #define NOTIFIER_NAME_PREFIX = @"rollbar-";
 #if TARGET_OS_IPHONE
@@ -60,29 +60,26 @@ static NSString * const DFK_CUSTOM = @"custom";
 
 #pragma mark - initializers
 
-- (id)init {
+- (instancetype)init {
     if (!configurationFilePath) {
         NSString *cachesDirectory = [RollbarCachesDirectory directory];
         configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
     }
 
-    if (self = [super init]) {
-        self.destination = [RollbarDestination new];
-        self.developerOptions = [RollbarDeveloperOptions new];
-        self.loggingOptions = [RollbarLoggingOptions new];
-        self.httpProxy = [RollbarProxy new];
-        self.httpsProxy = [RollbarProxy new];
-        self.dataScrubber = [RollbarScrubbingOptions new];
-        self.telemetry = [RollbarTelemetryOptions new];
-        self.notifier.name = NOTIFIER_NAME;
-        self.notifier.version = NOTIFIER_VERSION;
-        //self.server = [RollbarServer new];
-        //self.person = [RollbarPerson new];
-        //self.customData = [NSMutableDictionary dictionaryWithCapacity:10];
-
-        //[self save];
-    }
-
+    self = [super initWithDictionary:@{
+        DFK_DESTINATION:[RollbarDestination new].jsonFriendlyData,
+        DFK_DEVELOPER_OPTIONS:[RollbarDeveloperOptions new].jsonFriendlyData,
+        DFK_LOGGING_OPTIONS:[RollbarLoggingOptions new].jsonFriendlyData,
+        DFK_HTTP_PROXY:[RollbarProxy new].jsonFriendlyData,
+        DFK_HTTPS_PROXY:[RollbarProxy new].jsonFriendlyData,
+        DFK_DATA_SCRUBBER:[RollbarScrubbingOptions new].jsonFriendlyData,
+        DFK_TELEMETRY:[RollbarTelemetryOptions new].jsonFriendlyData,
+        DFK_NOTIFIER:[[RollbarModule alloc] initWithName:NOTIFIER_NAME version:NOTIFIER_VERSION].jsonFriendlyData
+        //DFK_SERVER: ,
+        //DFK_PERSON: ,
+        //DFK_CUSTOM: ,
+    }];
+    //[self save];
     return self;
 }
 
@@ -145,12 +142,12 @@ static NSString * const DFK_CUSTOM = @"custom";
 
 #pragma mark - Server
 
-- (RollbarServer *)server {
+- (RollbarServerConfig *)server {
     id data = [self safelyGetDictionaryByKey:DFK_SERVER];
-    return [[RollbarServer alloc] initWithDictionary:data];
+    return [[RollbarServerConfig alloc] initWithDictionary:data];
 }
 
-- (void)setServer:(RollbarServer *)value {
+- (void)setServer:(RollbarServerConfig *)value {
     [self setDataTransferObject:value forKey:DFK_SERVER];
 }
 

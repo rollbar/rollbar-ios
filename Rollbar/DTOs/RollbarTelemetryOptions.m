@@ -30,25 +30,24 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
 
 #pragma mark - initializers
 
-- (id)initWithEnabled:(BOOL)enabled
-           captureLog:(BOOL)captureLog
-  captureConnectivity:(BOOL)captureConnectivity
-   viewInputsScrubber:(RollbarScrubbingOptions *)viewInputsScrubber {
+- (instancetype)initWithEnabled:(BOOL)enabled
+                     captureLog:(BOOL)captureLog
+            captureConnectivity:(BOOL)captureConnectivity
+             viewInputsScrubber:(RollbarScrubbingOptions *)viewInputsScrubber {
     
-    self = [super init];
-    if (self) {
-        self.enabled = enabled;
-        self.captureLog = captureLog;
-        self.captureConnectivity = captureConnectivity;
-        self.viewInputsScrubber = viewInputsScrubber;
-        self.maximumTelemetryData = DEFAULT_MAX_TELEMETRY_DATA;
-    }
+    self = [super initWithDictionary:@{
+        DFK_ENABLED_FLAG:[NSNumber numberWithBool:enabled],
+        DFK_CAPTURE_LOG_FLAG:[NSNumber numberWithBool:captureLog],
+        DFK_CAPTURE_CONNECTIVITY_FLAG:[NSNumber numberWithBool:captureConnectivity],
+        DFK_VIEW_INPUTS_SCRUBBER:viewInputsScrubber.jsonFriendlyData,
+        DFK_MAX_TELEMETRY_DATA:[NSNumber numberWithUnsignedInt:DEFAULT_MAX_TELEMETRY_DATA]
+    }];
     return self;
 }
 
-- (id)initWithEnabled:(BOOL)enabled
-         captureLog:(BOOL)captureLog
-  captureConnectivity:(BOOL)captureConnectivity {
+- (instancetype)initWithEnabled:(BOOL)enabled
+                     captureLog:(BOOL)captureLog
+            captureConnectivity:(BOOL)captureConnectivity {
     
     return [self initWithEnabled:enabled
                       captureLog:captureLog
@@ -56,14 +55,14 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
               viewInputsScrubber:[RollbarScrubbingOptions new]];
 }
 
-- (id)initWithEnabled:(BOOL)enabled {
+- (instancetype)initWithEnabled:(BOOL)enabled {
     return [self initWithEnabled:enabled
                       captureLog:DEFAULT_CAPTURE_LOG_FLAG
              captureConnectivity:DEFAULT_CAPTURE_CONNECTIVITY_FLAG
               viewInputsScrubber:[RollbarScrubbingOptions new]];
 }
 
-- (id)init {
+- (instancetype)init {
     return [self initWithEnabled:DEFAULT_ENABLED_FLAG
                       captureLog:DEFAULT_CAPTURE_LOG_FLAG
              captureConnectivity:DEFAULT_CAPTURE_CONNECTIVITY_FLAG
