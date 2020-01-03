@@ -123,14 +123,12 @@
 #pragma mark - de/serialization methods of JSONSupport protocol
 
 - (NSMutableDictionary *)jsonFriendlyData {
+    
     return self->_data;
 }
 
 - (NSData *)serializeToJSONData {
-//    NSData *jsonData = [DataTransferObject dataWithJSONObject:self->_data
-//                                                      options:0
-//                                                        error:nil
-//                                                         safe:true];
+
     BOOL hasValidData = [NSJSONSerialization isValidJSONObject:self->_data];
     if (!hasValidData) {
         SdkLog(@"JSON-invalid internal data.");
@@ -154,31 +152,44 @@
 }
 
 - (nonnull NSString *)serializeToJSONString {
+    
     NSData *jsonData = [self serializeToJSONData];
     NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     return result;
 }
 
 - (BOOL)deserializeFromJSONData:(NSData *)jsonData {
+    
+    self->_data = nil;
+    self->_dataArray = nil;
+    self->_dataDictionary = nil;
+    
     if (!jsonData) {
-        self->_data = [[NSMutableDictionary alloc] initWithCapacity:10];
         return NO;
     }
+    
     NSError *error;
     self->_data =
     [NSJSONSerialization JSONObjectWithData:jsonData
                                     options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
                                       error:&error];
-    if (!self->_data) {
-        self->_data = [[NSMutableDictionary alloc] initWithCapacity:10];
-        SdkLog(@"Error restoring data from JSON NSData instance: %@", jsonData);
-        SdkLog(@"Error details: %@", error);
+    if (self->_data) {
+        
+        if ([self->_data isKindOfClass:[NSDictionary class]]) {
+            self->_dataDictionary = (NSMutableDictionary *) self->_data;
+            return YES;
+        }
+        else if ([self->_data isKindOfClass:[NSArray class]]) {
+            self->_dataArray = (NSMutableArray *) self->_data;
+            return YES;
+        }
         return NO;
     }
-    return YES;
+    return NO;
 }
 
 - (BOOL)deserializeFromJSONString:(NSString *)jsonString {
+    
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     if (!jsonData) {
         SdkLog(@"Error converting an NSString instance to NSData: %@", jsonString);
@@ -188,6 +199,7 @@
 }
 
 - (NSArray *)getDefinedProperties {
+    
     NSMutableArray *result = [NSMutableArray array];
     
     unsigned int outCount, i;
@@ -211,6 +223,7 @@
 }
 
 - (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO {
+    
     return [[self getDefinedProperties] isEqualToArray:[otherDTO getDefinedProperties]];
 }
 
@@ -218,11 +231,30 @@
     if (![object isKindOfClass:[DataTransferObject class]]) {
         return NO;
     }
+//    if ([self class] != [object class]) {
+//        return NO;
+//    }
+    
     DataTransferObject *otherDTO = object;
+    if (self->_data == otherDTO->_data) {
+        return YES;
+    }
     if(![self hasSameDefinedPropertiesAs:otherDTO]) {
         return NO;
     }
-    if (self->_data.count != otherDTO->_data.count) {
+    if (!self->_data && !otherDTO->_data) {
+        return YES;
+    }
+    if (self->_dataDictionary
+        && otherDTO->_dataDictionary
+        && self->_dataDictionary.count != otherDTO->_dataDictionary.count) {
+        
+        return NO;
+    }
+    if (self->_dataArray
+        && otherDTO->_dataArray
+        && self->_dataArray.count != otherDTO->_dataArray.count) {
+        
         return NO;
     }
 //    id thisKeys = self->_data.allKeys;
@@ -255,12 +287,103 @@
     return NO;
 }
 
-#pragma mark - initialization methods
+#pragma mark - Initializers
 
 - (instancetype)initWithJSONString: (NSString *)jsonString {
-    self = [super init];
+    self = [self init];
     if (self) {
         [self deserializeFromJSONString:jsonString];
+    }
+    return self;
+}
+
+- (instancetype)initWithJSONData: (NSData *)data {
+    self = [self init];
+    if (self) {
+        [self deserializeFromJSONData:data];
+    }
+    return self;
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)data;  {
+    
+    self = [super init];
+    if (!self) {
+        return self;
+    }
+            
+    self->_data = nil;
+    self->_dataArray = nil;
+    self->_dataDictionary = nil;
+
+    if (!data) {
+        return self;
+    }
+    
+    if (![DataTransferObject isTransferableObject:data]) {
+        return self;
+    }
+
+    if ([data isKindOfClass:[NSMutableDictionary class]]) {
+        self->_data = (NSMutableDictionary *) data;
+    }
+    else {
+        self->_data = data.mutableCopy;
+    }
+    self->_dataArray = nil;
+    self->_dataDictionary = (NSMutableDictionary *) self->_data;
+    for (NSString *key in self->_dataDictionary.allKeys) {
+        if (self->_dataDictionary[key] == [NSNull null]) {
+            [self->_dataDictionary removeObjectForKey:key];
+        }
+    }
+
+    return self;
+}
+
+- (instancetype)initWithArray:(NSArray *)data {
+    
+    self = [super init];
+    if (!self) {
+        return self;
+    }
+            
+    self->_data = nil;
+    self->_dataArray = nil;
+    self->_dataDictionary = nil;
+
+    if (!data) {
+        return self;
+    }
+    
+    if (![DataTransferObject isTransferableObject:data]) {
+        return self;
+    }
+
+    if ([data isKindOfClass:[NSMutableArray class]]) {
+        self->_data = (NSMutableArray *) data;
+    }
+    else {
+        self->_data = data.mutableCopy;
+    }
+    self->_dataDictionary = nil;
+    self->_dataArray = (NSMutableArray *) self->_data;
+    for (id item in self->_dataArray) {
+        if (item == [NSNull null]) {
+            [self->_dataArray removeObject:item];
+        }
+    }
+
+    return self;
+}
+
+- (instancetype)init {
+    
+    self = [super init];
+    if (self) {
+        self->_data = nil;
+        self->_dataArray = nil;
+        self->_dataDictionary = nil;
     }
     return self;
 }

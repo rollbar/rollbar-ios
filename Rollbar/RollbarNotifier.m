@@ -152,12 +152,7 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)logCrashReport:(NSString*)crashReport {
-//    NSDictionary *payload = [self buildPayloadWithLevel:self.configuration.crashLevel
-//                                                message:nil
-//                                              exception:nil
-//                                                  extra:nil
-//                                            crashReport:crashReport
-//                                                context:nil];
+
     RollbarConfig *config = self.configuration.asRollbarConfig;
     RollbarPayload *payload = [self buildRollbarPayloadWithLevel:config.loggingOptions.crashLevel
                                                          message:nil

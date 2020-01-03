@@ -36,8 +36,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Initializers
 
+/// Initialize this DTO instance with valid JSON data string seed
+/// @param jsonString valid JSON data string seed
+- (instancetype)initWithJSONString:(NSString *)jsonString;
+
+/// Initialize this DTO instance with valid JSON  NSData seed
+/// @param data valid JSON NSData seed
 - (instancetype)initWithJSONData:(NSData *)data;
+
+/// Initialize this DTO instance with valid JSON NSDictionary seed
+/// @param data valid JSON NSDictionary seed
 - (instancetype)initWithDictionary:(NSDictionary *)data;
+
+/// Initialize this DTO instance with valid JSON NSArray seed
+/// @param data valid JSON NSArray seed
 - (instancetype)initWithArray:(NSArray *)data;
 
 @end
