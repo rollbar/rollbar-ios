@@ -24,6 +24,7 @@
 @property (readonly, retain) NSString *rollbarUsername;
 
 #pragma mark - initializers
+
 /// Designated initializer
 /// @param environment Rollbar project environment
 /// @param comment Comment
@@ -36,5 +37,12 @@
                       localUserName:(NSString *)localUserName
                     rollbarUserName:(NSString *)rollbarUserName
 NS_DESIGNATED_INITIALIZER;
+
+/// Initialize this DTO instance with valid JSON NSArray seed
+/// @param data valid JSON NSArray seed
+- (instancetype)initWithArray:(NSArray *)data NS_UNAVAILABLE;
+
+/// Initialize empty DTO
+- (instancetype)init NS_UNAVAILABLE;
 
 @end

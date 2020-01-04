@@ -1,9 +1,13 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "RollbarPayloadTruncator.h"
-#import "Rollbar.h"
 #import "RollbarTestUtil.h"
+#import "../Rollbar/RollbarPayloadTruncator.h"
+#import "../Rollbar/Rollbar.h"
+#import "../Rollbar/RollbarNotifier.h"
+#import "../Rollbar/RollbarConfiguration.h"
+
+@import Rollbar;
 
 @interface PayloadTruncationTests : XCTestCase
 

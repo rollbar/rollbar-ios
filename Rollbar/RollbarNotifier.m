@@ -8,12 +8,13 @@
 #if TARGET_OS_IPHONE
     #import <UIKit/UIKit.h>
 #endif
-#include <sys/utsname.h>
+#import <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
 #import "KSCrash.h"
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
 #import "RollbarCachesDirectory.h"
+#import "RollbarConfiguration.h"
 
 #import "DataTransferObject+Protected.h"
 #import "RollbarPayloadDTOs.h"

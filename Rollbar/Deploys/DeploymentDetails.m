@@ -41,11 +41,4 @@ static NSString * const DFK_STATUS = @"status";
 
 #pragma mark - initializers
 
-- (instancetype)init {
-    return [self initWithEnvironment:nil
-                             comment:nil
-                            revision:nil
-                       localUserName:nil
-                     rollbarUserName:nil];
-}
 @end

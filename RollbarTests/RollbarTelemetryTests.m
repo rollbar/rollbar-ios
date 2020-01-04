@@ -1,9 +1,12 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "Rollbar.h"
 #import "RollbarTestUtil.h"
-#import "RollbarLog.h"
+#import "../Rollbar/Rollbar.h"
+#import "../Rollbar/RollbarLog.h"
+#import "../Rollbar/RollbarConfiguration.h"
+
+@import Rollbar;
 
 @interface RollbarTelemetryTests : XCTestCase
 

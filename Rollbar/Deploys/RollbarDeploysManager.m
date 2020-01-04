@@ -1,6 +1,6 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
-#include <sys/utsname.h>
+#import <sys/utsname.h>
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarDeploysManager.h"
 #import "Deployment.h"

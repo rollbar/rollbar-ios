@@ -23,6 +23,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarConfig : DataTransferObject
+
 #pragma mark - properties
 @property (nonatomic, strong) RollbarDestination *destination;
 @property (nonatomic, strong) RollbarDeveloperOptions *developerOptions;

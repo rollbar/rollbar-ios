@@ -37,29 +37,22 @@ static NSString * const DFK_ROLLBAR_USERNAME = @"rollbar_username";
                       localUserName:(NSString *)localUserName
                     rollbarUserName:(NSString *)rollbarUserName {
     self = [super initWithDictionary:@{
-        DFK_ENVIRONMENT:environment,
-        DFK_COMMENT:comment,
-        DFK_REVISION:revision,
-        DFK_LOCAL_USERNAME:localUserName,
-        DFK_ROLLBAR_USERNAME:rollbarUserName,
+        DFK_ENVIRONMENT:environment ? environment : [NSNull null],
+        DFK_COMMENT:comment ? comment : [NSNull null],
+        DFK_REVISION:revision ? revision : [NSNull null],
+        DFK_LOCAL_USERNAME:localUserName ? localUserName : [NSNull null],
+        DFK_ROLLBAR_USERNAME:rollbarUserName ? rollbarUserName : [NSNull null],
     }];
     return self;
 }
 
-- (instancetype)initWithJSONData:(NSDictionary *)jsonData {
-    return [self initWithEnvironment:jsonData[@"environment"]
-                             comment:jsonData[@"environment"]
-                            revision:jsonData[@"revision"]
-                       localUserName:jsonData[@"local_username"]
-                     rollbarUserName:jsonData[@"user_id"]
+- (instancetype)initWithDictionary:(NSDictionary *)data {
+    return [self initWithEnvironment:data[@"environment"]
+                             comment:data[@"environment"]
+                            revision:data[@"revision"]
+                       localUserName:data[@"local_username"]
+                     rollbarUserName:data[@"user_id"]
             ];
 }
 
-- (instancetype)init {
-    return [self initWithEnvironment:nil
-                             comment:nil
-                            revision:nil
-                       localUserName:nil
-                     rollbarUserName:nil];
-}
 @end

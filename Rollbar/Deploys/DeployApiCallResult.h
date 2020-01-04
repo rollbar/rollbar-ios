@@ -16,6 +16,17 @@
 /// API call's result description
 @property (readonly, copy) NSString *description;
 
+/// Initialize this DTO instance with valid JSON NSDictionary seed
+/// @param data valid JSON NSDictionary seed
+- (instancetype)initWithDictionary:(NSDictionary *)data NS_UNAVAILABLE;
+
+/// Initialize this DTO instance with valid JSON NSArray seed
+/// @param data valid JSON NSArray seed
+- (instancetype)initWithArray:(NSArray *)data NS_UNAVAILABLE;
+
+/// Initialize empty DTO
+- (instancetype)init NS_UNAVAILABLE;
+
 /// Designated initializer
 /// @param httpResponse HTTP response object
 /// @param extraResponseData extra response info
@@ -27,6 +38,11 @@
                       forRequest:(NSURLRequest*)request
 NS_DESIGNATED_INITIALIZER;
 
+/// Convenience initializer
+/// @param httpResponse HTTP response object
+/// @param data extra response data
+/// @param error error (if any)
+/// @param request  corresponding HTTP request
 - (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
                             data:(NSData*)data
                            error:(NSError*)error
