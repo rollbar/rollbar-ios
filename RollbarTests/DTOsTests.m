@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "../Rollbar/RollbarLevel.h"
 #import "../Rollbar/DTOs/RollbarPayload.h"
-#import "../Rollbar/DTOs/RollbarData.h"
 #import "../Rollbar/DTOs/RollbarConfig.h"
 #import "../Rollbar/DTOs/RollbarDestination.h"
 #import "../Rollbar/DTOs/RollbarDeveloperOptions.h"
@@ -32,11 +31,8 @@
 #import "../Rollbar/DTOs/RollbarCallStackFrameContext.h"
 #import "../Rollbar/DTOs/RollbarCallStackFrame.h"
 #import "../Rollbar/DTOs/RollbarTrace.h"
-
-
 #import "../Rollbar/DTOs/RollbarMessage.h"
 #import "../Rollbar/DTOs/RollbarCrashReport.h"
-#import "../Rollbar/DTOs/RollbarBody.h"
 
 @interface DTOsTests : XCTestCase
 

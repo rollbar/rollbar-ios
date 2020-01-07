@@ -10,65 +10,42 @@
 
 @implementation DataTransferObject (Protected)
 
-#pragma mark - Initializers
-
-- (instancetype)initWithJSONData: (NSData *)data {
-    self = [super init];
-    if (self) {
-        [self deserializeFromJSONData:data];
-    }
-    return self;
-}
-
-- (instancetype)initWithDictionary:(NSDictionary *)data;  {
-    
-        self = [super init];
-        if (self) {
-            if (!data) {
-                return self;
-            }
-            else if (![DataTransferObject isTransferableObject:data]) {
-                return self;
-            }
-            else {
-                if ([data isKindOfClass:[NSMutableDictionary class]]) {
-                    self->_data = (NSMutableDictionary *)data;
-                }
-                else {
-                    self->_data = data.mutableCopy;
-                }
-                 
-                for (NSString *key in self->_data.allKeys) {
-                    if (self->_data[key] == [NSNull null]) {
-                        [self->_data removeObjectForKey:key];
-                    }
-                }
-            }
-    //        else if ([data isKindOfClass:[NSMutableDictionary class]]) {
-    //            self->_data = (NSMutableDictionary *) data;
-    //        }
-    //        else if ([data isKindOfClass:[NSDictionary class]]) {
-    //            self->_data = [data mutableCopy];
-    //        }
-        }
-        return self;
-}
-
-- (instancetype)initWithArray:(NSArray *)data {
-    //TODO: implement...
-    return nil;
-}
-
-- (instancetype)init {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"Must use one of initWith...: instead."
-                                 userInfo:nil];
-}
-
 #pragma mark - Property overrides
 
 - (NSString *)description {
     return [self serializeToJSONString];
+}
+
+#pragma mark - Properties
+
+-(NSMutableDictionary *)dataDictionary {
+    if (self->_dataDictionary) {
+        return self->_dataDictionary;
+    }
+    else {
+        if (!self->_data || self->_data == [NSNull null]) {
+            return self->_dataDictionary;
+        }
+        if (!self->_dataArray && [self->_data isKindOfClass:[NSDictionary class]]) {
+            self->_dataDictionary = (NSMutableDictionary *) self->_data;
+        }
+        return self->_dataDictionary;
+    }
+}
+
+-(NSMutableArray *)dataArray {
+    if (self->_dataArray) {
+        return self->_dataArray;
+    }
+    else {
+        if (!self->_data || self->_data == [NSNull null]) {
+            return self->_dataArray;
+        }
+        if (!self->_dataDictionary && [self->_data isKindOfClass:[NSArray class]]) {
+            self->_dataArray = (NSMutableArray *) self->_data;
+        }
+        return self->_dataArray;
+    }
 }
 
 #pragma mark - Core API: transferable data getter/setter by key
@@ -118,8 +95,8 @@
 }
 
 - (NSMutableDictionary *)safelyGetDictionaryByKey:(NSString *)key {
-    NSMutableDictionary *result = [self->_data objectForKey:key];
-    if (nil == result) {
+    NSMutableDictionary *result = [self->_dataDictionary objectForKey:key];
+    if (!result) {
         result = [[NSMutableDictionary alloc] initWithCapacity:5];
         [self->_data setObject:result forKey:key];
     }

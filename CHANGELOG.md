@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.11.2**
+- chore: resolve #227: Fix build warnings.
+
 **1.11.1**
 - fix: resolve #225: Fix cocopods' podspec
 

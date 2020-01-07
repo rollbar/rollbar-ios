@@ -1,11 +1,12 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "RollbarConfiguration.h"
-#import "RollbarNotifier.h"
 #import "RollbarLevel.h"
 #import "RollbarTelemetry.h"
 #import "RollbarTelemetryType.h"
+
+@class RollbarConfiguration;
+@class RollbarNotifier;
 
 @interface Rollbar : NSObject
 

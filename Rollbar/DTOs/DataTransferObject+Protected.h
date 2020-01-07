@@ -14,11 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Dfines the protected DTO interface
 @interface DataTransferObject (Protected)
 
-#pragma mark - Initializers
+#pragma mark - Properties
 
-- (instancetype)initWithJSONData:(NSData *)data;
-- (instancetype)initWithDictionary:(NSDictionary *)data;
-- (instancetype)initWithArray:(NSArray *)data;
+@property (nonatomic, readonly, nullable) NSMutableDictionary *dataDictionary;
+@property (nonatomic, readonly, nullable) NSMutableArray *dataArray;
 
 #pragma mark - Core API: transferable data getter/setter by key
 

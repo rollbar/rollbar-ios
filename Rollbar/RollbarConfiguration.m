@@ -1,7 +1,6 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarConfiguration.h"
-#import "objc/runtime.h"
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarTelemetry.h"
 #import "RollbarCachesDirectory.h"
@@ -17,6 +16,8 @@
 #import "RollbarLoggingOptions.h"
 #import "CaptureIpType.h"
 #import "RollbarLevel.h"
+
+#import "objc/runtime.h"
 
 #pragma mark - Constants
 

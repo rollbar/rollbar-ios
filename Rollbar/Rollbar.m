@@ -3,6 +3,8 @@
 #import "Rollbar.h"
 #import "SdkLog.h"
 #import "RollbarKSCrashInstallation.h"
+#import "RollbarNotifier.h"
+#import "RollbarConfiguration.h"
 
 @implementation Rollbar
 

@@ -6,10 +6,10 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-// the DTO abstraction:
+// The DTO abstraction:
 #import "RollbarDTOAbstraction.h"
 
-// app domain enums:
+// App domain enums:
 #import "TriStateFlag.h"
 #import "CaptureIpType.h"
 #import "HttpMethod.h"

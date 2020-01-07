@@ -8,6 +8,8 @@
 #import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
 #import "../Rollbar/RollbarJSONFriendlyObject.h"
 
+@import Rollbar;
+
 @interface RollbarDeploysObserver : NSObject
     <DeploymentRegistrationObserver,
     DeploymentDetailsObserver,

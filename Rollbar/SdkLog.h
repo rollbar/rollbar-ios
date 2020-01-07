@@ -3,6 +3,6 @@
 #import <Foundation/Foundation.h>
 
 /// SDK-wide logging function.
-/// Use it for all the development/debugging needs.
+/// Use it for all the SDK development/debugging needs.
 /// @param format logged message format
 void SdkLog(NSString *format, ...);

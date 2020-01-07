@@ -1,9 +1,12 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "Rollbar.h"
 #import "RollbarTestUtil.h"
+#import "../Rollbar/Rollbar.h"
 #import "../Rollbar/RollbarConfiguration.h"
+#import "../Rollbar/DTOs/RollbarPayloadDTOs.h"
+
+@import Rollbar;
 
 @interface RollbarConfigurationTests : XCTestCase
 
@@ -159,11 +162,18 @@
 - (void)testEnabled {
     
     RollbarClearLogFile();
-    
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    XCTAssertTrue(logItems.count == 0,
+                  @"logItems count is expected to be 0. Actual value is %lu",
+                  (unsigned long) logItems.count
+                  );
+
+
     Rollbar.currentConfiguration.enabled = NO;
+    Rollbar.currentNotifier.configuration.enabled = NO;
     [Rollbar debug:@"Test1"];
     RollbarFlushFileThread(Rollbar.currentNotifier);
-    NSArray *logItems = RollbarReadLogItemFromFile();
+    logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 0,
                   @"logItems count is expected to be 0. Actual value is %lu",
                   (unsigned long) logItems.count
