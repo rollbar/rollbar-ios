@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <Rollbar/Rollbar.h>
+#import <Rollbar/RollbarConfiguration.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +19,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    // configure Rollbar:
+    RollbarConfiguration *config = [RollbarConfiguration configuration];
+    config.environment = @"samples";
+    // initialize Rollbar:
+    [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
+    // first test
+    [Rollbar info:@"iOSAppWithRollbarViaCarthage_Objective-C: the app just launched. Life is good..."];
+
+    // one more test:
+    [Rollbar log:RollbarInfo
+         message:@"Test message"
+       exception:nil
+            data:@{@"ExtraData1":@"extra value 1", @"ExtraData2":@"extra value 2"}
+         context:@"extra context"];
+    
     return YES;
 }
 

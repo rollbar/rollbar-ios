@@ -14,7 +14,23 @@
 		5520DE1723CE8C62007E522C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5520DE1623CE8C62007E522C /* Assets.xcassets */; };
 		5520DE1A23CE8C62007E522C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5520DE1823CE8C62007E522C /* LaunchScreen.storyboard */; };
 		5520DE1D23CE8C62007E522C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520DE1C23CE8C62007E522C /* main.m */; };
+		5524675723CE97B4008BE971 /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5524675623CE97B4008BE971 /* Rollbar.framework */; };
+		5524675823CE97B4008BE971 /* Rollbar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5524675623CE97B4008BE971 /* Rollbar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5524675923CE97B4008BE971 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5524675823CE97B4008BE971 /* Rollbar.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5520DE0723CE8C5F007E522C /* iOSAppWithRollbarViaCarthage_Objective-C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOSAppWithRollbarViaCarthage_Objective-C.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +45,7 @@
 		5520DE1923CE8C62007E522C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5520DE1B23CE8C62007E522C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5520DE1C23CE8C62007E522C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5524675623CE97B4008BE971 /* Rollbar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rollbar.framework; path = Carthage/Build/iOS/Rollbar.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5524675723CE97B4008BE971 /* Rollbar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +65,7 @@
 			children = (
 				5520DE0923CE8C5F007E522C /* iOSAppWithRollbarViaCarthage_Objective-C */,
 				5520DE0823CE8C5F007E522C /* Products */,
+				5524675523CE97B4008BE971 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,6 +95,14 @@
 			path = "iOSAppWithRollbarViaCarthage_Objective-C";
 			sourceTree = "<group>";
 		};
+		5524675523CE97B4008BE971 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5524675623CE97B4008BE971 /* Rollbar.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,6 +113,8 @@
 				5520DE0323CE8C5F007E522C /* Sources */,
 				5520DE0423CE8C5F007E522C /* Frameworks */,
 				5520DE0523CE8C5F007E522C /* Resources */,
+				5524675923CE97B4008BE971 /* Embed Frameworks */,
+				5524675A23CE98BC008BE971 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -140,6 +169,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5524675A23CE98BC008BE971 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5520DE0323CE8C5F007E522C /* Sources */ = {
@@ -291,6 +340,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "iOSAppWithRollbarViaCarthage_Objective-C/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -308,6 +361,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "iOSAppWithRollbarViaCarthage_Objective-C/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
