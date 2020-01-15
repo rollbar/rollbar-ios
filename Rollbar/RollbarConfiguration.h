@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RollbarLevel.h"
-#import "CaptureIpType.h"
+#import "DTOs/CaptureIpType.h"
 
 @class RollbarConfig;
 @class RollbarData;

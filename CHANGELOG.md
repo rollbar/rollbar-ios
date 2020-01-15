@@ -25,6 +25,10 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.11.3**
+- fix resolve #234: Extra data is not attached to message-like payloads under body.message.extra data field.
+- docs resolve #233: Create example of integrating Rollbar-iOS with ObjC iOS app via Carthage
+
 **1.11.2**
 - chore: resolve #227: Fix build warnings.
 

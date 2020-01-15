@@ -45,6 +45,12 @@ int main(int argc, const char * argv[]) {
         config.captureLogAsTelemetryData = YES;
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
         
+        [Rollbar log:RollbarInfo
+             message:@"Message with extra!"
+           exception:nil
+                data:@{@"ExtraData1":@"value11", @"ExtraData2":@"value22"}
+             context:@"Extra context"];
+        
         NSLog(@"Hello, World!");
         NSLog(@"See you in Telemetry!");
 
