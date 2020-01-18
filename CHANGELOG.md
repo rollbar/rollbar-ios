@@ -26,8 +26,12 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 ## Release Notes
 
 **1.11.3**
-- fix resolve #234: Extra data is not attached to message-like payloads under body.message.extra data field.
-- docs resolve #233: Create example of integrating Rollbar-iOS with ObjC iOS app via Carthage
+- fix: resolve #234: Extra data is not attached to message-like payloads under body.message.extra data field.
+- fix: resolve #235: Fix framework's modulemap.
+- chore: resolve #236: Consolidate info.plist-s of multiple targets.
+- chore: resolve #237: Clean-up the framework's umbrella header.
+- chore: resolve #238: Clean-up the framework's podspec.
+- docs: resolve #233: Create example of integrating Rollbar-iOS with ObjC iOS app via Carthage
 
 **1.11.2**
 - chore: resolve #227: Fix build warnings.

@@ -1,7 +1,7 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import "RollbarKSCrashReportSink.h"
-#import "Rollbar.h"
+#import "RollbarFacade.h"
 #import "KSCrashReportFilterBasic.h"
 #import "KSCrashReportFilterAppleFmt.h"
 

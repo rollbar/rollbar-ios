@@ -1,6 +1,6 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
-#import "Rollbar.h"
+#import "RollbarFacade.h"
 #import "SdkLog.h"
 #import "RollbarKSCrashInstallation.h"
 #import "RollbarNotifier.h"

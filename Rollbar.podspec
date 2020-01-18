@@ -27,6 +27,7 @@ Pod::Spec.new do |s|
 
   s.public_header_files =
                             'Rollbar/Rollbar.h',
+                            'Rollbar/RollbarFacade.h',
                             'Rollbar/RollbarNotifier.h',
                             'Rollbar/RollbarConfiguration.h',
                             'Rollbar/RollbarLevel.h',
