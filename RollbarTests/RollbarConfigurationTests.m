@@ -2,9 +2,6 @@
 
 #import <XCTest/XCTest.h>
 #import "RollbarTestUtil.h"
-#import "../Rollbar/Rollbar.h"
-#import "../Rollbar/RollbarConfiguration.h"
-#import "../Rollbar/DTOs/RollbarPayloadDTOs.h"
 
 @import Rollbar;
 

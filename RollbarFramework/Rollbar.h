@@ -28,7 +28,6 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 // KSCrash dependencies::
 #import <Rollbar/KSCrash.h>
 #import <Rollbar/KSCrashInstallation.h>
-#import <Rollbar/KSCrashInstallation+Private.h>
 #import <Rollbar/KSCrashReportFilterBasic.h>
 #import <Rollbar/KSCrashReportFilterAppleFmt.h>
 #import <Rollbar/KSCrashReportWriter.h>
@@ -40,9 +39,9 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/Rollbar.h>
 #import <Rollbar/RollbarFacade.h>
 #import <Rollbar/RollbarNotifier.h>
+#import <Rollbar/CaptureIpType.h>
 #import <Rollbar/RollbarConfiguration.h>
-#import <Rollbar/RollbarReachability.h>
-#import <Rollbar/RollbarLogger.h>
+#import <Rollbar/RollbarLog.h>
 #import <Rollbar/RollbarKSCrashInstallation.h>
 #import <Rollbar/RollbarKSCrashReportSink.h>
 #import <Rollbar/RollbarTelemetry.h>
@@ -59,7 +58,6 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 
 // Configuration DTOs:
 #import <Rollbar/RollbarLevel.h>
-#import <Rollbar/CaptureIpType.h>
 #import <Rollbar/RollbarConfig.h>
 #import <Rollbar/RollbarDestination.h>
 #import <Rollbar/RollbarDeveloperOptions.h>
@@ -99,7 +97,6 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/RollbarServer.h>
 #import <Rollbar/RollbarClient.h>
 #import <Rollbar/RollbarJavascript.h>
-#import <Rollbar/RollbarPayloadsDTOs.h>
 
 // Deploys API:
 #import <Rollbar/RollbarDeploys.h>
