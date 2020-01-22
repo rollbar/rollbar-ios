@@ -1,6 +1,0 @@
-platform :osx, '10.12'
-use_frameworks!
-
-target 'macOSAppWithRollbarCocoaPod' do
-pod 'Rollbar', '~> 1.8.0-alpha6'
-end
