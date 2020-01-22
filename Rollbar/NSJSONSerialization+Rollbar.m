@@ -1,7 +1,7 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import "NSJSONSerialization+Rollbar.h"
-#import "Rollbar.h"
+#import "RollbarFacade.h"
 #import "SdkLog.h"
 
 @implementation NSJSONSerialization (Rollbar)

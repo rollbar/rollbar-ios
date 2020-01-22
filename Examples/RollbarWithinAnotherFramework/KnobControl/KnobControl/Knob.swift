@@ -27,6 +27,7 @@
 /// THE SOFTWARE.
 
 import UIKit
+import Rollbar
 
 @IBDesignable public class Knob: UIControl {
   /** Contains the minimum value of the receiver. */
@@ -117,6 +118,14 @@ import UIKit
     addGestureRecognizer(gestureRecognizer)
   
     Rollbar.info("The Knob initialized!")
+    
+    // one more test:
+    Rollbar.log(RollbarLevel.info,
+                message:"Test message",
+                exception:nil,
+                data:["ExtraData1": "extra value 1", "ExtraData2": "extra value 2"],
+                context:"extra context")
+
   }
 
   @objc private func handleGesture(_ gesture: RotationGestureRecognizer) {

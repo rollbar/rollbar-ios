@@ -461,6 +461,17 @@ static BOOL isNetworkReachable = YES;
         return nil;
     }
     
+    // this is done only for backward campatibility for customers that used to rely on this undocumented
+    // extra data with a message:
+    if (message && extra) {
+//        NSMutableDictionary *msg = body.message.jsonFriendlyData.mutableCopy;
+//        [msg setObject:extra forKey:@"extra"];
+//        body.message = [[RollbarMessage alloc] initWithDictionary:msg];
+
+        [body.message setData:extra byKey:@"extra"];
+    }
+    
+
     // compile payload data:
     RollbarData *data = [[RollbarData alloc] initWithEnvironment:config.destination.environment
                                                             body:body];

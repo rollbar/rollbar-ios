@@ -1,12 +1,6 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <XCTest/XCTest.h>
-#import "../Rollbar/Deploys/Deployment.h"
-#import "../Rollbar/Deploys/DeploymentDetails.h"
-#import "../Rollbar/Deploys/DeployApiCallResult.h"
-#import "../Rollbar/Deploys/RollbarDeploysManager.h"
-#import "../Rollbar/Deploys/RollbarDeploysProtocol.h"
-#import "../Rollbar/RollbarJSONFriendlyObject.h"
 
 @import Rollbar;
 

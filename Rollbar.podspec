@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-  s.version                   = "1.11.2"
+  s.version                   = "1.11.3"
   s.name                      = "Rollbar"
   s.summary                   = "Objective-C library for crash reporting and logging with Rollbar. It works on iOS and macOS."
   s.description               = <<-DESC
@@ -27,6 +27,7 @@ Pod::Spec.new do |s|
 
   s.public_header_files =
                             'Rollbar/Rollbar.h',
+                            'Rollbar/RollbarFacade.h',
                             'Rollbar/RollbarNotifier.h',
                             'Rollbar/RollbarConfiguration.h',
                             'Rollbar/RollbarLevel.h',
@@ -77,7 +78,7 @@ Pod::Spec.new do |s|
                             'Rollbar/DTOs/RollbarServer.h',
                             'Rollbar/DTOs/RollbarClient.h',
                             'Rollbar/DTOs/RollbarJavascript.h',
-                            'Rollbar/DTOs/RollbarPayloadsDTOs.h',
+                            'Rollbar/DTOs/RollbarPayloadDTOs.h',
                             'KSCrash/Source/KSCrash/Recording/KSCrash.h',
                             'KSCrash/Source/KSCrash/Installations/KSCrashInstallation.h',
                             'KSCrash/Source/KSCrash/Installations/KSCrashInstallation+Private.h',

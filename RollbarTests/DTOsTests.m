@@ -7,32 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "../Rollbar/RollbarLevel.h"
-#import "../Rollbar/DTOs/RollbarPayload.h"
-#import "../Rollbar/DTOs/RollbarConfig.h"
-#import "../Rollbar/DTOs/RollbarDestination.h"
-#import "../Rollbar/DTOs/RollbarDeveloperOptions.h"
-#import "../Rollbar/DTOs/RollbarProxy.h"
-#import "../Rollbar/DTOs/RollbarScrubbingOptions.h"
-#import "../Rollbar/DTOs/RollbarServerConfig.h"
-#import "../Rollbar/DTOs/RollbarPerson.h"
-#import "../Rollbar/DTOs/RollbarModule.h"
-#import "../Rollbar/DTOs/RollbarTelemetryOptions.h"
-#import "../Rollbar/DTOs/RollbarLoggingOptions.h"
-#import "../Rollbar/DTOs/CaptureIpType.h"
-#import "../Rollbar/DTOs/RollbarPayload.h"
-#import "../Rollbar/DTOs/RollbarData.h"
-#import "../Rollbar/DTOs/RollbarBody.h"
-#import "../Rollbar/DTOs/RollbarJavascript.h"
-#import "../Rollbar/DTOs/RollbarClient.h"
-#import "../Rollbar/DTOs/RollbarServer.h"
-#import "../Rollbar/DTOs/RollbarRequest.h"
-#import "../Rollbar/DTOs/RollbarException.h"
-#import "../Rollbar/DTOs/RollbarCallStackFrameContext.h"
-#import "../Rollbar/DTOs/RollbarCallStackFrame.h"
-#import "../Rollbar/DTOs/RollbarTrace.h"
-#import "../Rollbar/DTOs/RollbarMessage.h"
-#import "../Rollbar/DTOs/RollbarCrashReport.h"
+
+@import Rollbar;
 
 @interface DTOsTests : XCTestCase
 
