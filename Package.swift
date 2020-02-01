@@ -1,10 +1,4 @@
-//
-//  Package.swift
-//  Rollbar
-//
-//  Created by Andrey Kornich on 2020-01-30.
-//  Copyright © 2020 Rollbar. All rights reserved.
-//
+// swift-tools-version:5.1
 
 import PackageDescription
 
