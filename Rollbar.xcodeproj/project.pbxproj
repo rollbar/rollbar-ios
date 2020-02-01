@@ -1352,6 +1352,7 @@
 		55C67FED23A03913000E4BBF /* RollbarCallStackFrameContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarCallStackFrameContext.m; sourceTree = "<group>"; };
 		55CB01DD23B2976300E455DE /* RollbarDeploysDTOs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeploysDTOs.h; sourceTree = "<group>"; };
 		55CB01E223B2978A00E455DE /* RollbarDeploys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeploys.h; sourceTree = "<group>"; };
+		55CFDEB723E39B05007AD2D9 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLoggingOptions.h; sourceTree = "<group>"; };
 		55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLoggingOptions.m; sourceTree = "<group>"; };
 		55F10FDE236120190043ADC0 /* RollbarDestination.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDestination.h; sourceTree = "<group>"; };
@@ -1748,6 +1749,7 @@
 		96D2220118D8E40600933444 = {
 			isa = PBXGroup;
 			children = (
+				55CFDEB723E39B05007AD2D9 /* Package.swift */,
 				55250C012345686A0073ABB9 /* CHANGELOG.md */,
 				55250C022345686A0073ABB9 /* Rollbar.podspec */,
 				96D2220F18D8E40600933444 /* Rollbar */,
@@ -4211,7 +4213,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.11.3;
+				CURRENT_PROJECT_VERSION = 1.12.0;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4275,7 +4277,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.11.3;
+				CURRENT_PROJECT_VERSION = 1.12.0;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
