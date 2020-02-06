@@ -13,6 +13,6 @@ let package = Package(name: "Rollbar",
                         ],
                       targets: [
                         .target(name: "KSCrash", path: "KSCrash"),
-                        .target(name: "Rollbar-SPM", path: "Rollbar", dependencies: ["KSCrash"]),
+                        .target(name: "Rollbar-SPM", dependencies: ["KSCrash"], path: "Rollbar"),
                         ]
 )
