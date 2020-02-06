@@ -12,7 +12,7 @@ let package = Package(name: "Rollbar",
                         .library(name: "Rollbar", targets: ["Rollbar-SPM"])
                         ],
                       targets: [
-                        .target(name: "KSCrash", path: "KSCrash"),
+                        .target(name: "KSCrash", path: "KSCrash", publicHeadersPath: "Source/Framework"),
                         .target(name: "Rollbar-SPM", dependencies: ["KSCrash"], path: "Rollbar"),
                         ]
 )
