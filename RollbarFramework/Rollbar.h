@@ -6,6 +6,9 @@
 //  Copyright © 2020 Rollbar. All rights reserved.
 //
 
+#ifndef KSCrashFramework_h
+#define KSCrashFramework_h
+
 #import <Foundation/Foundation.h>
 
 //#if TARGET_OS_IOS
@@ -110,5 +113,4 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/Deployment.h>
 #import <Rollbar/DeploymentDetails.h>
 
-
-
+#endif /* KSCrashFramework_h */
