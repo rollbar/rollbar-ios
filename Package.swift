@@ -70,6 +70,7 @@ let package = Package(name: "Rollbar",
                                 ],
                                 publicHeadersPath: "RollbarFramework",
                                 cSettings: [
+                                    .headerSearchPath("Rollbar"),
                                     .headerSearchPath("Rollbar/DTOs"),
                                     .headerSearchPath("Rollbar/Deploys"),
                                     ]
