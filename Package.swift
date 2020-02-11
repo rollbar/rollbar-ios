@@ -61,5 +61,8 @@ let package = Package(name: "Rollbar",
                         .target(name: "Rollbar-SPM",
                                 dependencies: ["KSCrash"],
                                 path: "Rollbar"),
-                        ]
+                        ],
+                      swiftLanguageVersions: [.v5],
+                      cLanguageStandard: .gnu99,
+                      cxxLanguageStandard: .gnucxx11
 )
