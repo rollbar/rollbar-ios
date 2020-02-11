@@ -29,7 +29,12 @@ let package = Package(name: "Rollbar",
                                 cxxSettings: [
                                     .headerSearchPath("KSCrash/Recording/Tools"),
                                     .headerSearchPath("KSCrash/swift/Basic"),
-                                    ]
+                                    ],
+                                swiftSettings: [],
+                                linkerSettings: [
+                                    .linkedLibrary("libz"),
+                                    .linkedLibrary("libc++"),
+                                ]
                         ),
                         .target(name: "Rollbar-SPM",
                                 dependencies: ["KSCrash"],
