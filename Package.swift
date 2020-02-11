@@ -73,6 +73,7 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("Rollbar"),
                                     .headerSearchPath("Rollbar/DTOs"),
                                     .headerSearchPath("Rollbar/Deploys"),
+                                    .headerSearchPath("KSCrash/Source/KSCrash/Recording"),
                                     ]
                         ),
                       ],
