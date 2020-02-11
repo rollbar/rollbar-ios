@@ -74,6 +74,7 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("Rollbar/DTOs"),
                                     .headerSearchPath("Rollbar/Deploys"),
                                     .headerSearchPath("KSCrash/Source/KSCrash/Recording"),
+                                    .headerSearchPath("KSCrash/Source/KSCrash/Recording/Monitors"),
                                     .headerSearchPath("KSCrash/Source/KSCrash/Reporting/Filters"),
                                     ]
                         ),
