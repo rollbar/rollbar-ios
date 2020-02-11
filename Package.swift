@@ -27,6 +27,7 @@ let package = Package(name: "Rollbar",
                                     //.headerSearchPath("KSCrash/swift/Basic"),
                                     ],
                                 cxxSettings: [
+                                    .headerSearchPath("KSCrash/Recording/Tools"),
                                     .headerSearchPath("KSCrash/swift/Basic"),
                                     ]
                         ),
