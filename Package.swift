@@ -77,6 +77,10 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("KSCrash/Source/KSCrash/Recording"),
                                     .headerSearchPath("KSCrash/Source/KSCrash/Recording/Monitors"),
                                     .headerSearchPath("KSCrash/Source/KSCrash/Reporting/Filters"),
+                                    ],
+                                    linkerSettings: [
+                                        .linkedLibrary("libz"),
+                                        .linkedLibrary("libc++"),
                                     ]
                         ),
                       ],
