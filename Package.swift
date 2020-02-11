@@ -19,7 +19,7 @@ let package = Package(name: "Rollbar",
                                 exclude: ["Common-Examples", "CrashProbe", "KSCrash-Tests"],
                                 publicHeadersPath: "Framework",
                                 cSettings: [
-                                    .headerSearchPath("KSCrash"),
+                                    .headerSearchPath("KSCrash/llvm/Support"),
                                     ]),
                         .target(name: "Rollbar-SPM",
                                 dependencies: ["KSCrash"],
