@@ -23,8 +23,12 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("KSCrash/llvm/Config"),
                                     .headerSearchPath("KSCrash/llvm/ADT"),
                                     .headerSearchPath("KSCrash/Recording"),
+                                    //.headerSearchPath("KSCrash/swift/Basic"),
+                                    ],
+                                cxxSettings: [
                                     .headerSearchPath("KSCrash/swift/Basic"),
-                                    ]),
+                                    ]
+                        ),
                         .target(name: "Rollbar-SPM",
                                 dependencies: ["KSCrash"],
                                 path: "Rollbar"),
