@@ -30,7 +30,7 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("KSCrash/Recording/Tools"),
                                     .headerSearchPath("KSCrash/swift/Basic"),
                                     ],
-                                swiftSettings: [],
+                                //swiftSettings: [],
                                 linkerSettings: [
                                     .linkedLibrary("libz"),
                                     .linkedLibrary("libc++"),
