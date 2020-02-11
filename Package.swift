@@ -21,6 +21,7 @@ let package = Package(name: "Rollbar",
                                 cSettings: [
                                     .headerSearchPath("KSCrash/llvm/Support"),
                                     .headerSearchPath("KSCrash/llvm/Config"),
+                                    .headerSearchPath("KSCrash/llvm/ADT"),
                                     ]),
                         .target(name: "Rollbar-SPM",
                                 dependencies: ["KSCrash"],
