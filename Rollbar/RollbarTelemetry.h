@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "DTOs/RollbarLevel.h"
+#import "RollbarLevel.h"
 #import "RollbarTelemetryType.h"
 
 #define NSLog(args...) [RollbarTelemetry NSLogReplacement:args];
