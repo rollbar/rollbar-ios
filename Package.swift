@@ -49,8 +49,6 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("KSCrash/Reporting/Tools"),
                                     .headerSearchPath("KSCrash/swift"),
                                     .headerSearchPath("KSCrash/swift/Basic"),
-//                                    .headerSearchPath("KSCrash/Recording/Tools"),
-//                                    .headerSearchPath("KSCrash/swift/Basic"),
                                     ],
                                 //swiftSettings: [],
                                 linkerSettings: [
