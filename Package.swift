@@ -9,9 +9,9 @@ let package = Package(name: "Rollbar",
                          //.watchOS(.v3)
                         ],
                       products: [
-                        .library(name: "Rollbar", targets: ["Rollbar-SPM"]),
-                        .library(name: "RollbarStatic", type: .static, targets: ["Rollbar-SPM"]),
-                        .library(name: "RollbarDynamic", type: .dynamic, targets: ["Rollbar-SPM"]),
+                        .library(name: "Rollbar", targets: ["Rollbar"]),
+                        //.library(name: "RollbarStatic", type: .static, targets: ["Rollbar"]),
+                        //.library(name: "RollbarDynamic", type: .dynamic, targets: ["Rollbar"]),
                         ],
                       targets: [
                         .target(name: "KSCrash",
@@ -49,14 +49,14 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("KSCrash/Reporting/Tools"),
                                     .headerSearchPath("KSCrash/swift"),
                                     .headerSearchPath("KSCrash/swift/Basic"),
-                                    ],
+                                    ]//,
                                 //swiftSettings: [],
-                                linkerSettings: [
-                                    .linkedLibrary("libz"),
-                                    .linkedLibrary("libc++"),
-                                ]
+//                                linkerSettings: [
+//                                    .linkedLibrary("libz"),
+//                                    .linkedLibrary("libc++"),
+//                                ]
                         ),
-                        .target(name: "Rollbar-SPM",
+                        .target(name: "Rollbar",
                                 dependencies: ["KSCrash"],
                                 path: ".",//"Rollbar",
                                 exclude: [
@@ -77,11 +77,11 @@ let package = Package(name: "Rollbar",
                                     .headerSearchPath("KSCrash/Source/KSCrash/Recording"),
                                     .headerSearchPath("KSCrash/Source/KSCrash/Recording/Monitors"),
                                     .headerSearchPath("KSCrash/Source/KSCrash/Reporting/Filters"),
-                                    ],
-                                    linkerSettings: [
-                                        .linkedLibrary("libz"),
-                                        .linkedLibrary("libc++"),
-                                    ]
+                                    ]//,
+//                                    linkerSettings: [
+//                                        .linkedLibrary("libz"),
+//                                        .linkedLibrary("libc++"),
+//                                    ]
                         ),
                       ],
                       swiftLanguageVersions: [.v5],
