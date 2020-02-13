@@ -62,6 +62,8 @@
 		55178C40234DACFC0081E84A /* RollbarPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 55178C3A234DACFC0081E84A /* RollbarPayload.m */; };
 		55178C41234DACFC0081E84A /* RollbarPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 55178C3A234DACFC0081E84A /* RollbarPayload.m */; };
 		55178C42234DACFC0081E84A /* RollbarPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 55178C3A234DACFC0081E84A /* RollbarPayload.m */; };
+		5518C80C23F4E527005692D2 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5518C80D23F4E529005692D2 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5526B34D237B62B300242958 /* RollbarLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5526B34B237B62B300242958 /* RollbarLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5526B34E237B62B300242958 /* RollbarLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5526B34B237B62B300242958 /* RollbarLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5526B34F237B62B300242958 /* RollbarLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5526B34B237B62B300242958 /* RollbarLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1306,6 +1308,7 @@
 		554B97BD238F9F93003DC4ED /* RollbarException.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarException.m; sourceTree = "<group>"; };
 		554B97C6238FA0C1003DC4ED /* RollbarCallStackFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarCallStackFrame.h; sourceTree = "<group>"; };
 		554B97C7238FA0C1003DC4ED /* RollbarCallStackFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarCallStackFrame.m; sourceTree = "<group>"; };
+		5552091723F4D77F00D81666 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		557A4E17236262460034BB55 /* RollbarScrubbingOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarScrubbingOptions.h; sourceTree = "<group>"; };
 		557A4E18236262460034BB55 /* RollbarScrubbingOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarScrubbingOptions.m; sourceTree = "<group>"; };
 		557A4E212362AD100034BB55 /* RollbarServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarServerConfig.h; sourceTree = "<group>"; };
@@ -1631,6 +1634,7 @@
 		343AB4531CC9AAE600962943 /* RollbarFramework */ = {
 			isa = PBXGroup;
 			children = (
+				5552091723F4D77F00D81666 /* module.modulemap */,
 				55309F1F23D25DE900B94361 /* Info.plist */,
 				343AB4541CC9AAE600962943 /* Rollbar.h */,
 			);
@@ -2284,6 +2288,7 @@
 				55454B3122C69DD100D4A414 /* KSStackCursor_MachineContext.h in Headers */,
 				55454AB222C69DBC00D4A414 /* KSCrashMonitor_Signal.h in Headers */,
 				55454AC222C69DBC00D4A414 /* KSCrashMonitor_NSException.h in Headers */,
+				5518C80D23F4E529005692D2 /* Rollbar.h in Headers */,
 				55454A3022C69C1000D4A414 /* RollbarTelemetry.h in Headers */,
 				55454A8B22C69DA300D4A414 /* KSCrashReportSinkEMail.h in Headers */,
 				55454B5022C69DDE00D4A414 /* KSCrash.h in Headers */,
@@ -2447,6 +2452,7 @@
 				554549F522C69A1E00D4A414 /* RollbarDeploysProtocol.h in Headers */,
 				55454AF322C69DD100D4A414 /* KSObjC.h in Headers */,
 				55454A9B22C69DBB00D4A414 /* KSCrashMonitor_Signal.h in Headers */,
+				5518C80C23F4E527005692D2 /* Rollbar.h in Headers */,
 				55454B8522C69E2000D4A414 /* SwiftStrings.h in Headers */,
 				55454A6B22C69D9700D4A414 /* KSCString.h in Headers */,
 				55927098234FC7D00087E01F /* RollbarData.h in Headers */,
@@ -3733,6 +3739,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-iOS$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)-iOS$(EFFECTIVE_PLATFORM_NAME)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(IPHONEOS_DEPLOYMENT_TARGET)";
 				MACOSX_DEPLOYMENT_TARGET = "$(MACOSX_DEPLOYMENT_TARGET)";
@@ -3762,6 +3769,7 @@
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)-iOS$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(IPHONEOS_DEPLOYMENT_TARGET)";
 				MACOSX_DEPLOYMENT_TARGET = "$(MACOSX_DEPLOYMENT_TARGET)";
@@ -4214,6 +4222,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.12.0;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4278,6 +4287,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1.12.0;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
