@@ -6,8 +6,8 @@
 //  Copyright © 2020 Rollbar. All rights reserved.
 //
 
-#ifndef KSCrashFramework_h
-#define KSCrashFramework_h
+#ifndef Rollbar_h
+#define Rollbar_h
 
 #import <Foundation/Foundation.h>
 
@@ -36,20 +36,17 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/KSCrashReportWriter.h>
 #import <Rollbar/KSCrashReportFilter.h>
 #import <Rollbar/KSCrashMonitorType.h>
-#import <Rollbar/RollbarKSCrashReportSink.h>
 
 // Notifier API:
-#import <Rollbar/Rollbar.h>
+//#import <Rollbar/Rollbar.h>
 #import <Rollbar/RollbarFacade.h>
 #import <Rollbar/RollbarNotifier.h>
-#import <Rollbar/CaptureIpType.h>
 #import <Rollbar/RollbarConfiguration.h>
 #import <Rollbar/RollbarLog.h>
 #import <Rollbar/RollbarKSCrashInstallation.h>
 #import <Rollbar/RollbarKSCrashReportSink.h>
 #import <Rollbar/RollbarTelemetry.h>
 #import <Rollbar/RollbarTelemetryType.h>
-#import <Rollbar/RollbarLog.h>
 
 // DTO Abstraction:
 #import <Rollbar/RollbarDTOAbstraction.h>
@@ -60,6 +57,7 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/RollbarDTOAbstraction.h>
 
 // Configuration DTOs:
+#import <Rollbar/CaptureIpType.h>
 #import <Rollbar/RollbarLevel.h>
 #import <Rollbar/RollbarConfig.h>
 #import <Rollbar/RollbarDestination.h>
@@ -113,4 +111,4 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/Deployment.h>
 #import <Rollbar/DeploymentDetails.h>
 
-#endif /* KSCrashFramework_h */
+#endif /* Rollbar_h */
