@@ -1286,6 +1286,8 @@
 		5526B34B237B62B300242958 /* RollbarLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLog.h; sourceTree = "<group>"; };
 		5526B34C237B62B300242958 /* RollbarLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLog.m; sourceTree = "<group>"; };
 		55309F1F23D25DE900B94361 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55413A9423F61CAE00F34CC2 /* Rollbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rollbar.h; sourceTree = "<group>"; };
+		55413A9523F61CAE00F34CC2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		554549C322C68DBA00D4A414 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		554549DD22C68E8F00D4A414 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55454B9F22C6A97600D4A414 /* Rollbar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rollbar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1734,6 +1736,15 @@
 			path = DTOs;
 			sourceTree = "<group>";
 		};
+		55413A9323F61C4F00F34CC2 /* RollbarSwiftPM */ = {
+			isa = PBXGroup;
+			children = (
+				55413A9523F61CAE00F34CC2 /* module.modulemap */,
+				55413A9423F61CAE00F34CC2 /* Rollbar.h */,
+			);
+			path = RollbarSwiftPM;
+			sourceTree = "<group>";
+		};
 		55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1761,6 +1772,7 @@
 				96D2220F18D8E40600933444 /* Rollbar */,
 				96D2222318D8E40600933444 /* RollbarTests */,
 				343AB4531CC9AAE600962943 /* RollbarFramework */,
+				55413A9323F61C4F00F34CC2 /* RollbarSwiftPM */,
 				55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */,
 				55454BC722C6A9CC00D4A414 /* RollbarKit-macOSTests */,
 				96D2220C18D8E40600933444 /* Frameworks */,

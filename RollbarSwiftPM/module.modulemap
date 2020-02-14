@@ -3,4 +3,6 @@ framework module Rollbar {
 	
 	export *
 	module * { export * }
+
+    requires objc
 }
