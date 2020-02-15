@@ -124,7 +124,7 @@
 		550647D122D4097300530813 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Andrey Kornich (Wide Spectrum Computing LLC)";
 				TargetAttributes = {
 					550647D822D4097300530813 = {
@@ -351,6 +351,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macOSAppWithRollbarCocoaPod/macOSAppWithRollbarCocoaPod.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = macOSAppWithRollbarCocoaPod/Info.plist;
@@ -369,6 +370,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macOSAppWithRollbarCocoaPod/macOSAppWithRollbarCocoaPod.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = macOSAppWithRollbarCocoaPod/Info.plist;
