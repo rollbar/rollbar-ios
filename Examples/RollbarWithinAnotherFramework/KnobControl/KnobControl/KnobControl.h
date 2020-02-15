@@ -26,10 +26,14 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import <SystemConfiguration/SystemConfiguration.h>
-#import <Rollbar/Rollbar.h>
-#import <Rollbar/RollbarConfiguration.h>
+//#import <UIKit/UIKit.h>
+//#import <SystemConfiguration/SystemConfiguration.h>
+//#import <Rollbar/Rollbar.h>
+//#import <Rollbar/RollbarConfiguration.h>
+
+@import UIKit;
+@import SystemConfiguration;
+@import Rollbar;
 
 //! Project version number for KnobControl.
 FOUNDATION_EXPORT double KnobControlVersionNumber;
