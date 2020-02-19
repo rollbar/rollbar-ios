@@ -27,6 +27,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 **1.12.0**
 - fix: resolve #248: 'NSJSONWritingSortedKeys' is only available on iOS 11.0 or newer.
+- chore: resolve #250: Remove unused classes, protocols, etc.
 - feat: ref #212: Add Swift Package Manager support.
 
 **1.11.3**

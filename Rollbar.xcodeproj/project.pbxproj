@@ -74,12 +74,6 @@
 		5526B354237B62B300242958 /* RollbarLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 5526B34C237B62B300242958 /* RollbarLog.m */; };
 		552C3BF022D3E76D00F97C88 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		552C3BF122D3E76E00F97C88 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		554549EB22C699BC00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		554549EC22C699BE00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		554549ED22C699CF00D4A414 /* RollbarJSONFriendlyObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		554549EE22C699D000D4A414 /* RollbarJSONFriendlyObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		554549EF22C699E900D4A414 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
-		554549F022C699ED00D4A414 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
 		554549F122C699FB00D4A414 /* DeployApiCallResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D93214CB35F00761B20 /* DeployApiCallResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554549F222C699FC00D4A414 /* DeployApiCallResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D93214CB35F00761B20 /* DeployApiCallResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554549F322C69A1400D4A414 /* DeployApiCallResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D96214CB39000761B20 /* DeployApiCallResult.m */; };
@@ -505,12 +499,6 @@
 		55454BA822C6A97700D4A414 /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55454B9F22C6A97600D4A414 /* Rollbar.framework */; };
 		55454BAD22C6A97700D4A414 /* RollbarKit_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55454BAC22C6A97700D4A414 /* RollbarKit_iOSTests.m */; };
 		55454BC922C6A9CC00D4A414 /* RollbarKit_macOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55454BC822C6A9CC00D4A414 /* RollbarKit_macOSTests.m */; };
-		55454BD222C6AB2500D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55454BD322C6AB2700D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55454BD422C6AB3500D4A414 /* RollbarJSONFriendlyObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55454BD522C6AB3700D4A414 /* RollbarJSONFriendlyObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55454BD622C6AB5400D4A414 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
-		55454BD722C6AB5500D4A414 /* RollbarJSONFriendlyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */; };
 		55454BD822C6AB6200D4A414 /* DeployApiCallResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D93214CB35F00761B20 /* DeployApiCallResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55454BD922C6AB6300D4A414 /* DeployApiCallResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 55143D93214CB35F00761B20 /* DeployApiCallResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55454BDA22C6AB6E00D4A414 /* DeployApiCallResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 55143D96214CB39000761B20 /* DeployApiCallResult.m */; };
@@ -1273,9 +1261,6 @@
 		55143D90214C80C800761B20 /* DeploymentDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeploymentDetails.h; sourceTree = "<group>"; };
 		55143D93214CB35F00761B20 /* DeployApiCallResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeployApiCallResult.h; sourceTree = "<group>"; };
 		55143D96214CB39000761B20 /* DeployApiCallResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeployApiCallResult.m; sourceTree = "<group>"; };
-		55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarJSONFriendlyProtocol.h; sourceTree = "<group>"; };
-		55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarJSONFriendlyObject.h; sourceTree = "<group>"; };
-		55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarJSONFriendlyObject.m; sourceTree = "<group>"; };
 		55143DA02151A83D00761B20 /* RollbarDeploysTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarDeploysTests.m; sourceTree = "<group>"; };
 		55178C2F234D9E6E0081E84A /* DataTransferObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataTransferObject.m; sourceTree = "<group>"; };
 		55178C34234D9EA20081E84A /* DataTransferObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataTransferObject.h; sourceTree = "<group>"; };
@@ -1811,9 +1796,6 @@
 			isa = PBXGroup;
 			children = (
 				55178C2E234D998F0081E84A /* DTOs */,
-				55143D98215016A100761B20 /* RollbarJSONFriendlyProtocol.h */,
-				55143D9A21501E5B00761B20 /* RollbarJSONFriendlyObject.h */,
-				55143D9D21501E8E00761B20 /* RollbarJSONFriendlyObject.m */,
 				55143D7C214C5E2200761B20 /* Deploys */,
 				B54F19511FDA6CA600A6AB0C /* KSCrash */,
 				B54736881FB405F2007F99D7 /* NSJSONSerialization+Rollbar.h */,
@@ -2193,9 +2175,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554549EC22C699BE00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454B0722C69DD100D4A414 /* KSCPU_Apple.h in Headers */,
-				554549EE22C699D000D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454B8222C69E1300D4A414 /* KSCrashInstallationVictory.h in Headers */,
 				55454B1922C69DD100D4A414 /* KSThread.h in Headers */,
 				55454B4922C69DDE00D4A414 /* KSCrashC.h in Headers */,
@@ -2357,8 +2337,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554549EB22C699BC00D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
-				554549ED22C699CF00D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55A6FA5B23A8772300DE091A /* RollbarPayloadDTOs.h in Headers */,
 				55454B5F22C69E0500D4A414 /* Casting.h in Headers */,
 				55454A5622C69D5B00D4A414 /* KSCrashReportFilterSets.h in Headers */,
@@ -2522,10 +2500,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5583C6C72396137D00C52617 /* RollbarClient.h in Headers */,
-				55454BD222C6AB2500D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454C2E22C6AE3800D4A414 /* KSCrashReportFilterAlert.h in Headers */,
 				55454D5E22C6AED300D4A414 /* KSCrashInstallationVictory.h in Headers */,
-				55454BD422C6AB3500D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454D0022C6AE8C00D4A414 /* KSStackCursor.h in Headers */,
 				55454C0322C6AC9300D4A414 /* RollbarKSCrashReportSink.h in Headers */,
 				5583C6D1239613B700C52617 /* RollbarJavascript.h in Headers */,
@@ -2686,10 +2662,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5583C6C82396137D00C52617 /* RollbarClient.h in Headers */,
-				55454BD322C6AB2700D4A414 /* RollbarJSONFriendlyProtocol.h in Headers */,
 				55454C3C22C6AE3900D4A414 /* KSCrashReportFilterAlert.h in Headers */,
 				55454D6D22C6AED400D4A414 /* KSCrashInstallationVictory.h in Headers */,
-				55454BD522C6AB3700D4A414 /* RollbarJSONFriendlyObject.h in Headers */,
 				55454D3922C6AE8D00D4A414 /* KSStackCursor.h in Headers */,
 				55454C0422C6AC9400D4A414 /* RollbarKSCrashReportSink.h in Headers */,
 				5583C6D2239613B700C52617 /* RollbarJavascript.h in Headers */,
@@ -3170,7 +3144,6 @@
 				55454B6B22C69E1300D4A414 /* KSCrashInstallationEmail.m in Sources */,
 				559270A623500C950087E01F /* DataTransferObject+Protected.m in Sources */,
 				55454A5522C69D5B00D4A414 /* KSCrashReportFilterGZip.m in Sources */,
-				554549EF22C699E900D4A414 /* RollbarJSONFriendlyObject.m in Sources */,
 				55F10FEE236135EF0043ADC0 /* RollbarDeveloperOptions.m in Sources */,
 				55454A2122C69B7700D4A414 /* RollbarLevel.m in Sources */,
 				5599052923635F30003C41F3 /* RollbarPerson.m in Sources */,
@@ -3305,7 +3278,6 @@
 				55454B7A22C69E1300D4A414 /* KSCrashInstallationEmail.m in Sources */,
 				559270A723500C950087E01F /* DataTransferObject+Protected.m in Sources */,
 				55454A6322C69D5B00D4A414 /* KSCrashReportFilterGZip.m in Sources */,
-				554549F022C699ED00D4A414 /* RollbarJSONFriendlyObject.m in Sources */,
 				55F10FEF236135EF0043ADC0 /* RollbarDeveloperOptions.m in Sources */,
 				55454A2222C69B7900D4A414 /* RollbarLevel.m in Sources */,
 				5599052A23635F30003C41F3 /* RollbarPerson.m in Sources */,
@@ -3517,7 +3489,6 @@
 				55454CF522C6AE8C00D4A414 /* KSMemory.c in Sources */,
 				55454C7D22C6AE6700D4A414 /* KSCrashReportStore.c in Sources */,
 				55454C5922C6AE4F00D4A414 /* KSCString.m in Sources */,
-				55454BD622C6AB5400D4A414 /* RollbarJSONFriendlyObject.m in Sources */,
 				55454C3222C6AE3800D4A414 /* KSCrashReportFilterAlert.m in Sources */,
 				55454C1522C6AD0100D4A414 /* RollbarReachability.m in Sources */,
 				55454C8E22C6AE7400D4A414 /* KSCrashC.c in Sources */,
@@ -3667,7 +3638,6 @@
 				55454D2E22C6AE8D00D4A414 /* KSMemory.c in Sources */,
 				55454C7F22C6AE6800D4A414 /* KSCrashReportStore.c in Sources */,
 				55454C6522C6AE5000D4A414 /* KSCString.m in Sources */,
-				55454BD722C6AB5500D4A414 /* RollbarJSONFriendlyObject.m in Sources */,
 				55454C4022C6AE3900D4A414 /* KSCrashReportFilterAlert.m in Sources */,
 				55454C1622C6AD0200D4A414 /* RollbarReachability.m in Sources */,
 				55454C9C22C6AE7500D4A414 /* KSCrashC.c in Sources */,
