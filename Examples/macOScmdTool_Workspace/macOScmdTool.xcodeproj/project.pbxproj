@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		551929C322CAC42500CC7FFF /* libRollbar-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554026EA22CAC0650004057A /* libRollbar-macOS.a */; };
+		551929C322CAC42500CC7FFF /* libRollbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554026EA22CAC0650004057A /* libRollbar.a */; };
 		553CB60522C6FC8400E0F4A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 553CB60422C6FC8400E0F4A4 /* main.m */; };
 		553CB63422CA87E300E0F4A4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 553CB63322CA87E300E0F4A4 /* libc++.tbd */; };
+		55D1BE9A23FCFF5300B24754 /* libRollbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554026EA22CAC0650004057A /* libRollbar.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -19,27 +20,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 554549DC22C68E8F00D4A414;
 			remoteInfo = "Rollbar-macOS";
-		};
-		554026E122CAC0650004057A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554026D422CAC0650004057A /* Rollbar.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 96D2220A18D8E40600933444;
-			remoteInfo = Rollbar;
-		};
-		554026E322CAC0650004057A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554026D422CAC0650004057A /* Rollbar.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 96D2221A18D8E40600933444;
-			remoteInfo = RollbarTests;
-		};
-		554026E522CAC0650004057A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554026D422CAC0650004057A /* Rollbar.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 343AB4521CC9AAE600962943;
-			remoteInfo = RollbarFramework;
 		};
 		554026E722CAC0650004057A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -109,7 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				551929C322CAC42500CC7FFF /* libRollbar-macOS.a in Frameworks */,
+				55D1BE9A23FCFF5300B24754 /* libRollbar.a in Frameworks */,
+				551929C322CAC42500CC7FFF /* libRollbar.a in Frameworks */,
 				553CB63422CA87E300E0F4A4 /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,14 +135,11 @@
 		554026D522CAC0650004057A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				554026E222CAC0650004057A /* libRollbar.a */,
-				554026E422CAC0650004057A /* RollbarTests.xctest */,
-				554026E622CAC0650004057A /* Rollbar.framework */,
-				554026E822CAC0650004057A /* libRollbar-iOS.a */,
-				554026EA22CAC0650004057A /* libRollbar-macOS.a */,
-				554026EC22CAC0650004057A /* RollbarKit_iOS.framework */,
+				554026E822CAC0650004057A /* libRollbar.a */,
+				554026EA22CAC0650004057A /* libRollbar.a */,
+				554026EC22CAC0650004057A /* Rollbar.framework */,
 				554026EE22CAC0650004057A /* RollbarKit-iOSTests.xctest */,
-				554026F022CAC0650004057A /* RollbarKit_macOS.framework */,
+				554026F022CAC0650004057A /* Rollbar.framework */,
 				554026F222CAC0650004057A /* RollbarKit-macOSTests.xctest */,
 			);
 			name = Products;
@@ -205,7 +183,7 @@
 		553CB5F922C6FC8400E0F4A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Andrey Kornich (Wide Spectrum Computing LLC)";
 				TargetAttributes = {
 					553CB60022C6FC8400E0F4A4 = {
@@ -214,7 +192,7 @@
 				};
 			};
 			buildConfigurationList = 553CB5FC22C6FC8400E0F4A4 /* Build configuration list for PBXProject "macOScmdTool" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -237,45 +215,24 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		554026E222CAC0650004057A /* libRollbar.a */ = {
+		554026E822CAC0650004057A /* libRollbar.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRollbar.a;
-			remoteRef = 554026E122CAC0650004057A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		554026E422CAC0650004057A /* RollbarTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RollbarTests.xctest;
-			remoteRef = 554026E322CAC0650004057A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		554026E622CAC0650004057A /* Rollbar.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Rollbar.framework;
-			remoteRef = 554026E522CAC0650004057A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		554026E822CAC0650004057A /* libRollbar-iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libRollbar-iOS.a";
 			remoteRef = 554026E722CAC0650004057A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		554026EA22CAC0650004057A /* libRollbar-macOS.a */ = {
+		554026EA22CAC0650004057A /* libRollbar.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libRollbar-macOS.a";
+			path = libRollbar.a;
 			remoteRef = 554026E922CAC0650004057A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		554026EC22CAC0650004057A /* RollbarKit_iOS.framework */ = {
+		554026EC22CAC0650004057A /* Rollbar.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = RollbarKit_iOS.framework;
+			path = Rollbar.framework;
 			remoteRef = 554026EB22CAC0650004057A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -286,10 +243,10 @@
 			remoteRef = 554026ED22CAC0650004057A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		554026F022CAC0650004057A /* RollbarKit_macOS.framework */ = {
+		554026F022CAC0650004057A /* Rollbar.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = RollbarKit_macOS.framework;
+			path = Rollbar.framework;
 			remoteRef = 554026EF22CAC0650004057A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -436,6 +393,7 @@
 		553CB60922C6FC8400E0F4A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar-macOS";
@@ -448,6 +406,7 @@
 		553CB60A22C6FC8400E0F4A4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../libs/Rollbar-macOS";

@@ -1910,7 +1910,6 @@
 		B54F19531FDA6CA600A6AB0C /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				B54F19541FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.h */,
 				B54F19551FDA6CA600A6AB0C /* Tools */,
 				B54F195B1FDA6CA600A6AB0C /* KSCrashReportFilterStringify.h */,
 				B54F195C1FDA6CA600A6AB0C /* KSCrashReportFilterSets.m */,
@@ -1919,6 +1918,7 @@
 				B54F195F1FDA6CA600A6AB0C /* KSCrashReportFilterAlert.h */,
 				B54F19601FDA6CA600A6AB0C /* KSCrashReportFilter.h */,
 				B54F19611FDA6CA600A6AB0C /* KSCrashReportFilterBasic.h */,
+				B54F19541FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.h */,
 				B54F19621FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.m */,
 				B54F19631FDA6CA600A6AB0C /* KSCrashReportFilterAlert.m */,
 				B54F19641FDA6CA600A6AB0C /* KSCrashReportFilterJSON.h */,

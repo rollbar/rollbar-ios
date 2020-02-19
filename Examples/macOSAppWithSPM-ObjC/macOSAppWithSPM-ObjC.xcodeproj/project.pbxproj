@@ -7,116 +7,109 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		551A4A7923ECEF38008AD1C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551A4A7823ECEF38008AD1C7 /* AppDelegate.swift */; };
-		551A4A7B23ECEF38008AD1C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551A4A7A23ECEF38008AD1C7 /* ViewController.swift */; };
-		551A4A7D23ECEF3C008AD1C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 551A4A7C23ECEF3C008AD1C7 /* Assets.xcassets */; };
-		551A4A8023ECEF3C008AD1C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 551A4A7E23ECEF3C008AD1C7 /* Main.storyboard */; };
-		551A4A8A23ECF0AB008AD1C7 /* Rollbar in Frameworks */ = {isa = PBXBuildFile; productRef = 551A4A8923ECF0AB008AD1C7 /* Rollbar */; };
-		5527FC1623F35097008362B4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5527FC1523F34FEE008362B4 /* libc++.tbd */; };
+		5582F77023F6268400ECAB34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5582F76F23F6268400ECAB34 /* AppDelegate.m */; };
+		5582F77323F6268400ECAB34 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5582F77223F6268400ECAB34 /* ViewController.m */; };
+		5582F77523F6268800ECAB34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5582F77423F6268800ECAB34 /* Assets.xcassets */; };
+		5582F77823F6268800ECAB34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5582F77623F6268800ECAB34 /* Main.storyboard */; };
+		5582F77B23F6268800ECAB34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5582F77A23F6268800ECAB34 /* main.m */; };
+		5582F78423F626FD00ECAB34 /* Rollbar in Frameworks */ = {isa = PBXBuildFile; productRef = 5582F78323F626FD00ECAB34 /* Rollbar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		551A4A7523ECEF38008AD1C7 /* macOSAppWithSPM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macOSAppWithSPM.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		551A4A7823ECEF38008AD1C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		551A4A7A23ECEF38008AD1C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		551A4A7C23ECEF3C008AD1C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		551A4A7F23ECEF3C008AD1C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		551A4A8123ECEF3C008AD1C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		551A4A8223ECEF3C008AD1C7 /* macOSAppWithSPM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOSAppWithSPM.entitlements; sourceTree = "<group>"; };
-		5527FC1523F34FEE008362B4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		5582F76B23F6268400ECAB34 /* macOSAppWithSPM-ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "macOSAppWithSPM-ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5582F76E23F6268400ECAB34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5582F76F23F6268400ECAB34 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5582F77123F6268400ECAB34 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5582F77223F6268400ECAB34 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5582F77423F6268800ECAB34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5582F77723F6268800ECAB34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5582F77923F6268800ECAB34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5582F77A23F6268800ECAB34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5582F77C23F6268800ECAB34 /* macOSAppWithSPM_ObjC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOSAppWithSPM_ObjC.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		551A4A7223ECEF38008AD1C7 /* Frameworks */ = {
+		5582F76823F6268400ECAB34 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5527FC1623F35097008362B4 /* libc++.tbd in Frameworks */,
-				551A4A8A23ECF0AB008AD1C7 /* Rollbar in Frameworks */,
+				5582F78423F626FD00ECAB34 /* Rollbar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		551A4A6C23ECEF38008AD1C7 = {
+		5582F76223F6268400ECAB34 = {
 			isa = PBXGroup;
 			children = (
-				551A4A7723ECEF38008AD1C7 /* macOSAppWithSPM */,
-				551A4A7623ECEF38008AD1C7 /* Products */,
-				5527FC1423F34FEE008362B4 /* Frameworks */,
+				5582F76D23F6268400ECAB34 /* macOSAppWithSPM-ObjC */,
+				5582F76C23F6268400ECAB34 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		551A4A7623ECEF38008AD1C7 /* Products */ = {
+		5582F76C23F6268400ECAB34 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				551A4A7523ECEF38008AD1C7 /* macOSAppWithSPM.app */,
+				5582F76B23F6268400ECAB34 /* macOSAppWithSPM-ObjC.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		551A4A7723ECEF38008AD1C7 /* macOSAppWithSPM */ = {
+		5582F76D23F6268400ECAB34 /* macOSAppWithSPM-ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				551A4A7823ECEF38008AD1C7 /* AppDelegate.swift */,
-				551A4A7A23ECEF38008AD1C7 /* ViewController.swift */,
-				551A4A7C23ECEF3C008AD1C7 /* Assets.xcassets */,
-				551A4A7E23ECEF3C008AD1C7 /* Main.storyboard */,
-				551A4A8123ECEF3C008AD1C7 /* Info.plist */,
-				551A4A8223ECEF3C008AD1C7 /* macOSAppWithSPM.entitlements */,
+				5582F76E23F6268400ECAB34 /* AppDelegate.h */,
+				5582F76F23F6268400ECAB34 /* AppDelegate.m */,
+				5582F77123F6268400ECAB34 /* ViewController.h */,
+				5582F77223F6268400ECAB34 /* ViewController.m */,
+				5582F77423F6268800ECAB34 /* Assets.xcassets */,
+				5582F77623F6268800ECAB34 /* Main.storyboard */,
+				5582F77923F6268800ECAB34 /* Info.plist */,
+				5582F77A23F6268800ECAB34 /* main.m */,
+				5582F77C23F6268800ECAB34 /* macOSAppWithSPM_ObjC.entitlements */,
 			);
-			path = macOSAppWithSPM;
-			sourceTree = "<group>";
-		};
-		5527FC1423F34FEE008362B4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5527FC1523F34FEE008362B4 /* libc++.tbd */,
-			);
-			name = Frameworks;
+			path = "macOSAppWithSPM-ObjC";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		551A4A7423ECEF38008AD1C7 /* macOSAppWithSPM */ = {
+		5582F76A23F6268400ECAB34 /* macOSAppWithSPM-ObjC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 551A4A8523ECEF3C008AD1C7 /* Build configuration list for PBXNativeTarget "macOSAppWithSPM" */;
+			buildConfigurationList = 5582F77F23F6268800ECAB34 /* Build configuration list for PBXNativeTarget "macOSAppWithSPM-ObjC" */;
 			buildPhases = (
-				551A4A7123ECEF38008AD1C7 /* Sources */,
-				551A4A7223ECEF38008AD1C7 /* Frameworks */,
-				551A4A7323ECEF38008AD1C7 /* Resources */,
+				5582F76723F6268400ECAB34 /* Sources */,
+				5582F76823F6268400ECAB34 /* Frameworks */,
+				5582F76923F6268400ECAB34 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = macOSAppWithSPM;
+			name = "macOSAppWithSPM-ObjC";
 			packageProductDependencies = (
-				551A4A8923ECF0AB008AD1C7 /* Rollbar */,
+				5582F78323F626FD00ECAB34 /* Rollbar */,
 			);
-			productName = macOSAppWithSPM;
-			productReference = 551A4A7523ECEF38008AD1C7 /* macOSAppWithSPM.app */;
+			productName = "macOSAppWithSPM-ObjC";
+			productReference = 5582F76B23F6268400ECAB34 /* macOSAppWithSPM-ObjC.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		551A4A6D23ECEF38008AD1C7 /* Project object */ = {
+		5582F76323F6268400ECAB34 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Andrey Kornich (Wide Spectrum Computing LLC)";
 				TargetAttributes = {
-					551A4A7423ECEF38008AD1C7 = {
+					5582F76A23F6268400ECAB34 = {
 						CreatedOnToolsVersion = 11.3.1;
-						LastSwiftMigration = 1130;
 					};
 				};
 			};
-			buildConfigurationList = 551A4A7023ECEF38008AD1C7 /* Build configuration list for PBXProject "macOSAppWithSPM" */;
+			buildConfigurationList = 5582F76623F6268400ECAB34 /* Build configuration list for PBXProject "macOSAppWithSPM-ObjC" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -124,48 +117,49 @@
 				en,
 				Base,
 			);
-			mainGroup = 551A4A6C23ECEF38008AD1C7;
+			mainGroup = 5582F76223F6268400ECAB34;
 			packageReferences = (
-				551A4A8823ECF0AB008AD1C7 /* XCRemoteSwiftPackageReference "rollbar-ios" */,
+				5582F78223F626FD00ECAB34 /* XCRemoteSwiftPackageReference "rollbar-ios" */,
 			);
-			productRefGroup = 551A4A7623ECEF38008AD1C7 /* Products */;
+			productRefGroup = 5582F76C23F6268400ECAB34 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				551A4A7423ECEF38008AD1C7 /* macOSAppWithSPM */,
+				5582F76A23F6268400ECAB34 /* macOSAppWithSPM-ObjC */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		551A4A7323ECEF38008AD1C7 /* Resources */ = {
+		5582F76923F6268400ECAB34 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				551A4A7D23ECEF3C008AD1C7 /* Assets.xcassets in Resources */,
-				551A4A8023ECEF3C008AD1C7 /* Main.storyboard in Resources */,
+				5582F77523F6268800ECAB34 /* Assets.xcassets in Resources */,
+				5582F77823F6268800ECAB34 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		551A4A7123ECEF38008AD1C7 /* Sources */ = {
+		5582F76723F6268400ECAB34 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				551A4A7B23ECEF38008AD1C7 /* ViewController.swift in Sources */,
-				551A4A7923ECEF38008AD1C7 /* AppDelegate.swift in Sources */,
+				5582F77323F6268400ECAB34 /* ViewController.m in Sources */,
+				5582F77B23F6268800ECAB34 /* main.m in Sources */,
+				5582F77023F6268400ECAB34 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		551A4A7E23ECEF3C008AD1C7 /* Main.storyboard */ = {
+		5582F77623F6268800ECAB34 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				551A4A7F23ECEF3C008AD1C7 /* Base */,
+				5582F77723F6268800ECAB34 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -173,11 +167,10 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		551A4A8323ECEF3C008AD1C7 /* Debug */ = {
+		5582F77D23F6268800ECAB34 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -228,19 +221,14 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "";
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		551A4A8423ECEF3C008AD1C7 /* Release */ = {
+		5582F77E23F6268800ECAB34 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -284,76 +272,65 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "";
 				SDKROOT = macosx;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		551A4A8623ECEF3C008AD1C7 /* Debug */ = {
+		5582F78023F6268800ECAB34 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = macOSAppWithSPM/macOSAppWithSPM.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "macOSAppWithSPM-ObjC/macOSAppWithSPM_ObjC.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = macOSAppWithSPM/Info.plist;
+				INFOPLIST_FILE = "macOSAppWithSPM-ObjC/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.macOSAppWithSPM;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.macOSAppWithSPM-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		551A4A8723ECEF3C008AD1C7 /* Release */ = {
+		5582F78123F6268800ECAB34 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = macOSAppWithSPM/macOSAppWithSPM.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "macOSAppWithSPM-ObjC/macOSAppWithSPM_ObjC.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = macOSAppWithSPM/Info.plist;
+				INFOPLIST_FILE = "macOSAppWithSPM-ObjC/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.macOSAppWithSPM;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rollbar.macOSAppWithSPM-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		551A4A7023ECEF38008AD1C7 /* Build configuration list for PBXProject "macOSAppWithSPM" */ = {
+		5582F76623F6268400ECAB34 /* Build configuration list for PBXProject "macOSAppWithSPM-ObjC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				551A4A8323ECEF3C008AD1C7 /* Debug */,
-				551A4A8423ECEF3C008AD1C7 /* Release */,
+				5582F77D23F6268800ECAB34 /* Debug */,
+				5582F77E23F6268800ECAB34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		551A4A8523ECEF3C008AD1C7 /* Build configuration list for PBXNativeTarget "macOSAppWithSPM" */ = {
+		5582F77F23F6268800ECAB34 /* Build configuration list for PBXNativeTarget "macOSAppWithSPM-ObjC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				551A4A8623ECEF3C008AD1C7 /* Debug */,
-				551A4A8723ECEF3C008AD1C7 /* Release */,
+				5582F78023F6268800ECAB34 /* Debug */,
+				5582F78123F6268800ECAB34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -361,23 +338,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		551A4A8823ECF0AB008AD1C7 /* XCRemoteSwiftPackageReference "rollbar-ios" */ = {
+		5582F78223F626FD00ECAB34 /* XCRemoteSwiftPackageReference "rollbar-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WideSpectrumComputing/rollbar-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.14;
+				minimumVersion = 1.12.39;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		551A4A8923ECF0AB008AD1C7 /* Rollbar */ = {
+		5582F78323F626FD00ECAB34 /* Rollbar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 551A4A8823ECF0AB008AD1C7 /* XCRemoteSwiftPackageReference "rollbar-ios" */;
+			package = 5582F78223F626FD00ECAB34 /* XCRemoteSwiftPackageReference "rollbar-ios" */;
 			productName = Rollbar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 551A4A6D23ECEF38008AD1C7 /* Project object */;
+	rootObject = 5582F76323F6268400ECAB34 /* Project object */;
 }
