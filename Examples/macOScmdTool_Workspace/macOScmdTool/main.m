@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "../../../Rollbar/Rollbar.h"
-#import "../../../Rollbar/RollbarConfiguration.h"
-#import "../../../Rollbar/RollbarTelemetry.h"
+//#import "../../../Rollbar/RollbarFacade.h"
+//#import "../../../Rollbar/DTOs/RollbarLevel.h"
+//#import "../../../Rollbar/RollbarConfiguration.h"
+//#import "../../../Rollbar/RollbarTelemetry.h"
 //#import <NSJSONSerialization+Rollbar.h>
+@import Rollbar;
 
 @interface BuggyClass : NSObject
 

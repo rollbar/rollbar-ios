@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.0**
+- feat: ref #212: Add Swift Package Manager support.
+
 **1.11.3**
 - fix: resolve #234: Extra data is not attached to message-like payloads under body.message.extra data field.
 - fix: resolve #235: Fix framework's modulemap.

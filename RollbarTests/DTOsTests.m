@@ -157,6 +157,22 @@
     XCTAssertTrue(NSOrderedSame == [dto.codeVersion compare:@"3.2.5"],
                   @"Proper new code version"
                   );
+    
+    
+    RollbarConfig *rc = [RollbarConfig new];
+    rc.destination.accessToken = @"ACCESSTOKEN";
+    rc.destination.environment = @"ENVIRONMENT";
+    rc.destination.endpoint = @"ENDPOINT";
+    
+    dto = rc.server;
+    NSString *branchValue = dto.branch;
+    XCTAssertNil(branchValue,
+                  @"Uninitialized branch"
+                  );
+    dto.branch = @"ANOTHER_BRANCH";
+    XCTAssertTrue(NSOrderedSame == [dto.branch compare:@"ANOTHER_BRANCH"],
+                  @"Proper branch"
+                  );
 }
 
 - (void)testRollbarPersonDTO {

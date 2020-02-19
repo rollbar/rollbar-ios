@@ -6,8 +6,9 @@
 //  Copyright © 2019 Andrey Kornich (Wide Spectrum Computing LLC). All rights reserved.
 //
 
-#import <Rollbar/Rollbar.h>
 #import "AppDelegate.h"
+
+@import Rollbar;
 
 @interface AppDelegate ()
 

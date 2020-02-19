@@ -62,6 +62,8 @@
 		55178C40234DACFC0081E84A /* RollbarPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 55178C3A234DACFC0081E84A /* RollbarPayload.m */; };
 		55178C41234DACFC0081E84A /* RollbarPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 55178C3A234DACFC0081E84A /* RollbarPayload.m */; };
 		55178C42234DACFC0081E84A /* RollbarPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 55178C3A234DACFC0081E84A /* RollbarPayload.m */; };
+		5518C80C23F4E527005692D2 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5518C80D23F4E529005692D2 /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 343AB4541CC9AAE600962943 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5526B34D237B62B300242958 /* RollbarLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5526B34B237B62B300242958 /* RollbarLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5526B34E237B62B300242958 /* RollbarLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5526B34B237B62B300242958 /* RollbarLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5526B34F237B62B300242958 /* RollbarLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5526B34B237B62B300242958 /* RollbarLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1284,6 +1286,8 @@
 		5526B34B237B62B300242958 /* RollbarLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLog.h; sourceTree = "<group>"; };
 		5526B34C237B62B300242958 /* RollbarLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLog.m; sourceTree = "<group>"; };
 		55309F1F23D25DE900B94361 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55413A9423F61CAE00F34CC2 /* Rollbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rollbar.h; sourceTree = "<group>"; };
+		55413A9523F61CAE00F34CC2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		554549C322C68DBA00D4A414 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		554549DD22C68E8F00D4A414 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55454B9F22C6A97600D4A414 /* Rollbar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rollbar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1306,6 +1310,7 @@
 		554B97BD238F9F93003DC4ED /* RollbarException.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarException.m; sourceTree = "<group>"; };
 		554B97C6238FA0C1003DC4ED /* RollbarCallStackFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarCallStackFrame.h; sourceTree = "<group>"; };
 		554B97C7238FA0C1003DC4ED /* RollbarCallStackFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarCallStackFrame.m; sourceTree = "<group>"; };
+		5552091723F4D77F00D81666 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		557A4E17236262460034BB55 /* RollbarScrubbingOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarScrubbingOptions.h; sourceTree = "<group>"; };
 		557A4E18236262460034BB55 /* RollbarScrubbingOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarScrubbingOptions.m; sourceTree = "<group>"; };
 		557A4E212362AD100034BB55 /* RollbarServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarServerConfig.h; sourceTree = "<group>"; };
@@ -1352,6 +1357,7 @@
 		55C67FED23A03913000E4BBF /* RollbarCallStackFrameContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarCallStackFrameContext.m; sourceTree = "<group>"; };
 		55CB01DD23B2976300E455DE /* RollbarDeploysDTOs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeploysDTOs.h; sourceTree = "<group>"; };
 		55CB01E223B2978A00E455DE /* RollbarDeploys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeploys.h; sourceTree = "<group>"; };
+		55CFDEB723E39B05007AD2D9 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLoggingOptions.h; sourceTree = "<group>"; };
 		55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLoggingOptions.m; sourceTree = "<group>"; };
 		55F10FDE236120190043ADC0 /* RollbarDestination.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDestination.h; sourceTree = "<group>"; };
@@ -1630,6 +1636,7 @@
 		343AB4531CC9AAE600962943 /* RollbarFramework */ = {
 			isa = PBXGroup;
 			children = (
+				5552091723F4D77F00D81666 /* module.modulemap */,
 				55309F1F23D25DE900B94361 /* Info.plist */,
 				343AB4541CC9AAE600962943 /* Rollbar.h */,
 			);
@@ -1717,6 +1724,8 @@
 				5583C6CE239613B700C52617 /* RollbarJavascript.m */,
 				5583C6D72396293D00C52617 /* TriStateFlag.h */,
 				5583C6D82396293D00C52617 /* TriStateFlag.m */,
+				B5EDEA7E1FCA679900830C78 /* RollbarLevel.h */,
+				B5EDEA7F1FCA679900830C78 /* RollbarLevel.m */,
 				55A5588B2356474F00D8898A /* CaptureIpType.h */,
 				55A5588C2356474F00D8898A /* CaptureIpType.m */,
 				5583C6AF239603A000C52617 /* HttpMethod.h */,
@@ -1725,6 +1734,15 @@
 				55A6FA4C23A846C000DE091A /* RollbarAppLanguage.m */,
 			);
 			path = DTOs;
+			sourceTree = "<group>";
+		};
+		55413A9323F61C4F00F34CC2 /* RollbarSwiftPM */ = {
+			isa = PBXGroup;
+			children = (
+				55413A9523F61CAE00F34CC2 /* module.modulemap */,
+				55413A9423F61CAE00F34CC2 /* Rollbar.h */,
+			);
+			path = RollbarSwiftPM;
 			sourceTree = "<group>";
 		};
 		55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */ = {
@@ -1748,11 +1766,13 @@
 		96D2220118D8E40600933444 = {
 			isa = PBXGroup;
 			children = (
+				55CFDEB723E39B05007AD2D9 /* Package.swift */,
 				55250C012345686A0073ABB9 /* CHANGELOG.md */,
 				55250C022345686A0073ABB9 /* Rollbar.podspec */,
 				96D2220F18D8E40600933444 /* Rollbar */,
 				96D2222318D8E40600933444 /* RollbarTests */,
 				343AB4531CC9AAE600962943 /* RollbarFramework */,
+				55413A9323F61C4F00F34CC2 /* RollbarSwiftPM */,
 				55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */,
 				55454BC722C6A9CC00D4A414 /* RollbarKit-macOSTests */,
 				96D2220C18D8E40600933444 /* Frameworks */,
@@ -1810,8 +1830,6 @@
 				B5D397171FB5492F000544DC /* RollbarKSCrashInstallation.m */,
 				B5D3971B1FB549D7000544DC /* RollbarKSCrashReportSink.h */,
 				B5D3971C1FB549D7000544DC /* RollbarKSCrashReportSink.m */,
-				B5EDEA7E1FCA679900830C78 /* RollbarLevel.h */,
-				B5EDEA7F1FCA679900830C78 /* RollbarLevel.m */,
 				96D2223318D8E51600933444 /* RollbarNotifier.h */,
 				96D2223418D8E51600933444 /* RollbarNotifier.m */,
 				96AB9E06191B10AE00F0168A /* RollbarReachability.h */,
@@ -1892,7 +1910,6 @@
 		B54F19531FDA6CA600A6AB0C /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				B54F19541FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.h */,
 				B54F19551FDA6CA600A6AB0C /* Tools */,
 				B54F195B1FDA6CA600A6AB0C /* KSCrashReportFilterStringify.h */,
 				B54F195C1FDA6CA600A6AB0C /* KSCrashReportFilterSets.m */,
@@ -1901,6 +1918,7 @@
 				B54F195F1FDA6CA600A6AB0C /* KSCrashReportFilterAlert.h */,
 				B54F19601FDA6CA600A6AB0C /* KSCrashReportFilter.h */,
 				B54F19611FDA6CA600A6AB0C /* KSCrashReportFilterBasic.h */,
+				B54F19541FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.h */,
 				B54F19621FDA6CA600A6AB0C /* KSCrashReportFilterAppleFmt.m */,
 				B54F19631FDA6CA600A6AB0C /* KSCrashReportFilterAlert.m */,
 				B54F19641FDA6CA600A6AB0C /* KSCrashReportFilterJSON.h */,
@@ -2282,6 +2300,7 @@
 				55454B3122C69DD100D4A414 /* KSStackCursor_MachineContext.h in Headers */,
 				55454AB222C69DBC00D4A414 /* KSCrashMonitor_Signal.h in Headers */,
 				55454AC222C69DBC00D4A414 /* KSCrashMonitor_NSException.h in Headers */,
+				5518C80D23F4E529005692D2 /* Rollbar.h in Headers */,
 				55454A3022C69C1000D4A414 /* RollbarTelemetry.h in Headers */,
 				55454A8B22C69DA300D4A414 /* KSCrashReportSinkEMail.h in Headers */,
 				55454B5022C69DDE00D4A414 /* KSCrash.h in Headers */,
@@ -2445,6 +2464,7 @@
 				554549F522C69A1E00D4A414 /* RollbarDeploysProtocol.h in Headers */,
 				55454AF322C69DD100D4A414 /* KSObjC.h in Headers */,
 				55454A9B22C69DBB00D4A414 /* KSCrashMonitor_Signal.h in Headers */,
+				5518C80C23F4E527005692D2 /* Rollbar.h in Headers */,
 				55454B8522C69E2000D4A414 /* SwiftStrings.h in Headers */,
 				55454A6B22C69D9700D4A414 /* KSCString.h in Headers */,
 				55927098234FC7D00087E01F /* RollbarData.h in Headers */,
@@ -3731,6 +3751,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-iOS$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)-iOS$(EFFECTIVE_PLATFORM_NAME)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(IPHONEOS_DEPLOYMENT_TARGET)";
 				MACOSX_DEPLOYMENT_TARGET = "$(MACOSX_DEPLOYMENT_TARGET)";
@@ -3760,6 +3781,7 @@
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)-iOS$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IPHONEOS_DEPLOYMENT_TARGET = "$(IPHONEOS_DEPLOYMENT_TARGET)";
 				MACOSX_DEPLOYMENT_TARGET = "$(MACOSX_DEPLOYMENT_TARGET)";
@@ -4211,7 +4233,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.11.3;
+				CURRENT_PROJECT_VERSION = 1.12.0;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4275,7 +4298,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.11.3;
+				CURRENT_PROJECT_VERSION = 1.12.0;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Rollbar",
+        "repositoryURL": "https://github.com/WideSpectrumComputing/rollbar-ios",
+        "state": {
+          "branch": null,
+          "revision": "a6c74e9c622bcabfc5d7d72f418fa4c741e49a48",
+          "version": "1.12.41"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
