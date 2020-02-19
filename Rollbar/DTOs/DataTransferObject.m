@@ -44,9 +44,9 @@
                                    safe:(BOOL)safe {
 #ifdef DEBUG
     opt |= NSJSONWritingPrettyPrinted;
-    if (@available(macOS 10.13, *)) {
+    if (@available(iOS 11, macOS 10.13, *)) {
         opt |= NSJSONWritingSortedKeys;
-    } else {
+    }else {
         // Fallback on earlier versions
     }
 #endif
@@ -135,14 +135,14 @@
     }
     
     NSJSONWritingOptions opt = 0;
-    #ifdef DEBUG
-        opt |= NSJSONWritingPrettyPrinted;
-        if (@available(macOS 10.13, *)) {
-            opt |= NSJSONWritingSortedKeys;
-        } else {
-            // Fallback on earlier versions
-        }
-    #endif
+#ifdef DEBUG
+    opt |= NSJSONWritingPrettyPrinted;
+    if (@available(iOS 11, macOS 10.13, *)) {
+        opt |= NSJSONWritingSortedKeys;
+    } else {
+        // Fallback on earlier versions
+    }
+#endif
     NSError *error = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self->_data options:opt error:&error];
     if (error) {
