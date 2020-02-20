@@ -25,6 +25,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.11.6**
 **1.11.5**
 - fix: resolve #253: fix the podspec issue
 
