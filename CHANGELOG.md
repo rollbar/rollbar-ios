@@ -25,6 +25,10 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.11.6**
+**1.11.5**
+- fix: resolve #253: fix the podspec issue
+
 **1.11.4**
 - fix: resolve #248: 'NSJSONWritingSortedKeys' is only available on iOS 11.0 or newer.
 - chore: resolve #250: Remove unused classes, protocols, etc.
