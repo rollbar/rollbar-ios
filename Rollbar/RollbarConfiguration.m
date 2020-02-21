@@ -203,20 +203,20 @@ static NSString *configurationFilePath = nil;
 
 #pragma mark - Logging options
 
-- (NSString *)crashLevel {
-    return [RollbarLevelUtil RollbarLevelToString:self->_configData.loggingOptions.crashLevel];
+- (RollbarLevel)rollbarCrashLevel {
+    return self->_configData.loggingOptions.crashLevel;
 }
 
-- (void)setCrashLevel:(NSString *)value {
-    self->_configData.loggingOptions.crashLevel = [RollbarLevelUtil RollbarLevelFromString:value];
+- (void)setRollbarCrashLevel:(RollbarLevel)value {
+    self->_configData.loggingOptions.crashLevel = value;
 }
 
-- (NSString *)logLevel {
-    return [RollbarLevelUtil RollbarLevelToString:self->_configData.loggingOptions.logLevel];
+- (RollbarLevel)rollbarLogLevel {
+    return self->_configData.loggingOptions.logLevel;
 }
 
-- (void)setLogLevel:(NSString *)value {
-    self->_configData.loggingOptions.logLevel = [RollbarLevelUtil RollbarLevelFromString:value];
+- (void)setRollbarLogLevel:(RollbarLevel)value {
+    self->_configData.loggingOptions.logLevel = value;
 }
 
 - (NSUInteger)maximumReportsPerMinute {
@@ -565,6 +565,22 @@ static NSString *configurationFilePath = nil;
 }
 
 #pragma mark - DEPRECATED
+
+- (NSString *)crashLevel {
+    return [RollbarLevelUtil RollbarLevelToString:self->_configData.loggingOptions.crashLevel];
+}
+
+- (void)setCrashLevel:(NSString *)value {
+    self->_configData.loggingOptions.crashLevel = [RollbarLevelUtil RollbarLevelFromString:value];
+}
+
+- (NSString *)logLevel {
+    return [RollbarLevelUtil RollbarLevelToString:self->_configData.loggingOptions.logLevel];
+}
+
+- (void)setLogLevel:(NSString *)value {
+    self->_configData.loggingOptions.logLevel = [RollbarLevelUtil RollbarLevelFromString:value];
+}
 
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock {
     _payloadModification = payloadModificationBlock;

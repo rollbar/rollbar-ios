@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.11.7**
+- chore: ref #255: Mark deprecated public API with proper deprecated attribute.
+
 **1.11.6**
 **1.11.5**
 - fix: resolve #253: fix the podspec issue

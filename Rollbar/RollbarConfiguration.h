@@ -44,8 +44,8 @@
 @property (nonatomic) NSNumber *httpsProxyPort;
 
 #pragma mark - Logging options
-@property (nonatomic, copy) NSString *crashLevel;
-@property (nonatomic, copy) NSString *logLevel;
+@property (nonatomic) RollbarLevel rollbarCrashLevel;
+@property (nonatomic) RollbarLevel rollbarLogLevel;
 @property (nonatomic) NSUInteger maximumReportsPerMinute;
 @property (nonatomic) CaptureIpType captureIp;
 @property (nonatomic, copy) NSString *codeVersion;
@@ -116,27 +116,51 @@
 
 #pragma mark - DEPRECATED
 
-/// START Deprecated
-
 // Decides whether or not to send payload. Returns true to ignore, false to send
-@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
-- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
+@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload)
+    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.");
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock
+    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.");
+
 // Modify payload
-@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
-- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
+@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload)
+    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.");
+- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock
+    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.");
 
-- (void)setRollbarLevel:(RollbarLevel)level;
-- (RollbarLevel)getRollbarLevel;
+@property (nonatomic, copy) NSString *crashLevel
+    DEPRECATED_MSG_ATTRIBUTE("Use rollbarCrashLevel property instead.");
+@property (nonatomic, copy) NSString *logLevel
+    DEPRECATED_MSG_ATTRIBUTE("Use rollbarLogLevel property instead.");
 
-- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute;
-- (void)setCodeFramework:(NSString *)framework;
-- (void)setCodeVersion:(NSString *)codeVersion;
-- (void)setRequestId:(NSString*)requestId;
-- (void)setCaptureIpType:(CaptureIpType)captureIp;
-- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData;
-- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
-- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
-/// END Deprecated
+- (void)setRollbarLevel:(RollbarLevel)level
+    DEPRECATED_MSG_ATTRIBUTE("Use rollbarLogLevel property instead.");
+- (RollbarLevel)getRollbarLevel
+    DEPRECATED_MSG_ATTRIBUTE("Use rollbarLogLevel property instead.");
+
+- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute
+    DEPRECATED_MSG_ATTRIBUTE("Use maximumReportsPerMinute property instead.");
+
+- (void)setCodeFramework:(NSString *)framework
+    DEPRECATED_MSG_ATTRIBUTE("Use framework property instead.");
+
+- (void)setCodeVersion:(NSString *)codeVersion
+    DEPRECATED_MSG_ATTRIBUTE("Use codeVersion property instead.");
+
+- (void)setRequestId:(NSString*)requestId
+    DEPRECATED_MSG_ATTRIBUTE("Use requestId property instead.");
+
+- (void)setCaptureIpType:(CaptureIpType)captureIp
+    DEPRECATED_MSG_ATTRIBUTE("Use captureIp property instead.");
+
+- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData
+    DEPRECATED_MSG_ATTRIBUTE("Use maximumTelemetryData property instead.");
+
+- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog
+    DEPRECATED_MSG_ATTRIBUTE("Use captureLogAsTelemetryData property instead.");
+
+- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity
+    DEPRECATED_MSG_ATTRIBUTE("Use shouldCaptureConnectivity property instead.");
 
 
 @end
