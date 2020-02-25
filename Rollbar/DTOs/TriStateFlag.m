@@ -29,9 +29,6 @@
     else if (NSOrderedSame == [value caseInsensitiveCompare:@"OFF"]) {
         return Off;
     }
-//    else if (NSOrderedSame == [value caseInsensitiveCompare:@"NONE"]) {
-//        return None;
-//    }
     else {
         return None; // default case...
     }
