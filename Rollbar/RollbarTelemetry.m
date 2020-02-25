@@ -105,13 +105,13 @@ static dispatch_queue_t fileQueue = nil;
     }
     
     NSTimeInterval timestamp = NSDate.date.timeIntervalSince1970 * 1000.0;
-    NSString *telemetryLvl = RollbarStringFromLevel(level);
-    NSString *telemetryType = RollbarStringFromTelemetryType(type);
+    NSString *telemetryLvl = [RollbarLevelUtil   RollbarLevelToString:level];
+    NSString *telemetryType = [RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:type];
     NSDictionary *info = @{@"level": telemetryLvl,
                            @"type": telemetryType,
                            @"source": @"client",
                            @"timestamp_ms": [NSString stringWithFormat:@"%.0f", round(timestamp)],
-                           @"body": data
+                           @"body": data ? data : [NSNull null]
                            };
 
     dispatch_async(queue, ^{

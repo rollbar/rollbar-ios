@@ -33,7 +33,7 @@
     
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"from" to:@"to"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"status"];
-    [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"method" url:@"url" statusCode:@"status_code"];
+    [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"method" url:@"url" statusCode:@"status_code" extraData:nil];
     [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"name" reason:@"reason" userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"data": @"content"}];
@@ -76,7 +76,7 @@
 
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"SomeNavigationSource" to:@"SomeNavigationDestination"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"SomeConnectivityStatus"];
-    [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"POST" url:@"www.myservice.com" statusCode:@"200"];
+    [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"POST" url:@"www.myservice.com" statusCode:@"200" extraData:nil];
     [Rollbar recordErrorEventForLevel:RollbarDebug message:@"Some telemetry message..."];
     [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"someExceptionName"
                                                                                      reason:@"someExceptionReason"
