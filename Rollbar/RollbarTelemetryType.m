@@ -2,11 +2,10 @@
 
 #import "RollbarTelemetryType.h"
 
-/**
- * Translates RollbarTelemetryType to string. Default is "manual".
- */
-NSString* RollbarStringFromTelemetryType(RollbarTelemetryType type) {
-    switch (type) {
+@implementation RollbarTelemetryTypeUtil
+
++ (NSString *) RollbarTelemetryTypeToString:(RollbarTelemetryType)value; {
+    switch (value) {
         case RollbarTelemetryView:
             return @"view";
         case RollbarTelemetryLog:
@@ -22,5 +21,38 @@ NSString* RollbarStringFromTelemetryType(RollbarTelemetryType type) {
         default:
             return @"manual";
     }
+}
+
++ (RollbarTelemetryType) RollbarTelemetryTypeFromString:(NSString *)value {
+    
+    if (NSOrderedSame == [value caseInsensitiveCompare:@"view"]) {
+        return RollbarTelemetryView;
+    }
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"log"]) {
+        return RollbarTelemetryLog;
+    }
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"error"]) {
+        return RollbarTelemetryError;
+    }
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"navigation"]) {
+        return RollbarTelemetryNavigation;
+    }
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"network"]) {
+        return RollbarTelemetryNetwork;
+    }
+    else  if (NSOrderedSame == [value caseInsensitiveCompare:@"connectivity"]) {
+        return RollbarTelemetryConnectivity;
+    }
+    else {
+        return RollbarTelemetryManual; // default case...
+    }
+}
+
+@end
+
+#pragma mark - deprecated
+
+NSString* _Nonnull RollbarStringFromTelemetryType(RollbarTelemetryType type) {
+    return [RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:type];
 }
 

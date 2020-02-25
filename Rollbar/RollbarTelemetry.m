@@ -4,8 +4,8 @@
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarCachesDirectory.h"
 
-#define DEFAULT_DATA_LIMIT 10
-#define TELEMETRY_FILE_NAME @"rollbar.telemetry"
+static NSUInteger const DEFAULT_DATA_LIMIT = 10;
+static NSString * const TELEMETRY_FILE_NAME = @"rollbar.telemetry";
 
 static BOOL captureLog = false;
 
@@ -18,7 +18,7 @@ static dispatch_queue_t fileQueue = nil;
 
 @implementation RollbarTelemetry {
     NSMutableArray *_dataArray;
-    NSInteger _limit;
+    NSUInteger _limit;
     NSString *_dataFilePath;
 }
 
@@ -39,7 +39,8 @@ static dispatch_queue_t fileQueue = nil;
     va_start(args, format);
     if (captureLog) {
         va_copy (argsCopy, args);
-        NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
+        NSString *message = [[NSString alloc] initWithFormat:format
+                                                   arguments:args];
         [[RollbarTelemetry sharedInstance] recordLogEventForLevel:RollbarDebug
                                                           message:message
                                                         extraData:nil];
@@ -50,7 +51,7 @@ static dispatch_queue_t fileQueue = nil;
     va_end(args);
 }
 
-#pragma mark -
+#pragma mark - Initializers
 
 - (id)init {
     self = [super init];
@@ -69,20 +70,14 @@ static dispatch_queue_t fileQueue = nil;
     return self;
 }
 
-#pragma mark -
+#pragma mark - Config options
 
-/**
- * Sets whether or not to use replacement log.
- */
 - (void)setCaptureLog:(BOOL)shouldCapture {
     dispatch_async(queue, ^{
         captureLog = shouldCapture;
     });
 }
 
-/**
- * Sets max number of telemetry events to capture.
- */
 - (void)setDataLimit:(NSInteger)dataLimit {
     dispatch_async(queue, ^{
         self->_limit = dataLimit;
@@ -99,7 +94,7 @@ static dispatch_queue_t fileQueue = nil;
     }
 }
 
-#pragma mark -
+#pragma mark - Telemetry data/event recording methods
 
 - (void)recordEventForLevel:(RollbarLevel)level
                        type:(RollbarTelemetryType)type
@@ -128,8 +123,6 @@ static dispatch_queue_t fileQueue = nil;
         });
     });
 }
-
-#pragma mark -
 
 - (void)recordViewEventForLevel:(RollbarLevel)level
                         element:(NSString *)element
@@ -161,8 +154,6 @@ static dispatch_queue_t fileQueue = nil;
     [self recordEventForLevel:level type:RollbarTelemetryView data:data];
 }
 
-#pragma mark -
-
 - (void)recordNetworkEventForLevel:(RollbarLevel)level
                             method:(NSString *)method
                                url:(NSString *)url
@@ -181,8 +172,6 @@ static dispatch_queue_t fileQueue = nil;
     [self recordEventForLevel:level type:RollbarTelemetryNetwork data:data];
 }
 
-#pragma mark -
-
 - (void)recordConnectivityEventForLevel:(RollbarLevel)level
                                  status:(NSString *)status
                               extraData:(NSDictionary *)extraData {
@@ -197,8 +186,6 @@ static dispatch_queue_t fileQueue = nil;
     [self recordEventForLevel:level type:RollbarTelemetryConnectivity data:data];
 }
 
-#pragma mark -
-
 - (void)recordErrorEventForLevel:(RollbarLevel)level
                          message:(NSString *)message
                        extraData:(NSDictionary *)extraData {
@@ -212,8 +199,6 @@ static dispatch_queue_t fileQueue = nil;
 
     [self recordEventForLevel:level type:RollbarTelemetryError data:data];
 }
-
-#pragma mark -
 
 - (void)recordNavigationEventForLevel:(RollbarLevel)level
                                  from:(NSString *)from
@@ -231,8 +216,6 @@ static dispatch_queue_t fileQueue = nil;
     [self recordEventForLevel:level type:RollbarTelemetryNavigation data:data];
 }
 
-#pragma mark -
-
 - (void)recordManualEventForLevel:(RollbarLevel)level
                          withData:(NSDictionary *)extraData {
     
@@ -243,8 +226,6 @@ static dispatch_queue_t fileQueue = nil;
 
     [self recordEventForLevel:level type:RollbarTelemetryManual data:data];
 }
-
-#pragma mark -
 
 - (void)recordLogEventForLevel:(RollbarLevel)level
                        message:(NSString *)message
@@ -260,7 +241,7 @@ static dispatch_queue_t fileQueue = nil;
     [self recordEventForLevel:level type:RollbarTelemetryLog data:data];
 }
 
-#pragma mark -
+#pragma mark - Tlemetry cache access methods
 
 - (NSArray *)getAllData {
     __block NSArray *dataCopy = nil;
