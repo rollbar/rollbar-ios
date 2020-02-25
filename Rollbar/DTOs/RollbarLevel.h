@@ -19,15 +19,23 @@ NS_ASSUME_NONNULL_BEGIN
 /// RollbarLevel utility
 @interface RollbarLevelUtil : NSObject
 
+/// Converts RollbarLevel enum value to its string equivalent or default string.
+/// @param value RollbarLevel enum value
 + (NSString *) RollbarLevelToString:(RollbarLevel)value;
+
+/// Converts string value into its  RollbarLevel enum value equivalent or default enum value.
+/// @param value input string
 + (RollbarLevel) RollbarLevelFromString:(NSString *)value;
 
 @end
 
+NS_ASSUME_NONNULL_END
+
 #pragma mark - deprecated
 
-NSString* RollbarStringFromLevel(RollbarLevel level);
-RollbarLevel RollbarLevelFromString(NSString *levelString);
+NSString* _Nonnull RollbarStringFromLevel(RollbarLevel level)
+DEPRECATED_MSG_ATTRIBUTE("Use [RollbarLevelUtil RollbarLevelToString:...] methods instead.");
 
-NS_ASSUME_NONNULL_END
+RollbarLevel RollbarLevelFromString(NSString * _Nonnull levelString)
+DEPRECATED_MSG_ATTRIBUTE("Use [RollbarLevelUtil RollbarLevelFromString:...] methods instead.");
 

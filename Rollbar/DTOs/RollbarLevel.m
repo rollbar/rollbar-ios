@@ -2,22 +2,6 @@
 
 #import "RollbarLevel.h"
 
-/**
- * Translates RollbarLevel to string. Default is "info".
- */
-NSString* RollbarStringFromLevel(RollbarLevel level) {
-
-    return [RollbarLevelUtil RollbarLevelToString:level];
-}
-
-/**
- * Translates given string to RollbarLevel. Default is RollbarInfo.
- */
-RollbarLevel RollbarLevelFromString(NSString *levelString) {
-
-    return [RollbarLevelUtil RollbarLevelFromString:levelString];
-}
-
 @implementation RollbarLevelUtil
 
 + (NSString *) RollbarLevelToString:(RollbarLevel)value; {
@@ -56,4 +40,15 @@ RollbarLevel RollbarLevelFromString(NSString *levelString) {
 
 @end
 
+#pragma mark - deprecated
+
+NSString* _Nonnull RollbarStringFromLevel(RollbarLevel level) {
+
+    return [RollbarLevelUtil RollbarLevelToString:level];
+}
+
+RollbarLevel RollbarLevelFromString(NSString* _Nonnull levelString) {
+
+    return [RollbarLevelUtil RollbarLevelFromString:levelString];
+}
 
