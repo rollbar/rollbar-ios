@@ -155,7 +155,7 @@ DEPRECATED_MSG_ATTRIBUTE("Use critical:... methods instead.");
 #pragma mark - Telemetry: Network events
 
 + (void)recordNetworkEventForLevel:(RollbarLevel)level
-                             ethod:(NSString *)method
+                            method:(NSString *)method
                                url:(NSString *)url
                         statusCode:(NSString *)statusCode;
 

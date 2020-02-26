@@ -118,15 +118,19 @@
 
 // Decides whether or not to send payload. Returns true to ignore, false to send
 @property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload)
-    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.");
+//    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.")
+;
 - (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock
-    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.");
+//    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.")
+;
 
 // Modify payload
 @property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload)
-    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.");
+//    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.")
+;
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock
-    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.");
+//    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.")
+;
 
 @property (nonatomic, copy) NSString *crashLevel
     DEPRECATED_MSG_ATTRIBUTE("Use rollbarCrashLevel property instead.");

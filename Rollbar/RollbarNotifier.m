@@ -183,7 +183,7 @@ static BOOL isNetworkReachable = YES;
 //    }
     RollbarConfig *config = self.configuration.asRollbarConfig;
     
-    RollbarLevel rollbarLevel = RollbarLevelFromString(level);
+    RollbarLevel rollbarLevel = [RollbarLevelUtil RollbarLevelFromString:level];
     if (rollbarLevel < config.loggingOptions.logLevel) {
         return;
     }
@@ -1255,7 +1255,7 @@ static BOOL isNetworkReachable = YES;
 
 - (void)updateReportingRate:(NSUInteger)maximumReportsPerMinute {
     if (nil != self.configuration) {
-        [self.configuration setReportingRate:maximumReportsPerMinute];
+        self.configuration.maximumReportsPerMinute = maximumReportsPerMinute;
     }
     if (nil != rollbarThread) {
         [rollbarThread cancel];
@@ -1265,6 +1265,7 @@ static BOOL isNetworkReachable = YES;
         [rollbarThread start];
     }
 }
+    
 #pragma mark - Network telemetry data
 
 - (void)captureTelemetryDataForNetwork:(BOOL)reachable {

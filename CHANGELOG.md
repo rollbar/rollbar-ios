@@ -27,7 +27,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 **1.11.7**
 - refactor: resolve #256: Refactor RollbarTelemetry implementation.
-- chore: ref #255: Mark deprecated public API with proper deprecated attribute.
+- refactor: resolve #255: Mark deprecated public API with proper deprecated attribute.
 
 **1.11.6**
 **1.11.5**

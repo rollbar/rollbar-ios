@@ -97,7 +97,7 @@ static RollbarNotifier *notifier = nil;
        data:(NSDictionary*)data
     context:(NSString*)context {
 
-    [notifier log:RollbarStringFromLevel(level)
+    [notifier log:[RollbarLevelUtil RollbarLevelToString:level]
           message:message
         exception:exception
              data:data
@@ -346,7 +346,9 @@ static RollbarNotifier *notifier = nil;
 
 + (void)recordViewEventForLevel:(RollbarLevel)level
                         element:(NSString *)element {
-    [self recordViewEventForLevel:level element:element extraData:nil];
+    [self recordViewEventForLevel:level
+                          element:element
+                        extraData:nil];
 }
 
 + (void)recordViewEventForLevel:(RollbarLevel)level
@@ -386,7 +388,9 @@ static RollbarNotifier *notifier = nil;
 
 + (void)recordConnectivityEventForLevel:(RollbarLevel)level
                                  status:(NSString *)status {
-    [self recordConnectivityEventForLevel:level status:status extraData:nil];
+    [self recordConnectivityEventForLevel:level
+                                   status:status
+                                extraData:nil];
 }
 
 + (void)recordConnectivityEventForLevel:(RollbarLevel)level
@@ -401,7 +405,9 @@ static RollbarNotifier *notifier = nil;
 
 + (void)recordErrorEventForLevel:(RollbarLevel)level
                          message:(NSString *)message {
-    [self recordErrorEventForLevel:level message:message extraData:nil];
+    [self recordErrorEventForLevel:level
+                           message:message
+                         extraData:nil];
 }
 
 + (void)recordErrorEventForLevel:(RollbarLevel)level
@@ -426,7 +432,10 @@ static RollbarNotifier *notifier = nil;
 + (void)recordNavigationEventForLevel:(RollbarLevel)level
                                  from:(NSString *)from
                                    to:(NSString *)to {
-    [self recordNavigationEventForLevel:level from:from to:to extraData:nil];
+    [self recordNavigationEventForLevel:level
+                                   from:from
+                                     to:to
+                              extraData:nil];
 }
 
 + (void)recordNavigationEventForLevel:(RollbarLevel)level
@@ -443,14 +452,17 @@ static RollbarNotifier *notifier = nil;
 
 + (void)recordManualEventForLevel:(RollbarLevel)level
                          withData:(NSDictionary *)extraData {
-    [[RollbarTelemetry sharedInstance] recordManualEventForLevel:level withData:extraData];
+    [[RollbarTelemetry sharedInstance] recordManualEventForLevel:level
+                                                        withData:extraData];
 }
 
 #pragma mark - Log
 
 + (void)recordLogEventForLevel:(RollbarLevel)level
                        message:(NSString *)message {
-    [self recordLogEventForLevel:level message:message extraData:nil];
+    [self recordLogEventForLevel:level
+                         message:message
+                       extraData:nil];
 }
 
 + (void)recordLogEventForLevel:(RollbarLevel)level
