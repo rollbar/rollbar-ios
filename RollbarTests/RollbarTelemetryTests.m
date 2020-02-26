@@ -72,7 +72,7 @@
 }
 
 - (void)testErrorReportingWithTelemetry {
-//    Rollbar.currentConfiguration.telemetryEnabled = YES;
+    Rollbar.currentConfiguration.telemetryEnabled = YES;
 
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"SomeNavigationSource" to:@"SomeNavigationDestination"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"SomeConnectivityStatus"];
@@ -86,36 +86,35 @@
     [Rollbar debug:@"Demonstrate Telemetry capture"];
     [Rollbar debug:@"Demonstrate Telemetry capture once more..."];
     
-//    NSArray *logItems = RollbarReadLogItemFromFile();
-//    NSDictionary *item = logItems[0];
-//    for (NSDictionary *item in logItems) {
-//        NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
-//
-//        for (NSDictionary *data in telemetryData) {
-//            NSDictionary *body = data[@"body"];
-//            NSString *type = data[@"type"];
-//            if ([type isEqualToString:@"error"]) {
-//                if ([data[@"level"] isEqualToString:@"debug"]) {
-//                    XCTAssertTrue([body[@"message"] isEqualToString:@"test"]);
-//                } else if ([data[@"level"] isEqualToString:@"error"]) {
-//                    XCTAssertTrue([body[@"class"] isEqualToString:NSStringFromClass([NSException class])]);
-//                    XCTAssertTrue([body[@"description"] isEqualToString:@"reason"]);
-//                    XCTAssertTrue([body[@"message"] isEqualToString:@"reason"]);
-//                }
-//            } else if ([type isEqualToString:@"navigation"]) {
-//                XCTAssertTrue([body[@"from"] isEqualToString:@"from"]);
-//                XCTAssertTrue([body[@"to"] isEqualToString:@"to"]);
-//            } else if ([type isEqualToString:@"connectivity"]) {
-//                XCTAssertTrue([body[@"change"] isEqualToString:@"status"]);
-//            } else if ([type isEqualToString:@"network"]) {
-//                XCTAssertTrue([body[@"method"] isEqualToString:@"method"]);
-//                XCTAssertTrue([body[@"status_code"] isEqualToString:@"status_code"]);
-//                XCTAssertTrue([body[@"url"] isEqualToString:@"url"]);
-//            } else if ([type isEqualToString:@"manual"]) {
-//                XCTAssertTrue([body[@"data"] isEqualToString:@"content"]);
-//            }
-//        }
-//    }
+    NSArray *logItems = RollbarReadLogItemFromFile();
+    for (NSDictionary *item in logItems) {
+        NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
+
+        for (NSDictionary *data in telemetryData) {
+            NSDictionary *body = data[@"body"];
+            NSString *type = data[@"type"];
+            if ([type isEqualToString:@"error"]) {
+                if ([data[@"level"] isEqualToString:@"debug"]) {
+                    XCTAssertTrue([body[@"message"] isEqualToString:@"Some telemetry message..."]);
+                } else if ([data[@"level"] isEqualToString:@"error"]) {
+                    XCTAssertTrue([body[@"class"] isEqualToString:NSStringFromClass([NSException class])]);
+                    XCTAssertTrue([body[@"description"] isEqualToString:@"someExceptionReason"]);
+                    XCTAssertTrue([body[@"message"] isEqualToString:@"someExceptionReason"]);
+                }
+            } else if ([type isEqualToString:@"navigation"]) {
+                XCTAssertTrue([body[@"from"] isEqualToString:@"SomeNavigationSource"]);
+                XCTAssertTrue([body[@"to"] isEqualToString:@"SomeNavigationDestination"]);
+            } else if ([type isEqualToString:@"connectivity"]) {
+                XCTAssertTrue([body[@"change"] isEqualToString:@"SomeConnectivityStatus"]);
+            } else if ([type isEqualToString:@"network"]) {
+                XCTAssertTrue([body[@"method"] isEqualToString:@"POST"]);
+                XCTAssertTrue([body[@"status_code"] isEqualToString:@"200"]);
+                XCTAssertTrue([body[@"url"] isEqualToString:@"www.myservice.com"]);
+            } else if ([type isEqualToString:@"manual"]) {
+                XCTAssertTrue([body[@"myTelemetryParameter"] isEqualToString:@"itsValue"]);
+            }
+        }
+    }
 
 }
 
