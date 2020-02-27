@@ -8,7 +8,13 @@
 
 @property (atomic, strong) RollbarConfiguration *configuration;
 
-- (id)initWithAccessToken:(NSString*)accessToken configuration:(RollbarConfiguration*)configuration isRoot:(BOOL)isRoot;
+- (instancetype)init
+NS_UNAVAILABLE;
+
+- (instancetype)initWithAccessToken:(NSString*)accessToken
+                      configuration:(RollbarConfiguration*)configuration
+                             isRoot:(BOOL)isRoot
+NS_DESIGNATED_INITIALIZER;
 
 - (void)processSavedItems;
 

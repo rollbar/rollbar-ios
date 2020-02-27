@@ -28,6 +28,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 **1.11.7**
 - refactor: resolve #256: Refactor RollbarTelemetry implementation.
 - refactor: resolve #255: Mark deprecated public API with proper deprecated attribute.
+- refactor: resolve #259: Refactor RollbarNotifier's initializers
 - test: resolve #257: Fix failing testErrorReportingWithTelemetry unit test
 - test: resolve #258: Fix deprecated API warnings in unit-test builds
 

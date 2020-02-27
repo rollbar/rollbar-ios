@@ -55,9 +55,9 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *m_osData;
 }
 
-- (id)initWithAccessToken:(NSString*)accessToken
-            configuration:(RollbarConfiguration*)configuration
-                   isRoot:(BOOL)isRoot {
+- (instancetype)initWithAccessToken:(NSString*)accessToken
+                      configuration:(RollbarConfiguration*)configuration
+                             isRoot:(BOOL)isRoot {
     
     if ((self = [super init])) {
         [self updateAccessToken:accessToken
@@ -264,8 +264,9 @@ static BOOL isNetworkReachable = YES;
             return;
         }
         NSError *error;
+        NSJSONReadingOptions serializationOptions = (NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves);
         NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:lineData
-                                                                options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
+                                                                options:serializationOptions
                                                                   error:&error];
 
         if (!payload) {
@@ -631,289 +632,289 @@ static BOOL isNetworkReachable = YES;
 
 #pragma mark - LEGACY payload data builders
 
-- (NSDictionary*)buildPersonData {
-    NSMutableDictionary *personData = [NSMutableDictionary dictionary];
-    
-    if (self.configuration.personId) {
-        personData[@"id"] = self.configuration.personId;
-    }
-    if (self.configuration.personUsername) {
-        personData[@"username"] = self.configuration.personUsername;
-    }
-    if (self.configuration.personEmail) {
-        personData[@"email"] = self.configuration.personEmail;
-    }
-    
-    if ([[personData allKeys] count]) {
-        return personData;
-    }
-    
-    return nil;
-}
+//- (NSDictionary*)buildPersonData {
+//    NSMutableDictionary *personData = [NSMutableDictionary dictionary];
+//
+//    if (self.configuration.personId) {
+//        personData[@"id"] = self.configuration.personId;
+//    }
+//    if (self.configuration.personUsername) {
+//        personData[@"username"] = self.configuration.personUsername;
+//    }
+//    if (self.configuration.personEmail) {
+//        personData[@"email"] = self.configuration.personEmail;
+//    }
+//
+//    if ([[personData allKeys] count]) {
+//        return personData;
+//    }
+//
+//    return nil;
+//}
 
-- (NSDictionary*)buildServerData {
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//- (NSDictionary*)buildServerData {
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//
+//    if (self.configuration.serverHost) {
+//        data[@"host"] = self.configuration.serverHost;
+//    }
+//    if (self.configuration.serverRoot) {
+//        data[@"root"] = self.configuration.serverRoot;
+//    }
+//    if (self.configuration.serverBranch) {
+//        data[@"branch"] = self.configuration.serverBranch;
+//    }
+//    if (self.configuration.serverCodeVersion) {
+//        data[@"code_version"] = self.configuration.serverCodeVersion;
+//    }
+//
+//    if ([[data allKeys] count]) {
+//        return data;
+//    }
+//
+//    return nil;
+//}
 
-    if (self.configuration.serverHost) {
-        data[@"host"] = self.configuration.serverHost;
-    }
-    if (self.configuration.serverRoot) {
-        data[@"root"] = self.configuration.serverRoot;
-    }
-    if (self.configuration.serverBranch) {
-        data[@"branch"] = self.configuration.serverBranch;
-    }
-    if (self.configuration.serverCodeVersion) {
-        data[@"code_version"] = self.configuration.serverCodeVersion;
-    }
+//- (NSDictionary*)buildClientData {
+//
+//    NSBundle *mainBundle = [NSBundle mainBundle];
+//
+//    NSString *version = [mainBundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+//    if (self.configuration.codeVersion.length > 0) {
+//        version = self.configuration.codeVersion;
+//    }
+//
+//    NSString *shortVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+//    NSString *bundleName = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
+//    NSString *bundleIdentifier = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey];
+//
+//    struct utsname systemInfo;
+//    uname(&systemInfo);
+//    NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+//
+//#if TARGET_OS_IPHONE
+//    NSDictionary *osData = @{
+//                             @"os": @"iOS",
+//                             @"os_version": [[UIDevice currentDevice] systemVersion],
+//                             @"device_code": deviceCode,
+//                             @"code_version": version ? version : @"",
+//                             @"short_version": shortVersion ? shortVersion : @"",
+//                             @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+//                             @"app_name": bundleName ? bundleName : @""
+//                             };
+//#else
+//    NSOperatingSystemVersion osVer = [[NSProcessInfo processInfo] operatingSystemVersion];
+//    NSDictionary *osData = @{
+//                             @"os": @"macOS",
+//                             @"os_version": [NSString stringWithFormat:@" %tu.%tu.%tu",
+//                                             osVer.majorVersion,
+//                                             osVer.minorVersion,
+//                                             osVer.patchVersion
+//                                             ],
+//                             @"device_code": deviceCode,
+//                             @"code_version": version ? version : @"",
+//                             @"short_version": shortVersion ? shortVersion : @"",
+//                             @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
+//                             @"app_name": bundleName ? bundleName : [[NSProcessInfo processInfo] processName]
+//                             };
+//#endif
+//
+//    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]];
+//
+//    if (self.configuration.captureIp == CaptureIpFull) {
+//        return @{@"timestamp": timestamp,
+//                 @"ios": osData,
+//                 @"user_ip": @"$remote_ip"};
+//    } else if (self.configuration.captureIp == CaptureIpAnonymize) {
+//        return @{@"timestamp": timestamp,
+//                 @"ios": osData,
+//                 @"user_ip": @"$remote_ip_anonymize"};
+//    } else {
+//        return @{@"timestamp": timestamp,
+//                 @"ios": osData
+//                 };
+//    }
+//}
 
-    if ([[data allKeys] count]) {
-        return data;
-    }
+//- (NSDictionary*)buildOptionalData {
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//
+//    // Add client/server linking ID
+//    if (self.configuration.requestId) {
+//        [data setObject:self.configuration.requestId forKey:@"requestId"];
+//    }
+//
+//    // Add server data
+//    NSDictionary *serverData = [self buildServerData];
+//
+//    if (serverData) {
+//        [data setObject:serverData forKey:@"server"];
+//    }
+//
+//    if ([[data allKeys] count]) {
+//        return data;
+//    }
+//
+//    return nil;
+//}
 
-    return nil;
-}
+//- (NSDictionary*)buildPayloadWithLevel:(NSString*)level
+//                               message:(NSString*)message
+//                             exception:(NSException*)exception
+//                                 extra:(NSDictionary*)extra
+//                           crashReport:(NSString*)crashReport
+//                               context:(NSString*)context {
+//
+//    NSDictionary *clientData = [self buildClientData];
+//    NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
+//                                   @"version": self.configuration.notifierVersion,
+//                                   @"configured_options": self.configuration.asRollbarConfig.jsonFriendlyData
+//    };
+//
+//    NSMutableDictionary *customData =
+//        [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];
+//    if (crashReport || exception) {
+//        // neither crash report no exception payload objects have placeholders for any extra data
+//        // or an extra message, let's preserve them as the custom data:
+//        if (extra) {
+//            customData[@"error.extra"] = extra;
+//        }
+//        if (message && message.length > 0) {
+//            customData[@"error.message"] = message;
+//        }
+//    }
+//
+//    NSDictionary *body = [self buildPayloadBodyWithMessage:message
+//                                                 exception:exception
+//                                                     extra:extra
+//                                               crashReport:crashReport
+//                          ];
+//    NSString *platform = @"client";
+//    NSMutableDictionary *data = [@{
+//        @"environment": self.configuration.environment,
+//        @"level": level,
+//        @"language": @"objective-c",
+//        @"framework": self.configuration.framework,
+//        @"platform": platform,
+//        @"uuid": [self generateUUID],
+//        @"client": clientData,
+//        @"notifier": notifierData,
+//        @"custom": customData,
+//        @"body": body
+//    } mutableCopy];
+//
+//    NSDictionary *personData = [self buildPersonData];
+//
+//    if (personData) {
+//        data[@"person"] = personData;
+//    }
+//
+//    NSDictionary *optionalData = [self buildOptionalData];
+//
+//    if (optionalData) {
+//        [data addEntriesFromDictionary:optionalData];
+//    }
+//
+//    if (context) {
+//        data[@"context"] = context;
+//    }
+//
+//    // Transform payload, if necessary
+//    [self modifyPayload:data];
+//    [self scrubPayload:data];
+//    if ([self shouldIgnorePayload:data]) {
+//        return nil;
+//    }
+//
+//    return @{@"access_token": self.configuration.accessToken,
+//             @"data": data};
+//}
 
-- (NSDictionary*)buildClientData {
-    
-    NSBundle *mainBundle = [NSBundle mainBundle];
-    
-    NSString *version = [mainBundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
-    if (self.configuration.codeVersion.length > 0) {
-        version = self.configuration.codeVersion;
-    }
-    
-    NSString *shortVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *bundleName = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
-    NSString *bundleIdentifier = [mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey];
-    
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    NSString *deviceCode = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    
-#if TARGET_OS_IPHONE
-    NSDictionary *osData = @{
-                             @"os": @"iOS",
-                             @"os_version": [[UIDevice currentDevice] systemVersion],
-                             @"device_code": deviceCode,
-                             @"code_version": version ? version : @"",
-                             @"short_version": shortVersion ? shortVersion : @"",
-                             @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
-                             @"app_name": bundleName ? bundleName : @""
-                             };
-#else
-    NSOperatingSystemVersion osVer = [[NSProcessInfo processInfo] operatingSystemVersion];
-    NSDictionary *osData = @{
-                             @"os": @"macOS",
-                             @"os_version": [NSString stringWithFormat:@" %tu.%tu.%tu",
-                                             osVer.majorVersion,
-                                             osVer.minorVersion,
-                                             osVer.patchVersion
-                                             ],
-                             @"device_code": deviceCode,
-                             @"code_version": version ? version : @"",
-                             @"short_version": shortVersion ? shortVersion : @"",
-                             @"bundle_identifier": bundleIdentifier ? bundleIdentifier : @"",
-                             @"app_name": bundleName ? bundleName : [[NSProcessInfo processInfo] processName]
-                             };
-#endif
+//- (NSDictionary*)buildPayloadBodyWithCrashReport:(NSString*)crashReport {
+//    return @{@"crash_report": @{@"raw": crashReport}};
+//}
+//
+//- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message
+//                                       extra:(NSDictionary*)extra {
+//    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+//    result[@"body"] = message ? message : @"";
+//
+//    if (extra) {
+//        result[@"extra"] = extra;
+//    }
+//
+//    return @{@"message": result};
+//}
+//
+//- (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception {
+//
+//    NSMutableDictionary *exceptionInfo = [[NSMutableDictionary alloc] init];
+//    [exceptionInfo setObject:NSStringFromClass([exception class]) forKey:@"class"];
+//    [exceptionInfo setObject:[exception.reason mutableCopy] forKey:@"message"];
+//    [exceptionInfo setObject:[exception.description mutableCopy] forKey:@"description"];
+//
+//    NSMutableArray *frames = [NSMutableArray array];
+//    for (NSString *line in exception.callStackSymbols) {
+//        NSMutableArray *components =
+//        [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
+//        [components removeObject:@""];
+//        [components removeObjectAtIndex:0];
+//        if (components.count >= 4) {
+//            NSString *method = [self methodNameFromStackTrace:components];
+//            NSString *filename = [components componentsJoinedByString:@" "];
+//            [frames addObject:@{
+//                                @"library": components[0],
+//                                @"filename": filename,
+//                                @"address": components[1],
+//                                @"lineno": components[components.count-1],
+//                                @"method": method
+//                                }];
+//        }
+//    }
+//
+//    return @{@"trace": @{@"frames": frames, @"exception": exceptionInfo}};
+//}
 
-    NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]];
+//- (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
+//    int start = false;
+//    NSString *buf;
+//    for (NSString *component in stackTraceComponents) {
+//        if (!start && [component hasPrefix:@"0x"]) {
+//            start = true;
+//        } else if (start && [component isEqualToString:@"+"]) {
+//            break;
+//        } else if (start) {
+//            buf =
+//            buf ? [NSString stringWithFormat:@"%@ %@", buf, component]
+//            : component;
+//        }
+//    }
+//    return buf ? buf : @"Unknown";
+//}
 
-    if (self.configuration.captureIp == CaptureIpFull) {
-        return @{@"timestamp": timestamp,
-                 @"ios": osData,
-                 @"user_ip": @"$remote_ip"};
-    } else if (self.configuration.captureIp == CaptureIpAnonymize) {
-        return @{@"timestamp": timestamp,
-                 @"ios": osData,
-                 @"user_ip": @"$remote_ip_anonymize"};
-    } else {
-        return @{@"timestamp": timestamp,
-                 @"ios": osData
-                 };
-    }
-}
-
-- (NSDictionary*)buildOptionalData {
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-
-    // Add client/server linking ID
-    if (self.configuration.requestId) {
-        [data setObject:self.configuration.requestId forKey:@"requestId"];
-    }
-
-    // Add server data
-    NSDictionary *serverData = [self buildServerData];
-
-    if (serverData) {
-        [data setObject:serverData forKey:@"server"];
-    }
-
-    if ([[data allKeys] count]) {
-        return data;
-    }
-
-    return nil;
-}
-
-- (NSDictionary*)buildPayloadWithLevel:(NSString*)level
-                               message:(NSString*)message
-                             exception:(NSException*)exception
-                                 extra:(NSDictionary*)extra
-                           crashReport:(NSString*)crashReport
-                               context:(NSString*)context {
-    
-    NSDictionary *clientData = [self buildClientData];
-    NSDictionary *notifierData = @{@"name": self.configuration.notifierName,
-                                   @"version": self.configuration.notifierVersion,
-                                   @"configured_options": self.configuration.asRollbarConfig.jsonFriendlyData
-    };
-    
-    NSMutableDictionary *customData =
-        [NSMutableDictionary dictionaryWithDictionary:self.configuration.customData];
-    if (crashReport || exception) {
-        // neither crash report no exception payload objects have placeholders for any extra data
-        // or an extra message, let's preserve them as the custom data:
-        if (extra) {
-            customData[@"error.extra"] = extra;
-        }
-        if (message && message.length > 0) {
-            customData[@"error.message"] = message;
-        }
-    }
-
-    NSDictionary *body = [self buildPayloadBodyWithMessage:message
-                                                 exception:exception
-                                                     extra:extra
-                                               crashReport:crashReport
-                          ];
-    NSString *platform = @"client";
-    NSMutableDictionary *data = [@{
-        @"environment": self.configuration.environment,
-        @"level": level,
-        @"language": @"objective-c",
-        @"framework": self.configuration.framework,
-        @"platform": platform,
-        @"uuid": [self generateUUID],
-        @"client": clientData,
-        @"notifier": notifierData,
-        @"custom": customData,
-        @"body": body
-    } mutableCopy];
-    
-    NSDictionary *personData = [self buildPersonData];
-    
-    if (personData) {
-        data[@"person"] = personData;
-    }
-
-    NSDictionary *optionalData = [self buildOptionalData];
-
-    if (optionalData) {
-        [data addEntriesFromDictionary:optionalData];
-    }
-
-    if (context) {
-        data[@"context"] = context;
-    }
-
-    // Transform payload, if necessary
-    [self modifyPayload:data];
-    [self scrubPayload:data];
-    if ([self shouldIgnorePayload:data]) {
-        return nil;
-    }
-
-    return @{@"access_token": self.configuration.accessToken,
-             @"data": data};
-}
-
-- (NSDictionary*)buildPayloadBodyWithCrashReport:(NSString*)crashReport {
-    return @{@"crash_report": @{@"raw": crashReport}};
-}
-
-- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message
-                                       extra:(NSDictionary*)extra {
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    result[@"body"] = message ? message : @"";
-    
-    if (extra) {
-        result[@"extra"] = extra;
-    }
-    
-    return @{@"message": result};
-}
-
-- (NSDictionary*)buildPayloadBodyWithException:(NSException*)exception {
-
-    NSMutableDictionary *exceptionInfo = [[NSMutableDictionary alloc] init];
-    [exceptionInfo setObject:NSStringFromClass([exception class]) forKey:@"class"];
-    [exceptionInfo setObject:[exception.reason mutableCopy] forKey:@"message"];
-    [exceptionInfo setObject:[exception.description mutableCopy] forKey:@"description"];
-
-    NSMutableArray *frames = [NSMutableArray array];
-    for (NSString *line in exception.callStackSymbols) {
-        NSMutableArray *components =
-        [NSMutableArray arrayWithArray:[line componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]]];
-        [components removeObject:@""];
-        [components removeObjectAtIndex:0];
-        if (components.count >= 4) {
-            NSString *method = [self methodNameFromStackTrace:components];
-            NSString *filename = [components componentsJoinedByString:@" "];
-            [frames addObject:@{
-                                @"library": components[0],
-                                @"filename": filename,
-                                @"address": components[1],
-                                @"lineno": components[components.count-1],
-                                @"method": method
-                                }];
-        }
-    }
-    
-    return @{@"trace": @{@"frames": frames, @"exception": exceptionInfo}};
-}
-
-- (NSString*)methodNameFromStackTrace:(NSArray*)stackTraceComponents {
-    int start = false;
-    NSString *buf;
-    for (NSString *component in stackTraceComponents) {
-        if (!start && [component hasPrefix:@"0x"]) {
-            start = true;
-        } else if (start && [component isEqualToString:@"+"]) {
-            break;
-        } else if (start) {
-            buf =
-            buf ? [NSString stringWithFormat:@"%@ %@", buf, component]
-            : component;
-        }
-    }
-    return buf ? buf : @"Unknown";
-}
-
-- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message
-                                   exception:(NSException*)exception
-                                       extra:(NSDictionary*)extra
-                                 crashReport:(NSString*)crashReport {
-    NSDictionary *payloadBody;
-    if (crashReport) {
-        payloadBody = [self buildPayloadBodyWithCrashReport:crashReport];
-    } else if (exception) {
-        payloadBody = [self buildPayloadBodyWithException:exception];
-    } else {
-        payloadBody = [self buildPayloadBodyWithMessage:message extra:extra];
-    }
-    
-    NSArray *telemetryData = [[RollbarTelemetry sharedInstance] getAllData];
-    if (payloadBody && telemetryData.count > 0) {
-        NSMutableDictionary *newPayloadBody = nil;
-        newPayloadBody = [NSMutableDictionary dictionaryWithDictionary:payloadBody];
-        [newPayloadBody setObject:telemetryData forKey:@"telemetry"];
-        return newPayloadBody;
-    }
-    
-    return payloadBody;
-}
+//- (NSDictionary*)buildPayloadBodyWithMessage:(NSString*)message
+//                                   exception:(NSException*)exception
+//                                       extra:(NSDictionary*)extra
+//                                 crashReport:(NSString*)crashReport {
+//    NSDictionary *payloadBody;
+//    if (crashReport) {
+//        payloadBody = [self buildPayloadBodyWithCrashReport:crashReport];
+//    } else if (exception) {
+//        payloadBody = [self buildPayloadBodyWithException:exception];
+//    } else {
+//        payloadBody = [self buildPayloadBodyWithMessage:message extra:extra];
+//    }
+//
+//    NSArray *telemetryData = [[RollbarTelemetry sharedInstance] getAllData];
+//    if (payloadBody && telemetryData.count > 0) {
+//        NSMutableDictionary *newPayloadBody = nil;
+//        newPayloadBody = [NSMutableDictionary dictionaryWithDictionary:payloadBody];
+//        [newPayloadBody setObject:telemetryData forKey:@"telemetry"];
+//        return newPayloadBody;
+//    }
+//
+//    return payloadBody;
+//}
 
 - (void)queuePayload:(NSDictionary*)payload {
     [self performSelector:@selector(queuePayload_OnlyCallOnThread:)
@@ -1003,12 +1004,12 @@ static BOOL isNetworkReachable = YES;
 - (BOOL)sendPayload:(NSData*)payload {
     NSURL *url = [NSURL URLWithString:self.configuration.endpoint];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
+
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
-    
+
     if (YES == self.configuration.logPayload) {
         NSString *payloadString = [[NSString alloc]initWithData:payload
                                                        encoding:NSUTF8StringEncoding
@@ -1016,7 +1017,7 @@ static BOOL isNetworkReachable = YES;
         NSLog(@"%@", payloadString);
         //TODO: if self.configuration.logPayloadFile is defined, save the payload into the file...
     }
-    
+
     if (NO == self.configuration.transmit) {
         return YES; // we just successfully shortcircuit here...
     }
@@ -1029,12 +1030,12 @@ static BOOL isNetworkReachable = YES;
 #endif
         // This requires iOS 7.0+
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        
+
         NSURLSession *session = [NSURLSession sharedSession];
-        
+
         if (self.configuration.httpProxyEnabled
             || self.configuration.httpsProxyEnabled) {
-            
+
             NSDictionary *connectionProxyDictionary =
             @{
               @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxyEnabled],
@@ -1050,7 +1051,7 @@ static BOOL isNetworkReachable = YES;
             sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
             session = [NSURLSession sessionWithConfiguration:sessionConfig];
         }
-        
+
         NSURLSessionDataTask *dataTask =
             [session dataTaskWithRequest:request
                        completionHandler:^(
@@ -1063,13 +1064,13 @@ static BOOL isNetworkReachable = YES;
                 dispatch_semaphore_signal(sem);
             }];
         [dataTask resume];
-        
+
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     } else {
         // Using method sendSynchronousRequest, deprecated since iOS 9.0
         NSError *error;
         NSHTTPURLResponse *response;
-        
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSData *data = [NSURLConnection sendSynchronousRequest:request
@@ -1080,14 +1081,14 @@ static BOOL isNetworkReachable = YES;
                                       error:error
                                        data:data];
     }
-    
+
     return result;
 }
 
 - (BOOL)checkPayloadResponse:(NSURLResponse*)response
                        error:(NSError*)error
                         data:(NSData*)data {
-    
+
     // Lookup rate limiting headers and afjust reporting rate accordingly:
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     NSDictionary *httpHeaders = [httpResponse allHeaderFields];
@@ -1103,7 +1104,7 @@ static BOOL isNetworkReachable = YES;
         nextSendTime =
         [[NSDate alloc] initWithTimeIntervalSinceNow:rateLimitSeconds];
     }
-    
+
     if (error) {
         SdkLog(@"There was an error reporting to Rollbar");
         SdkLog(@"Error: %@", [error localizedDescription]);
@@ -1126,13 +1127,13 @@ static BOOL isNetworkReachable = YES;
     return NO;
 }
 
-- (NSString*)generateUUID {
-    CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
-    NSString *string =
-    (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, uuid);
-    CFRelease(uuid);
-    return string;
-}
+//- (NSString*)generateUUID {
+//    CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+//    NSString *string =
+//    (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, uuid);
+//    CFRelease(uuid);
+//    return string;
+//}
 
 #pragma mark - Payload truncate
 
@@ -1292,6 +1293,8 @@ static BOOL isNetworkReachable = YES;
     return rollbarThread;
 }
 
-- (void)_test_doNothing {}
+- (void)_test_doNothing {
+    
+}
 
 @end
