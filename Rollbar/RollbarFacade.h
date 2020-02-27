@@ -10,7 +10,7 @@
 
 @interface Rollbar : NSObject
 
-#pragma mark - Initializers
+#pragma mark - Class Initializers
 
 + (void)initWithAccessToken:(NSString*)accessToken;
 

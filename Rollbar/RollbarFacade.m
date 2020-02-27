@@ -24,13 +24,16 @@ static RollbarNotifier *notifier = nil;
 
 + (void)initWithAccessToken:(NSString *)accessToken {
 
-    [Rollbar initWithAccessToken:accessToken configuration:nil];
+    [Rollbar initWithAccessToken:accessToken
+                   configuration:nil];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken
               configuration:(RollbarConfiguration*)configuration {
 
-    [Rollbar initWithAccessToken:accessToken configuration:configuration enableCrashReporter:YES];
+    [Rollbar initWithAccessToken:accessToken
+                   configuration:configuration
+             enableCrashReporter:YES];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken
@@ -44,11 +47,9 @@ static RollbarNotifier *notifier = nil;
         notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken
                                                   configuration:configuration
                                                          isRoot:YES];
-
         if (enable) {
             [Rollbar enableCrashReporter];
         }
-
         [notifier.configuration save];
     }
 }
@@ -63,12 +64,11 @@ static RollbarNotifier *notifier = nil;
 
 + (void)updateConfiguration:(RollbarConfiguration*)configuration
                      isRoot:(BOOL)isRoot {
-    [notifier updateConfiguration:configuration isRoot:isRoot];
+    [notifier updateConfiguration:configuration
+                           isRoot:isRoot];
 }
 
 #pragma mark - New logging methods
-
-// Log
 
 + (void)log:(RollbarLevel)level
     message:(NSString*)message {
