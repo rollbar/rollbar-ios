@@ -32,6 +32,129 @@
 + (void)updateConfiguration:(RollbarConfiguration*)configuration
                      isRoot:(BOOL)isRoot;
 
+
+
+#pragma mark - New logging methods
+
++ (void)log:(RollbarLevel)level
+    message:(NSString*)message;
++ (void)log:(RollbarLevel)level
+    message:(NSString*)message
+  exception:(NSException*)exception;
++ (void)log:(RollbarLevel)level
+    message:(NSString*)message
+  exception:(NSException*)exception
+       data:(NSDictionary*)data;
++ (void)log:(RollbarLevel)level
+    message:(NSString*)message
+  exception:(NSException*)exception
+       data:(NSDictionary*)data
+    context:(NSString*)context;
+
++ (void)debug:(NSString*)message;
++ (void)debug:(NSString*)message
+    exception:(NSException*)exception;
++ (void)debug:(NSString*)message
+    exception:(NSException*)exception
+         data:(NSDictionary*)data;
++ (void)debug:(NSString*)message
+    exception:(NSException*)exception
+         data:(NSDictionary*)data
+      context:(NSString*)context;
+
++ (void)info:(NSString*)message;
++ (void)info:(NSString*)message
+   exception:(NSException*)exception;
++ (void)info:(NSString*)message
+   exception:(NSException*)exception
+        data:(NSDictionary*)data;
++ (void)info:(NSString*)message
+   exception:(NSException*)exception
+        data:(NSDictionary*)data
+     context:(NSString*)context;
+
++ (void)warning:(NSString*)message;
++ (void)warning:(NSString*)message
+      exception:(NSException*)exception;
++ (void)warning:(NSString*)message
+      exception:(NSException*)exception
+           data:(NSDictionary*)data;
++ (void)warning:(NSString*)message
+      exception:(NSException*)exception
+           data:(NSDictionary*)data
+        context:(NSString*)context;
+
++ (void)error:(NSString*)message;
++ (void)error:(NSString*)message
+    exception:(NSException*)exception;
++ (void)error:(NSString*)message
+    exception:(NSException*)exception
+         data:(NSDictionary*)data;
++ (void)error:(NSString*)message
+    exception:(NSException*)exception
+         data:(NSDictionary*)data
+      context:(NSString*)context;
+
++ (void)critical:(NSString*)message;
++ (void)critical:(NSString*)message
+       exception:(NSException*)exception;
++ (void)critical:(NSString*)message
+       exception:(NSException*)exception
+            data:(NSDictionary*)data;
++ (void)critical:(NSString*)message
+       exception:(NSException*)exception
+            data:(NSDictionary*)data
+         context:(NSString*)context;
+
++ (void)logCrashReport:(NSString*)crashReport;
+
+#pragma mark - Send manually constructed JSON payload
+
++ (void)sendJsonPayload:(NSData*)payload;
+
+#pragma mark - Telemetry API
+
++ (void)recordViewEventForLevel:(RollbarLevel)level
+                        element:(NSString *)element;
++ (void)recordViewEventForLevel:(RollbarLevel)level
+                        element:(NSString *)element
+                      extraData:(NSDictionary *)extraData;
+
++ (void)recordNetworkEventForLevel:(RollbarLevel)level
+                            method:(NSString *)method
+                               url:(NSString *)url
+                        statusCode:(NSString *)statusCode;
++ (void)recordNetworkEventForLevel:(RollbarLevel)level
+                            method:(NSString *)method
+                               url:(NSString *)url
+                        statusCode:(NSString *)statusCode
+                         extraData:(NSDictionary *)extraData;
+
++ (void)recordConnectivityEventForLevel:(RollbarLevel)level
+                                 status:(NSString *)status;
++ (void)recordConnectivityEventForLevel:(RollbarLevel)level
+                                 status:(NSString *)status
+                              extraData:(NSDictionary *)extraData;
+
++ (void)recordErrorEventForLevel:(RollbarLevel)level
+                         message:(NSString *)message;
++ (void)recordErrorEventForLevel:(RollbarLevel)level
+                       exception:(NSException *)exception;
++ (void)recordErrorEventForLevel:(RollbarLevel)level
+                         message:(NSString *)message
+                       extraData:(NSDictionary *)extraData;
+
++ (void)recordNavigationEventForLevel:(RollbarLevel)level
+                                 from:(NSString *)from
+                                   to:(NSString *)to;
++ (void)recordNavigationEventForLevel:(RollbarLevel)level
+                                 from:(NSString *)from
+                                   to:(NSString *)to
+                            extraData:(NSDictionary *)extraData;
+
++ (void)recordManualEventForLevel:(RollbarLevel)level
+                         withData:(NSDictionary *)extraData;
+
 #pragma mark - DEPRECATED old logging methods, for backward compatibility
 
 + (void)logWithLevel:(NSString*)level
@@ -103,104 +226,5 @@ DEPRECATED_MSG_ATTRIBUTE("Use critical:... methods instead.");
 
 + (void)criticalWithData:(NSDictionary*)data
 DEPRECATED_MSG_ATTRIBUTE("Use critical:... methods instead.");
-
-
-#pragma mark - New logging methods
-
-+ (void)log:(RollbarLevel)level message:(NSString*)message;
-+ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception;
-+ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
-+ (void)log:(RollbarLevel)level message:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
-
-+ (void)debug:(NSString*)message;
-+ (void)debug:(NSString*)message exception:(NSException*)exception;
-+ (void)debug:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
-+ (void)debug:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
-
-+ (void)info:(NSString*)message;
-+ (void)info:(NSString*)message exception:(NSException*)exception;
-+ (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
-+ (void)info:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
-
-+ (void)warning:(NSString*)message;
-+ (void)warning:(NSString*)message exception:(NSException*)exception;
-+ (void)warning:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
-+ (void)warning:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
-
-+ (void)error:(NSString*)message;
-+ (void)error:(NSString*)message exception:(NSException*)exception;
-+ (void)error:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
-+ (void)error:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
-
-+ (void)critical:(NSString*)message;
-+ (void)critical:(NSString*)message exception:(NSException*)exception;
-+ (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data;
-+ (void)critical:(NSString*)message exception:(NSException*)exception data:(NSDictionary*)data context:(NSString*)context;
-
-+ (void)logCrashReport:(NSString*)crashReport;
-
-#pragma mark - Send JSON payload
-
-+ (void)sendJsonPayload:(NSData*)payload;
-
-#pragma mark - Telemetry: View events
-
-+ (void)recordViewEventForLevel:(RollbarLevel)level
-                        element:(NSString *)element;
-
-+ (void)recordViewEventForLevel:(RollbarLevel)level
-                        element:(NSString *)element
-                      extraData:(NSDictionary *)extraData;
-
-#pragma mark - Telemetry: Network events
-
-+ (void)recordNetworkEventForLevel:(RollbarLevel)level
-                            method:(NSString *)method
-                               url:(NSString *)url
-                        statusCode:(NSString *)statusCode;
-
-+ (void)recordNetworkEventForLevel:(RollbarLevel)level
-                            method:(NSString *)method
-                               url:(NSString *)url
-                        statusCode:(NSString *)statusCode
-                         extraData:(NSDictionary *)extraData;
-
-#pragma mark - Telemetry: Connectivity events
-
-+ (void)recordConnectivityEventForLevel:(RollbarLevel)level
-                                 status:(NSString *)status;
-
-+ (void)recordConnectivityEventForLevel:(RollbarLevel)level
-                                 status:(NSString *)status
-                              extraData:(NSDictionary *)extraData;
-
-
-#pragma mark - Telemetry: Error events
-
-+ (void)recordErrorEventForLevel:(RollbarLevel)level
-                         message:(NSString *)message;
-
-+ (void)recordErrorEventForLevel:(RollbarLevel)level
-                       exception:(NSException *)exception;
-
-+ (void)recordErrorEventForLevel:(RollbarLevel)level
-                         message:(NSString *)message
-                       extraData:(NSDictionary *)extraData;
-
-#pragma mark - Telemetry: Navigation events
-
-+ (void)recordNavigationEventForLevel:(RollbarLevel)level
-                                 from:(NSString *)from
-                                   to:(NSString *)to;
-
-+ (void)recordNavigationEventForLevel:(RollbarLevel)level
-                                 from:(NSString *)from
-                                   to:(NSString *)to
-                            extraData:(NSDictionary *)extraData;
-
-#pragma mark - Telemetry: Manual/Custom events
-
-+ (void)recordManualEventForLevel:(RollbarLevel)level
-                         withData:(NSDictionary *)extraData;
 
 @end
