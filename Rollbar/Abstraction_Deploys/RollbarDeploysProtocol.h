@@ -5,7 +5,7 @@
 #import "DeploymentDetails.h"
 #import "DeployApiCallResult.h"
 
-#pragma mark - Deploys Service Response Observer Protocols
+#pragma mark - Deploys API Service Response Observer Protocols
 
 /// Deployment reqistration observer protocol
 @protocol DeploymentRegistrationObserver
@@ -31,7 +31,7 @@
 - (void)onGetDeploymentDetailsPageCompleted:(nonnull DeploymentDetailsPageResult *)result;
 @end
 
-#pragma mark - Deploys Service Requests Protocol
+#pragma mark - Deploys API Service Requests Protocol
 
 /// Rollbar Deploys API protocol
 @protocol RollbarDeploysProtocol

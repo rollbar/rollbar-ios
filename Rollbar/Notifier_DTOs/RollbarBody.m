@@ -13,7 +13,7 @@
 #import "RollbarMessage.h"
 #import "RollbarCrashReport.h"
 #import "RollbarTrace.h"
-#import "../RollbarTelemetry.h"
+#import "RollbarTelemetry.h"
 
 static NSString * const DFK_TELEMETRY = @"telemetry";
 static NSString * const DFK_TRACE = @"trace";
