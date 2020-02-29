@@ -46,7 +46,6 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/RollbarKSCrashInstallation.h>
 #import <Rollbar/RollbarKSCrashReportSink.h>
 #import <Rollbar/RollbarTelemetry.h>
-#import <Rollbar/RollbarTelemetryType.h>
 
 // DTO Abstraction:
 #import <Rollbar/RollbarDTOAbstraction.h>
@@ -74,6 +73,7 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/RollbarPayloadDTOs.h>
 #import <Rollbar/TriStateFlag.h>
 #import <Rollbar/HttpMethod.h>
+#import <Rollbar/RollbarSource.h>
 #import <Rollbar/RollbarAppLanguage.h>
 #import <Rollbar/RollbarPayload.h>
 #import <Rollbar/RollbarData.h>
@@ -98,6 +98,19 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/RollbarServer.h>
 #import <Rollbar/RollbarClient.h>
 #import <Rollbar/RollbarJavascript.h>
+
+#import <Rollbar/RollbarTelemetryType.h>
+#import <Rollbar/RollbarTelemetryEvent.h>
+
+#import <Rollbar/RollbarTelemetryBody.h>
+#import <Rollbar/RollbarTelemetryLogBody.h>
+#import <Rollbar/RollbarTelemetryViewBody.h>
+#import <Rollbar/RollbarTelemetryErrorBody.h>
+#import <Rollbar/RollbarTelemetryNavigationBody.h>
+#import <Rollbar/RollbarTelemetryNetworkBody.h>
+#import <Rollbar/RollbarTelemetryConnectivityBody.h>
+#import <Rollbar/RollbarTelemetryManualBody.h>
+
 
 // Deploys API:
 #import <Rollbar/RollbarDeploys.h>

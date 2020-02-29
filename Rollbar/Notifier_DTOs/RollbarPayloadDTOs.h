@@ -14,6 +14,7 @@
 #import "CaptureIpType.h"
 #import "HttpMethod.h"
 #import "RollbarAppLanguage.h"
+#import "RollbarSource.h"
 
 // DTO types:
 #import "RollbarPayload.h"
@@ -39,4 +40,16 @@
 #import "RollbarServer.h"
 #import "RollbarClient.h"
 #import "RollbarJavascript.h"
+
+#import "RollbarTelemetryType.h"
+#import "RollbarTelemetryEvent.h"
+
+#import "RollbarTelemetryBody.h"
+#import "RollbarTelemetryLogBody.h"
+#import "RollbarTelemetryViewBody.h"
+#import "RollbarTelemetryErrorBody.h"
+#import "RollbarTelemetryNavigationBody.h"
+#import "RollbarTelemetryNetworkBody.h"
+#import "RollbarTelemetryConnectivityBody.h"
+#import "RollbarTelemetryManualBody.h"
 

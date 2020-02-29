@@ -7,7 +7,7 @@
 + (NSString *) RollbarTelemetryTypeToString:(RollbarTelemetryType)value; {
     switch (value) {
         case RollbarTelemetryView:
-            return @"view";
+            return @"dom";
         case RollbarTelemetryLog:
             return @"log";
         case RollbarTelemetryError:
@@ -25,7 +25,7 @@
 
 + (RollbarTelemetryType) RollbarTelemetryTypeFromString:(NSString *)value {
     
-    if (NSOrderedSame == [value caseInsensitiveCompare:@"view"]) {
+    if (NSOrderedSame == [value caseInsensitiveCompare:@"dom"]) {
         return RollbarTelemetryView;
     }
     else  if (NSOrderedSame == [value caseInsensitiveCompare:@"log"]) {
