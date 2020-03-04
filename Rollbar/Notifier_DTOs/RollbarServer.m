@@ -49,9 +49,6 @@ static NSString *const DFK_CPU = @"cpu";
     if (serverConfig) {
         self = [super initWithDictionary:serverConfig.jsonFriendlyData];
     }
-    else {
-        self = [super init];
-    }
     
     if (self) {
         [self mergeDataDictionary:@{

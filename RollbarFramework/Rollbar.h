@@ -100,8 +100,6 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/RollbarJavascript.h>
 
 #import <Rollbar/RollbarTelemetryType.h>
-#import <Rollbar/RollbarTelemetryEvent.h>
-
 #import <Rollbar/RollbarTelemetryBody.h>
 #import <Rollbar/RollbarTelemetryLogBody.h>
 #import <Rollbar/RollbarTelemetryViewBody.h>
@@ -110,6 +108,9 @@ FOUNDATION_EXPORT const unsigned char RollbarVersionString[];
 #import <Rollbar/RollbarTelemetryNetworkBody.h>
 #import <Rollbar/RollbarTelemetryConnectivityBody.h>
 #import <Rollbar/RollbarTelemetryManualBody.h>
+
+#import <Rollbar/RollbarTelemetryEvent.h>
+
 
 
 // Deploys API:

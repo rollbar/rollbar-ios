@@ -6,7 +6,7 @@
 //  Copyright © 2020 Rollbar. All rights reserved.
 //
 
-#import <Rollbar/Rollbar.h>
+#import <Foundation/Foundation.h>
 
 #pragma mark - RollbarSource enum
 
