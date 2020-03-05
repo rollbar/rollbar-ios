@@ -14,6 +14,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarTelemetryConnectivityBody : RollbarTelemetryBody
 
+#pragma mark - Properties
+
+@property (nonatomic, copy) NSString *status;
+
+#pragma mark - Initializers
+
+-(instancetype)initWithStatus:(nonnull NSString *)status
+                     extraData:(nullable NSDictionary *)extraData
+NS_DESIGNATED_INITIALIZER;
+
+-(instancetype)initWithStatus:(nonnull NSString *)status;
+
+- (instancetype)initWithArray:(NSArray *)data
+NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithDictionary:(NSDictionary *)data
+NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init
+NS_UNAVAILABLE;
+
 @end
 
 NS_ASSUME_NONNULL_END
