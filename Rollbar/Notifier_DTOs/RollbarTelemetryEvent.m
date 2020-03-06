@@ -38,13 +38,14 @@ static NSString * const DFK_BODY = @"body";
                        source:(RollbarSource)source {
 
     NSTimeInterval timestamp = NSDate.date.timeIntervalSince1970 * 1000.0;
-    self = [super initWithDictionary:@{
+    RollbarTelemetryBody *body = [RollbarTelemetryEvent createTelemetryBodyWithType:type
+                                                                               data:nil];
+    self = [self initWithDictionary:@{
         DFK_LEVEL:[RollbarLevelUtil RollbarLevelToString:level],
         DFK_TYPE:[RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:type],
         DFK_SOURCE:[RollbarSourceUtil RollbarSourceToString:source],
         DFK_TIMESTAMP:[NSString stringWithFormat:@"%.0f", round(timestamp)],
-        DFK_BODY:[RollbarTelemetryEvent createTelemetryBodyWithType:self.type
-                                                               data:nil]
+        DFK_BODY:body.jsonFriendlyData
     }];
     return self;
 }
@@ -55,12 +56,12 @@ static NSString * const DFK_BODY = @"body";
     
     NSTimeInterval timestamp = NSDate.date.timeIntervalSince1970 * 1000.0;
     RollbarTelemetryType type = [RollbarTelemetryEvent deriveTypeFromBody:body];
-    self = [super initWithDictionary:@{
+    self = [self initWithDictionary:@{
         DFK_LEVEL:[RollbarLevelUtil RollbarLevelToString:level],
         DFK_TYPE:[RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:type],
         DFK_SOURCE:[RollbarSourceUtil RollbarSourceToString:source],
         DFK_TIMESTAMP:[NSString stringWithFormat:@"%.0f", round(timestamp)],
-        DFK_BODY: body
+        DFK_BODY: body.jsonFriendlyData
     }];
     return self;
 }
@@ -84,10 +85,10 @@ static NSString * const DFK_BODY = @"body";
     return [RollbarLevelUtil RollbarLevelFromString:result];
 }
 
--(void)setLevel:(RollbarLevel)value {
-    [self setData:[RollbarLevelUtil RollbarLevelToString:value]
-            byKey:DFK_LEVEL];
-}
+//-(void)setLevel:(RollbarLevel)value {
+//    [self setData:[RollbarLevelUtil RollbarLevelToString:value]
+//            byKey:DFK_LEVEL];
+//}
 
 #pragma mark type
 
@@ -96,10 +97,10 @@ static NSString * const DFK_BODY = @"body";
     return [RollbarTelemetryTypeUtil RollbarTelemetryTypeFromString:result];
 }
 
--(void)setType:(RollbarTelemetryType)value {
-    [self setData:[RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:value]
-            byKey:DFK_TYPE];
-}
+//-(void)setType:(RollbarTelemetryType)value {
+//    [self setData:[RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:value]
+//            byKey:DFK_TYPE];
+//}
 
 #pragma mark source
 
@@ -108,10 +109,10 @@ static NSString * const DFK_BODY = @"body";
     return [RollbarSourceUtil RollbarSourceFromString:result];
 }
 
--(void)setSource:(RollbarSource)value {
-    [self setData:[RollbarSourceUtil RollbarSourceToString:value]
-            byKey:DFK_SOURCE];
-}
+//-(void)setSource:(RollbarSource)value {
+//    [self setData:[RollbarSourceUtil RollbarSourceToString:value]
+//            byKey:DFK_SOURCE];
+//}
 
 #pragma mark timestamp
                         
@@ -123,10 +124,10 @@ static NSString * const DFK_BODY = @"body";
     return 0;
 }
 
--(void)setTimestamp:(NSTimeInterval)value {
-    [self setData:[NSNumber numberWithDouble:(value * 1000.0)] // [msec]
-            byKey:DFK_TIMESTAMP];
-}
+//-(void)setTimestamp:(NSTimeInterval)value {
+//    [self setData:[NSNumber numberWithDouble:(value * 1000.0)] // [msec]
+//            byKey:DFK_TIMESTAMP];
+//}
 
 #pragma mark body
 
@@ -136,9 +137,9 @@ static NSString * const DFK_BODY = @"body";
                                                          data:data];
 }
 
-- (void)setBody:(RollbarTelemetryBody *)value {
-    [self setDataTransferObject:value forKey:DFK_BODY];
-}
+//- (void)setBody:(RollbarTelemetryBody *)value {
+//    [self setDataTransferObject:value forKey:DFK_BODY];
+//}
 
 + (nullable RollbarTelemetryBody *)createTelemetryBodyWithType:(RollbarTelemetryType)type
                                                           data:(NSDictionary *)data {
@@ -154,7 +155,7 @@ static NSString * const DFK_BODY = @"body";
             body = [RollbarTelemetryNavigationBody alloc];
             break;
         case RollbarTelemetryError:
-            body = [RollbarTelemetryNavigationBody alloc];
+            body = [RollbarTelemetryErrorBody alloc];
             break;
         case RollbarTelemetryManual:
             body = [RollbarTelemetryManualBody alloc];

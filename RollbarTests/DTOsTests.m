@@ -725,4 +725,82 @@
     XCTAssertEqual(dto.frames[1].filename, filename);
 }
 
+-(void)testRollbarTelemetryEventDTO_properBodyBasedOnType {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    RollbarTelemetryType type;
+    RollbarTelemetryEvent *event = nil;
+    
+    type = RollbarTelemetryLog;
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                           telemetryType:type
+                                                  source:source];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, type);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryLogBody class]]);
+
+    type = RollbarTelemetryView;
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                           telemetryType:type
+                                                  source:source];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, type);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryViewBody class]]);
+    
+    type = RollbarTelemetryError;
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                           telemetryType:type
+                                                  source:source];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, type);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryErrorBody class]]);
+    
+    type = RollbarTelemetryNavigation;
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                           telemetryType:type
+                                                  source:source];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, type);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryNavigationBody class]]);
+    
+    type = RollbarTelemetryNetwork;
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                           telemetryType:type
+                                                  source:source];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, type);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryNetworkBody class]]);
+    
+    type = RollbarTelemetryConnectivity;
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                           telemetryType:type
+                                                  source:source];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, type);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryConnectivityBody class]]);
+    
+    type = RollbarTelemetryManual;
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                           telemetryType:type
+                                                  source:source];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, type);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryManualBody class]]);
+}
+
 @end

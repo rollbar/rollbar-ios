@@ -2,7 +2,7 @@
 
 #import <XCTest/XCTest.h>
 #import "RollbarTestUtil.h"
-#import "../Rollbar/RollbarPayloadTruncator.h"
+#import "../Rollbar/Notifier/RollbarPayloadTruncator.h"
 
 @import Rollbar;
 

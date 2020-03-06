@@ -317,7 +317,7 @@
     self->_dataDictionary = nil;
 
     if (!data) {
-        return self;
+        data = [NSMutableDictionary dictionary];
     }
     
     if (![DataTransferObject isTransferableObject:data]) {
