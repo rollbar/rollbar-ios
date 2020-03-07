@@ -174,18 +174,19 @@ static NSString * const DFK_BODY = @"body";
 
 +(RollbarTelemetryType)deriveTypeFromBody:(nonnull RollbarTelemetryBody *)body {
 
-        //TODO: implement
-    if ([body isKindOfClass:[RollbarTelemetryViewBody class]]) {
-        return RollbarTelemetryView;
+    //TODO: order of type discovery matters (for inhereted body type hierarchies):
+    if ([body isKindOfClass:[RollbarTelemetryErrorBody class]]) {
+        return RollbarTelemetryError;
     }
     else if ([body isKindOfClass:[RollbarTelemetryLogBody class]]) {
         return RollbarTelemetryLog;
     }
+
+    else if ([body isKindOfClass:[RollbarTelemetryViewBody class]]) {
+        return RollbarTelemetryView;
+    }
     else if ([body isKindOfClass:[RollbarTelemetryNavigationBody class]]) {
         return RollbarTelemetryNavigation;
-    }
-    else if ([body isKindOfClass:[RollbarTelemetryErrorBody class]]) {
-        return RollbarTelemetryError;
     }
     else if ([body isKindOfClass:[RollbarTelemetryManualBody class]]) {
         return RollbarTelemetryManual;

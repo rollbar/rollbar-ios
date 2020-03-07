@@ -803,4 +803,212 @@
     XCTAssertTrue([event.body isKindOfClass:[RollbarTelemetryManualBody class]]);
 }
 
+-(void)testRollbarTelemetryEventDTO_Log {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    NSDictionary *extra = @{
+        @"EXTRA1":@"extra_1",
+        @"EXTRA2":@"extra_2",
+    };
+    RollbarTelemetryEvent *event = nil;
+    
+    NSString *logMessage = @"log message";
+    RollbarTelemetryBody *body = [[RollbarTelemetryLogBody alloc] initWithMessage:logMessage
+                                                                        extraData:extra];
+    
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                                  source:source
+                                                    body:body];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, RollbarTelemetryLog);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[body class]]);
+    for (NSString *key in extra) {
+        XCTAssertEqual(event.body.jsonFriendlyData[key], extra[key]);
+    }
+
+    XCTAssertEqual(((RollbarTelemetryLogBody *) event.body).message, logMessage);
+}
+
+-(void)testRollbarTelemetryEventDTO_View {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    NSDictionary *extra = @{
+        @"EXTRA1":@"extra_1",
+        @"EXTRA2":@"extra_2",
+    };
+    RollbarTelemetryEvent *event = nil;
+    
+    NSString *viewElement = @"The element";
+    RollbarTelemetryBody *body = [[RollbarTelemetryViewBody alloc] initWithElement:viewElement
+                                                                         extraData:extra];
+    
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                                  source:source
+                                                    body:body];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, RollbarTelemetryView);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[body class]]);
+    for (NSString *key in extra) {
+        XCTAssertEqual(event.body.jsonFriendlyData[key], extra[key]);
+    }
+
+    XCTAssertEqual(((RollbarTelemetryViewBody *) event.body).element, viewElement);
+}
+
+-(void)testRollbarTelemetryEventDTO_Error {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    NSDictionary *extra = @{
+        @"EXTRA1":@"extra_1",
+        @"EXTRA2":@"extra_2",
+    };
+    RollbarTelemetryEvent *event = nil;
+    
+    NSString *logMessage = @"error message";
+    RollbarTelemetryBody *body = [[RollbarTelemetryErrorBody alloc] initWithMessage:logMessage
+                                                                          extraData:extra];
+    
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                                  source:source
+                                                    body:body];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, RollbarTelemetryError);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[body class]]);
+    for (NSString *key in extra) {
+        XCTAssertEqual(event.body.jsonFriendlyData[key], extra[key]);
+    }
+
+    XCTAssertEqual(((RollbarTelemetryErrorBody *) event.body).message, logMessage);
+}
+
+-(void)testRollbarTelemetryEventDTO_Navigation {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    NSDictionary *extra = @{
+        @"EXTRA1":@"extra_1",
+        @"EXTRA2":@"extra_2",
+    };
+    RollbarTelemetryEvent *event = nil;
+    
+    NSString *from = @"FROM";
+    NSString *to = @"TO";
+    RollbarTelemetryBody *body = [[RollbarTelemetryNavigationBody alloc] initWithFromLocation:from
+                                                                                   toLocation:to
+                                                                                    extraData:extra];
+    
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                                  source:source
+                                                    body:body];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, RollbarTelemetryNavigation);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[body class]]);
+    for (NSString *key in extra) {
+        XCTAssertEqual(event.body.jsonFriendlyData[key], extra[key]);
+    }
+
+    XCTAssertEqual(((RollbarTelemetryNavigationBody *) event.body).from, from);
+    XCTAssertEqual(((RollbarTelemetryNavigationBody *) event.body).to, to);
+}
+
+-(void)testRollbarTelemetryEventDTO_Network {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    NSDictionary *extra = @{
+        @"EXTRA1":@"extra_1",
+        @"EXTRA2":@"extra_2",
+    };
+    RollbarTelemetryEvent *event = nil;
+    
+    HttpMethod method = Patch;
+    NSString *url = @"URL";
+    NSString *statusCode = @"STATUS_CODE";
+    RollbarTelemetryBody *body = [[RollbarTelemetryNetworkBody alloc] initWithMethod:method
+                                                                                 url:url
+                                                                          statusCode:statusCode
+                                                                           extraData:extra];
+    
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                                  source:source
+                                                    body:body];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, RollbarTelemetryNetwork);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[body class]]);
+    for (NSString *key in extra) {
+        XCTAssertEqual(event.body.jsonFriendlyData[key], extra[key]);
+    }
+
+    XCTAssertEqual(((RollbarTelemetryNetworkBody *) event.body).method, method);
+    XCTAssertEqual(((RollbarTelemetryNetworkBody *) event.body).url, url);
+    XCTAssertEqual(((RollbarTelemetryNetworkBody *) event.body).statusCode, statusCode);
+}
+
+-(void)testRollbarTelemetryEventDTO_Connectivity {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    NSDictionary *extra = @{
+        @"EXTRA1":@"extra_1",
+        @"EXTRA2":@"extra_2",
+    };
+    RollbarTelemetryEvent *event = nil;
+    
+    NSString *status = @"STATUS_GOOD";
+    RollbarTelemetryBody *body = [[RollbarTelemetryConnectivityBody alloc] initWithStatus:status
+                                                                                extraData:extra];
+    
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                                  source:source
+                                                    body:body];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, RollbarTelemetryConnectivity);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[body class]]);
+    for (NSString *key in extra) {
+        XCTAssertEqual(event.body.jsonFriendlyData[key], extra[key]);
+    }
+
+    XCTAssertEqual(((RollbarTelemetryConnectivityBody *) event.body).status, status);
+}
+
+-(void)testRollbarTelemetryEventDTO_Manual {
+    
+    RollbarLevel level = RollbarWarning;
+    RollbarSource source = Server;
+    NSDictionary *extra = @{
+        @"EXTRA1":@"extra_1",
+        @"EXTRA2":@"extra_2",
+    };
+    RollbarTelemetryEvent *event = nil;
+    
+    RollbarTelemetryBody *body = [[RollbarTelemetryManualBody alloc] initWithDictionary:extra];
+    
+    event = [[RollbarTelemetryEvent alloc] initWithLevel:level
+                                                  source:source
+                                                    body:body];
+    XCTAssertEqual(event.level, level);
+    XCTAssertEqual(event.source, source);
+    XCTAssertEqual(event.type, RollbarTelemetryManual);
+    XCTAssertNotNil(event.body);
+    XCTAssertTrue([event.body isKindOfClass:[body class]]);
+    for (NSString *key in extra) {
+        XCTAssertEqual(event.body.jsonFriendlyData[key], extra[key]);
+    }
+}
+
 @end
