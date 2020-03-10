@@ -80,8 +80,8 @@
 
 #pragma mark - Telemetry:
 @property (nonatomic) BOOL telemetryEnabled;
-@property (nonatomic) NSInteger maximumTelemetryData;
-@property (nonatomic) BOOL captureLogAsTelemetryData;
+@property (nonatomic) NSInteger maximumTelemetryEvents;
+@property (nonatomic) BOOL captureLogAsTelemetryEvents;
 @property (nonatomic) BOOL shouldCaptureConnectivity;
 @property (nonatomic) BOOL scrubViewInputsTelemetry;
 @property (nonatomic, strong) NSMutableSet *telemetryViewInputsToScrub;
@@ -158,10 +158,10 @@
     DEPRECATED_MSG_ATTRIBUTE("Use captureIp property instead.");
 
 - (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData
-    DEPRECATED_MSG_ATTRIBUTE("Use maximumTelemetryData property instead.");
+    DEPRECATED_MSG_ATTRIBUTE("Use maximumTelemetryEvents property instead.");
 
 - (void)setCaptureLogAsTelemetryData:(BOOL)captureLog
-    DEPRECATED_MSG_ATTRIBUTE("Use captureLogAsTelemetryData property instead.");
+    DEPRECATED_MSG_ATTRIBUTE("Use captureLogAsTelemetryEvents property instead.");
 
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity
     DEPRECATED_MSG_ATTRIBUTE("Use shouldCaptureConnectivity property instead.");

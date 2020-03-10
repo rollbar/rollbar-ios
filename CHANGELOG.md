@@ -26,7 +26,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 ## Release Notes
 
 **1.11.7**
-- feat: ref #261: Turn telemetry events into DTOs
+- feat: resolve #261: Turn telemetry events into DTOs
 - refactor: resolve #262: Improve codebase layout by logically grouping source code files
 - refactor: resolve #256: Refactor RollbarTelemetry implementation.
 - refactor: resolve #255: Mark deprecated public API with proper deprecated attribute.

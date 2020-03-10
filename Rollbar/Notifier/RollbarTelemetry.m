@@ -17,12 +17,14 @@ static dispatch_queue_t queue = nil;
 static dispatch_queue_t fileQueue = nil;
 
 @implementation RollbarTelemetry {
+    
     NSMutableArray *_dataArray;
     NSUInteger _limit;
     NSString *_dataFilePath;
 }
 
 + (instancetype)sharedInstance {
+    
     static RollbarTelemetry *sharedInstance = nil;
     static dispatch_once_t onceToken;
 
@@ -35,6 +37,7 @@ static dispatch_queue_t fileQueue = nil;
 }
 
 + (void)NSLogReplacement:(NSString *)format, ... {
+    
     va_list args, argsCopy;
     va_start(args, format);
     if (captureLog) {
@@ -53,7 +56,8 @@ static dispatch_queue_t fileQueue = nil;
 
 #pragma mark - Initializers
 
-- (id)init {
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         _dataArray = [NSMutableArray array];
@@ -73,19 +77,22 @@ static dispatch_queue_t fileQueue = nil;
 #pragma mark - Config options
 
 - (void)setCaptureLog:(BOOL)shouldCapture {
+    
     dispatch_async(queue, ^{
         captureLog = shouldCapture;
     });
 }
 
 - (void)setDataLimit:(NSInteger)dataLimit {
+    
     dispatch_async(queue, ^{
         self->_limit = dataLimit;
-        [self truncateDataArray];
+        [self trimDataArray];
     });
 }
 
-- (void)truncateDataArray {
+- (void)trimDataArray {
+    
     if (@available(iOS 10.0, macOS 10.12, *)) {
         dispatch_assert_queue_debug(queue);
     }
@@ -96,11 +103,76 @@ static dispatch_queue_t fileQueue = nil;
 
 #pragma mark - Telemetry data/event recording methods
 
+- (void)recordEvent:(nonnull RollbarTelemetryEvent *)event {
+
+    if (!self->_enabled) {
+        return;
+    }
+    
+    if (RollbarTelemetryView == event.type) {
+        RollbarTelemetryViewBody *viewbody = (RollbarTelemetryViewBody *)event.body;
+        // check if the extradata needs some scrubbing based on the element name:
+        __block BOOL needsScrubbing = false;
+        [_viewInputsToScrub enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+            if( [viewbody.element caseInsensitiveCompare:obj] == NSOrderedSame ) {
+                needsScrubbing = true;
+                *stop = YES;
+            }
+        }];
+        // scrub the extradata as needed:
+        if (needsScrubbing) {
+            for (NSString * key in event.body.jsonFriendlyData.allKeys)
+            {
+                if ([key caseInsensitiveCompare:@"element"] != NSOrderedSame) {
+                    viewbody.jsonFriendlyData[key] = @"[scrubbed]";
+                }
+            }
+        }
+    }
+    
+    dispatch_async(queue, ^{
+        [self->_dataArray addObject:event.jsonFriendlyData];
+        [self trimDataArray];
+        NSData *data = [self serializedDataArray];
+        dispatch_async(fileQueue, ^{
+            [self saveTelemetryData:data];
+        });
+    });
+}
+
+
+- (void)recordEventWithLevel:(RollbarLevel)level
+                   eventBody:(nonnull RollbarTelemetryBody *)body {
+    
+    if (!self->_enabled) {
+        return;
+    }
+    
+    return [self recordEventWithLevel:level
+                               source:Client
+                            eventBody:body];
+}
+
+- (void)recordEventWithLevel:(RollbarLevel)level
+                      source:(RollbarSource)source
+                   eventBody:(nonnull RollbarTelemetryBody *)body {
+
+    if (!self->_enabled) {
+        return;
+    }
+    
+    RollbarTelemetryEvent *event = [[RollbarTelemetryEvent alloc]
+                                    initWithLevel:level
+                                    source:source
+                                    body:body];
+    [self recordEvent:event];
+}
+
 - (void)recordEventForLevel:(RollbarLevel)level
                        type:(RollbarTelemetryType)type
                        data:(NSDictionary *)data {
     
-    if (!_enabled) {
+    if (!self->_enabled) {
         return;
     }
     
@@ -113,45 +185,42 @@ static dispatch_queue_t fileQueue = nil;
                            @"timestamp_ms": [NSString stringWithFormat:@"%.0f", round(timestamp)],
                            @"body": data ? data : [NSNull null]
                            };
-
-    dispatch_async(queue, ^{
-        [self->_dataArray addObject:info];
-        [self truncateDataArray];
-        NSData *data = [self serializedDataArray];
-        dispatch_async(fileQueue, ^{
-            [self saveTelemetryData:data];
-        });
-    });
+    RollbarTelemetryEvent *event = [[RollbarTelemetryEvent alloc] initWithDictionary:info];
+    [self recordEvent:event];
 }
 
 - (void)recordViewEventForLevel:(RollbarLevel)level
                         element:(NSString *)element
                       extraData:(NSDictionary *)extraData {
     
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    if (extraData) {
-        [data addEntriesFromDictionary:extraData];
-    }
+    RollbarTelemetryBody *body = [[RollbarTelemetryViewBody alloc] initWithElement:element
+                                                                         extraData:extraData];
+    [self recordEventWithLevel:level eventBody:body];
 
-    // check if the extradata needs some scrubbing based on the element name:
-    __block BOOL needsScrubbing = false;
-    [_viewInputsToScrub enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if( [element caseInsensitiveCompare:obj] == NSOrderedSame ) {
-            needsScrubbing = true;
-            *stop = YES;
-        }
-    }];
-    // scrub the extradata as needed:
-    if (needsScrubbing) {
-        for (NSString * key in data)
-        {
-            [data setValue:@"[scrubbed]" forKey:key];
-        }
-    }
-    // add the element name:
-    [data setObject:element forKey:@"element"];
-
-    [self recordEventForLevel:level type:RollbarTelemetryView data:data];
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//    if (extraData) {
+//        [data addEntriesFromDictionary:extraData];
+//    }
+//
+//    // check if the extradata needs some scrubbing based on the element name:
+//    __block BOOL needsScrubbing = false;
+//    [_viewInputsToScrub enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+//        if( [element caseInsensitiveCompare:obj] == NSOrderedSame ) {
+//            needsScrubbing = true;
+//            *stop = YES;
+//        }
+//    }];
+//    // scrub the extradata as needed:
+//    if (needsScrubbing) {
+//        for (NSString * key in data)
+//        {
+//            [data setValue:@"[scrubbed]" forKey:key];
+//        }
+//    }
+//    // add the element name:
+//    [data setObject:element forKey:@"element"];
+//
+//    [self recordEventForLevel:level type:RollbarTelemetryView data:data];
 }
 
 - (void)recordNetworkEventForLevel:(RollbarLevel)level
@@ -159,45 +228,72 @@ static dispatch_queue_t fileQueue = nil;
                                url:(NSString *)url
                         statusCode:(NSString *)statusCode
                          extraData:(NSDictionary *)extraData {
-    
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    if (extraData) {
-        [data addEntriesFromDictionary:extraData];
+
+    HttpMethod httpMethod = [HttpMethodUtil HttpMethodFromString:method];
+    RollbarTelemetryNetworkBody *body = [[RollbarTelemetryNetworkBody alloc] initWithMethod:httpMethod
+                                                                                        url:url
+                                                                                 statusCode:statusCode
+                                                                                  extraData:extraData];
+    if (!self->_enabled) {
+        return;
     }
-
-    [data setObject:method forKey:@"method"];
-    [data setObject:url forKey:@"url"];
-    [data setObject:statusCode forKey:@"status_code"];
-
-    [self recordEventForLevel:level type:RollbarTelemetryNetwork data:data];
+    
+    [self recordEventWithLevel:level eventBody:body];
+    
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//    if (extraData) {
+//        [data addEntriesFromDictionary:extraData];
+//    }
+//
+//    [data setObject:method forKey:@"method"];
+//    [data setObject:url forKey:@"url"];
+//    [data setObject:statusCode forKey:@"status_code"];
+//
+//    [self recordEventForLevel:level type:RollbarTelemetryNetwork data:data];
 }
 
 - (void)recordConnectivityEventForLevel:(RollbarLevel)level
                                  status:(NSString *)status
                               extraData:(NSDictionary *)extraData {
     
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    if (extraData) {
-        [data addEntriesFromDictionary:extraData];
+    if (!self->_enabled) {
+        return;
     }
-
-    [data setObject:status forKey:@"change"];
-
-    [self recordEventForLevel:level type:RollbarTelemetryConnectivity data:data];
+    
+    RollbarTelemetryConnectivityBody *body = [[RollbarTelemetryConnectivityBody alloc] initWithStatus:status
+                                                                                            extraData:extraData];
+    [self recordEventWithLevel:level eventBody:body];
+    
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//    if (extraData) {
+//        [data addEntriesFromDictionary:extraData];
+//    }
+//
+//    [data setObject:status forKey:@"change"];
+//
+//    [self recordEventForLevel:level type:RollbarTelemetryConnectivity data:data];
 }
 
 - (void)recordErrorEventForLevel:(RollbarLevel)level
                          message:(NSString *)message
                        extraData:(NSDictionary *)extraData {
     
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    if (extraData) {
-        [data addEntriesFromDictionary:extraData];
+    if (!self->_enabled) {
+        return;
     }
-
-    [data setObject:message forKey:@"message"];
-
-    [self recordEventForLevel:level type:RollbarTelemetryError data:data];
+    
+    RollbarTelemetryErrorBody *body = [[RollbarTelemetryErrorBody alloc] initWithMessage:message
+                                                                               extraData:extraData];
+    [self recordEventWithLevel:level eventBody:body];
+    
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//    if (extraData) {
+//        [data addEntriesFromDictionary:extraData];
+//    }
+//
+//    [data setObject:message forKey:@"message"];
+//
+//    [self recordEventForLevel:level type:RollbarTelemetryError data:data];
 }
 
 - (void)recordNavigationEventForLevel:(RollbarLevel)level
@@ -205,43 +301,89 @@ static dispatch_queue_t fileQueue = nil;
                                    to:(NSString *)to
                             extraData:(NSDictionary *)extraData {
     
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    if (extraData) {
-        [data addEntriesFromDictionary:extraData];
+    if (!self->_enabled) {
+        return;
     }
-
-    [data setObject:from forKey:@"from"];
-    [data setObject:to forKey:@"to"];
-
-    [self recordEventForLevel:level type:RollbarTelemetryNavigation data:data];
+    
+    RollbarTelemetryNavigationBody *body = [[RollbarTelemetryNavigationBody alloc] initWithFromLocation:from
+                                                                                             toLocation:to
+                                                                                              extraData:extraData];
+    [self recordEventWithLevel:level eventBody:body];
+    
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//    if (extraData) {
+//        [data addEntriesFromDictionary:extraData];
+//    }
+//
+//    [data setObject:from forKey:@"from"];
+//    [data setObject:to forKey:@"to"];
+//
+//    [self recordEventForLevel:level type:RollbarTelemetryNavigation data:data];
 }
 
 - (void)recordManualEventForLevel:(RollbarLevel)level
                          withData:(NSDictionary *)extraData {
     
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    if (extraData) {
-        [data addEntriesFromDictionary:extraData];
+    if (!self->_enabled) {
+        return;
     }
-
-    [self recordEventForLevel:level type:RollbarTelemetryManual data:data];
+    
+    RollbarTelemetryManualBody *body = [[RollbarTelemetryManualBody alloc] initWithDictionary:extraData];
+    [self recordEventWithLevel:level eventBody:body];
+    
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//    if (extraData) {
+//        [data addEntriesFromDictionary:extraData];
+//    }
+//
+//    [self recordEventForLevel:level type:RollbarTelemetryManual data:data];
 }
 
 - (void)recordLogEventForLevel:(RollbarLevel)level
                        message:(NSString *)message
                      extraData:(NSDictionary *)extraData {
     
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    if (extraData) {
-        [data addEntriesFromDictionary:extraData];
+    if (!self->_enabled) {
+        return;
     }
-
-    [data setObject:message forKey:@"message"];
-
-    [self recordEventForLevel:level type:RollbarTelemetryLog data:data];
+    
+    RollbarTelemetryLogBody *body = [[RollbarTelemetryLogBody alloc] initWithMessage:message
+                                                                           extraData:extraData];
+    [self recordEventWithLevel:level eventBody:body];
+    
+//    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+//    if (extraData) {
+//        [data addEntriesFromDictionary:extraData];
+//    }
+//
+//    [data setObject:message forKey:@"message"];
+//
+//    [self recordEventForLevel:level type:RollbarTelemetryLog data:data];
 }
 
 #pragma mark - Tlemetry cache access methods
+
+-(nonnull NSArray<RollbarTelemetryEvent*> *)getAllEvents {
+    NSArray *telemetryData = [self getAllData];
+    NSMutableArray<RollbarTelemetryEvent*> *events =
+        [NSMutableArray arrayWithCapacity:telemetryData ? telemetryData.count : 0];
+    if (!telemetryData) {
+        return events;
+    }
+    for (NSDictionary *dataItem in telemetryData) {
+        RollbarTelemetryType eventType =
+            [RollbarTelemetryTypeUtil RollbarTelemetryTypeFromString:dataItem[@"type"]];
+        RollbarTelemetryBody *eventBody =
+            [RollbarTelemetryEvent createTelemetryBodyWithType:eventType data:dataItem[@"body"]];
+        RollbarLevel eventLevel = [RollbarLevelUtil RollbarLevelFromString:dataItem[@"level"]];
+        RollbarSource eventSource = [RollbarSourceUtil RollbarSourceFromString:dataItem[@"source"]];
+        RollbarTelemetryEvent *event = [[RollbarTelemetryEvent alloc] initWithLevel:eventLevel
+                                                                             source:eventSource
+                                                                               body:eventBody];
+        [events addObject:event];
+    }
+    return events;
+}
 
 - (NSArray *)getAllData {
     __block NSArray *dataCopy = nil;

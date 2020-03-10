@@ -2,7 +2,17 @@
 
 #import <Foundation/Foundation.h>
 #import "RollbarLevel.h"
+#import "RollbarSource.h"
 #import "RollbarTelemetryType.h"
+#import "RollbarTelemetryEvent.h"
+#import "RollbarTelemetryBody.h"
+#import "RollbarTelemetryLogBody.h"
+#import "RollbarTelemetryViewBody.h"
+#import "RollbarTelemetryErrorBody.h"
+#import "RollbarTelemetryNavigationBody.h"
+#import "RollbarTelemetryNetworkBody.h"
+#import "RollbarTelemetryConnectivityBody.h"
+#import "RollbarTelemetryManualBody.h"
 
 #define NSLog(args...) [RollbarTelemetry NSLogReplacement:args];
 
@@ -10,7 +20,7 @@
 @interface RollbarTelemetry : NSObject
 
 /// Shared service instance/singleton
-+ (instancetype)sharedInstance;
++ (nonnull instancetype)sharedInstance;
 
 /// NSLog replacement
 /// @param format NSLog entry format
@@ -36,6 +46,16 @@
 - (void)setDataLimit:(NSInteger)dataLimit;
 
 #pragma mark - Telemetry data/event recording methods
+
+- (void)recordEvent:(nonnull RollbarTelemetryEvent *)event;
+
+- (void)recordEventWithLevel:(RollbarLevel)level
+                      source:(RollbarSource)source
+                   eventBody:(nonnull RollbarTelemetryBody *)body;
+
+- (void)recordEventWithLevel:(RollbarLevel)level
+                   eventBody:(nonnull RollbarTelemetryBody *)body;
+
 
 /// Records/captures a telemetry event
 /// @param level relevant Rollbar log level
@@ -106,6 +126,8 @@
                      extraData:(NSDictionary *)extraData;
 
 #pragma mark - Tlemetry cache access methods
+
+-(nonnull NSArray<RollbarTelemetryEvent*> *)getAllEvents;
 
 /// Gets all the currently captured telemetry data/events
 - (NSArray *)getAllData;

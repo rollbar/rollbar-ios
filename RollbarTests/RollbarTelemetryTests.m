@@ -33,7 +33,7 @@
     
     [Rollbar recordNavigationEventForLevel:RollbarInfo from:@"from" to:@"to"];
     [Rollbar recordConnectivityEventForLevel:RollbarInfo status:@"status"];
-    [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"method" url:@"url" statusCode:@"status_code" extraData:nil];
+    [Rollbar recordNetworkEventForLevel:RollbarInfo method:@"DELETE" url:@"url" statusCode:@"status_code" extraData:nil];
     [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     [Rollbar recordErrorEventForLevel:RollbarError exception:[NSException exceptionWithName:@"name" reason:@"reason" userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarDebug withData:@{@"data": @"content"}];
@@ -62,7 +62,7 @@
         } else if ([type isEqualToString:@"connectivity"]) {
             XCTAssertTrue([body[@"change"] isEqualToString:@"status"]);
         } else if ([type isEqualToString:@"network"]) {
-            XCTAssertTrue([body[@"method"] isEqualToString:@"method"]);
+            XCTAssertTrue([body[@"method"] isEqualToString:@"DELETE"]);
             XCTAssertTrue([body[@"status_code"] isEqualToString:@"status_code"]);
             XCTAssertTrue([body[@"url"] isEqualToString:@"url"]);
         } else if ([type isEqualToString:@"manual"]) {
@@ -142,7 +142,7 @@
 
 - (void)testRollbarLog {
     Rollbar.currentConfiguration.telemetryEnabled = YES;
-    Rollbar.currentConfiguration.captureLogAsTelemetryData = YES;
+    Rollbar.currentConfiguration.captureLogAsTelemetryEvents = YES;
     
     [RollbarTelemetry.sharedInstance clearAllData];
     NSNumber *counter = [NSNumber numberWithInt:123];

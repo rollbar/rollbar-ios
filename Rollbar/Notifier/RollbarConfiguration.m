@@ -382,20 +382,20 @@ static NSString *configurationFilePath = nil;
     self->_configData.telemetry.enabled = telemetryEnabled;
 }
 
-- (NSInteger)maximumTelemetryData {
+- (NSInteger)maximumTelemetryEvents {
     return self->_configData.telemetry.maximumTelemetryData;
 }
 
-- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData {
+- (void)setMaximumTelemetryEvents:(NSInteger)maximumTelemetryData {
     [[RollbarTelemetry sharedInstance] setDataLimit:maximumTelemetryData];
     self->_configData.telemetry.maximumTelemetryData = maximumTelemetryData;
 }
 
-- (BOOL)captureLogAsTelemetryData {
+- (BOOL)captureLogAsTelemetryEvents {
     return self->_configData.telemetry.captureLog;
 }
 
-- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog {
+- (void)setCaptureLogAsTelemetryEvents:(BOOL)captureLog {
     [[RollbarTelemetry sharedInstance] setCaptureLog:captureLog];
     self->_configData.telemetry.captureLog = captureLog;
 }

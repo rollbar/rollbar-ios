@@ -60,13 +60,18 @@ NS_ASSUME_NONNULL_BEGIN
 //NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithArray:(NSArray *)data
-NS_DESIGNATED_INITIALIZER;
+NS_UNAVAILABLE;
 
 - (instancetype)initWithDictionary:(NSDictionary *)data
 NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init
 NS_UNAVAILABLE;
+
+#pragma mark - Class utility
+
++ (nullable RollbarTelemetryBody *)createTelemetryBodyWithType:(RollbarTelemetryType)type
+                                                          data:(NSDictionary *)data;
 
 @end
 

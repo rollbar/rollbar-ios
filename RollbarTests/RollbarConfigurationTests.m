@@ -197,7 +197,7 @@
     RollbarClearLogFile();
 }
 
-- (void)testMaximumTelemetryData {
+- (void)testMaximumTelemetryEvents {
     
     Rollbar.currentConfiguration.telemetryEnabled = YES;
 
@@ -206,7 +206,7 @@
     for (int i=0; i<testCount; i++) {
         [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     }
-    Rollbar.currentConfiguration.maximumReportsPerMinute = max;
+    Rollbar.currentConfiguration.maximumTelemetryEvents = max;
     [Rollbar debug:@"Test"];
     RollbarFlushFileThread(Rollbar.currentNotifier);
     NSArray *logItems = RollbarReadLogItemFromFile();
@@ -327,7 +327,7 @@
     [[RollbarTelemetry sharedInstance] clearAllData];
     //Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
     Rollbar.currentConfiguration.telemetryEnabled = YES;
-    Rollbar.currentConfiguration.captureLogAsTelemetryData = YES;
+    Rollbar.currentConfiguration.captureLogAsTelemetryEvents = YES;
     // The following line ensures the captureLogAsTelemetryData setting is flushed through the internal queue
     [[RollbarTelemetry sharedInstance] getAllData];
     NSLog(logMsg);

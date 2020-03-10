@@ -66,10 +66,10 @@ static NSString * const DFK_BODY = @"body";
     return self;
 }
 
-- (instancetype)initWithArray:(NSArray *)data {
-
-    return [super initWithArray:data];
-}
+//- (instancetype)initWithArray:(NSArray *)data {
+//
+//    return [super initWithArray:data];
+//}
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
 
