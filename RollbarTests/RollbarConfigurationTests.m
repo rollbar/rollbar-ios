@@ -87,7 +87,7 @@
     for (int i=0; i<testCount; i++) {
         [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     }
-    [Rollbar.currentConfiguration setMaximumTelemetryData:max];
+    Rollbar.currentConfiguration.maximumReportsPerMinute = max;
     NSArray *telemetryCollection = [[RollbarTelemetry sharedInstance] getAllData];
     XCTAssertTrue(telemetryCollection.count == 0,
                   @"Telemetry count is expected to be %i. Actual is %lu",
@@ -103,7 +103,7 @@
     for (int i=0; i<testCount; i++) {
         [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     }
-    [Rollbar.currentConfiguration setMaximumTelemetryData:max];
+    Rollbar.currentConfiguration.maximumReportsPerMinute = max;
     telemetryCollection = [[RollbarTelemetry sharedInstance] getAllData];
     XCTAssertTrue(telemetryCollection.count == max,
                   @"Telemetry count is expected to be %i. Actual is %lu",
@@ -197,7 +197,7 @@
     RollbarClearLogFile();
 }
 
-- (void)testMaximumTelemetryData {
+- (void)testMaximumTelemetryEvents {
     
     Rollbar.currentConfiguration.telemetryEnabled = YES;
 
@@ -206,7 +206,7 @@
     for (int i=0; i<testCount; i++) {
         [Rollbar recordErrorEventForLevel:RollbarDebug message:@"test"];
     }
-    [Rollbar.currentConfiguration setMaximumTelemetryData:max];
+    Rollbar.currentConfiguration.maximumTelemetryEvents = max;
     [Rollbar debug:@"Test"];
     RollbarFlushFileThread(Rollbar.currentNotifier);
     NSArray *logItems = RollbarReadLogItemFromFile();
@@ -327,7 +327,7 @@
     [[RollbarTelemetry sharedInstance] clearAllData];
     //Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
     Rollbar.currentConfiguration.telemetryEnabled = YES;
-    [Rollbar.currentConfiguration setCaptureLogAsTelemetryData:YES];
+    Rollbar.currentConfiguration.captureLogAsTelemetryEvents = YES;
     // The following line ensures the captureLogAsTelemetryData setting is flushed through the internal queue
     [[RollbarTelemetry sharedInstance] getAllData];
     NSLog(logMsg);

@@ -15,15 +15,13 @@
     [super setUp];
     RollbarClearLogFile();
     if (!Rollbar.currentConfiguration) {
-        [Rollbar initWithAccessToken:@""];
-        
+        //[Rollbar initWithAccessToken:@""];
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
         Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
         Rollbar.currentConfiguration.environment = @"unit-tests";
         Rollbar.currentConfiguration.transmit = YES;
         Rollbar.currentConfiguration.logPayload = YES;
-        [Rollbar.currentConfiguration setReportingRate:5000];
-
+        Rollbar.currentConfiguration.maximumReportsPerMinute = 5000;
     }
 }
 

@@ -25,6 +25,16 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.0**
+- feat: resolve #261: Turn telemetry events into DTOs
+- refactor: resolve #262: Improve codebase layout by logically grouping source code files
+- refactor: resolve #256: Refactor RollbarTelemetry implementation.
+- refactor: resolve #255: Mark deprecated public API with proper deprecated attribute.
+- refactor: resolve #259: Refactor RollbarNotifier's initializers
+- chore: resolve #260: Remove dead code from RollbarNotifier
+- test: resolve #257: Fix failing testErrorReportingWithTelemetry unit test
+- test: resolve #258: Fix deprecated API warnings in unit-test builds
+
 **1.11.6**
 **1.11.5**
 - fix: resolve #253: fix the podspec issue
