@@ -25,7 +25,7 @@ static NSString * const DFK_DESCRIPTION = @"description";
                       forRequest:(NSURLRequest*)request {
     
     self = [self initWithResponse:httpResponse
-                extraResponseData:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]
+                extraResponseData:data ? [NSJSONSerialization JSONObjectWithData:data options:0 error:nil] : nil
                             error:error
                        forRequest:request];
     return self;

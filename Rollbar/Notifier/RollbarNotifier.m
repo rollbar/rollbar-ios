@@ -146,10 +146,10 @@ static BOOL isNetworkReachable = YES;
             
             [reachability startNotifier];
         }
+
+        self->nextSendTime = [[NSDate alloc] init];
     }
 
-    nextSendTime = [[NSDate alloc] init];
-    
     return self;
 }
 

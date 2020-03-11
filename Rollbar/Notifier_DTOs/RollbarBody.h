@@ -26,22 +26,22 @@ NS_ASSUME_NONNULL_BEGIN
 // If an iOS crash report, use "crash_report"
 
 // Option 1: "trace"
-@property (nonatomic, strong) RollbarTrace *trace;
+@property (nonatomic, strong, nullable) RollbarTrace *trace;
 
 // Option 2: "trace_chain"
 // Used for exceptions with inner exceptions or causes
 // Each element in the list should be a "trace" object, as shown above.
 // Must contain at least one element.
-@property (nonatomic,strong) NSArray<RollbarTrace *> *traceChain;
+@property (nonatomic,strong, nullable) NSArray<RollbarTrace *> *traceChain;
 
 // Option 3: "message"
 // Only one of "trace", "trace_chain", "message", or "crash_report" should be present.
 // Presence of a "message" key means that this payload is a log message.
-@property (nonatomic, strong) RollbarMessage *message;
+@property (nonatomic, strong, nullable) RollbarMessage *message;
 
 // Option 4: "crash_report"
 // Only one of "trace", "trace_chain", "message", or "crash_report" should be present.
-@property (nonatomic, strong) RollbarCrashReport *crashReport;
+@property (nonatomic, strong, nullable) RollbarCrashReport *crashReport;
 
 #pragma mark - Optional properties
 

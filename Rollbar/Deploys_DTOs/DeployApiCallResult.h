@@ -5,6 +5,8 @@
 #import "DataTransferObject.h"
 #import "DeployApiCallOutcome.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark - DeployApiCallResult
 
 /// Models result of Deploy API call/request
@@ -14,7 +16,7 @@
 @property (readonly) DeployApiCallOutcome outcome;
 
 /// API call's result description
-@property (readonly, copy) NSString *description;
+@property (readonly, copy, nullable) NSString *description;
 
 /// Initialize this DTO instance with valid JSON NSDictionary seed
 /// @param data valid JSON NSDictionary seed
@@ -32,10 +34,10 @@
 /// @param extraResponseData extra response info
 /// @param error error (if any)
 /// @param request corresponding HTTP request
-- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-               extraResponseData:(id)extraResponseData
-                           error:(NSError*)error
-                      forRequest:(NSURLRequest*)request
+- (instancetype)initWithResponse:(nullable NSHTTPURLResponse *)httpResponse
+               extraResponseData:(nullable id)extraResponseData
+                           error:(nullable NSError *)error
+                      forRequest:(nonnull NSURLRequest *)request
 NS_DESIGNATED_INITIALIZER;
 
 /// Convenience initializer
@@ -43,10 +45,10 @@ NS_DESIGNATED_INITIALIZER;
 /// @param data extra response data
 /// @param error error (if any)
 /// @param request  corresponding HTTP request
-- (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
-                            data:(NSData*)data
-                           error:(NSError*)error
-                      forRequest:(NSURLRequest*)request;
+- (instancetype)initWithResponse:(nullable NSHTTPURLResponse *)httpResponse
+                            data:(nullable NSData *)data
+                           error:(nullable NSError *)error
+                      forRequest:(nonnull NSURLRequest *)request;
 
 @end
 
@@ -56,7 +58,7 @@ NS_DESIGNATED_INITIALIZER;
 @interface DeploymentRegistrationResult : DeployApiCallResult
 
 /// Deployment ID
-@property (readonly, copy) NSString *deploymentId;
+@property (readonly, copy, nonnull) NSString *deploymentId;
 
 @end
 
@@ -66,7 +68,7 @@ NS_DESIGNATED_INITIALIZER;
 @interface DeploymentDetailsResult : DeployApiCallResult
 
 /// Deployment details object
-@property (readonly, retain) DeploymentDetails *deployment;
+@property (readonly, retain, nullable) DeploymentDetails *deployment;
 
 @end
 
@@ -76,9 +78,11 @@ NS_DESIGNATED_INITIALIZER;
 @interface DeploymentDetailsPageResult : DeployApiCallResult
 
 /// Deployment details objects
-@property (readonly, retain) NSArray<DeploymentDetails *> *deployments;
+@property (readonly, retain, nullable) NSArray<DeploymentDetails *> *deployments;
 
 /// Deployment details page number
 @property (readonly) NSUInteger pageNumber;
 
 @end
+
+NS_ASSUME_NONNULL_END

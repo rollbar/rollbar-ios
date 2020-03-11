@@ -52,10 +52,10 @@ static NSString * const DFK_NOTIFIER = @"notifier";
 
 -(nonnull RollbarBody *)body {
     NSDictionary *data = [self getDataByKey:DFK_BODY];
-    if (data) {
-        return [[RollbarBody alloc] initWithDictionary:data];
+    if (!data) {
+        data = [NSMutableDictionary dictionary];
     }
-    return nil;
+    return [[RollbarBody alloc] initWithDictionary:data];
 }
 
 -(void)setBody:(nonnull RollbarBody *)value {
@@ -74,7 +74,7 @@ static NSString * const DFK_NOTIFIER = @"notifier";
 
 -(NSTimeInterval)timestamp {
     NSNumber *dateNumber = [self getDataByKey:DFK_TIMESTAMP];
-    if (dateNumber) {
+    if (nil != dateNumber) {
         return (NSTimeInterval)dateNumber.longValue;
     }
     return 0;

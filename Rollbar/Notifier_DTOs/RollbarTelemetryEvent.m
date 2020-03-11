@@ -118,7 +118,7 @@ static NSString * const DFK_BODY = @"body";
                         
 -(NSTimeInterval)timestamp {
     NSNumber *dateNumber = [self getDataByKey:DFK_TIMESTAMP]; // [sec]
-    if (dateNumber) {
+    if (nil != dateNumber) {
         return (NSTimeInterval)(dateNumber.doubleValue / 1000.0); // [msec]
     }
     return 0;
@@ -168,6 +168,9 @@ static NSString * const DFK_BODY = @"body";
             break;
         default:
             return nil;
+    }
+    if (!data) {
+        data = [NSMutableDictionary dictionary];
     }
     return [body initWithDictionary:data];
 }

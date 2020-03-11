@@ -6,6 +6,7 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "RollbarProxy.h"
 #import "DataTransferObject+Protected.h"
 
@@ -43,7 +44,7 @@ static NSString * const DFK_PROXY_PORT = @"proxyPort";
     return [self initWithDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
                                      [NSNumber numberWithBool:DEFAULT_ENABLED_FLAG], DFK_ENABLED,
                                      DEFAULT_PROXY_URL, DFK_PROXY_URL,
-                                     DEFAULT_PROXY_PORT, DFK_PROXY_PORT,
+                                     [NSNumber numberWithUnsignedInt:DEFAULT_PROXY_PORT], DFK_PROXY_PORT,
                                      nil]
             ];
 }

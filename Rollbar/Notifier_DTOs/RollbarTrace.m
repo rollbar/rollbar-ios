@@ -31,7 +31,7 @@ static NSString * const DFK_EXCEPTION = @"exception";
         }
         return result;
     }
-    return nil;
+    return [NSMutableArray array];
 }
 
 -(void)setFrames:(nonnull NSArray<RollbarCallStackFrame *> *)frames {
@@ -41,10 +41,10 @@ static NSString * const DFK_EXCEPTION = @"exception";
 
 -(nonnull RollbarException *)exception {
     NSDictionary *data = [self getDataByKey:DFK_EXCEPTION];
-    if (data) {
-        return [[RollbarException alloc] initWithDictionary:data];
+    if (!data) {
+        data = [NSMutableDictionary dictionary];
     }
-    return nil;
+    return [[RollbarException alloc] initWithDictionary:data];
 }
 
 -(void)setException:(nonnull RollbarException *)exception {
