@@ -7,20 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		551929C322CAC42500CC7FFF /* libRollbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554026EA22CAC0650004057A /* libRollbar.a */; };
+		5510630D24185AF900AD051A /* Rollbar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554026F022CAC0650004057A /* Rollbar.framework */; };
+		5510630E24185AF900AD051A /* Rollbar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 554026F022CAC0650004057A /* Rollbar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		553CB60522C6FC8400E0F4A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 553CB60422C6FC8400E0F4A4 /* main.m */; };
 		553CB63422CA87E300E0F4A4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 553CB63322CA87E300E0F4A4 /* libc++.tbd */; };
-		55D1BE9A23FCFF5300B24754 /* libRollbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 554026EA22CAC0650004057A /* libRollbar.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		551929B722CAC2C600CC7FFF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 554026D422CAC0650004057A /* Rollbar.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 554549DC22C68E8F00D4A414;
-			remoteInfo = "Rollbar-macOS";
-		};
 		554026E722CAC0650004057A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 554026D422CAC0650004057A /* Rollbar.xcodeproj */;
@@ -66,6 +59,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5510630F24185AFA00AD051A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5510630E24185AF900AD051A /* Rollbar.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		553CB5FF22C6FC8400E0F4A4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,9 +93,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55D1BE9A23FCFF5300B24754 /* libRollbar.a in Frameworks */,
-				551929C322CAC42500CC7FFF /* libRollbar.a in Frameworks */,
 				553CB63422CA87E300E0F4A4 /* libc++.tbd in Frameworks */,
+				5510630D24185AF900AD051A /* Rollbar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,11 +169,11 @@
 				553CB5FD22C6FC8400E0F4A4 /* Sources */,
 				553CB5FE22C6FC8400E0F4A4 /* Frameworks */,
 				553CB5FF22C6FC8400E0F4A4 /* CopyFiles */,
+				5510630F24185AFA00AD051A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				551929B822CAC2C600CC7FFF /* PBXTargetDependency */,
 			);
 			name = macOScmdTool;
 			productName = macOScmdTool;
@@ -269,14 +272,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		551929B822CAC2C600CC7FFF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Rollbar-macOS";
-			targetProxy = 551929B722CAC2C600CC7FFF /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		553CB60622C6FC8400E0F4A4 /* Debug */ = {

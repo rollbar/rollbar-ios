@@ -386,9 +386,9 @@ static NSString *configurationFilePath = nil;
     return self->_configData.telemetry.maximumTelemetryData;
 }
 
-- (void)setMaximumTelemetryEvents:(NSInteger)maximumTelemetryData {
-    [[RollbarTelemetry sharedInstance] setDataLimit:maximumTelemetryData];
-    self->_configData.telemetry.maximumTelemetryData = maximumTelemetryData;
+- (void)setMaximumTelemetryEvents:(NSInteger)maximumTelemetryEvents {
+    [[RollbarTelemetry sharedInstance] setDataLimit:maximumTelemetryEvents];
+    self->_configData.telemetry.maximumTelemetryData = maximumTelemetryEvents;
 }
 
 - (BOOL)captureLogAsTelemetryEvents {
@@ -609,6 +609,18 @@ static NSString *configurationFilePath = nil;
 - (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity {
     self->_configData.telemetry.captureConnectivity = captureConnectivity;
 }
+
+- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog {
+    [[RollbarTelemetry sharedInstance] setCaptureLog:captureLog];
+    self->_configData.telemetry.captureLog = captureLog;
+}
+
+- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData {
+    [[RollbarTelemetry sharedInstance] setDataLimit:maximumTelemetryData];
+    self->_configData.telemetry.maximumTelemetryData = maximumTelemetryData;
+}
+
+
 
 //- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
 //    if (value) {

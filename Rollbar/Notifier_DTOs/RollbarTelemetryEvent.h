@@ -71,7 +71,7 @@ NS_UNAVAILABLE;
 #pragma mark - Class utility
 
 + (nullable RollbarTelemetryBody *)createTelemetryBodyWithType:(RollbarTelemetryType)type
-                                                          data:(NSDictionary *)data;
+                                                          data:(nullable NSDictionary *)data;
 
 @end
 
