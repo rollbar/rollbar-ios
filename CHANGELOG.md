@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.2**
+- fix: resolve #266: Telemetry events timestamp is rendered as a string instead of expected "as a number"
+
 **1.12.1**
 - fix: resolve #264: Fix Rollbar.podspec
 

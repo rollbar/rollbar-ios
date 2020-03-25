@@ -85,6 +85,9 @@
     
     [Rollbar debug:@"Demonstrate Telemetry capture"];
     [Rollbar debug:@"Demonstrate Telemetry capture once more..."];
+    [Rollbar debug:@"DO Demonstrate Telemetry capture once more..."];
+
+    //[NSThread sleepForTimeInterval:8.0f];
     
     NSArray *logItems = RollbarReadLogItemFromFile();
     for (NSDictionary *item in logItems) {
