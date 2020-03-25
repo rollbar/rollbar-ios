@@ -44,7 +44,7 @@ static NSString * const DFK_BODY = @"body";
         DFK_LEVEL:[RollbarLevelUtil RollbarLevelToString:level],
         DFK_TYPE:[RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:type],
         DFK_SOURCE:[RollbarSourceUtil RollbarSourceToString:source],
-        DFK_TIMESTAMP:[NSString stringWithFormat:@"%.0f", round(timestamp)],
+        DFK_TIMESTAMP:[NSNumber numberWithDouble:round(timestamp)],
         DFK_BODY:body.jsonFriendlyData
     }];
     return self;
@@ -60,7 +60,7 @@ static NSString * const DFK_BODY = @"body";
         DFK_LEVEL:[RollbarLevelUtil RollbarLevelToString:level],
         DFK_TYPE:[RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:type],
         DFK_SOURCE:[RollbarSourceUtil RollbarSourceToString:source],
-        DFK_TIMESTAMP:[NSString stringWithFormat:@"%.0f", round(timestamp)],
+        DFK_TIMESTAMP:[NSNumber numberWithDouble:round(timestamp)],
         DFK_BODY: body.jsonFriendlyData
     }];
     return self;
