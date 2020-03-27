@@ -5,7 +5,13 @@
 
 @interface RollbarThread : NSThread
 
-- (id)initWithNotifier:(RollbarNotifier*)notifier reportingRate:(NSUInteger)reportsPerMinute;
+/// Disallowed initializer
+- (instancetype)init
+NS_UNAVAILABLE;
+
+- (instancetype)initWithNotifier:(RollbarNotifier*)notifier
+                   reportingRate:(NSUInteger)reportsPerMinute;
+//NS_DESIGNATED_INITIALIZER;
 
 @property(atomic) BOOL active;
 

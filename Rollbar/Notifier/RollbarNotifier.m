@@ -65,6 +65,9 @@ static BOOL isNetworkReachable = YES;
                          isRoot:isRoot];
         
         if (isRoot) {
+            
+            // make sure we have all the expected data directories/folder set:
+            
             NSString *cachesDirectory = [RollbarCachesDirectory directory];
             if (nil != self.configuration.logPayloadFile
                 && self.configuration.logPayloadFile.length > 0) {
@@ -77,6 +80,7 @@ static BOOL isNetworkReachable = YES;
                 payloadsFilePath =
                 [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
             }
+            
             // create working cache directory:
             if (![[NSFileManager defaultManager] fileExistsAtPath:cachesDirectory]) {
                 NSError *error;
@@ -88,6 +92,8 @@ static BOOL isNetworkReachable = YES;
                  ];
                 NSLog(@"result %@", result);
             }
+            
+            // make sure we have all the data files set:
             
             queuedItemsFilePath =
             [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
@@ -123,13 +129,16 @@ static BOOL isNetworkReachable = YES;
                                 @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
             }
             
-            // Deals with sending items that have been queued up
+            // Setup the worker thread
+            // that sends the items that have been queued up in the item file set above:
+            
             rollbarThread = [[RollbarThread alloc] initWithNotifier:self
                                                       reportingRate:configuration.maximumReportsPerMinute];
             [rollbarThread start];
             
             // Listen for reachability status
-            // so that items are only sent when the internet is available
+            // so that the items are only sent when the internet is available
+            
             reachability = [RollbarReachability reachabilityForInternetConnection];
             
             isNetworkReachable = [reachability isReachable];
@@ -211,6 +220,7 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)processSavedItems {
+    
     if (!isNetworkReachable) {
         // Don't attempt sending if the network is known to be not reachable
         return;
@@ -647,6 +657,9 @@ static BOOL isNetworkReachable = YES;
 - (BOOL)sendItem:(NSDictionary*)payload
        nextOffset:(NSUInteger)nextOffset {
     
+    RollbarPayload *rollbarPayload =
+    [[RollbarPayload alloc] initWithDictionary:[payload copy]];
+    
     NSMutableDictionary *newPayload =
     [NSMutableDictionary dictionaryWithDictionary:payload];
     [RollbarPayloadTruncator truncatePayload:newPayload];
@@ -677,7 +690,13 @@ static BOOL isNetworkReachable = YES;
             [fileHandle closeFile];
         }
         
-        BOOL success = [self sendPayload:jsonPayload];
+        RollbarConfig *rollbarConfig =
+        [[RollbarConfig alloc] initWithDictionary:rollbarPayload.data.notifier.jsonFriendlyData[@"configured_options"]];
+        
+        BOOL success =
+        rollbarConfig ? [self sendPayload:jsonPayload usingConfig:rollbarConfig]
+        : [self sendPayload:jsonPayload]; // backward compatibility with just upgraded very old SDKs...
+        
         if (!success) {
             if (retryCount < MAX_RETRY_COUNT) {
                 queueState[@"retry_count"] =
@@ -702,6 +721,92 @@ static BOOL isNetworkReachable = YES;
     [self saveQueueState];
     
     return YES;
+}
+
+- (BOOL)sendPayload:(nonnull NSData*)payload
+        usingConfig:(nonnull RollbarConfig*)config {
+    
+    NSURL *url = [NSURL URLWithString:config.destination.endpoint];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:config.destination.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
+    [request setHTTPBody:payload];
+
+    if (YES == config.developerOptions.logPayload) {
+        NSString *payloadString = [[NSString alloc]initWithData:payload
+                                                       encoding:NSUTF8StringEncoding
+                                   ];
+        NSLog(@"%@", payloadString);
+        //TODO: if config.developerOptions.logPayloadFile is defined, save the payload into the file...
+    }
+
+    if (NO == config.developerOptions.transmit) {
+        return YES; // we just successfully shortcircuit here...
+    }
+
+    __block BOOL result = NO;
+#if TARGET_OS_IPHONE
+    if (IS_IOS7_OR_HIGHER) {
+#else
+    if (IS_MACOS10_10_OR_HIGHER) {
+#endif
+        // This requires iOS 7.0+
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+
+        NSURLSession *session = [NSURLSession sharedSession];
+
+        if (config.httpProxy.enabled
+            || config.httpsProxy.enabled) {
+
+            NSDictionary *connectionProxyDictionary =
+            @{
+              @"HTTPEnable"   : [NSNumber numberWithBool:config.httpProxy.enabled],
+              @"HTTPProxy"    : config.httpProxy.proxyUrl,
+              @"HTTPPort"     : [NSNumber numberWithUnsignedInteger:config.httpProxy.proxyPort],
+              @"HTTPSEnable"  : [NSNumber numberWithBool:config.httpsProxy.enabled],
+              @"HTTPSProxy"   : config.httpsProxy.proxyUrl,
+              @"HTTPSPort"    : [NSNumber numberWithUnsignedInteger:config.httpsProxy.proxyPort]
+              };
+
+            NSURLSessionConfiguration *sessionConfig =
+            [NSURLSessionConfiguration ephemeralSessionConfiguration];
+            sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
+            session = [NSURLSession sessionWithConfiguration:sessionConfig];
+        }
+
+        NSURLSessionDataTask *dataTask =
+            [session dataTaskWithRequest:request
+                       completionHandler:^(
+                                           NSData * _Nullable data,
+                                           NSURLResponse * _Nullable response,
+                                           NSError * _Nullable error) {
+                result = [self checkPayloadResponse:response
+                                              error:error
+                                               data:data];
+                dispatch_semaphore_signal(sem);
+            }];
+        [dataTask resume];
+
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    } else {
+        // Using method sendSynchronousRequest, deprecated since iOS 9.0
+        NSError *error;
+        NSHTTPURLResponse *response;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        NSData *data = [NSURLConnection sendSynchronousRequest:request
+                                             returningResponse:&response
+                                                         error:&error];
+#pragma clang diagnostic pop
+        result = [self checkPayloadResponse:response
+                                      error:error
+                                       data:data];
+    }
+
+    return result;
 }
 
 - (BOOL)sendPayload:(NSData*)payload {
