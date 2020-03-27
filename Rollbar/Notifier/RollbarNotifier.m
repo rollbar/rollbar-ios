@@ -809,6 +809,8 @@ static BOOL isNetworkReachable = YES;
     return result;
 }
 
+/// This is a DEPRECATED method left for some backward compatibility for very old clients eventually moving to this more recent implementation.
+/// Use/maintain sendPayload:usingConfig: instead!
 - (BOOL)sendPayload:(NSData*)payload {
     NSURL *url = [NSURL URLWithString:self.configuration.endpoint];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
