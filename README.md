@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/96c71b625f4044d2bb5b5c1972dc9bf3)](https://app.codacy.com/manual/Rollbar/rollbar-ios?utm_source=github.com&utm_medium=referral&utm_content=rollbar/rollbar-ios&utm_campaign=Badge_Grade_Settings)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
