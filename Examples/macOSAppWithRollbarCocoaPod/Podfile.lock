@@ -1,16 +1,16 @@
 PODS:
-  - Rollbar (1.11.3)
+  - Rollbar (1.12.3)
 
 DEPENDENCIES:
-  - Rollbar (~> 1.11.3)
+  - Rollbar (~> 1.12.3)
 
 SPEC REPOS:
   trunk:
     - Rollbar
 
 SPEC CHECKSUMS:
-  Rollbar: e54b68c371f3599add3ff9ecfca0da27d5c62777
+  Rollbar: d362a41a3bb2e82586f18efcc6fa64948d264112
 
-PODFILE CHECKSUM: a7fa311ecad27ca193989ea794c557379543b41e
+PODFILE CHECKSUM: fb91af7a0a445c19b9a37d1faf4740e43a736ab0
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

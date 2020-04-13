@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55538FF024442E2B00F5ABFA /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 55538FEF24442E2B00F5ABFA /* Podfile */; };
 		55E7288322D7F92E007661F3 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E7288222D7F92E007661F3 /* NetworkExtension.framework */; };
 		55F1BBC722D6F23A00F4F958 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1BBC622D6F23A00F4F958 /* AppDelegate.m */; };
 		55F1BBCA22D6F23A00F4F958 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1BBC922D6F23A00F4F958 /* ViewController.m */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		14F553DAD246167FA8E483A7 /* Pods-iOSAppWithRollbarCocoaPod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSAppWithRollbarCocoaPod.release.xcconfig"; path = "Target Support Files/Pods-iOSAppWithRollbarCocoaPod/Pods-iOSAppWithRollbarCocoaPod.release.xcconfig"; sourceTree = "<group>"; };
+		55538FEF24442E2B00F5ABFA /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		55E7288222D7F92E007661F3 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		55E7288422D7F92E007661F3 /* iOSAppWithRollbarCocoaPod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSAppWithRollbarCocoaPod.entitlements; sourceTree = "<group>"; };
 		55F1BBC222D6F23A00F4F958 /* iOSAppWithRollbarCocoaPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSAppWithRollbarCocoaPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +62,7 @@
 		55F1BBB922D6F23A00F4F958 = {
 			isa = PBXGroup;
 			children = (
+				55538FEF24442E2B00F5ABFA /* Podfile */,
 				55F1BBC422D6F23A00F4F958 /* iOSAppWithRollbarCocoaPod */,
 				55F1BBC322D6F23A00F4F958 /* Products */,
 				37F9380CA54C0E591B785FA6 /* Pods */,
@@ -167,6 +170,7 @@
 			files = (
 				55F1BBD222D6F23D00F4F958 /* LaunchScreen.storyboard in Resources */,
 				55F1BBCF22D6F23D00F4F958 /* Assets.xcassets in Resources */,
+				55538FF024442E2B00F5ABFA /* Podfile in Resources */,
 				55F1BBCD22D6F23A00F4F958 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

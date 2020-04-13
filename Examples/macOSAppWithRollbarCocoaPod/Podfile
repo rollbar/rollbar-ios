@@ -2,5 +2,5 @@ platform :osx, '10.12'
 use_frameworks!
 
 target 'macOSAppWithRollbarCocoaPod' do
-pod 'Rollbar', '~> 1.11.3'
+pod 'Rollbar', '~> 1.12.3'
 end
