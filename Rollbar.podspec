@@ -15,15 +15,15 @@ Pod::Spec.new do |s|
   s.social_media_url          = "http://twitter.com/rollbar"
   s.ios.deployment_target     = '8.0'
   s.osx.deployment_target     = '10.12'
-  s.source                    = { :git => "https://github.com/rollbar/rollbar-ios.git", 
-                           :tag => "v#{s.version}", 
+  s.source                    = { :git => "https://github.com/rollbar/rollbar-ios.git",
+                           :tag => "v#{s.version}",
                            :submodules => true
                            }
 
   s.source_files        = 'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
-                          
+
                           'Rollbar/*.{h,m}',
-                          
+
                           'Rollbar/Abstraction_Common/*.{h,m}',
                           'Rollbar/Abstraction_DTO/*.{h,m}',
                           'Rollbar/Abstraction_Deploys/*.{h,m}',
@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
 
                           'Rollbar/Notifier/*.{h,m}',
                           'Rollbar/Notifier_DTOs/*.{h,m}',
-                          
+
                           'Rollbar/Deploys/*.{h,m}',
                           'Rollbar/Deploys_DTOs/*.{h,m}'
 
@@ -118,17 +118,21 @@ Pod::Spec.new do |s|
                             'KSCrash/Source/KSCrash/Reporting/Filters/KSCrashReportFilter.h',
                             'KSCrash/Source/KSCrash/Recording/Monitors/KSCrashMonitorType.h'
 
-  s.ios.frameworks = 
+  s.ios.frameworks =
                 "Foundation",
                 "SystemConfiguration",
                 "UIKit",
                 "MessageUI"
-  s.osx.frameworks = 
+  s.osx.frameworks =
                 "Foundation",
                 "SystemConfiguration"
-  s.libraries = 
-                "c++", 
+  s.libraries =
+                "c++",
                 "z"
   s.requires_arc = true
 
+  s.pod_target_xcconfig = {
+    "USE_HEADERMAP" => "NO",
+    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/Rollbar\""
+  }
 end
