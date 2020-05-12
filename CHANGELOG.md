@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.5**
+- fix: resolve #227: Fix broken Cocoapods push
+
 **1.12.4**
 - fix: resolve PR #275: Compile without headermap, to fix header file collisions.
 - fix: resolve #244: Demangle.cpp failing to build 
