@@ -26,6 +26,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 ## Release Notes
 
 **1.12.4**
+- fix: resolve PR #275: Compile without headermap, to fix header file collisions.
+- fix: resolve #244: Demangle.cpp failing to build 
+- fix: resolve #239: Compiler Issue - "'absl/base/internal/inline_variable.h' file not found"
 - chore: resolve #272: Update CocoaPods related examples to use latest pod version 
 
 **1.12.3**
