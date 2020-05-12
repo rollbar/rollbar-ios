@@ -133,6 +133,6 @@ Pod::Spec.new do |s|
 
   s.pod_target_xcconfig = {
     "USE_HEADERMAP" => "NO",
-    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/Rollbar\""
+    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/Rollbar/**\""
   }
 end
