@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.6**
+-fix: resolve #279: Increment Cocoapods pod version
+
 **1.12.5**
 - fix: resolve #227: Fix broken Cocoapods push
 
