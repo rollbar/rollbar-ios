@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <Rollbar/Rollbar.h>
+@import Rollbar;
 
 @interface AppDelegate ()
 

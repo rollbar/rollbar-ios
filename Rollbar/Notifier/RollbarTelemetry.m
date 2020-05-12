@@ -60,6 +60,7 @@ static dispatch_queue_t fileQueue = nil;
     
     self = [super init];
     if (self) {
+        _enabled = NO;
         _dataArray = [NSMutableArray array];
         _limit = DEFAULT_DATA_LIMIT;
         

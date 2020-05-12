@@ -44,6 +44,7 @@
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
     NSArray *telemetryData = [item valueForKeyPath:@"body.telemetry"];
+    XCTAssertTrue(telemetryData.count > 0);
 
     for (NSDictionary *data in telemetryData) {
         NSDictionary *body = data[@"body"];

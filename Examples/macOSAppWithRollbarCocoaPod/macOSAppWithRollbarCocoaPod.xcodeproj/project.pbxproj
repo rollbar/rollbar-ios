@@ -27,7 +27,7 @@
 		550647E722D4097500530813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		550647E822D4097500530813 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		550647EA22D4097500530813 /* macOSAppWithRollbarCocoaPod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOSAppWithRollbarCocoaPod.entitlements; sourceTree = "<group>"; };
-		550647F022D40E6F00530813 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		550647F022D40E6F00530813 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6D6F4F79D3BE3D6FA25A13A2 /* Pods-macOSAppWithRollbarCocoaPod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macOSAppWithRollbarCocoaPod.release.xcconfig"; path = "Target Support Files/Pods-macOSAppWithRollbarCocoaPod/Pods-macOSAppWithRollbarCocoaPod.release.xcconfig"; sourceTree = "<group>"; };
 		DB7913F8E3D95330157E60EB /* Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig"; path = "Target Support Files/Pods-macOSAppWithRollbarCocoaPod/Pods-macOSAppWithRollbarCocoaPod.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
