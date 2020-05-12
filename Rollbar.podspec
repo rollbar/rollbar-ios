@@ -48,7 +48,7 @@ Pod::Spec.new do |s|
 
                             'Rollbar/Common/TriStateFlag.h',
 
-                            'Rollbar/Notifier/Rollbar.h',
+                            'RollbarFramework/Rollbar.h',
                             'Rollbar/Notifier/RollbarFacade.h',
                             'Rollbar/Notifier/RollbarNotifier.h',
                             'Rollbar/Notifier/RollbarConfiguration.h',
