@@ -22,6 +22,8 @@ Pod::Spec.new do |s|
 
   s.source_files        = 'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
 
+                          'RollbarFramework/*.{h,m}',
+
                           'Rollbar/*.{h,m}',
 
                           'Rollbar/Abstraction_Common/*.{h,m}',
@@ -38,7 +40,7 @@ Pod::Spec.new do |s|
 
   s.public_header_files =
                             'RollbarFramework/Rollbar.h',
-                            
+
                             'Rollbar/Abstraction_Common/Persistent.h',
                             'Rollbar/Abstraction_Common/JSONSupport.h',
 
