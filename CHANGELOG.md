@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.8**
+- fix: resolve #283: Add RollbarFramework/* to source_files
+
 **1.12.7**
 - fix: resolve #281: Set the correct Rollbar.h location in podspec
 - chore: updated samples to the latest pod
