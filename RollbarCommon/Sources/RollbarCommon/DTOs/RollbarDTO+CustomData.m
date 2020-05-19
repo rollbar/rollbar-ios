@@ -1,16 +1,16 @@
 //
-//  DataTransferObject+CustomData.m
+//  RollbarDTO+CustomData.m
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-09.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "DataTransferObject+CustomData.h"
+#import "RollbarDTO+CustomData.h"
 
-@implementation DataTransferObject (CustomData)
+@implementation RollbarDTO (CustomData)
 
-- (void)addKeyed:(NSString *)aKey DataTransferObject:(DataTransferObject *)aValue {
+- (void)addKeyed:(NSString *)aKey DataTransferObject:(RollbarDTO *)aValue {
     [self->_data setValue:aValue forKey:aKey];
 }
 
@@ -35,7 +35,7 @@
 }
 
 - (BOOL)tryAddKeyed:(NSString *)aKey Object:(NSObject *)aValue {
-    if ([DataTransferObject isTransferableObject:aValue]) {
+    if ([RollbarDTO isTransferableObject:aValue]) {
         [self->_data setValue:aValue forKey:aKey];
         return YES;
     }

@@ -1,24 +1,24 @@
 //
-//  DataTransferObject+CustomData.h
+//  RollbarDTO+CustomData.h
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-09.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "DataTransferObject.h"
+#import "RollbarDTO.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Adds custom data manipulation methods to a DTO
-@interface DataTransferObject (CustomData)
+@interface RollbarDTO (CustomData)
 
 #pragma mark - Non-safe operations
 
 /// Add custom data value by a key
 /// @param aKey the key
 /// @param aValue the custom data
-- (void)addKeyed:(NSString *)aKey DataTransferObject:(DataTransferObject *)aValue;
+- (void)addKeyed:(NSString *)aKey DataTransferObject:(RollbarDTO *)aValue;
 
 /// Add custom data value by a key
 /// @param aKey the key

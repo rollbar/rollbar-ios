@@ -1,5 +1,5 @@
 //
-//  DataTransferObject.h
+//  RollbarDTO.h
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-08.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DataTransferObject : NSObject <RollbarJSONSupport> {
+@interface RollbarDTO : NSObject <RollbarJSONSupport> {
     @private
     id _data;
         //...
@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Checks if the provided DTO has same defined properties as this instance
 /// @param otherDTO the other DTO to compare with
-- (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO;
+- (BOOL)hasSameDefinedPropertiesAs:(RollbarDTO *)otherDTO;
 
 /// Signifies that this DTO doesn't carry any useful data and is just an empty transpot "shell"
 @property (nonatomic, readonly) BOOL isEmpty;

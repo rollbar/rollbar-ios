@@ -1,14 +1,14 @@
 //
-//  DataTransferObject+Protected.m
+//  RollbarDTO+Protected.m
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-10.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "DataTransferObject+Protected.h"
+#import "RollbarDTO+Protected.h"
 
-@implementation DataTransferObject (Protected)
+@implementation RollbarDTO (Protected)
 
 #pragma mark - Property overrides
 
@@ -64,7 +64,7 @@
         [self->_data removeObjectForKey:key];
         return;
     }
-    if ([DataTransferObject isTransferableDataValue:data]) {
+    if ([RollbarDTO isTransferableDataValue:data]) {
         [self->_data setObject:data forKey:key];
         //[self->_data setValue:data forKey:key];
     }
@@ -83,13 +83,13 @@
 
 #pragma mark - safe data getters by key
 
-- (DataTransferObject *)safelyGetDataTransferObjectByKey:(NSString *)key {
-//    DataTransferObject *result = [self->_data objectForKey:key];
+- (RollbarDTO *)safelyGetDataTransferObjectByKey:(NSString *)key {
+//    RollbarDTO *result = [self->_data objectForKey:key];
 //    if (nil == result) {
-//        result = [[DataTransferObject alloc] initWi];
+//        result = [[RollbarDTO alloc] initWi];
 //        [self->_data setObject:result forKey:key];
 //    }
-    DataTransferObject *result = [[DataTransferObject alloc] initWithDictionary:[self->_data objectForKey:key]];
+    RollbarDTO *result = [[RollbarDTO alloc] initWithDictionary:[self->_data objectForKey:key]];
 
     return result;
 }
@@ -132,7 +132,7 @@
 
 #pragma mark - data setters by key
 
-- (void)setDataTransferObject:(DataTransferObject *)data forKey:(NSString *)key {
+- (void)setDataTransferObject:(RollbarDTO *)data forKey:(NSString *)key {
     [self->_data setObject:(data->_data) forKey:key];
 }
 

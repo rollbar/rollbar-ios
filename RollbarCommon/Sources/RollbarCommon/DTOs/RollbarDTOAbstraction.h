@@ -6,8 +6,8 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "JSONSupport.h"
-#import "Persistent.h"
-#import "DataTransferObject.h"
-#import "DataTransferObject+CustomData.h"
+#import "RollbarJSONSupport.h"
+#import "RollbarPersistent.h"
+#import "RollbarDTO.h"
+#import "RollbarDTO+CustomData.h"
 

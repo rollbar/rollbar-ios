@@ -1,18 +1,18 @@
 //
-//  DataTransferObject.m
+//  RollbarDTO.m
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-10-08.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "DataTransferObject.h"
+#import "RollbarDTO.h"
 #import "../RollbarSdkLog.h"
 
 #import <Foundation/NSObjCRuntime.h>
 #import "objc/runtime.h"
 
-@implementation DataTransferObject {
+@implementation RollbarDTO {
 
 }
 
@@ -34,7 +34,7 @@
         return YES;
     }
     else {
-        return [DataTransferObject isTransferableObject:obj];
+        return [RollbarDTO isTransferableObject:obj];
     }
 }
 
@@ -222,20 +222,20 @@
     return result;
 }
 
-- (BOOL)hasSameDefinedPropertiesAs:(DataTransferObject *)otherDTO {
+- (BOOL)hasSameDefinedPropertiesAs:(RollbarDTO *)otherDTO {
     
     return [[self getDefinedProperties] isEqualToArray:[otherDTO getDefinedProperties]];
 }
 
 - (BOOL)isEqual:(id)object {
-    if (![object isKindOfClass:[DataTransferObject class]]) {
+    if (![object isKindOfClass:[RollbarDTO class]]) {
         return NO;
     }
 //    if ([self class] != [object class]) {
 //        return NO;
 //    }
     
-    DataTransferObject *otherDTO = object;
+    RollbarDTO *otherDTO = object;
     if (self->_data == otherDTO->_data) {
         return YES;
     }
@@ -320,7 +320,7 @@
         data = [NSMutableDictionary dictionary];
     }
     
-    if (![DataTransferObject isTransferableObject:data]) {
+    if (![RollbarDTO isTransferableObject:data]) {
         return self;
     }
 
@@ -356,7 +356,7 @@
         return self;
     }
     
-    if (![DataTransferObject isTransferableObject:data]) {
+    if (![RollbarDTO isTransferableObject:data]) {
         return self;
     }
 
