@@ -27,7 +27,17 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "RollbarCommon",
-            dependencies: []),
+            dependencies: [],
+            publicHeadersPath: "include",
+            cSettings: [
+                .headerSearchPath("Sources/RollbarCommon/**"),
+                .headerSearchPath("Sources/RollbarCommon"),
+                .headerSearchPath("Sources/RollbarCommon/include"),
+                .headerSearchPath("Sources/RollbarCommon/DTOs"),
+                
+                .define("DEFINES_MODULE"),
+            ]
+        ),
         .testTarget(
             name: "RollbarCommonTests",
             dependencies: ["RollbarCommon"]),

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "../RollbarJSONSupport.h"
+#import "../include/RollbarJSONSupport.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
