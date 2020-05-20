@@ -10,11 +10,11 @@
 #define RollbarDeploysDTOs_h
 
 // Deploy API DTOs:
-#import "Deployment.h"
-#import "DeploymentDetails.h"
-#import "DeployApiCallResult.h"
+#import "RollbarDeployment.h"
+#import "RollbarDeploymentDetails.h"
+#import "RollbarDeployApiCallResult.h"
 
 // Deploy API enums:
-#import "DeployApiCallOutcome.h"
+#import "RollbarDeployApiCallOutcome.h"
 
 #endif /* RollbarDeploysDTOs_h */

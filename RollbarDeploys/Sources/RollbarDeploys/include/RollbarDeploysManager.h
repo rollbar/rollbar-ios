@@ -16,9 +16,9 @@
 /// @param deploymentDetailsPageObserver deployment details page observer
 - (instancetype)initWithWriteAccessToken:(NSString *)writeAccessToken
                          readAccessToken:(NSString *)readAccessToken
-          deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploymentRegistrationObserver
-               deploymentDetailsObserver:(NSObject<DeploymentDetailsObserver>*)deploymentDetailsObserver
-           deploymentDetailsPageObserver:(NSObject<DeploymentDetailsPageObserver>*)deploymentDetailsPageObserver
+          deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*)deploymentRegistrationObserver
+               deploymentDetailsObserver:(NSObject<RollbarDeploymentDetailsObserver>*)deploymentDetailsObserver
+           deploymentDetailsPageObserver:(NSObject<RollbarDeploymentDetailsPageObserver>*)deploymentDetailsPageObserver
 NS_DESIGNATED_INITIALIZER;
 
 @end

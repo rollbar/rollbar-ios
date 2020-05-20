@@ -1,34 +1,40 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "Deployment.h"
-#import "DeploymentDetails.h"
-#import "DeployApiCallResult.h"
+//#import "RollbarDeployment.h"
+//#import "RollbarDeploymentDetails.h"
+//#import "RollbarDeployApiCallResult.h"
+
+@class RollbarDeployment;
+@class RollbarDeploymentDetails;
+@class RollbarDeployApiCallResult;
+@class RollbarDeploymentDetailsResult;
+@class RollbarDeploymentDetailsPageResult;
 
 #pragma mark - Deploys API Service Response Observer Protocols
 
 /// Deployment reqistration observer protocol
-@protocol DeploymentRegistrationObserver
+@protocol RollbarDeploymentRegistrationObserver
 @required
 /// Deployment reqistration observer's callback method
 /// @param result deployment registration result object
-- (void)onRegisterDeploymentCompleted:(nonnull DeployApiCallResult *)result;
+- (void)onRegisterDeploymentCompleted:(nonnull RollbarDeployApiCallResult *)result;
 @end
 
 /// Deployment details observer protocol
-@protocol DeploymentDetailsObserver
+@protocol RollbarDeploymentDetailsObserver
 @required
 /// Deployment details observer's callback method
 /// @param result result obect
-- (void)onGetDeploymentDetailsCompleted:(nonnull DeploymentDetailsResult *)result;
+- (void)onGetDeploymentDetailsCompleted:(nonnull RollbarDeploymentDetailsResult *)result;
 @end
 
 /// Deployment details page observer protocol
-@protocol DeploymentDetailsPageObserver
+@protocol RollbarDeploymentDetailsPageObserver
 @required
 /// Deployment details page observer's callback method
 /// @param result result object
-- (void)onGetDeploymentDetailsPageCompleted:(nonnull DeploymentDetailsPageResult *)result;
+- (void)onGetDeploymentDetailsPageCompleted:(nonnull RollbarDeploymentDetailsPageResult *)result;
 @end
 
 #pragma mark - Deploys API Service Requests Protocol
@@ -40,7 +46,7 @@
 
 /// Register deployment API call
 /// @param deployment deployment registration result
-- (void) registerDeployment:(nonnull Deployment *)deployment;
+- (void) registerDeployment:(nonnull RollbarDeployment *)deployment;
 
 /// Individual deployment details API call
 /// @param deployId deployment ID

@@ -1,4 +1,4 @@
-module RollbarCommon {
+module RollbarDeploys {
 	umbrella "."
 	
 	export *

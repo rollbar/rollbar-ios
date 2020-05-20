@@ -1,36 +1,36 @@
 //
-//  DeployApiCallOutcome.m
+//  RollbarDeployApiCallOutcome.m
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2019-11-08.
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import "DeployApiCallOutcome.h"
+#import "RollbarDeployApiCallOutcome.h"
 
-@implementation DeployApiCallOutcomeUtil
+@implementation RollbarDeployApiCallOutcomeUtil
 
-+ (NSString *) DeployApiCallOutcomeToString:(DeployApiCallOutcome)value; {
++ (NSString *) DeployApiCallOutcomeToString:(RollbarDeployApiCallOutcome)value; {
     switch (value) {
-        case DeployApiCallSuccess:
+        case RollbarDeployApiCall_Success:
             return @"success";
-        case DeployApiCallError:
+        case RollbarDeployApiCall_Error:
             return @"error";
         default:
             return @"unknown";
     }
 }
 
-+ (DeployApiCallOutcome) DeployApiCallOutcomeFromString:(NSString *)value {
++ (RollbarDeployApiCallOutcome) DeployApiCallOutcomeFromString:(NSString *)value {
     
     if (NSOrderedSame == [value caseInsensitiveCompare:@"success"]) {
-        return DeployApiCallSuccess;
+        return RollbarDeployApiCall_Success;
     }
     else  if (NSOrderedSame == [value caseInsensitiveCompare:@"error"]) {
-        return DeployApiCallError;
+        return RollbarDeployApiCall_Error;
     }
     else {
-        return DeployApiCallError; // default case...
+        return RollbarDeployApiCall_Error; // default case...
     }
 }
 

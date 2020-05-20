@@ -6,8 +6,8 @@
 //  Copyright © 2020 Rollbar. All rights reserved.
 //
 
-#ifndef RollbarCommon_h
-#define RollbarCommon_h
+#ifndef RollbarDeploys_h
+#define RollbarDeploys_h
 
 #import <Foundation/Foundation.h>
 
@@ -19,23 +19,18 @@
 //#import <Cocoa/Cocoa.h>
 //#endif
 
-//! Project version number for RollbarCommon.framework.
-FOUNDATION_EXPORT double RollbarCommonVersionNumber;
+//! Project version number for RollbarDeploys.framework.
+FOUNDATION_EXPORT double RollbarDeploysVersionNumber;
 
-//! Project version string for RollbarCommon.framework.
-FOUNDATION_EXPORT const unsigned char RollbarCommonVersionString[];
+//! Project version string for RollbarDeploys.framework.
+FOUNDATION_EXPORT const unsigned char RollbarDeploysVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like
 // #import <RollbarCommon/PublicHeader.h>
 
-#import "RollbarJSONSupport.h"
-#import "RollbarPersistent.h"
-#import "RollbarDTO+Protected.h"
-#import "../RollbarSdkLog.h"
-#import "../RollbarTriStateFlag.h"
-#import "../NSJSONSerialization+Rollbar.h"
-
-#import "RollbarDTOAbstraction.h"
+#import "RollbarDeploysDTOs.h"
+#import "RollbarDeploysProtocol.h"
+#import "RollbarDeploysManager.h"
 
 //#import <RollbarJSONSupport.h>
 //#import <RollbarPersistent.h>
@@ -45,4 +40,4 @@ FOUNDATION_EXPORT const unsigned char RollbarCommonVersionString[];
 //
 //#import <RollbarDTOAbstraction.h>
 
-#endif /* RollbarCommon_h */
+#endif /* RollbarDeploys_h */

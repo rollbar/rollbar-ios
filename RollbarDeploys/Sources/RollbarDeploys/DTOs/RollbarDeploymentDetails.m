@@ -2,11 +2,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "DeploymentDetails.h"
+#import "RollbarDeploymentDetails.h"
 //#import "DataTransferObject+Protected.h"
 @import RollbarCommon;
 
-@implementation DeploymentDetails
+@implementation RollbarDeploymentDetails
 
 #pragma mark - data field keys
 static NSString * const DFK_DEPLOY_ID = @"id";

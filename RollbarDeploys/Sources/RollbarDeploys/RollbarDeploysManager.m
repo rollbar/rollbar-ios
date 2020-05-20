@@ -3,7 +3,9 @@
 #import <sys/utsname.h>
 //#import "NSJSONSerialization+Rollbar.h"
 #import "RollbarDeploysManager.h"
-#import "Deployment.h"
+#import "RollbarDeployment.h"
+#import "RollbarDeployApiCallResult.h"
+
 @import RollbarCommon;
 
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
@@ -16,16 +18,16 @@
 
 @implementation RollbarDeploysManager {
     NSMutableData *responseData;
-    NSObject<DeploymentRegistrationObserver> *_deploymentRegistrationObserver;
-    NSObject<DeploymentDetailsObserver> *_deploymentDetailsObserver;
-    NSObject<DeploymentDetailsPageObserver> *_deploymentDetailsPageObserver;
+    NSObject<RollbarDeploymentRegistrationObserver> *_deploymentRegistrationObserver;
+    NSObject<RollbarDeploymentDetailsObserver> *_deploymentDetailsObserver;
+    NSObject<RollbarDeploymentDetailsPageObserver> *_deploymentDetailsPageObserver;
 }
 
 - (id)initWithWriteAccessToken:(NSString *)writeAccessToken
                readAccessToken:(NSString *)readAccessToken
-deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploymentRegistrationObserver
-     deploymentDetailsObserver:(NSObject<DeploymentDetailsObserver>*)deploymentDetailsObserver
- deploymentDetailsPageObserver:(NSObject<DeploymentDetailsPageObserver>*)deploymentDetailsPageObserver {
+deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*)deploymentRegistrationObserver
+     deploymentDetailsObserver:(NSObject<RollbarDeploymentDetailsObserver>*)deploymentDetailsObserver
+ deploymentDetailsPageObserver:(NSObject<RollbarDeploymentDetailsPageObserver>*)deploymentDetailsPageObserver {
     self = [super init];
     if (nil != self) {
         self.writeAccessToken = writeAccessToken;
@@ -62,7 +64,7 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
     [self sendGetRequestToUrl:getUrl];
 }
 
-- (void)registerDeployment:(nonnull Deployment *)deployment {
+- (void)registerDeployment:(nonnull RollbarDeployment *)deployment {
     NSString * const url =
         @"https://api.rollbar.com/api/1/deploy/";
     NSMutableDictionary *params =
@@ -195,8 +197,8 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
         && [requestUrl hasSuffix:@"/deploy/"]
         && (nil != _deploymentRegistrationObserver)
         ) {
-        DeploymentRegistrationResult *result =
-        [[DeploymentRegistrationResult alloc] initWithResponse:httpResponse
+        RollbarDeploymentRegistrationResult *result =
+        [[RollbarDeploymentRegistrationResult alloc] initWithResponse:httpResponse
                                                           data:data
                                                          error:error
                                                     forRequest:request];
@@ -206,8 +208,8 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
              && [requestUrl containsString:@"/deploy/"]
              && (nil != _deploymentDetailsObserver)
              ) {
-        DeploymentDetailsResult *result =
-        [[DeploymentDetailsResult alloc] initWithResponse:httpResponse
+        RollbarDeploymentDetailsResult *result =
+        [[RollbarDeploymentDetailsResult alloc] initWithResponse:httpResponse
                                                      data:data
                                                     error:error
                                                forRequest:request];
@@ -217,8 +219,8 @@ deploymentRegistrationObserver:(NSObject<DeploymentRegistrationObserver>*)deploy
              && [requestUrl containsString:@"/deploys/"]
              && (nil != _deploymentDetailsPageObserver)
              ) {
-        DeploymentDetailsPageResult *result =
-        [[DeploymentDetailsPageResult alloc] initWithResponse:httpResponse
+        RollbarDeploymentDetailsPageResult *result =
+        [[RollbarDeploymentDetailsPageResult alloc] initWithResponse:httpResponse
                                                      data:data
                                                     error:error
                                                forRequest:request];
