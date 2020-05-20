@@ -4,7 +4,7 @@
 @import RollbarCommon;
 
 /// Models a Deployment
-@interface Deployment : RollbarDTO
+@interface RollbarDeployment : RollbarDTO
 
 #pragma mark - properties
 

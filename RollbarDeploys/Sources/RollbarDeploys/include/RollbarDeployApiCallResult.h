@@ -1,21 +1,21 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "DeploymentDetails.h"
+#import "RollbarDeploymentDetails.h"
 //#import "DataTransferObject.h"
-#import "DeployApiCallOutcome.h"
+#import "RollbarDeployApiCallOutcome.h"
 
 @import RollbarCommon;
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - DeployApiCallResult
+#pragma mark - RollbarDeployApiCallResult
 
 /// Models result of Deploy API call/request
-@interface DeployApiCallResult : RollbarDTO
+@interface RollbarDeployApiCallResult : RollbarDTO
 
 /// API call's outcome
-@property (readonly) DeployApiCallOutcome outcome;
+@property (readonly) RollbarDeployApiCallOutcome outcome;
 
 /// API call's result description
 @property (readonly, copy, nullable) NSString *description;
@@ -54,33 +54,33 @@ NS_DESIGNATED_INITIALIZER;
 
 @end
 
-#pragma mark - DeploymentRegistrationResult
+#pragma mark - RollbarDeploymentRegistrationResult
 
 /// Models result of a deployment registration request
-@interface DeploymentRegistrationResult : DeployApiCallResult
+@interface RollbarDeploymentRegistrationResult : RollbarDeployApiCallResult
 
 /// Deployment ID
 @property (readonly, copy, nonnull) NSString *deploymentId;
 
 @end
 
-#pragma mark - DeploymentDetailsResult
+#pragma mark - RollbarDeploymentDetailsResult
 
 /// Models result of a deployment details request
-@interface DeploymentDetailsResult : DeployApiCallResult
+@interface RollbarDeploymentDetailsResult : RollbarDeployApiCallResult
 
 /// Deployment details object
-@property (readonly, retain, nullable) DeploymentDetails *deployment;
+@property (readonly, retain, nullable) RollbarDeploymentDetails *deployment;
 
 @end
 
-#pragma mark - DeploymentDetailsPageResult
+#pragma mark - RollbarDeploymentDetailsPageResult
 
 /// Models result of a deployment details page request
-@interface DeploymentDetailsPageResult : DeployApiCallResult
+@interface RollbarDeploymentDetailsPageResult : RollbarDeployApiCallResult
 
 /// Deployment details objects
-@property (readonly, retain, nullable) NSArray<DeploymentDetails *> *deployments;
+@property (readonly, retain, nullable) NSArray<RollbarDeploymentDetails *> *deployments;
 
 /// Deployment details page number
 @property (readonly) NSUInteger pageNumber;

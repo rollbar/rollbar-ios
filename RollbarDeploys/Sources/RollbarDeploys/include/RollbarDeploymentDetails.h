@@ -1,10 +1,10 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "Deployment.h"
+#import "RollbarDeployment.h"
 
 /// Models Deployment details
-@interface DeploymentDetails : Deployment
+@interface RollbarDeploymentDetails : RollbarDeployment
 
 /// Deployment ID
 @property (readonly, copy) NSString *deployId;
