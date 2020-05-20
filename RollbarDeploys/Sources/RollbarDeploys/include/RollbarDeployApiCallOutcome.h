@@ -6,7 +6,8 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
+@import Foundation;
 
 typedef NS_ENUM(NSInteger, RollbarDeployApiCallOutcome) {
     RollbarDeployApiCall_Success,

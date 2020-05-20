@@ -1,7 +1,7 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
 #import "RollbarDeployment.h"
-//#import "DataTransferObject+Protected.h"
+
 @import RollbarCommon;
 
 @implementation RollbarDeployment

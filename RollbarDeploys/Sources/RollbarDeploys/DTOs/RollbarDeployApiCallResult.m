@@ -2,7 +2,6 @@
 
 #import <Foundation/Foundation.h>
 #import "RollbarDeployApiCallResult.h"
-//#import "DataTransferObject+Protected.h"
 
 @import RollbarCommon;
 

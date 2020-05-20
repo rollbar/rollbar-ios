@@ -1,10 +1,10 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
 #import "RollbarDeploymentDetails.h"
-//#import "DataTransferObject.h"
 #import "RollbarDeployApiCallOutcome.h"
 
+@import Foundation;
 @import RollbarCommon;
 
 NS_ASSUME_NONNULL_BEGIN

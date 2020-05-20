@@ -1,9 +1,11 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
 //#import "RollbarDeployment.h"
 //#import "RollbarDeploymentDetails.h"
 //#import "RollbarDeployApiCallResult.h"
+
+@import Foundation;
 
 @class RollbarDeployment;
 @class RollbarDeploymentDetails;
