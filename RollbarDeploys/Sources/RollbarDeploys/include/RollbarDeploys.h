@@ -33,12 +33,4 @@ FOUNDATION_EXPORT const unsigned char RollbarDeploysVersionString[];
 #import "RollbarDeploysProtocol.h"
 #import "RollbarDeploysManager.h"
 
-//#import <RollbarJSONSupport.h>
-//#import <RollbarPersistent.h>
-//#import <RollbarSdkLog.h>
-//#import <RollbarTriStateFlag.h>
-//#import <NSJSONSerialization+Rollbar.h>
-//
-//#import <RollbarDTOAbstraction.h>
-
 #endif /* RollbarDeploys_h */

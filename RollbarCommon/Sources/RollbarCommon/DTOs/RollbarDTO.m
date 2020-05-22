@@ -7,7 +7,7 @@
 //
 
 #import "RollbarDTO.h"
-#import "../RollbarSdkLog.h"
+#import "RollbarSdkLog.h"
 
 #import <Foundation/NSObjCRuntime.h>
 #import "objc/runtime.h"

@@ -17,6 +17,14 @@ let package = Package(
         .library(
             name: "RollbarCommon",
             targets: ["RollbarCommon"]),
+//        .library(
+//            name: "RollbarCommonStatic",
+//            type: .static,
+//            targets: ["RollbarCommon"]),
+//        .library(
+//            name: "RollbarCommonDynamic",
+//            type: .dynamic,
+//            targets: ["RollbarCommon"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -31,11 +39,11 @@ let package = Package(
             publicHeadersPath: "include",
             cSettings: [
                 .headerSearchPath("Sources/RollbarCommon/**"),
-                .headerSearchPath("Sources/RollbarCommon"),
-                .headerSearchPath("Sources/RollbarCommon/include"),
-                .headerSearchPath("Sources/RollbarCommon/DTOs"),
+//                .headerSearchPath("Sources/RollbarCommon"),
+//                .headerSearchPath("Sources/RollbarCommon/include"),
+//                .headerSearchPath("Sources/RollbarCommon/DTOs"),
                 
-                .define("DEFINES_MODULE"),
+//                .define("DEFINES_MODULE"),
             ]
         ),
         .testTarget(

@@ -7,7 +7,7 @@
 //
 
 #import "RollbarDTO.h"
-#import "../RollbarTriStateFlag.h"
+#import "RollbarTriStateFlag.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

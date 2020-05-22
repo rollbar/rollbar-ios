@@ -22,7 +22,15 @@ let package = Package(
         .target(
             name: "RollbarDeploys",
             dependencies: ["RollbarCommon",],
-            publicHeadersPath: "include"
+            publicHeadersPath: "include",
+            cSettings: [
+                .headerSearchPath("Sources/RollbarDeploys/**"),
+//                .headerSearchPath("Sources/RollbarDeploys"),
+//                .headerSearchPath("Sources/RollbarDeploys/include"),
+//                .headerSearchPath("Sources/RollbarDeploys/DTOs"),
+                
+//                .define("DEFINES_MODULE"),
+            ]
         ),
         .testTarget(
             name: "RollbarDeploysTests",

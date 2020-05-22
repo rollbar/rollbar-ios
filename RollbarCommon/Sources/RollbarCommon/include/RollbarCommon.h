@@ -9,7 +9,8 @@
 #ifndef RollbarCommon_h
 #define RollbarCommon_h
 
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
+@import Foundation;
 
 //#if TARGET_OS_IOS
 //#import <UIKit/UIKit.h>
@@ -31,9 +32,9 @@ FOUNDATION_EXPORT const unsigned char RollbarCommonVersionString[];
 #import "RollbarJSONSupport.h"
 #import "RollbarPersistent.h"
 #import "RollbarDTO+Protected.h"
-#import "../RollbarSdkLog.h"
-#import "../RollbarTriStateFlag.h"
-#import "../NSJSONSerialization+Rollbar.h"
+#import "RollbarSdkLog.h"
+#import "RollbarTriStateFlag.h"
+#import "NSJSONSerialization+Rollbar.h"
 
 #import "RollbarDTOAbstraction.h"
 
