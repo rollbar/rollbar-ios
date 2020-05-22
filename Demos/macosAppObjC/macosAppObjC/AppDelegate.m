@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "RollbarDeploysDemoClient.h"
+
 @interface AppDelegate ()
 
 @end
@@ -16,6 +18,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    RollbarDeploysDemoClient * rollbarDeploysIntro = [[RollbarDeploysDemoClient new] init];
+    [rollbarDeploysIntro demoDeploymentRegistration];
+    [rollbarDeploysIntro demoGetDeploymentDetailsById];
+    [rollbarDeploysIntro demoGetDeploymentsPage];
 }
 
 

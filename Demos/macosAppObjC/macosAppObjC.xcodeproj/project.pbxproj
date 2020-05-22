@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,8 @@
 		55759A732477561100ED3F04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55759A722477561100ED3F04 /* Assets.xcassets */; };
 		55759A762477561100ED3F04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55759A742477561100ED3F04 /* Main.storyboard */; };
 		55759A792477561100ED3F04 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55759A782477561100ED3F04 /* main.m */; };
+		55FD0711247860F1000BBC22 /* RollbarDeploys in Frameworks */ = {isa = PBXBuildFile; productRef = 55FD0710247860F1000BBC22 /* RollbarDeploys */; };
+		55FD07142478614B000BBC22 /* RollbarDeploysDemoClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD07132478614B000BBC22 /* RollbarDeploysDemoClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		55759A772477561100ED3F04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55759A782477561100ED3F04 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55759A7A2477561100ED3F04 /* macosAppObjC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macosAppObjC.entitlements; sourceTree = "<group>"; };
+		55FD07122478614B000BBC22 /* RollbarDeploysDemoClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeploysDemoClient.h; sourceTree = "<group>"; };
+		55FD07132478614B000BBC22 /* RollbarDeploysDemoClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarDeploysDemoClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FD0711247860F1000BBC22 /* RollbarDeploys in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +48,7 @@
 			children = (
 				55759A6B2477560D00ED3F04 /* macosAppObjC */,
 				55759A6A2477560D00ED3F04 /* Products */,
+				55FD070F247860F1000BBC22 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,8 +72,17 @@
 				55759A772477561100ED3F04 /* Info.plist */,
 				55759A782477561100ED3F04 /* main.m */,
 				55759A7A2477561100ED3F04 /* macosAppObjC.entitlements */,
+				55FD07122478614B000BBC22 /* RollbarDeploysDemoClient.h */,
+				55FD07132478614B000BBC22 /* RollbarDeploysDemoClient.m */,
 			);
 			path = macosAppObjC;
+			sourceTree = "<group>";
+		};
+		55FD070F247860F1000BBC22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +101,9 @@
 			dependencies = (
 			);
 			name = macosAppObjC;
+			packageProductDependencies = (
+				55FD0710247860F1000BBC22 /* RollbarDeploys */,
+			);
 			productName = macosAppObjC;
 			productReference = 55759A692477560D00ED3F04 /* macosAppObjC.app */;
 			productType = "com.apple.product-type.application";
@@ -142,6 +160,7 @@
 				55759A712477560D00ED3F04 /* ViewController.m in Sources */,
 				55759A792477561100ED3F04 /* main.m in Sources */,
 				55759A6E2477560D00ED3F04 /* AppDelegate.m in Sources */,
+				55FD07142478614B000BBC22 /* RollbarDeploysDemoClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +347,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		55FD0710247860F1000BBC22 /* RollbarDeploys */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RollbarDeploys;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 55759A612477560D00ED3F04 /* Project object */;
 }
