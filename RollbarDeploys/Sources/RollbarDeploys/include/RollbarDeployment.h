@@ -39,6 +39,9 @@
                     rollbarUserName:(NSString *)rollbarUserName
 NS_DESIGNATED_INITIALIZER;
 
+- (instancetype)initWithDictionary:(NSDictionary *)data
+NS_DESIGNATED_INITIALIZER;
+
 /// Initialize this DTO instance with valid JSON NSArray seed
 /// @param data valid JSON NSArray seed
 - (instancetype)initWithArray:(NSArray *)data NS_UNAVAILABLE;

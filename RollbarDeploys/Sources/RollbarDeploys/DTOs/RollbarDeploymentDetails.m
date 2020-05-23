@@ -41,4 +41,8 @@ static NSString * const DFK_STATUS = @"status";
 
 #pragma mark - initializers
 
+- (instancetype)initWithDictionary:(NSDictionary *)data {
+    return [super initWithDictionary:data];
+}
+
 @end

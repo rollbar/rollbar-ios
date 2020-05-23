@@ -10,6 +10,7 @@
 @class RollbarDeployment;
 @class RollbarDeploymentDetails;
 @class RollbarDeployApiCallResult;
+@class RollbarDeploymentRegistrationResult;
 @class RollbarDeploymentDetailsResult;
 @class RollbarDeploymentDetailsPageResult;
 
@@ -20,7 +21,7 @@
 @required
 /// Deployment reqistration observer's callback method
 /// @param result deployment registration result object
-- (void)onRegisterDeploymentCompleted:(nonnull RollbarDeployApiCallResult *)result;
+- (void)onRegisterDeploymentCompleted:(nonnull RollbarDeploymentRegistrationResult *)result;
 @end
 
 /// Deployment details observer protocol

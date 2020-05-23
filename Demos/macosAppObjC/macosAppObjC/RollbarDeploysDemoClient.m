@@ -72,7 +72,7 @@
                                                                    rollbarUserName:rollbarUsername];
     RollbarDeploysManager *deploysManager =
         [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
-                                                readAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"
+                                                readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"
                                  deploymentRegistrationObserver:observer
                                       deploymentDetailsObserver:observer
                                   deploymentDetailsPageObserver:observer
@@ -85,7 +85,7 @@
     NSString * const testDeploymentId = @"9961771";
     RollbarDeploysObserver *observer = [[RollbarDeploysObserver alloc] init];
     RollbarDeploysManager *deploysManager =
-    [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
+    [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"0d7ef175a2e14bc9b48732af2b2652f9"
                                             readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"
                              deploymentRegistrationObserver:observer
                                   deploymentDetailsObserver:observer
@@ -98,7 +98,7 @@
     
     RollbarDeploysObserver *observer = [[RollbarDeploysObserver alloc] init];
     RollbarDeploysManager *deploysManager =
-    [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"2d6e0add5d9b403d9126b4bcea7e0199"
+    [[RollbarDeploysManager alloc] initWithWriteAccessToken:@"0d7ef175a2e14bc9b48732af2b2652f9"
                                             readAccessToken:@"d1fd12f1bd7e4340a0a55378d41061f0"
                              deploymentRegistrationObserver:observer
                                   deploymentDetailsObserver:observer

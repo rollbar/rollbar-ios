@@ -48,12 +48,13 @@ static NSString * const DFK_ROLLBAR_USERNAME = @"rollbar_username";
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)data {
-    return [self initWithEnvironment:data[@"environment"]
-                             comment:data[@"environment"]
-                            revision:data[@"revision"]
-                       localUserName:data[@"local_username"]
-                     rollbarUserName:data[@"user_id"]
-            ];
+//    return [self initWithEnvironment:data[@"environment"]
+//                             comment:data[@"environment"]
+//                            revision:data[@"revision"]
+//                       localUserName:data[@"local_username"]
+//                     rollbarUserName:data[@"user_id"]
+//            ];
+    return [super initWithDictionary:data];
 }
 
 @end
