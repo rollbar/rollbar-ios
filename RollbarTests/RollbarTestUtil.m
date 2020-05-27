@@ -7,26 +7,35 @@
 static NSString *QUEUED_ITEMS_FILE_NAME = @"rollbar.items";
 
 NSString* _logFilePath() {
+    
     NSString *cachesDirectory = [RollbarCachesDirectory directory];
     return [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
 }
 
 void RollbarClearLogFile() {
+    
     NSString *filePath = _logFilePath();
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     BOOL fileExists = [fileManager fileExistsAtPath:filePath];
     
     if (fileExists) {
-        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-        if (!success) NSLog(@"Error: %@", [error localizedDescription]);
-        [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
+        BOOL success = [fileManager removeItemAtPath:filePath
+                                               error:&error];
+        if (!success) {
+            NSLog(@"Error: %@", [error localizedDescription]);
+        }
+        [[NSFileManager defaultManager] createFileAtPath:filePath
+                                                contents:nil
+                                              attributes:nil];
     }
 }
 
 NSArray* RollbarReadLogItemFromFile() {
+    
     NSString *filePath = _logFilePath();
-    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:filePath andOffset:0];
+    RollbarFileReader *reader = [[RollbarFileReader alloc] initWithFilePath:filePath
+                                                                  andOffset:0];
     
     NSMutableArray *items = [NSMutableArray array];
     [reader enumerateLinesUsingBlock:^(NSString *line, NSUInteger nextOffset, BOOL *stop) {
@@ -49,5 +58,7 @@ NSArray* RollbarReadLogItemFromFile() {
 }
 
 void RollbarFlushFileThread(RollbarNotifier *notifier) {
-    [notifier performSelector:@selector(_test_doNothing) onThread:[notifier _rollbarThread] withObject:nil waitUntilDone:YES];
+    
+    [notifier performSelector:@selector(_test_doNothing)
+                     onThread:[notifier _rollbarThread] withObject:nil waitUntilDone:YES];
 }

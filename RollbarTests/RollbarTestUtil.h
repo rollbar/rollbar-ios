@@ -9,6 +9,8 @@ NSArray* RollbarReadLogItemFromFile(void);
 void RollbarFlushFileThread(RollbarNotifier *notifier);
 
 @interface RollbarNotifier (Tests)
+
 - (NSThread *)_rollbarThread;
 - (void)_test_doNothing;
+
 @end

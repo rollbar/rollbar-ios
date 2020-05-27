@@ -3,18 +3,28 @@
 //#import <Foundation/Foundation.h>
 @import Foundation;
 
+/// Rollbar category for NSJSONSerialization
 @interface NSJSONSerialization (Rollbar)
 
 NS_ASSUME_NONNULL_BEGIN
 
-+ (nullable NSData *)dataWithJSONObject:(id)obj
-                                options:(NSJSONWritingOptions)opt
-                                  error:(NSError **)error
-                                   safe:(BOOL)safe;
+/// Returns NSData representation of an object composition representing structured JSON data
+/// @param obj object composition representing structured JSON data
+/// @param opt JSON writing options
+/// @param error error (if any)
+/// @param safe safe/valid NSJSONSerialization structure  flag
++ (nullable NSData *)rollbar_dataWithJSONObject:(id)obj
+                                        options:(NSJSONWritingOptions)opt
+                                          error:(NSError **)error
+                                           safe:(BOOL)safe;
 
-+ (NSDictionary *)safeDataFromJSONObject:(id)obj;
+/// Turns JSON-like object structure into a valid NSJSONSerialization structure
+/// @param obj JSON-like object
++ (NSDictionary *)rollbar_safeDataFromJSONObject:(id)obj;
 
-+ (unsigned long)measureJSONDataByteSize:(NSData *)jsonData;
+/// Byte-length of a NSData representation of a JSON structure
+/// @param jsonData NSData representation of a JSON structure
++ (unsigned long)rollbar_measureJSONDataByteSize:(NSData *)jsonData;
 
 NS_ASSUME_NONNULL_END
 
