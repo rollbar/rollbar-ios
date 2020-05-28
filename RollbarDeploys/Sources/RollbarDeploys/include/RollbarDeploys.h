@@ -1,5 +1,5 @@
 //
-//  Rollbar.h
+//  RollbarDeploys.h
 //  Rollbar
 //
 //  Created by Andrey Kornich on 2020-01-17.
@@ -27,7 +27,7 @@ FOUNDATION_EXPORT double RollbarDeploysVersionNumber;
 FOUNDATION_EXPORT const unsigned char RollbarDeploysVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like
-// #import <RollbarCommon/PublicHeader.h>
+// #import <RollbarDeploys/PublicHeader.h>
 
 #import "RollbarDeploysDTOs.h"
 #import "RollbarDeploysProtocol.h"

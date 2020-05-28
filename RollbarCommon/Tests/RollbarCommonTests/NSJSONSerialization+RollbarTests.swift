@@ -40,7 +40,7 @@ final class NSJSONSerializationRollbarTests: XCTestCase {
     func testNSJSONSerializationRollbar_safeDataFromJSONObject() {
                 
         let goldenStandard =
-        "{\"access_token\":\"321\",\"data\":{\"attribute\":\"An attribute\",\"body\":\"Message\",\"date\":\"1970-01-01 00:00:00 +0000\",\"error\":{},\"httpUrlResponse\":{\"header1\":\"Header 1\",\"header2\":\"Header 2\"},\"innerData\":{\"attribute\":\"An attribute\",\"body\":\"Message\",\"date\":\"1970-01-01 00:00:00 +0000\",\"error\":{},\"httpUrlResponse\":{\"header1\":\"Header 1\",\"header2\":\"Header 2\"},\"scrubFields\":\"secret,CCV,password\",\"url\":\"http:\\/\\/www.apple.com\"},\"scrubFields\":\"secret,CCV,password\",\"url\":\"http:\\/\\/www.apple.com\"}}";
+            "{\"access_token\":\"321\",\"data\":{\"attribute\":\"An attribute\",\"body\":\"Message\",\"date\":\"1970-01-01 00:00:00 +0000\",\"error\":{},\"httpUrlResponse\":{\"header1\":\"Header 1\",\"header2\":\"Header 2\"},\"innerData\":{\"attribute\":\"An attribute\",\"body\":\"Message\",\"date\":\"1970-01-01 00:00:00 +0000\",\"error\":{},\"httpUrlResponse\":{\"header1\":\"Header 1\",\"header2\":\"Header 2\"},\"scrubFields\":\"secret,CCV,password\",\"url\":\"http:\\/\\/www.apple.com\"},\"scrubFields\":\"secret,CCV,password\",\"url\":\"http:\\/\\/www.apple.com\"}}";
         
         var data = [
             "body": "Message",

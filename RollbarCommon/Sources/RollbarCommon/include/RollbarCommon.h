@@ -31,10 +31,12 @@ FOUNDATION_EXPORT const unsigned char RollbarCommonVersionString[];
 
 #import "RollbarJSONSupport.h"
 #import "RollbarPersistent.h"
+#import "RollbarTriStateFlag.h"
+#import "RollbarCachesDirectory.h"
+#import "NSJSONSerialization+Rollbar.h"
+#import "RollbarFileReader.h"
 #import "RollbarDTO+Protected.h"
 #import "RollbarSdkLog.h"
-#import "RollbarTriStateFlag.h"
-#import "NSJSONSerialization+Rollbar.h"
 
 #import "RollbarDTOAbstraction.h"
 

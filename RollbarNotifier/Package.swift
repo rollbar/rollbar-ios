@@ -14,13 +14,24 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
+        .package(path: "../RollbarCommon"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "RollbarNotifier",
-            dependencies: []),
+            dependencies: ["RollbarCommon",],
+            publicHeadersPath: "include",
+            cSettings: [
+                .headerSearchPath("Sources/RollbarNotifier/**"),
+//                .headerSearchPath("Sources/RollbarNotifier"),
+//                .headerSearchPath("Sources/RollbarNotifier/include"),
+//                .headerSearchPath("Sources/RollbarNotifier/DTOs"),
+                
+//                .define("DEFINES_MODULE"),
+            ]
+        ),
         .testTarget(
             name: "RollbarNotifierTests",
             dependencies: ["RollbarNotifier"]),
