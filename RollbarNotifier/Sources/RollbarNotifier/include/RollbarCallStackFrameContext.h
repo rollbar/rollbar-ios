@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Initializers
 
--(instancetype)initWitPreCodeLines:(nullable NSArray<NSString *> *)pre
+-(instancetype)initWithPreCodeLines:(nullable NSArray<NSString *> *)pre
                      postCodeLines:(nullable NSArray<NSString *> *)post;
 
 @end

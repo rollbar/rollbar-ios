@@ -712,7 +712,8 @@ static BOOL isNetworkReachable = YES;
     else {
         SdkLog(
             @"Omitting payload until nextSendTime is reached: %@",
-            [[NSString alloc] initWithData:jsonPayload encoding:NSUTF8StringEncoding]
+            [[NSString alloc] initWithData:jsonPayload
+                                  encoding:NSUTF8StringEncoding]
         );
     }
     

@@ -34,7 +34,7 @@ static NSString * const DFK_POST_CODE_LINES = @"post";
 
 #pragma mark - Initializers
 
--(instancetype)initWitPreCodeLines:(nullable NSArray<NSString *> *)pre
+-(instancetype)initWithPreCodeLines:(nullable NSArray<NSString *> *)pre
                      postCodeLines:(nullable NSArray<NSString *> *)post {
     
     self = [super initWithDictionary:@{
