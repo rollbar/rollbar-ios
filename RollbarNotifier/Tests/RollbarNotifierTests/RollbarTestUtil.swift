@@ -12,15 +12,36 @@ import RollbarNotifier
 class RollbarTestUtil {
     
     private static let queuedItemsFileName = "rollbar.items";
-    
-    private static func getFilePath() -> String {
+    private static let telemetryFileName = "rollbar.telemetry";
+
+    private static func getQueuedItemsFilePath() -> String {
         let cachesDirectory = RollbarCachesDirectory.directory() ?? "";
         let filePath = URL(fileURLWithPath: cachesDirectory).appendingPathComponent(queuedItemsFileName);
         return filePath.path;
     }
-    
+
+    private static func getTelemetryFilePath() -> String {
+        let cachesDirectory = RollbarCachesDirectory.directory() ?? "";
+        let filePath = URL(fileURLWithPath: cachesDirectory).appendingPathComponent(telemetryFileName);
+        return filePath.path;
+    }
+
+    public static func clearTelemetryFile() {
+        let filePath = RollbarTestUtil.getTelemetryFilePath();
+        let fileManager = FileManager.default;
+        let fileExists = fileManager.fileExists(atPath: filePath);
+        if fileExists {
+            do {
+                try fileManager.removeItem(atPath: filePath);
+            } catch {
+                print("Unexpected error: \(error).")
+            }
+            fileManager.createFile(atPath: filePath, contents: nil, attributes: nil);
+        }
+    }
+
     public static func clearLogFile() {
-        let filePath = RollbarTestUtil.getFilePath();
+        let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileManager = FileManager.default;
         let fileExists = fileManager.fileExists(atPath: filePath);
         if fileExists {
@@ -35,7 +56,7 @@ class RollbarTestUtil {
 
     public static func readFirstItemStringsFromLogFile() -> String? {
         
-        let filePath = RollbarTestUtil.getFilePath();
+        let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileReader = RollbarFileReader(filePath: filePath, andOffset: 0);
         let item = fileReader?.readLine();
         return item;
@@ -43,7 +64,7 @@ class RollbarTestUtil {
 
     public static func readItemStringsFromLogFile() -> [String] {
         
-        let filePath = RollbarTestUtil.getFilePath();
+        let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileReader = RollbarFileReader(filePath: filePath, andOffset: 0);
         var items = [String]();
         fileReader!.enumerateLines({ (line, nextOffset, stop) in
@@ -56,7 +77,7 @@ class RollbarTestUtil {
     }
 
     public static func readItemsFromLogFile() -> [NSMutableDictionary] {
-        let filePath = RollbarTestUtil.getFilePath();
+        let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileReader = RollbarFileReader(filePath: filePath, andOffset: 0);
         var items = [NSMutableDictionary] ();
         fileReader!.enumerateLines({ (line, nextOffset, stop) in
@@ -81,6 +102,11 @@ class RollbarTestUtil {
         return items;
     }
     
+    public static func waitForPesistenceToComplete() {
+        usleep(500); //[msec]
+    }
+    
+
 //    public static func flushFileThread(logger: RollbarLogger) {
 //        logger.perform(
 //            #selector(logger._test_do_nothing),
