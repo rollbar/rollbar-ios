@@ -4,7 +4,7 @@
 
 @class RollbarConfiguration;
 
-@interface RollbarNotifier : NSObject 
+@interface RollbarLogger : NSObject 
 
 /// Notifier's config object
 @property (atomic, strong) RollbarConfiguration *configuration;

@@ -12,6 +12,7 @@
 @class RollbarTrace;
 @class RollbarMessage;
 @class RollbarCrashReport;
+@class RollbarTelemetryEvent;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Optional properties
 
 // Optional: "telemetry". Only applicable if you are sending telemetry data.
-@property (nonatomic, strong, nullable) RollbarTelemetry *telemetry;
+@property (readonly, nonatomic, strong, nullable) NSArray<RollbarTelemetryEvent *> *telemetry;
 
 #pragma mark - Initializers
 

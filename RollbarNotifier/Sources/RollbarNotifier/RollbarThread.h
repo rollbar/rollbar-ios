@@ -1,7 +1,8 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "RollbarNotifier.h"
+
+@class RollbarLogger;
 
 @interface RollbarThread : NSThread
 
@@ -9,7 +10,7 @@
 - (instancetype)init
 NS_UNAVAILABLE;
 
-- (instancetype)initWithNotifier:(RollbarNotifier*)notifier
+- (instancetype)initWithNotifier:(RollbarLogger*)logger
                    reportingRate:(NSUInteger)reportsPerMinute;
 //NS_DESIGNATED_INITIALIZER;
 

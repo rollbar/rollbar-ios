@@ -30,6 +30,8 @@ FOUNDATION_EXPORT const unsigned char RollbarNotifierVersionString[];
 // #import <RollbarNotifier/PublicHeader.h>
 
 #import "Rollbar.h"
+#import "RollbarNotifier.h"
+#import "RollbarConfiguration.h"
 #import "RollbarTelemetry.h"
 
 #endif /* RollbarNotifier_h */

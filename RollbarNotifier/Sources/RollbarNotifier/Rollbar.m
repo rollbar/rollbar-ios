@@ -3,12 +3,12 @@
 #import "Rollbar.h"
 //#import "SdkLog.h"
 //#import "RollbarKSCrashInstallation.h"
-#import "RollbarNotifier.h"
+#import "RollbarLogger.h"
 #import "RollbarConfiguration.h"
 
 @implementation Rollbar
 
-static RollbarNotifier *notifier = nil;
+static RollbarLogger *logger = nil;
 
 //+ (void)enableCrashReporter {
 //    
@@ -18,7 +18,7 @@ static RollbarNotifier *notifier = nil;
 //        if (error) {
 //            SdkLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
 //        } else if (completed) {
-//            [notifier processSavedItems];
+//            [loger processSavedItems];
 //        }
 //    }];
 //}
@@ -42,33 +42,33 @@ static RollbarNotifier *notifier = nil;
         enableCrashReporter:(BOOL)enable {
 
     [RollbarTelemetry sharedInstance]; // Load saved data, if any
-    if (notifier) {
+    if (logger) {
         RollbarSdkLog(@"Rollbar has already been initialized.");
     } else {
-        notifier = [[RollbarNotifier alloc] initWithAccessToken:accessToken
+        logger = [[RollbarLogger alloc] initWithAccessToken:accessToken
                                                   configuration:configuration
                                                          isRoot:YES];
 //        if (enable) {
 //            [Rollbar enableCrashReporter];
 //        }
-        [notifier.configuration save];
+        [logger.configuration save];
     }
 }
 
 + (RollbarConfiguration*)currentConfiguration {
     
-    return notifier.configuration;
+    return logger.configuration;
 }
 
-+ (RollbarNotifier*)currentNotifier {
++ (RollbarLogger*)currentLogger {
     
-    return notifier;
+    return logger;
 }
 
 + (void)updateConfiguration:(RollbarConfiguration*)configuration
                      isRoot:(BOOL)isRoot {
     
-    [notifier updateConfiguration:configuration
+    [logger updateConfiguration:configuration
                            isRoot:isRoot];
 }
 
@@ -101,7 +101,7 @@ static RollbarNotifier *notifier = nil;
        data:(NSDictionary*)data
     context:(NSString*)context {
 
-    [notifier log:[RollbarLevelUtil RollbarLevelToString:level]
+    [logger log:[RollbarLevelUtil RollbarLevelToString:level]
           message:message
         exception:exception
              data:data
@@ -296,7 +296,7 @@ static RollbarNotifier *notifier = nil;
 
 + (void)sendJsonPayload:(NSData*)payload {
 
-    [notifier sendPayload:payload];
+    [logger sendPayload:payload];
 }
 
 
@@ -304,7 +304,7 @@ static RollbarNotifier *notifier = nil;
 
 + (void)logCrashReport:(NSString*)crashReport {
 
-    [notifier logCrashReport:crashReport];
+    [logger logCrashReport:crashReport];
 }
 
 #pragma mark - Telemetry logging methods
@@ -447,14 +447,14 @@ static RollbarNotifier *notifier = nil;
 + (void)logWithLevel:(NSString*)level
              message:(NSString*)message {
 
-    [notifier log:level message:message exception:nil data:nil context:nil];
+    [logger log:level message:message exception:nil data:nil context:nil];
 }
 
 + (void)logWithLevel:(NSString*)level
              message:(NSString*)message
                 data:(NSDictionary*)data {
 
-    [notifier log:level message:message exception:nil data:data context:nil];
+    [logger log:level message:message exception:nil data:data context:nil];
 }
 
 + (void)logWithLevel:(NSString*)level
@@ -462,103 +462,103 @@ static RollbarNotifier *notifier = nil;
                 data:(NSDictionary*)data
              context:(NSString*)context {
 
-    [notifier log:level message:message exception:nil data:data context:context];
+    [logger log:level message:message exception:nil data:data context:context];
 }
 
 + (void)logWithLevel:(NSString*)level
                 data:(NSDictionary*)data {
 
-    [notifier log:level message:nil exception:nil data:data context:nil];
+    [logger log:level message:nil exception:nil data:data context:nil];
 }
 
 // Debug
 
 + (void)debugWithMessage:(NSString*)message {
 
-    [notifier log:@"debug" message:message exception:nil data:nil context:nil];
+    [logger log:@"debug" message:message exception:nil data:nil context:nil];
 }
 
 + (void)debugWithMessage:(NSString*)message
                     data:(NSDictionary*)data {
 
-    [notifier log:@"debug" message:message exception:nil data:data context:nil];
+    [logger log:@"debug" message:message exception:nil data:data context:nil];
 }
 
 + (void)debugWithData:(NSDictionary*)data {
 
-    [notifier log:@"debug" message:nil exception:nil data:data context:nil];
+    [logger log:@"debug" message:nil exception:nil data:data context:nil];
 }
 
 // Info
 
 + (void)infoWithMessage:(NSString*)message {
 
-    [notifier log:@"info" message:message exception:nil data:nil context:nil];
+    [logger log:@"info" message:message exception:nil data:nil context:nil];
 }
 
 + (void)infoWithMessage:(NSString*)message
                    data:(NSDictionary*)data {
 
-    [notifier log:@"info" message:message exception:nil data:data context:nil];
+    [logger log:@"info" message:message exception:nil data:data context:nil];
 }
 
 + (void)infoWithData:(NSDictionary*)data {
 
-    [notifier log:@"info" message:nil exception:nil data:data context:nil];
+    [logger log:@"info" message:nil exception:nil data:data context:nil];
 }
 
 // Warning
 
 + (void)warningWithMessage:(NSString*)message {
 
-    [notifier log:@"warning" message:message exception:nil data:nil context:nil];
+    [logger log:@"warning" message:message exception:nil data:nil context:nil];
 }
 
 + (void)warningWithMessage:(NSString*)message
                       data:(NSDictionary*)data {
 
-    [notifier log:@"warning" message:message exception:nil data:data context:nil];
+    [logger log:@"warning" message:message exception:nil data:data context:nil];
 }
 
 + (void)warningWithData:(NSDictionary*)data {
 
-    [notifier log:@"warning" message:nil exception:nil data:data context:nil];
+    [logger log:@"warning" message:nil exception:nil data:data context:nil];
 }
 
 // Error
 
 + (void)errorWithMessage:(NSString*)message {
 
-    [notifier log:@"error" message:message exception:nil data:nil context:nil];
+    [logger log:@"error" message:message exception:nil data:nil context:nil];
 }
 
 + (void)errorWithMessage:(NSString*)message
                     data:(NSDictionary*)data {
 
-    [notifier log:@"error" message:message exception:nil data:data context:nil];
+    [logger log:@"error" message:message exception:nil data:data context:nil];
 }
 
 + (void)errorWithData:(NSDictionary*)data {
 
-    [notifier log:@"error" message:nil exception:nil data:data context:nil];
+    [logger log:@"error" message:nil exception:nil data:data context:nil];
 }
 
 // Critical
 
 + (void)criticalWithMessage:(NSString*)message {
 
-    [notifier log:@"critical" message:message exception:nil data:nil context:nil];
+    [logger log:@"critical" message:message exception:nil data:nil context:nil];
 }
 
 + (void)criticalWithMessage:(NSString*)message
                        data:(NSDictionary*)data {
 
-    [notifier log:@"critical" message:message exception:nil data:data context:nil];
+    [logger log:@"critical" message:message exception:nil data:data context:nil];
 }
 
 + (void)criticalWithData:(NSDictionary*)data {
 
-    [notifier log:@"critical" message:nil exception:nil data:data context:nil];
+    [logger log:@"critical" message:nil exception:nil data:data context:nil];
 }
 
 

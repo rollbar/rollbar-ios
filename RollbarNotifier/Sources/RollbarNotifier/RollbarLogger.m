@@ -1,6 +1,6 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
-#import "RollbarNotifier.h"
+#import "RollbarLogger.h"
 #import "RollbarThread.h"
 #import "RollbarFileReader.h"
 #import "RollbarReachability.h"
@@ -45,10 +45,18 @@ static RollbarThread *rollbarThread = nil;
 static RollbarReachability *reachability = nil;
 static BOOL isNetworkReachable = YES;
 
+@interface RollbarLogger ()
+
+- (NSThread *)_rollbarThread;
+
+- (void)_test_doNothing;
+
+@end
+
 #define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
 #define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
 
-@implementation RollbarNotifier {
+@implementation RollbarLogger {
     NSDate *nextSendTime;
     
     @private
@@ -1096,7 +1104,6 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)_test_doNothing {
-    
 }
 
 @end

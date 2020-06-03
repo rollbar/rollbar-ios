@@ -1,22 +1,23 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarThread.h"
+#import "RollbarLogger.h"
 //#import "SdkLog.h"
 
 @implementation RollbarThread {
-    @private RollbarNotifier *_notifier;
+    @private RollbarLogger *_logger;
     @private NSUInteger _maxReportsPerMinute;
     @private NSTimer *_timer;
 }
 
-- (instancetype)initWithNotifier:(RollbarNotifier*)notifier
+- (instancetype)initWithNotifier:(RollbarLogger*)logger
                    reportingRate:(NSUInteger)reportsPerMinute {
     
     if ((self = [super initWithTarget:self
                              selector:@selector(run)
                                object:nil])) {
         
-        _notifier = notifier;
+        _logger = logger;
         
         if(reportsPerMinute > 0) {
             _maxReportsPerMinute = reportsPerMinute;
@@ -41,7 +42,7 @@
     }
     
     @autoreleasepool {
-        [_notifier processSavedItems];
+        [_logger processSavedItems];
     }
 }
 

@@ -6,7 +6,7 @@
 #import "RollbarTelemetryType.h"
 
 @class RollbarConfiguration;
-@class RollbarNotifier;
+@class RollbarLogger;
 
 @interface Rollbar : NSObject
 
@@ -23,7 +23,7 @@
 
 #pragma mark - Shared/global notifier
 
-+ (RollbarNotifier*)currentNotifier;
++ (RollbarLogger*)currentLogger;
 
 #pragma mark - Configuration
 
