@@ -6,6 +6,7 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(RollbarNotifierDTOsTests.allTests),
         testCase(RollbarNotifierTelemetryTests.allTests),
         testCase(RollbarNotifierConfigurationTests.allTests),
+        testCase(RollbarNotifierTruncationTests.allTests),
     ]
 }
 #endif
