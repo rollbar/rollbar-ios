@@ -35,5 +35,17 @@ let package = Package(
         .testTarget(
             name: "RollbarDeploysTests",
             dependencies: ["RollbarDeploys"]),
+        .testTarget(
+            name: "RollbarDeploysTests-ObjC",
+            dependencies: ["RollbarDeploys"],
+            cSettings: [
+                .headerSearchPath("Tests/RollbarDeploysTests-ObjC/**"),
+//                .headerSearchPath("Sources/RollbarDeploys"),
+//                .headerSearchPath("Sources/RollbarDeploys/include"),
+//                .headerSearchPath("Sources/RollbarDeploys/DTOs"),
+                
+//                .define("DEFINES_MODULE"),
+            ]
+        ),
     ]
 )

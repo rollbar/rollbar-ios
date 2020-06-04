@@ -134,10 +134,10 @@ deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[params valueForKey:@"access_token"] forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     
-    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:params
-                                                          options:NSJSONWritingPrettyPrinted
-                                                            error:nil
-                                                             safe:true
+    NSData *jsonPayload = [NSJSONSerialization rollbar_dataWithJSONObject:params
+                                                                  options:NSJSONWritingPrettyPrinted
+                                                                    error:nil
+                                                                     safe:true
                            ];
     [request setHTTPBody:jsonPayload];
     
