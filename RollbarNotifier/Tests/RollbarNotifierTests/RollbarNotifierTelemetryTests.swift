@@ -1,6 +1,6 @@
 import XCTest
 import Foundation
-import os.log
+//import os.log
 @testable import RollbarNotifier
 
 final class RollbarNotifierTelemetryTests: XCTestCase {
