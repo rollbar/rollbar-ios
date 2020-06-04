@@ -72,7 +72,7 @@ static NSString * const DFK_CRASH_REPORT = @"crash_report";
         }
         return result;
     }
-    return [NSMutableArray array];
+    return nil; //[NSMutableArray array];
 }
 
 - (void)setTraceChain:(nullable NSArray<RollbarTrace *> *)traceChain {

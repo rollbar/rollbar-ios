@@ -44,5 +44,17 @@ let package = Package(
 //                .define("DEFINES_MODULE"),
             ]
         ),
+        .testTarget(
+            name: "RollbarNotifierTests-ObjC",
+            dependencies: ["RollbarNotifier"],
+            cSettings: [
+                .headerSearchPath("Tests/RollbarNotifierTests-ObjC/**"),
+//                .headerSearchPath("Sources/RollbarNotifier"),
+//                .headerSearchPath("Sources/RollbarNotifier/include"),
+//                .headerSearchPath("Sources/RollbarNotifier/DTOs"),
+                
+//                .define("DEFINES_MODULE"),
+            ]
+        ),
     ]
 )
