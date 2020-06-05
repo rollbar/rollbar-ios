@@ -186,14 +186,14 @@ static RollbarLogger *logger = nil;
 
 + (void)warning:(NSString*)message {
 
-    [Rollbar info:message
+    [Rollbar warning:message
         exception:nil];
 }
 
 + (void)warning:(NSString*)message
       exception:(NSException*)exception {
 
-    [Rollbar info:message
+    [Rollbar warning:message
         exception:exception
              data:nil];
 }
@@ -202,7 +202,7 @@ static RollbarLogger *logger = nil;
       exception:(NSException*)exception
            data:(NSDictionary*)data {
 
-    [Rollbar info:message
+    [Rollbar warning:message
         exception:exception
              data:data
           context:nil];

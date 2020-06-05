@@ -12,6 +12,7 @@ import RollbarNotifier
 class RollbarTestUtil {
     
     private static let queuedItemsFileName = "rollbar.items";
+    private static let queuedItemsStateFileName = "rollbar.state";
     private static let telemetryFileName = "rollbar.telemetry";
 
     private static func getQueuedItemsFilePath() -> String {
@@ -20,6 +21,11 @@ class RollbarTestUtil {
         return filePath.path;
     }
 
+    private static func getQueuedItemsStateFilePath() -> String {
+        let cachesDirectory = RollbarCachesDirectory.directory() ?? "";
+        let filePath = URL(fileURLWithPath: cachesDirectory).appendingPathComponent(queuedItemsStateFileName);
+        return filePath.path;
+    }
     private static func getTelemetryFilePath() -> String {
         let cachesDirectory = RollbarCachesDirectory.directory() ?? "";
         let filePath = URL(fileURLWithPath: cachesDirectory).appendingPathComponent(telemetryFileName);
@@ -41,17 +47,21 @@ class RollbarTestUtil {
     }
 
     public static func clearLogFile() {
-        let filePath = RollbarTestUtil.getQueuedItemsFilePath();
+        let itemsStateFilePath = RollbarTestUtil.getQueuedItemsStateFilePath();
+        let itemsFilePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileManager = FileManager.default;
-        let fileExists = fileManager.fileExists(atPath: filePath);
-        if fileExists {
-            do {
-                try fileManager.removeItem(atPath: filePath);
-            } catch {
-                print("Unexpected error: \(error).")
+        do {
+//            if fileManager.fileExists(atPath: itemsStateFilePath) {
+//                try fileManager.removeItem(atPath: itemsStateFilePath);
+//            }
+            if fileManager.fileExists(atPath: itemsFilePath) {
+                try fileManager.removeItem(atPath: itemsFilePath);
             }
-            fileManager.createFile(atPath: filePath, contents: nil, attributes: nil);
+        } catch {
+            print("Unexpected error: \(error).")
         }
+        //fileManager.createFile(atPath: itemsStateFilePath, contents: nil, attributes: nil);
+        fileManager.createFile(atPath: itemsFilePath, contents: nil, attributes: nil);
     }
 
     public static func readFirstItemStringsFromLogFile() -> String? {
