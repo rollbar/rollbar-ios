@@ -1,10 +1,5 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
-//#import <Foundation/Foundation.h>
-//#import "RollbarDeployment.h"
-//#import "RollbarDeploymentDetails.h"
-//#import "RollbarDeployApiCallResult.h"
-
 @import Foundation;
 
 @class RollbarDeployment;
@@ -24,6 +19,8 @@
 - (void)onRegisterDeploymentCompleted:(nonnull RollbarDeploymentRegistrationResult *)result;
 @end
 
+
+
 /// Deployment details observer protocol
 @protocol RollbarDeploymentDetailsObserver
 @required
@@ -31,6 +28,8 @@
 /// @param result result obect
 - (void)onGetDeploymentDetailsCompleted:(nonnull RollbarDeploymentDetailsResult *)result;
 @end
+
+
 
 /// Deployment details page observer protocol
 @protocol RollbarDeploymentDetailsPageObserver

@@ -1,11 +1,11 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
-//#import <Foundation/Foundation.h>
-#import "RollbarDeploymentDetails.h"
 #import "RollbarDeployApiCallOutcome.h"
 
 @import Foundation;
 @import RollbarCommon;
+
+@class RollbarDeploymentDetails;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -54,6 +54,8 @@ NS_DESIGNATED_INITIALIZER;
 
 @end
 
+
+
 #pragma mark - RollbarDeploymentRegistrationResult
 
 /// Models result of a deployment registration request
@@ -64,6 +66,8 @@ NS_DESIGNATED_INITIALIZER;
 
 @end
 
+
+
 #pragma mark - RollbarDeploymentDetailsResult
 
 /// Models result of a deployment details request
@@ -73,6 +77,8 @@ NS_DESIGNATED_INITIALIZER;
 @property (readonly, retain, nullable) RollbarDeploymentDetails *deployment;
 
 @end
+
+
 
 #pragma mark - RollbarDeploymentDetailsPageResult
 
