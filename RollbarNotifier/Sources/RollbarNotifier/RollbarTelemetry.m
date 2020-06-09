@@ -4,6 +4,16 @@
 #import "NSJSONSerialization+Rollbar.h"
 #import "RollbarCachesDirectory.h"
 
+#import "RollbarTelemetryEvent.h"
+#import "RollbarTelemetryBody.h"
+#import "RollbarTelemetryLogBody.h"
+#import "RollbarTelemetryViewBody.h"
+#import "RollbarTelemetryErrorBody.h"
+#import "RollbarTelemetryNavigationBody.h"
+#import "RollbarTelemetryNetworkBody.h"
+#import "RollbarTelemetryConnectivityBody.h"
+#import "RollbarTelemetryManualBody.h"
+
 static NSUInteger const DEFAULT_DATA_LIMIT = 10;
 static NSString * const TELEMETRY_FILE_NAME = @"rollbar.telemetry";
 

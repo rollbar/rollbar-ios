@@ -6,8 +6,6 @@
 //  Copyright © 2020 Rollbar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 #import "RollbarTelemetryLogBody.h"
 
 NS_ASSUME_NONNULL_BEGIN

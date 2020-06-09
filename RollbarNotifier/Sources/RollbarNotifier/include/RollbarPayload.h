@@ -6,7 +6,6 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-@import Foundation;
 @import RollbarCommon;
 
 @class RollbarData;

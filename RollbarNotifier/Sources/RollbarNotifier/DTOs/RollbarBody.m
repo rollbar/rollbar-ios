@@ -8,8 +8,6 @@
 
 #import "RollbarBody.h"
 
-#import <Foundation/Foundation.h>
-//#import "DataTransferObject+Protected.h"
 #import "RollbarMessage.h"
 #import "RollbarCrashReport.h"
 #import "RollbarTrace.h"

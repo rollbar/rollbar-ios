@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rollbar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 
 @import RollbarCommon;
+
 #import "RollbarLevel.h"
 #import "RollbarTelemetryType.h"
 #import "RollbarSource.h"

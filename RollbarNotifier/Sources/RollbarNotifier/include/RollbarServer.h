@@ -6,7 +6,6 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "RollbarServerConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN

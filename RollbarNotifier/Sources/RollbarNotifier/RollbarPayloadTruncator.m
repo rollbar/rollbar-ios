@@ -1,8 +1,6 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
 #import "RollbarPayloadTruncator.h"
-//#import "NSJSONSerialization+Rollbar.h"
-#import <Foundation/Foundation.h>
 
 @import RollbarCommon;
 

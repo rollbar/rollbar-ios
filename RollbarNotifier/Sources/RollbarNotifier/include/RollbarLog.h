@@ -6,7 +6,7 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /// Rollbar equivalent of NSLog(...) that also allows capture of the log messages as part of RollbarTelemetry data.
 /// NOTE:    When this SDK is used from Objective-C codebase NSLog(...) messages get captured by the SDK.

@@ -10,7 +10,6 @@
 //#import "RollbarDTOAbstraction.h"
 
 // App domain enums:
-//#import "RollbarTriStateFlag.h"
 #import "RollbarCaptureIpType.h"
 #import "RollbarHttpMethod.h"
 #import "RollbarAppLanguage.h"

@@ -1,18 +1,20 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "RollbarLevel.h"
 #import "RollbarSource.h"
 #import "RollbarTelemetryType.h"
-#import "RollbarTelemetryEvent.h"
-#import "RollbarTelemetryBody.h"
-#import "RollbarTelemetryLogBody.h"
-#import "RollbarTelemetryViewBody.h"
-#import "RollbarTelemetryErrorBody.h"
-#import "RollbarTelemetryNavigationBody.h"
-#import "RollbarTelemetryNetworkBody.h"
-#import "RollbarTelemetryConnectivityBody.h"
-#import "RollbarTelemetryManualBody.h"
+
+@class RollbarTelemetryEvent;
+@class RollbarTelemetryBody;
+@class RollbarTelemetryLogBody;
+@class RollbarTelemetryViewBody;
+@class RollbarTelemetryErrorBody;
+@class RollbarTelemetryNavigationBody;
+@class RollbarTelemetryNetworkBody;
+@class RollbarTelemetryConnectivityBody;
+@class RollbarTelemetryManualBody;
 
 #define NSLog(args...) [RollbarTelemetry NSLogReplacement:args];
 
