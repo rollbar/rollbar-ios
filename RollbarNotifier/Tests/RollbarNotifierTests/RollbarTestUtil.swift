@@ -51,9 +51,9 @@ class RollbarTestUtil {
         let itemsFilePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileManager = FileManager.default;
         do {
-//            if fileManager.fileExists(atPath: itemsStateFilePath) {
-//                try fileManager.removeItem(atPath: itemsStateFilePath);
-//            }
+            if fileManager.fileExists(atPath: itemsStateFilePath) {
+                try fileManager.removeItem(atPath: itemsStateFilePath);
+            }
             if fileManager.fileExists(atPath: itemsFilePath) {
                 try fileManager.removeItem(atPath: itemsFilePath);
             }
@@ -61,7 +61,7 @@ class RollbarTestUtil {
             print("Unexpected error: \(error).")
         }
         //fileManager.createFile(atPath: itemsStateFilePath, contents: nil, attributes: nil);
-        fileManager.createFile(atPath: itemsFilePath, contents: nil, attributes: nil);
+        //fileManager.createFile(atPath: itemsFilePath, contents: nil, attributes: nil);
     }
 
     public static func readFirstItemStringsFromLogFile() -> String? {
@@ -112,10 +112,10 @@ class RollbarTestUtil {
         return items;
     }
     
-    public static func waitForPesistenceToComplete() {
-        usleep(500); //[msec]
+    public static func waitForPesistenceToComplete(waitTimeInSeconds: TimeInterval = 0.5) {
+        Thread.sleep(forTimeInterval: waitTimeInSeconds);
     }
-    
+
 
 //    public static func flushFileThread(logger: RollbarLogger) {
 //        logger.perform(
