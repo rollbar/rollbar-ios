@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5547273924903EB7005018BD /* RollbarNotifier in Frameworks */ = {isa = PBXBuildFile; productRef = 5547273824903EB7005018BD /* RollbarNotifier */; };
 		55759A6E2477560D00ED3F04 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55759A6D2477560D00ED3F04 /* AppDelegate.m */; };
 		55759A712477560D00ED3F04 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55759A702477560D00ED3F04 /* ViewController.m */; };
 		55759A732477561100ED3F04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55759A722477561100ED3F04 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FD0711247860F1000BBC22 /* RollbarDeploys in Frameworks */,
+				5547273924903EB7005018BD /* RollbarNotifier in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +105,7 @@
 			name = macosAppObjC;
 			packageProductDependencies = (
 				55FD0710247860F1000BBC22 /* RollbarDeploys */,
+				5547273824903EB7005018BD /* RollbarNotifier */,
 			);
 			productName = macosAppObjC;
 			productReference = 55759A692477560D00ED3F04 /* macosAppObjC.app */;
@@ -349,6 +352,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5547273824903EB7005018BD /* RollbarNotifier */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RollbarNotifier;
+		};
 		55FD0710247860F1000BBC22 /* RollbarDeploys */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RollbarDeploys;
