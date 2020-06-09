@@ -163,6 +163,7 @@
         return [RollbarTriStateFlagUtil TriStateFlagFromString:result];
     }
 }
+
 - (void)setTriStateFlag:(RollbarTriStateFlag)data forKey:(NSString *)key{
     if (data == RollbarTriStateFlag_None) {
         [self->_data removeObjectForKey:key];

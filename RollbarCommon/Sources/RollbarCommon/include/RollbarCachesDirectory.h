@@ -6,10 +6,15 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface RollbarCachesDirectory : NSObject
 
 + (NSString *)directory;
+
+#pragma mark - Initializers
+
+- (instancetype) init
+NS_UNAVAILABLE;
 
 @end

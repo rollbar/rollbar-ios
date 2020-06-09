@@ -6,11 +6,13 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "../include/RollbarJSONSupport.h"
+#import "RollbarJSONSupport.h"
+
+@import Foundation;
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// The foundation for defining Rollbar Data Transfer Objects (DTOs)
 @interface RollbarDTO : NSObject <RollbarJSONSupport> {
     @private
     id _data;
