@@ -2,7 +2,7 @@
 
 #import "RollbarThread.h"
 #import "RollbarLogger.h"
-//#import "SdkLog.h"
+#import "RollbarSdkLog.h"
 
 @implementation RollbarThread {
     @private RollbarLogger *_logger;
@@ -42,6 +42,7 @@
     }
     
     @autoreleasepool {
+        RollbarSdkLog(@"Checking items...");
         [_logger processSavedItems];
     }
 }

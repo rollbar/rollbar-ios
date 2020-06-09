@@ -11,6 +11,8 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         
         RollbarTestUtil.clearLogFile();
         RollbarTestUtil.clearTelemetryFile();
+        RollbarTestUtil.waitForPesistenceToComplete();
+        
         
         //if Rollbar.currentConfiguration() != nil {
             Rollbar.initWithAccessToken("2ffc7997ed864dda94f63e7b7daae0f3");
@@ -23,6 +25,9 @@ final class RollbarNotifierLoggerTests: XCTestCase {
     }
     
     override func tearDown() {
+        
+        RollbarTestUtil.waitForPesistenceToComplete(waitTimeInSeconds: 2.0);
+
         Rollbar.update(RollbarConfiguration(), isRoot: true);
         super.tearDown();
     }
@@ -33,8 +38,8 @@ final class RollbarNotifierLoggerTests: XCTestCase {
 
     func testRollbarNotifiersIndependentConfiguration() {
 
-        RollbarTestUtil.clearLogFile();
-        RollbarTestUtil.clearTelemetryFile();
+        //RollbarTestUtil.clearLogFile();
+        //RollbarTestUtil.clearTelemetryFile();
 
         Rollbar.currentConfiguration().transmit = false;
         Rollbar.currentConfiguration().logPayload = true;
@@ -76,8 +81,8 @@ final class RollbarNotifierLoggerTests: XCTestCase {
 
     func testRollbarTransmit() {
 
-        RollbarTestUtil.clearLogFile();
-        RollbarTestUtil.clearTelemetryFile();
+        //RollbarTestUtil.clearLogFile();
+        //RollbarTestUtil.clearTelemetryFile();
 
         Rollbar.currentConfiguration().accessToken = "2ffc7997ed864dda94f63e7b7daae0f3";
         Rollbar.currentConfiguration().environment = "unit-tests";
@@ -86,23 +91,19 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         Rollbar.currentConfiguration().transmit = true;
         Rollbar.critical("Transmission test YES");
         RollbarTestUtil.waitForPesistenceToComplete();
-        RollbarTestUtil.waitForPesistenceToComplete();
 
         Rollbar.currentConfiguration().transmit = false;
         Rollbar.critical("Transmission test NO");
-        RollbarTestUtil.waitForPesistenceToComplete();
         RollbarTestUtil.waitForPesistenceToComplete();
 
         Rollbar.currentConfiguration().transmit = true;
         //Rollbar.currentConfiguration.enabled = NO;
         Rollbar.critical("Transmission test YES2");
         RollbarTestUtil.waitForPesistenceToComplete();
-        RollbarTestUtil.waitForPesistenceToComplete();
 
         var count = 50;
         while (count > 0) {
             Rollbar.critical("Rate Limit Test \(count)");
-            RollbarTestUtil.waitForPesistenceToComplete();
             RollbarTestUtil.waitForPesistenceToComplete();
             count -= 1;
         }
@@ -110,8 +111,8 @@ final class RollbarNotifierLoggerTests: XCTestCase {
     
     func testNotification() {
 
-        RollbarTestUtil.clearLogFile();
-        RollbarTestUtil.clearTelemetryFile();
+//        RollbarTestUtil.clearLogFile();
+//        RollbarTestUtil.clearTelemetryFile();
 
         let notificationText = [
             "error": ["testing-error-with-message", NSException(name: NSExceptionName("testing-error"), reason: "testing-error-2", userInfo: nil)],

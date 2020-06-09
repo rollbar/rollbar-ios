@@ -135,6 +135,7 @@ static BOOL isNetworkReachable = YES;
             if (!queueState) {
                 queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
                                 @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
+                [self saveQueueState];
             }
             
             // Setup the worker thread
@@ -230,6 +231,7 @@ static BOOL isNetworkReachable = YES;
 - (void)processSavedItems {
     
     if (!isNetworkReachable) {
+        RollbarSdkLog(@"Processing saved items: no network!");
         // Don't attempt sending if the network is known to be not reachable
         return;
     }
@@ -243,6 +245,7 @@ static BOOL isNetworkReachable = YES;
     [fileHandle closeFile];
 
     if (!fileLength) {
+        RollbarSdkLog(@"Processing saved items: no queued items in the file!");
         return;
     }
 
@@ -256,6 +259,7 @@ static BOOL isNetworkReachable = YES;
         queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
         queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
         [self saveQueueState];
+        RollbarSdkLog(@"Processing saved items: emptied the queued items file.");
 
         return;
     }

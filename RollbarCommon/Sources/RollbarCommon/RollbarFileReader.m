@@ -3,6 +3,7 @@
 #import "RollbarFileReader.h"
 
 @implementation RollbarFileReader
+
 @synthesize lineDelimiter, chunkSize;
 
 + (NSRange)findData:(NSData *)dataToFind inData:(NSData*)data {
@@ -30,7 +31,7 @@
     return foundRange;
 }
 
-- (id) initWithFilePath:(NSString *)aPath andOffset:(NSUInteger)offset {
+- (instancetype) initWithFilePath:(NSString *)aPath andOffset:(NSUInteger)offset {
     if (self = [super init]) {
         fileHandle = [NSFileHandle fileHandleForReadingAtPath:aPath];
         if (fileHandle == nil) {
