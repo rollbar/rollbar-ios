@@ -10,8 +10,9 @@ Pod::Spec.new do |sdk|
   
     # Rollbar SDK:
     # ============
-    sdk.version      = "2.0.0-alpha"
+    sdk.version      = "2.0.0-alpha1"
     sdk.name         = "RollbarSDK"
+    sdk.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     sdk.description  = <<-DESC
                       Find, fix, and resolve errors with Rollbar.
                       Easily send error data using Rollbar API.
@@ -32,28 +33,31 @@ Pod::Spec.new do |sdk|
                               :tag => "v#{sdk.version}",
                               :submodules => true }
     sdk.resource = "rollbar-logo.png"
+    sdk.ios.deployment_target = '8.0'
+    sdk.osx.deployment_target = '10.10'
+    sdk.tvos.deployment_target = '11.0'
+    sdk.watchos.deployment_target = '4.0'
 
   
     # RollbarCommon module:
     # =====================
     sdk.subspec 'RollbarCommon' do |common|
       common.name         = "RollbarCommon"
-      common.summary      = "Objective-C library for common components of Rollbar SDK. It works on Apple *OS."
 
       # Any platform, if ommited:
       # common.platform     = :ios
       # common.platform     = :ios, "5.0"
 
       #  When using multiple platforms:
-      common.ios.deployment_target = "8.0"
-      common.osx.deployment_target = "10.10"
-      common.tvos.deployment_target = "11.0"
-      common.watchos.deployment_target = "4.0"
+      # common.ios.deployment_target = "8.0"
+      # common.osx.deployment_target = "10.10"
+      # common.tvos.deployment_target = "11.0"
+      # common.watchos.deployment_target = "4.0"
 
       common.source_files  = "Sources/RollbarCommon/**/*.{h,m}"
       # common.exclude_files = "Classes/Exclude"
       common.public_header_files = "Sources/RollbarCommon/include/*.h"
-      common.module_map = "Sources/RollbarCommon/include/module.modulemap"
+      # common.module_map = "Sources/RollbarCommon/include/module.modulemap"
       # common.resource = "../rollbar-logo.png"
       # common.resources = "Resources/*.png"
       # common.preserve_paths = "FilesToSave", "MoreFilesToSave"
@@ -74,27 +78,26 @@ Pod::Spec.new do |sdk|
     # =====================
     sdk.subspec 'RollbarDeploys' do |deploys|
         deploys.name         = "RollbarDeploys"
-        deploys.summary      = "Objective-C library for managing deploys with Rollbar. It works on Apple *OS."
 
         # Any platform, if ommited:
         # deploys.platform     = :ios
         # deploys.platform     = :ios, "5.0"
 
         #  When using multiple platforms:
-        deploys.ios.deployment_target = "8.0"
-        deploys.osx.deployment_target = "10.10"
-        deploys.tvos.deployment_target = "11.0"
-        deploys.watchos.deployment_target = "4.0"
+        # deploys.ios.deployment_target = "8.0"
+        # deploys.osx.deployment_target = "10.10"
+        # deploys.tvos.deployment_target = "11.0"
+        # deploys.watchos.deployment_target = "4.0"
 
         deploys.source_files  = "Sources/RollbarDeploys/**/*.{h,m}"
         # deploys.exclude_files = "Classes/Exclude"
         deploys.public_header_files = "Sources/RollbarDeploys/include/*.h"
-        deploys.module_map = "Sources/RollbarDeploys/include/module.modulemap"
+        # deploys.module_map = "Sources/RollbarDeploys/include/module.modulemap"
         # deploys.resource = "../rollbar-logo.png"
         # deploys.resources = "Resources/*.png"
         # deploys.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-        deploys.dependency = "RollbarSDK/RollbarCommon"
+        deploys.dependency 'RollbarSDK/RollbarCommon'
         deploys.framework = "Foundation"
         # deploys.frameworks = "SomeFramework", "AnotherFramework"
         # deploys.library   = "iconv"
@@ -111,27 +114,26 @@ Pod::Spec.new do |sdk|
     # =====================
     sdk.subspec 'RollbarNotifier' do |notifier|
         notifier.name         = "RollbarNotifier"
-        notifier.summary      = "Objective-C library for reporting errors and log messages to Rollbar. It works on Apple *OS."
 
         # Any platform, if ommited:
         # notifier.platform     = :ios
         # notifier.platform     = :ios, "5.0"
 
         #  When using multiple platforms:
-        notifier.ios.deployment_target = "8.0"
-        notifier.osx.deployment_target = "10.10"
-        notifier.tvos.deployment_target = "11.0"
-        notifier.watchos.deployment_target = "4.0"
+        # notifier.ios.deployment_target = "8.0"
+        # notifier.osx.deployment_target = "10.10"
+        # notifier.tvos.deployment_target = "11.0"
+        # notifier.watchos.deployment_target = "4.0"
 
         notifier.source_files  = "Sources/RollbarNotifier/**/*.{h,m}"
         # notifier.exclude_files = "Classes/Exclude"
         notifier.public_header_files = "Sources/RollbarNotifier/include/*.h"
-        notifier.module_map = "Sources/RollbarNotifier/include/module.modulemap"
+        # notifier.module_map = "Sources/RollbarNotifier/include/module.modulemap"
         # notifier.resource = "../rollbar-logo.png"
         # notifier.resources = "Resources/*.png"
         # notifier.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-        notifier.dependency = "RollbarSDK/RollbarCommon"
+        notifier.dependency 'RollbarSDK/RollbarCommon'
         notifier.framework = "Foundation"
         # notifier.frameworks = "SomeFramework", "AnotherFramework"
         # notifier.library   = "iconv"
