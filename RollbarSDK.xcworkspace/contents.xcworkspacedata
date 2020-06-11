@@ -3,6 +3,34 @@
    version = "1.0">
    <Group
       location = "container:"
+      name = "RollbarSDK">
+      <FileRef
+         location = "group:CHANGELOG.md">
+      </FileRef>
+      <FileRef
+         location = "group:rollbar-logo.png">
+      </FileRef>
+      <FileRef
+         location = "group:LICENSE">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:Package.swift">
+      </FileRef>
+      <FileRef
+         location = "group:RollbarSDK.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:Rollbar.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:upload_dsym.py">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
       name = "Demos">
       <Group
          location = "container:"
