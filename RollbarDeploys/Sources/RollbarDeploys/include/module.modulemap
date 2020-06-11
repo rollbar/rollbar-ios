@@ -1,0 +1,8 @@
+module RollbarDeploys {
+	umbrella "."
+	
+	export *
+	module * { export * }
+
+    //requires objc
+}

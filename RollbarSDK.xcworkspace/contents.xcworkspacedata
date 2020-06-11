@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "RollbarSDK">
+      <FileRef
+         location = "group:CHANGELOG.md">
+      </FileRef>
+      <FileRef
+         location = "group:rollbar-logo.png">
+      </FileRef>
+      <FileRef
+         location = "group:LICENSE">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:Package.swift">
+      </FileRef>
+      <FileRef
+         location = "group:RollbarSDK.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:Rollbar.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:upload_dsym.py">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Demos">
+      <Group
+         location = "container:"
+         name = "Demos_iOS">
+      </Group>
+      <Group
+         location = "container:"
+         name = "macOS">
+         <FileRef
+            location = "group:Demos/macosAppObjC/macosAppObjC.xcodeproj">
+         </FileRef>
+      </Group>
+   </Group>
+   <FileRef
+      location = "group:RollbarNotifier">
+   </FileRef>
+   <FileRef
+      location = "group:RollbarDeploys">
+   </FileRef>
+   <FileRef
+      location = "group:RollbarCommon">
+   </FileRef>
+</Workspace>

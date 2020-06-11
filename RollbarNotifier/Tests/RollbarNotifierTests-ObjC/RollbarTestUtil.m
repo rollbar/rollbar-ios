@@ -57,8 +57,8 @@ NSArray* RollbarReadLogItemFromFile() {
     return items;
 }
 
-void RollbarFlushFileThread(RollbarNotifier *notifier) {
+void RollbarFlushFileThread(RollbarLogger *logger) {
     
-    [notifier performSelector:@selector(_test_doNothing)
-                     onThread:[notifier _rollbarThread] withObject:nil waitUntilDone:YES];
+    [logger performSelector:@selector(_test_doNothing)
+                     onThread:[logger _rollbarThread] withObject:nil waitUntilDone:YES];
 }

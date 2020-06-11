@@ -2,13 +2,13 @@
 
 #import <Foundation/Foundation.h>
 
-@import Rollbar;
+@import RollbarNotifier;
 
 void RollbarClearLogFile(void);
 NSArray* RollbarReadLogItemFromFile(void);
-void RollbarFlushFileThread(RollbarNotifier *notifier);
+void RollbarFlushFileThread(RollbarLogger *logger);
 
-@interface RollbarNotifier (Tests)
+@interface RollbarLogger (Tests)
 
 - (NSThread *)_rollbarThread;
 - (void)_test_doNothing;
