@@ -10,8 +10,8 @@ Pod::Spec.new do |sdk|
   
     # Rollbar SDK:
     # ============
-    sdk.version      = "2.0.0-alpha1"
-    sdk.name         = "RollbarSDK"
+    sdk.version      = '2.0.0-alpha2'
+    sdk.name         = 'RollbarSDK'
     sdk.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     sdk.description  = <<-DESC
                       Find, fix, and resolve errors with Rollbar.
@@ -32,7 +32,7 @@ Pod::Spec.new do |sdk|
     sdk.source             = { :git => "https://github.com/rollbar/rollbar-ios.git",
                               :tag => "v#{sdk.version}",
                               :submodules => true }
-    sdk.resource = "rollbar-logo.png"
+    sdk.resource = 'rollbar-logo.png'
     sdk.ios.deployment_target = '8.0'
     sdk.osx.deployment_target = '10.10'
     sdk.tvos.deployment_target = '11.0'
@@ -54,10 +54,10 @@ Pod::Spec.new do |sdk|
       # common.tvos.deployment_target = "11.0"
       # common.watchos.deployment_target = "4.0"
 
-      common.source_files  = "Sources/RollbarCommon/**/*.{h,m}"
+      common.source_files  = 'RollbarCommon/Sources/RollbarCommon/**/*.{h,m}'
       # common.exclude_files = "Classes/Exclude"
-      common.public_header_files = "Sources/RollbarCommon/include/*.h"
-      # common.module_map = "Sources/RollbarCommon/include/module.modulemap"
+      common.public_header_files = 'RollbarCommon/Sources/RollbarCommon/include/*.h'
+      # common.module_map = "RollbarCommon/Sources/RollbarCommon/include/module.modulemap"
       # common.resource = "../rollbar-logo.png"
       # common.resources = "Resources/*.png"
       # common.preserve_paths = "FilesToSave", "MoreFilesToSave"
@@ -89,10 +89,10 @@ Pod::Spec.new do |sdk|
         # deploys.tvos.deployment_target = "11.0"
         # deploys.watchos.deployment_target = "4.0"
 
-        deploys.source_files  = "Sources/RollbarDeploys/**/*.{h,m}"
+        deploys.source_files  = 'RollbarDeploys/Sources/RollbarDeploys/**/*.{h,m}'
         # deploys.exclude_files = "Classes/Exclude"
-        deploys.public_header_files = "Sources/RollbarDeploys/include/*.h"
-        # deploys.module_map = "Sources/RollbarDeploys/include/module.modulemap"
+        deploys.public_header_files = 'RollbarDeploys/Sources/RollbarDeploys/include/*.h'
+        # deploys.module_map = "RollbarDeploys/Sources/RollbarDeploys/include/module.modulemap"
         # deploys.resource = "../rollbar-logo.png"
         # deploys.resources = "Resources/*.png"
         # deploys.preserve_paths = "FilesToSave", "MoreFilesToSave"
@@ -125,10 +125,10 @@ Pod::Spec.new do |sdk|
         # notifier.tvos.deployment_target = "11.0"
         # notifier.watchos.deployment_target = "4.0"
 
-        notifier.source_files  = "Sources/RollbarNotifier/**/*.{h,m}"
+        notifier.source_files  = 'RollbarNotifier/Sources/RollbarNotifier/**/*.{h,m}'
         # notifier.exclude_files = "Classes/Exclude"
-        notifier.public_header_files = "Sources/RollbarNotifier/include/*.h"
-        # notifier.module_map = "Sources/RollbarNotifier/include/module.modulemap"
+        notifier.public_header_files = 'RollbarNotifier/Sources/RollbarNotifier/include/*.h'
+        # notifier.module_map = "RollbarNotifier/Sources/RollbarNotifier/include/module.modulemap"
         # notifier.resource = "../rollbar-logo.png"
         # notifier.resources = "Resources/*.png"
         # notifier.preserve_paths = "FilesToSave", "MoreFilesToSave"
