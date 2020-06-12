@@ -6,6 +6,9 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
+#ifndef RollbarDTO_h
+#define RollbarDTO_h
+
 #import "RollbarJSONSupport.h"
 
 @import Foundation;
@@ -72,3 +75,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif //RollbarDTO_h

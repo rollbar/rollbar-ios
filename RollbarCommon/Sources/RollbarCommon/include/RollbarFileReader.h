@@ -1,5 +1,8 @@
 // Based off of DDFileReader from http://stackoverflow.com/a/8027618
 
+#ifndef RollbarFileReader_h
+#define RollbarFileReader_h
+
 @import Foundation;
 
 @interface RollbarFileReader : NSObject {
@@ -36,3 +39,5 @@ NS_UNAVAILABLE;
 NS_DESIGNATED_INITIALIZER;
 
 @end
+
+#endif //RollbarFileReader_h

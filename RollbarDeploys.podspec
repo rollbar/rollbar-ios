@@ -48,8 +48,8 @@ Pod::Spec.new do |s|
     # s.exclude_files = "Classes/Exclude"
     # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-    s.framework = 'Foundation'
-    s.dependency 'RollbarCommon', "~> #{s.version}"
+    s.framework = "Foundation"
+    s.dependency "RollbarCommon", "~> #{s.version}"
     # s.frameworks = "SomeFramework", "AnotherFramework"
     # s.library   = "iconv"
     # s.libraries = "iconv", "xml2"

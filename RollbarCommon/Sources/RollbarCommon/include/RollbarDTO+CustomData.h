@@ -6,6 +6,9 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
+#ifndef RollbarDTO_CustomData_h
+#define RollbarDTO_CustomData_h
+
 #import "RollbarDTO.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -55,3 +58,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif //#ifndef RollbarDTO_CustomData_h
