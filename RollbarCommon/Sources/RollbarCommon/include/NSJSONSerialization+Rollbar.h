@@ -1,5 +1,8 @@
 //  Copyright © 2018 Rollbar. All rights reserved.
 
+#ifndef NSJSONSerialization_Rollbar_h
+#define NSJSONSerialization_Rollbar_h
+
 @import Foundation;
 
 /// Rollbar category for NSJSONSerialization
@@ -28,3 +31,5 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 @end
+
+#endif //NSJSONSerialization_Rollbar_h

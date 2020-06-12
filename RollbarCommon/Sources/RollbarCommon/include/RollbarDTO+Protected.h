@@ -6,6 +6,9 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
+#ifndef RollbarDTO_Protected_h
+#define RollbarDTO_Protected_h
+
 #import "RollbarDTO.h"
 #import "RollbarTriStateFlag.h"
 
@@ -66,3 +69,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif //RollbarDTO_Protected_h

@@ -6,6 +6,9 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
+#ifndef RollbarCachesDirectory_h
+#define RollbarCachesDirectory_h
+
 @import Foundation;
 
 @interface RollbarCachesDirectory : NSObject
@@ -18,3 +21,5 @@
 NS_UNAVAILABLE;
 
 @end
+
+#endif // RollbarCachesDirectory_h

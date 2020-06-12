@@ -6,7 +6,9 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
-//#import <Foundation/Foundation.h>
+#ifndef RollbarTriStateFlag_h
+#define RollbarTriStateFlag_h
+
 @import Foundation;
 
 #pragma mark - RollbarTriStateFlag enum
@@ -35,3 +37,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif //RollbarTriStateFlag_h
