@@ -23,6 +23,15 @@
          location = "group:RollbarSDK.podspec">
       </FileRef>
       <FileRef
+         location = "group:RollbarCommon.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RollbarDeploys.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RollbarNotifier.podspec">
+      </FileRef>
+      <FileRef
          location = "group:Rollbar.podspec">
       </FileRef>
       <FileRef
