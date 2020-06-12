@@ -8,7 +8,7 @@
 Pod::Spec.new do |s|
 
   
-    s.version      = '2.0.0-alpha3'
+    s.version      = '2.0.0-alpha4'
     s.name         = 'RollbarDeploys'
     s.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     s.description  = <<-DESC
@@ -31,6 +31,7 @@ Pod::Spec.new do |s|
                               :tag => "v#{s.version}",
                               :submodules => true }
     s.resource = 'rollbar-logo.png'
+    # s.resources = "Resources/*.png"
 
     #  When using multiple platforms:
     s.ios.deployment_target = '8.0'
@@ -41,15 +42,14 @@ Pod::Spec.new do |s|
     # s.platform     = :ios
     # s.platform     = :ios, "5.0"
 
-    s.source_files  = '#{s.name}/Sources/#{s.name}/**/*.{h,m}'
-    s.public_header_files = '#{s.name}/Sources/#{s.name}/include/*.h'
+    s.source_files  = "#{s.name}/Sources/#{s.name}/**/*.{h,m}"
+    s.public_header_files = "#{s.name}/Sources/#{s.name}/include/*.h"
     s.module_map = "#{s.name}/Sources/#{s.name}/include/module.modulemap"
     # s.exclude_files = "Classes/Exclude"
-    # s.resources = "Resources/*.png"
     # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
     s.framework = 'Foundation'
-    s.dependency 'RollbarCommon', '~> #{s.version}'
+    s.dependency 'RollbarCommon', "~> #{s.version}"
     # s.frameworks = "SomeFramework", "AnotherFramework"
     # s.library   = "iconv"
     # s.libraries = "iconv", "xml2"
