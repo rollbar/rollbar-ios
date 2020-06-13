@@ -8,7 +8,7 @@
 Pod::Spec.new do |s|
 
   
-    s.version      = '2.0.0-alpha6'
+    s.version      = '2.0.0-alpha7'
     s.name         = 'RollbarNotifier'
     s.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     s.description  = <<-DESC
@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '8.0'
     s.osx.deployment_target = '10.10'
     s.tvos.deployment_target = '11.0'
-    s.watchos.deployment_target = '4.0'
+    # s.watchos.deployment_target = '4.0'
     # Any platform, if ommited:
     # s.platform     = :ios
     # s.platform     = :ios, "5.0"
@@ -48,8 +48,8 @@ Pod::Spec.new do |s|
     # s.exclude_files = "Classes/Exclude"
     # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-    s.framework = 'Foundation'
-    s.dependency 'RollbarCommon', '~> #{s.version}'
+    s.framework = "Foundation"
+    s.dependency "RollbarCommon", "~> #{s.version}"
     # s.frameworks = "SomeFramework", "AnotherFramework"
     # s.library   = "iconv"
     # s.libraries = "iconv", "xml2"
