@@ -21,6 +21,7 @@ final class RollbarNotifierLoggerTests: XCTestCase {
             Rollbar.currentConfiguration().transmit = true;
             Rollbar.currentConfiguration().logPayload = true;
             Rollbar.currentConfiguration().maximumReportsPerMinute = 5000;
+            Rollbar.currentConfiguration()?.asRollbarConfig()?.customData = ["someKey": "someValue", ];
         //}
     }
     
