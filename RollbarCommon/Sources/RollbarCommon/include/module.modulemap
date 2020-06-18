@@ -4,5 +4,5 @@ module RollbarCommon {
 	export *
 	module * { export * }
 
-    //requires objc
+    requires objc
 }

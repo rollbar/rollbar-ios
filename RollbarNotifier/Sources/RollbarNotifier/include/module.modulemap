@@ -4,5 +4,5 @@ module RollbarNotifier {
 	export *
 	module * { export * }
 
-    //requires objc
+    requires objc
 }
