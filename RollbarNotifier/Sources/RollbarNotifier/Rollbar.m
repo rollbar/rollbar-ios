@@ -1,7 +1,8 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
+@import RollbarCommon;
+
 #import "Rollbar.h"
-#import "RollbarSdkLog.h"
 //#import "RollbarKSCrashInstallation.h"
 #import "RollbarLogger.h"
 #import "RollbarConfiguration.h"
@@ -51,7 +52,7 @@ static RollbarLogger *logger = nil;
 //        if (enable) {
 //            [Rollbar enableCrashReporter];
 //        }
-        [logger.configuration save];
+//        [logger.configuration save];
     }
 }
 
