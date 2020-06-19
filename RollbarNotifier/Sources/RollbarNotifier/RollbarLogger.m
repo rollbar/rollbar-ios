@@ -1,22 +1,19 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
+@import RollbarCommon;
+
 #import "RollbarLogger.h"
 #import "RollbarThread.h"
-#import "RollbarFileReader.h"
 #import "RollbarReachability.h"
-//#import "SdkLog.h"
 #if TARGET_OS_IPHONE
     #import <UIKit/UIKit.h>
 #endif
 #import <sys/utsname.h>
-#import "NSJSONSerialization+Rollbar.h"
 //#import "KSCrash.h"
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
-#import "RollbarCachesDirectory.h"
 #import "RollbarConfiguration.h"
 
-//#import "DataTransferObject+Protected.h"
 #import "RollbarPayloadDTOs.h"
 
 #define MAX_PAYLOAD_SIZE 128 // The maximum payload size in kb

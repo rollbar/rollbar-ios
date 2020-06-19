@@ -1,8 +1,9 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
+@import RollbarCommon;
+
 #import "RollbarThread.h"
 #import "RollbarLogger.h"
-#import "RollbarSdkLog.h"
 
 @implementation RollbarThread {
     @private RollbarLogger *_logger;

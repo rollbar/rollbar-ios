@@ -1,7 +1,8 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
+@import RollbarCommon;
+
 #import "RollbarTelemetry.h"
-#import "NSJSONSerialization+Rollbar.h"
 #import "RollbarCachesDirectory.h"
 
 #import "RollbarTelemetryEvent.h"
