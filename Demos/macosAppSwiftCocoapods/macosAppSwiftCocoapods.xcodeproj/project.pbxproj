@@ -3,17 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13696F80638DF08FCF2515D2 /* Pods_macosAppSwiftCocoapods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00A238546FB0010D057DF0A /* Pods_macosAppSwiftCocoapods.framework */; };
 		55897B61249AF55800C0DB50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55897B60249AF55800C0DB50 /* AppDelegate.swift */; };
 		55897B63249AF55800C0DB50 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55897B62249AF55800C0DB50 /* ViewController.swift */; };
 		55897B65249AF55C00C0DB50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55897B64249AF55C00C0DB50 /* Assets.xcassets */; };
 		55897B68249AF55C00C0DB50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55897B66249AF55C00C0DB50 /* Main.storyboard */; };
+		55DDB495249D7EA400435FD0 /* RollbarDeploysDemoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DDB494249D7EA400435FD0 /* RollbarDeploysDemoClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4781270023F6CDA74DE0BAD2 /* Pods-macosAppSwiftCocoapods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macosAppSwiftCocoapods.release.xcconfig"; path = "Target Support Files/Pods-macosAppSwiftCocoapods/Pods-macosAppSwiftCocoapods.release.xcconfig"; sourceTree = "<group>"; };
 		55897B5D249AF55800C0DB50 /* macosAppSwiftCocoapods.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macosAppSwiftCocoapods.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55897B60249AF55800C0DB50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55897B62249AF55800C0DB50 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -21,6 +24,10 @@
 		55897B67249AF55C00C0DB50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		55897B69249AF55C00C0DB50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55897B6A249AF55C00C0DB50 /* macosAppSwiftCocoapods.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macosAppSwiftCocoapods.entitlements; sourceTree = "<group>"; };
+		55928895249B042200DD9F9B /* RollbarNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RollbarNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55DDB494249D7EA400435FD0 /* RollbarDeploysDemoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollbarDeploysDemoClient.swift; sourceTree = "<group>"; };
+		9F233B5DB9B9EEB6802E8322 /* Pods-macosAppSwiftCocoapods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macosAppSwiftCocoapods.debug.xcconfig"; path = "Target Support Files/Pods-macosAppSwiftCocoapods/Pods-macosAppSwiftCocoapods.debug.xcconfig"; sourceTree = "<group>"; };
+		B00A238546FB0010D057DF0A /* Pods_macosAppSwiftCocoapods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_macosAppSwiftCocoapods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,17 +35,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13696F80638DF08FCF2515D2 /* Pods_macosAppSwiftCocoapods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04F772B5876496AC08688671 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9F233B5DB9B9EEB6802E8322 /* Pods-macosAppSwiftCocoapods.debug.xcconfig */,
+				4781270023F6CDA74DE0BAD2 /* Pods-macosAppSwiftCocoapods.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		55897B54249AF55800C0DB50 = {
 			isa = PBXGroup;
 			children = (
 				55897B5F249AF55800C0DB50 /* macosAppSwiftCocoapods */,
 				55897B5E249AF55800C0DB50 /* Products */,
+				04F772B5876496AC08688671 /* Pods */,
+				EB46F5DA8BABBAE666AAB91E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,8 +78,18 @@
 				55897B66249AF55C00C0DB50 /* Main.storyboard */,
 				55897B69249AF55C00C0DB50 /* Info.plist */,
 				55897B6A249AF55C00C0DB50 /* macosAppSwiftCocoapods.entitlements */,
+				55DDB494249D7EA400435FD0 /* RollbarDeploysDemoClient.swift */,
 			);
 			path = macosAppSwiftCocoapods;
+			sourceTree = "<group>";
+		};
+		EB46F5DA8BABBAE666AAB91E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55928895249B042200DD9F9B /* RollbarNotifier.framework */,
+				B00A238546FB0010D057DF0A /* Pods_macosAppSwiftCocoapods.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -70,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55897B6D249AF55C00C0DB50 /* Build configuration list for PBXNativeTarget "macosAppSwiftCocoapods" */;
 			buildPhases = (
+				798FA236BA32EBA93ADDFDC3 /* [CP] Check Pods Manifest.lock */,
 				55897B59249AF55800C0DB50 /* Sources */,
 				55897B5A249AF55800C0DB50 /* Frameworks */,
 				55897B5B249AF55800C0DB50 /* Resources */,
+				3026AAC828926FEC1AD7A7F2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -128,6 +159,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3026AAC828926FEC1AD7A7F2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-macosAppSwiftCocoapods/Pods-macosAppSwiftCocoapods-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-macosAppSwiftCocoapods/Pods-macosAppSwiftCocoapods-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-macosAppSwiftCocoapods/Pods-macosAppSwiftCocoapods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		798FA236BA32EBA93ADDFDC3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-macosAppSwiftCocoapods-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		55897B59249AF55800C0DB50 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -135,6 +208,7 @@
 			files = (
 				55897B63249AF55800C0DB50 /* ViewController.swift in Sources */,
 				55897B61249AF55800C0DB50 /* AppDelegate.swift in Sources */,
+				55DDB495249D7EA400435FD0 /* RollbarDeploysDemoClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,9 +341,11 @@
 		};
 		55897B6E249AF55C00C0DB50 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F233B5DB9B9EEB6802E8322 /* Pods-macosAppSwiftCocoapods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macosAppSwiftCocoapods/macosAppSwiftCocoapods.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
@@ -281,15 +357,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.macosAppSwiftCocoapods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		55897B6F249AF55C00C0DB50 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4781270023F6CDA74DE0BAD2 /* Pods-macosAppSwiftCocoapods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = macosAppSwiftCocoapods/macosAppSwiftCocoapods.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
@@ -301,6 +380,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.macosAppSwiftCocoapods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
