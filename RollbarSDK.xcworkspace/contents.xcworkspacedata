@@ -5,6 +5,9 @@
       location = "container:"
       name = "RollbarSDK">
       <FileRef
+         location = "group:Package.swift">
+      </FileRef>
+      <FileRef
          location = "group:CHANGELOG.md">
       </FileRef>
       <FileRef
