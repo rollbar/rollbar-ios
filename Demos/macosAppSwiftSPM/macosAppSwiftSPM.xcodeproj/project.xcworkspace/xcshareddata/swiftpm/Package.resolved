@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "RollbarSDK",
+        "repositoryURL": "https://github.com/rollbar/rollbar-ios",
+        "state": {
+          "branch": "vNext-2.0.0",
+          "revision": "a5490469570974f9b385b8307f2e6684a210f11d",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
