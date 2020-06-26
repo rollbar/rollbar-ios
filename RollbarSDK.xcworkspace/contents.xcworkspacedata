@@ -17,9 +17,6 @@
          location = "group:README.md">
       </FileRef>
       <FileRef
-         location = "group:Package.swift">
-      </FileRef>
-      <FileRef
          location = "group:RollbarSDK.podspec">
       </FileRef>
       <FileRef
@@ -30,9 +27,6 @@
       </FileRef>
       <FileRef
          location = "group:RollbarNotifier.podspec">
-      </FileRef>
-      <FileRef
-         location = "group:Rollbar.podspec">
       </FileRef>
       <FileRef
          location = "group:upload_dsym.py">
