@@ -42,8 +42,10 @@
 
     // configure Rollbar:
     RollbarConfiguration *config = [RollbarConfiguration configuration];
+    
     //config.crashLevel = @"critical";
     config.environment = @"samples";
+    config.asRollbarConfig.customData = @{ @"someKey": @"someValue", };
     // init Rollbar shared instance:
     [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
     

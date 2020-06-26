@@ -1,0 +1,8 @@
+platform :osx, '10.12'
+use_frameworks!
+
+target 'macosAppSwiftCocoapods' do
+    pod 'RollbarNotifier', '~> 2.0.0-alpha10'
+    pod 'RollbarDeploys', '~> 2.0.0-alpha10'
+    pod 'SwiftTryCatch2', '~> 2.0.2'
+end

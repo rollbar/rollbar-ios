@@ -1,0 +1,29 @@
+PODS:
+  - RollbarCommon (2.0.0-alpha10)
+  - RollbarDeploys (2.0.0-alpha10):
+    - RollbarCommon (~> 2.0.0-alpha10)
+  - RollbarNotifier (2.0.0-alpha10):
+    - RollbarCommon (~> 2.0.0-alpha10)
+  - SwiftTryCatch2 (2.0.2)
+
+DEPENDENCIES:
+  - RollbarDeploys (~> 2.0.0-alpha10)
+  - RollbarNotifier (~> 2.0.0-alpha10)
+  - SwiftTryCatch2 (~> 2.0.2)
+
+SPEC REPOS:
+  trunk:
+    - RollbarCommon
+    - RollbarDeploys
+    - RollbarNotifier
+    - SwiftTryCatch2
+
+SPEC CHECKSUMS:
+  RollbarCommon: 52e3c363f086892067f0a5441e41bd9085d3e5ea
+  RollbarDeploys: b5c2bd3e81051e6c43c27c002ea96770b0c3ad33
+  RollbarNotifier: 6718ee9289226025e1c21e480681d2f253b46bf7
+  SwiftTryCatch2: a1b6e301b0b1cc1c1af9849f13969979c706ff5e
+
+PODFILE CHECKSUM: 67529d6dedcfb826f7616a719a8416f3036c8986
+
+COCOAPODS: 1.9.3
