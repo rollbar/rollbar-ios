@@ -56,6 +56,7 @@ let package = Package(
 //        .testTarget(
 //            name: "RollbarCommonTests-ObjC",
 //            dependencies: ["RollbarCommon"],
+//            path: "RollbarCommon/Tests/RollbarCommonTests-ObjC",
 //            cSettings: [
 //                .headerSearchPath("RollbarCommon/Tests/RollbarCommonTests-ObjC/**"),
 ////                .define("DEFINES_MODULE"),
@@ -114,8 +115,8 @@ let package = Package(
         ),
         .testTarget(
             name: "RollbarNotifierTests-ObjC",
-            path: "RollbarNotifier/Sources/RollbarNotifierTests-ObjC",
             dependencies: ["RollbarNotifier"],
+            path: "RollbarNotifier/Sources/RollbarNotifierTests-ObjC",
             cSettings: [
                 .headerSearchPath("RollbarNotifier/Tests/RollbarNotifierTests-ObjC/**"),
 //                .define("DEFINES_MODULE"),
