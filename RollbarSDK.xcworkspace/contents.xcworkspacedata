@@ -43,7 +43,7 @@
       name = "Demos">
       <Group
          location = "container:"
-         name = "Demos_iOS">
+         name = "iOS">
       </Group>
       <Group
          location = "container:"
