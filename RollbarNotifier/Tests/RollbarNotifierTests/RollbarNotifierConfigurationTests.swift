@@ -160,6 +160,9 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
         Rollbar.currentConfiguration().maximumTelemetryEvents = max;
         Rollbar.debug("Test");
         RollbarTestUtil.waitForPesistenceToComplete();
+        RollbarTestUtil.waitForPesistenceToComplete();
+        RollbarTestUtil.waitForPesistenceToComplete();
+        RollbarTestUtil.waitForPesistenceToComplete();
         let logItem = RollbarTestUtil.readFirstItemStringsFromLogFile()!;
         let payload = RollbarPayload(jsonString: logItem);
         let telemetry = payload.data.body.telemetry!;
@@ -271,7 +274,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
 
         // define scrub whitelist fields (the same as the scrub fields - to counterbalance them):
         for key in keys {
-            Rollbar.currentConfiguration().addScrubWhitelistField(key);
+            Rollbar.currentConfiguration().addScrubSafeListField(key);
         }
 
         Rollbar.debug("test");

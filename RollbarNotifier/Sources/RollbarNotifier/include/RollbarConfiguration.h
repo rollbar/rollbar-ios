@@ -59,9 +59,9 @@
 - (void)addScrubField:(NSString *)field;
 - (void)removeScrubField:(NSString *)field;
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (readonly, nonatomic, strong) NSSet *scrubWhitelistFields;
-- (void)addScrubWhitelistField:(NSString *)field;
-- (void)removeScrubWhitelistField:(NSString *)field;
+@property (readonly, nonatomic, strong) NSSet *scrubSafeListFields;
+- (void)addScrubSafeListField:(NSString *)field;
+- (void)removeScrubSafeListField:(NSString *)field;
 
 #pragma mark - Server
 @property (nonatomic, copy) NSString *serverHost;
