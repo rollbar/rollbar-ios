@@ -646,22 +646,22 @@ static BOOL isNetworkReachable = YES;
      ];
 }
 
-- (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
-    NSFileHandle *fileHandle =
-    [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
-    [fileHandle seekToEndOfFile];
-    NSError *error = nil;
-    [fileHandle writeData:[NSJSONSerialization rollbar_dataWithJSONObject:payload
-                                                          options:0
-                                                            error:&error
-                                                             safe:true]];
-    if (error) {
-        RollbarSdkLog(@"Error: %@", [error localizedDescription]);
-    }
-    [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [fileHandle closeFile];
-    [[RollbarTelemetry sharedInstance] clearAllData];
-}
+//- (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
+//    NSFileHandle *fileHandle =
+//    [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
+//    [fileHandle seekToEndOfFile];
+//    NSError *error = nil;
+//    [fileHandle writeData:[NSJSONSerialization rollbar_dataWithJSONObject:payload
+//                                                          options:0
+//                                                            error:&error
+//                                                             safe:true]];
+//    if (error) {
+//        RollbarSdkLog(@"Error: %@", [error localizedDescription]);
+//    }
+//    [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    [fileHandle closeFile];
+//    [[RollbarTelemetry sharedInstance] clearAllData];
+//}
 
 - (BOOL)sendItem:(NSDictionary*)payload
        nextOffset:(NSUInteger)nextOffset {
@@ -821,6 +821,7 @@ static BOOL isNetworkReachable = YES;
 /// This is a DEPRECATED method left for some backward compatibility for very old clients eventually moving to this more recent implementation.
 /// Use/maintain sendPayload:usingConfig: instead!
 - (BOOL)sendPayload:(NSData*)payload {
+    
     NSURL *url = [NSURL URLWithString:self.configuration.endpoint];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 
@@ -950,6 +951,7 @@ static BOOL isNetworkReachable = YES;
 
 - (void)createMutablePayloadWithData:(NSMutableDictionary *)data
                              forPath:(NSString *)path {
+                                 
     NSArray *pathComponents = [path componentsSeparatedByString:@"."];
     NSString *currentPath = @"";
 
@@ -976,64 +978,66 @@ static BOOL isNetworkReachable = YES;
 
 #pragma mark - Payload transformations
 
-// Run data through custom payload modification method if available
-- (void)modifyPayload:(NSMutableDictionary *)data {
-    if (self.configuration.payloadModification) {
-        self.configuration.payloadModification(data);
-    }
-}
+//// Run data through custom payload modification method if available
+//- (void)modifyPayload:(NSMutableDictionary *)data {
+//
+//    if (self.configuration.payloadModification) {
+//        self.configuration.payloadModification(data);
+//    }
+//}
 
-// Determine if this payload should be ignored
-- (BOOL)shouldIgnorePayload:(NSDictionary*)data {
-    BOOL shouldIgnore = false;
+//// Determine if this payload should be ignored
+//- (BOOL)shouldIgnorePayload:(NSDictionary*)data {
+//
+//    BOOL shouldIgnore = false;
+//
+//    if (self.configuration.checkIgnore) {
+//        @try {
+//            shouldIgnore = self.configuration.checkIgnore(data);
+//        } @catch(NSException *e) {
+//            RollbarSdkLog(@"checkIgnore error: %@", e.reason);
+//
+//            // Remove checkIgnore to prevent future exceptions
+//            [self.configuration setCheckIgnoreBlock:nil];
+//        }
+//    }
+//
+//    return shouldIgnore;
+//}
 
-    if (self.configuration.checkIgnore) {
-        @try {
-            shouldIgnore = self.configuration.checkIgnore(data);
-        } @catch(NSException *e) {
-            RollbarSdkLog(@"checkIgnore error: %@", e.reason);
-
-            // Remove checkIgnore to prevent future exceptions
-            [self.configuration setCheckIgnoreBlock:nil];
-        }
-    }
-
-    return shouldIgnore;
-}
-
-// Scrub specified fields from payload
-- (void)scrubPayload:(NSMutableDictionary*)data {
-
-    if (self.configuration.scrubFields.count == 0) {
-        return;
-    }
-
-    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields.mutableCopy;
-    if (self.configuration.scrubSafeListFields.count > 0) {
-        // actualFieldsToScrub =
-        // self.configuration.scrubFields - self.configuration.scrubWhitelistFields
-        // while using case insensitive field name comparison:
-        actualFieldsToScrub = [NSMutableSet new];
-        for(NSString *key in self.configuration.scrubFields) {
-            BOOL isSafelisted = false;
-            for (NSString *safeKey in self.configuration.scrubSafeListFields) {
-                if (NSOrderedSame == [key caseInsensitiveCompare:safeKey]) {
-                    isSafelisted = true;
-                }
-            }
-            if (!isSafelisted) {
-                [actualFieldsToScrub addObject:key];
-            }
-        }
-    }
-    
-    for (NSString *key in actualFieldsToScrub) {
-        if ([data valueForKeyPath:key]) {
-            [self createMutablePayloadWithData:data forPath:key];
-            [data setValue:@"*****" forKeyPath:key];
-        }
-    }
-}
+//// Scrub specified fields from payload
+//- (void)scrubPayload:(NSMutableDictionary*)data {
+//
+//    if (self.configuration.scrubFields.count == 0) {
+//        return;
+//    }
+//
+//    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields.mutableCopy;
+//    if (self.configuration.scrubSafeListFields.count > 0) {
+//        // actualFieldsToScrub =
+//        // self.configuration.scrubFields - self.configuration.scrubWhitelistFields
+//        // while using case insensitive field name comparison:
+//        actualFieldsToScrub = [NSMutableSet new];
+//        for(NSString *key in self.configuration.scrubFields) {
+//            BOOL isSafelisted = false;
+//            for (NSString *safeKey in self.configuration.scrubSafeListFields) {
+//                if (NSOrderedSame == [key caseInsensitiveCompare:safeKey]) {
+//                    isSafelisted = true;
+//                }
+//            }
+//            if (!isSafelisted) {
+//                [actualFieldsToScrub addObject:key];
+//            }
+//        }
+//    }
+//
+//    for (NSString *key in actualFieldsToScrub) {
+//        if ([data valueForKeyPath:key]) {
+//            [self createMutablePayloadWithData:data forPath:key];
+//            [data setValue:@"*****" forKeyPath:key];
+//        }
+//    }
+//}
 
 #pragma mark - Update configuration methods
 

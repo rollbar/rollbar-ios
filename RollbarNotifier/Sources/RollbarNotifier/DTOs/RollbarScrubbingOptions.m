@@ -54,7 +54,17 @@ static NSString * const DFK_SAFELIST_FIELDS = @"safeListFields"; // do not scrub
 
 - (instancetype)init {
 
-    return [self initWithScrubFields:@[]];
+    // init with the default set of scrub-fields:
+    return [self initWithScrubFields:@[
+        @"Password",
+        @"passwd",
+        @"confirm_password",
+        @"password_confirmation",
+        @"accessToken",
+        @"auth_token",
+        @"authentication",
+        @"secret",
+    ]];
 }
 
 #pragma mark - property accessors
