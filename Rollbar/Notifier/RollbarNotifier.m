@@ -606,19 +606,19 @@ static BOOL isNetworkReachable = YES;
     }
     
     NSMutableSet *actualFieldsToScrub = config.dataScrubber.scrubFields.mutableCopy;
-    if (config.dataScrubber.whitelistFields.count > 0) {
+    if (config.dataScrubber.safeListFields.count > 0) {
         // actualFieldsToScrub =
-        // config.dataScrubber.scrubFields - config.dataScrubber.whitelistFields
+        // config.dataScrubber.scrubFields - config.dataScrubber.safeListFields
         // while using case insensitive field name comparison:
         actualFieldsToScrub = [NSMutableSet new];
         for(NSString *key in config.dataScrubber.scrubFields) {
-            BOOL isWhitelisted = false;
-            for (NSString *whiteKey in config.dataScrubber.whitelistFields) {
+            BOOL isSafelisted = false;
+            for (NSString *whiteKey in config.dataScrubber.safeListFields) {
                 if (NSOrderedSame == [key caseInsensitiveCompare:whiteKey]) {
-                    isWhitelisted = true;
+                    isSafelisted = true;
                 }
             }
-            if (!isWhitelisted) {
+            if (!isSafelisted) {
                 [actualFieldsToScrub addObject:key];
             }
         }
@@ -1000,19 +1000,19 @@ static BOOL isNetworkReachable = YES;
     }
 
     NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields.mutableCopy;
-    if (self.configuration.scrubWhitelistFields.count > 0) {
+    if (self.configuration.scrubSafeListFields.count > 0) {
         // actualFieldsToScrub =
-        // self.configuration.scrubFields - self.configuration.scrubWhitelistFields
+        // self.configuration.scrubFields - self.configuration.scrubSafeListFields
         // while using case insensitive field name comparison:
         actualFieldsToScrub = [NSMutableSet new];
         for(NSString *key in self.configuration.scrubFields) {
-            BOOL isWhitelisted = false;
-            for (NSString *whiteKey in self.configuration.scrubWhitelistFields) {
+            BOOL isSafelisted = false;
+            for (NSString *whiteKey in self.configuration.scrubSafeListFields) {
                 if (NSOrderedSame == [key caseInsensitiveCompare:whiteKey]) {
-                    isWhitelisted = true;
+                    isSafelisted = true;
                 }
             }
-            if (!isWhitelisted) {
+            if (!isSafelisted) {
                 [actualFieldsToScrub addObject:key];
             }
         }

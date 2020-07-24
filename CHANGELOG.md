@@ -25,6 +25,10 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.9**
+- feat: resolve #306: Define default scrub fields
+- refactor: resolve #307: Change WitelistFileds into SafeListFields within the RollbarScrubbingOptions
+
 **1.12.8**
 - fix: resolve #283: Add RollbarFramework/* to source_files
 

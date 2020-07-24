@@ -59,9 +59,9 @@
 - (void)addScrubField:(NSString *)field;
 - (void)removeScrubField:(NSString *)field;
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (readonly, nonatomic, strong) NSSet *scrubWhitelistFields;
-- (void)addScrubWhitelistField:(NSString *)field;
-- (void)removeScrubWhitelistField:(NSString *)field;
+@property (readonly, nonatomic, strong) NSSet *scrubSafeListFields;
+- (void)addScrubSafeListField:(NSString *)field;
+- (void)removeScrubSafeListField:(NSString *)field;
 
 #pragma mark - Server
 @property (nonatomic, copy) NSString *serverHost;
@@ -116,21 +116,29 @@
 
 #pragma mark - DEPRECATED
 
+// Fields to not scrub from the payload even if they mention among scrubFields:
+@property (readonly, nonatomic, strong) NSSet *scrubWhitelistFields
+DEPRECATED_MSG_ATTRIBUTE("Use scrubSafeListFields property instead.");
+
+- (void)addScrubWhitelistField:(NSString *)field
+DEPRECATED_MSG_ATTRIBUTE("Use addScrubSafeListField method instead.");
+
+- (void)removeScrubWhitelistField:(NSString *)field
+DEPRECATED_MSG_ATTRIBUTE("Use removeScrubSafeListField method instead.");
+
 // Decides whether or not to send payload. Returns true to ignore, false to send
 @property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload)
-//    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.")
-;
+    DEPRECATED_MSG_ATTRIBUTE("Use ^checkIgnoreRollbarData property instead.");
+
 - (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock
-//    DEPRECATED_MSG_ATTRIBUTE("Use checkIgnoreRollbarData property instead.")
-;
+    DEPRECATED_MSG_ATTRIBUTE("Use ^checkIgnoreRollbarData property instead.");
 
 // Modify payload
 @property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload)
-//    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.")
-;
+    DEPRECATED_MSG_ATTRIBUTE("Use ^modifyRollbarData property instead.");
+
 - (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock
-//    DEPRECATED_MSG_ATTRIBUTE("Use modifyRollbarData property instead.")
-;
+    DEPRECATED_MSG_ATTRIBUTE("Use ^modifyRollbarData property instead.");
 
 @property (nonatomic, copy) NSString *crashLevel
     DEPRECATED_MSG_ATTRIBUTE("Use rollbarCrashLevel property instead.");
