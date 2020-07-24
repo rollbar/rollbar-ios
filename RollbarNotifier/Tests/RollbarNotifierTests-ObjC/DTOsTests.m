@@ -107,12 +107,12 @@
     XCTAssertTrue(dto.scrubFields.count == 2,
                   @"Has some scrub fields"
                   );
-    XCTAssertTrue(dto.whitelistFields.count == 0,
+    XCTAssertTrue(dto.safeListFields.count == 0,
                   @"Has NO whitelist fields"
                   );
     
-    dto.whitelistFields = @[@"tf1", @"tf2", @"tf3"];
-    XCTAssertTrue(dto.whitelistFields.count == 3,
+    dto.safeListFields = @[@"tf1", @"tf2", @"tf3"];
+    XCTAssertTrue(dto.safeListFields.count == 3,
                   @"Has some whitelist fields"
                   );
     
@@ -248,7 +248,7 @@
     RollbarScrubbingOptions *scrubber =
     [[RollbarScrubbingOptions alloc] initWithEnabled:YES
                                          scrubFields:@[@"one", @"two"]
-                                     whitelistFields:@[@"two", @"three", @"four"]
+                                      safeListFields:@[@"two", @"three", @"four"]
      ];
     RollbarTelemetryOptions *dto = [[RollbarTelemetryOptions alloc] initWithEnabled:YES
                                                                          captureLog:YES
@@ -270,7 +270,7 @@
     XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count == 2,
                   @"Proper view inputs scrubber scrub fields count"
                   );
-    XCTAssertTrue(dto.viewInputsScrubber.whitelistFields.count == 3,
+    XCTAssertTrue(dto.viewInputsScrubber.safeListFields.count == 3,
                   @"Proper view inputs scrubber white list fields count"
                   );
     
@@ -290,7 +290,7 @@
     XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count == 0,
                   @"Proper view inputs scrubber scrub fields count"
                   );
-    XCTAssertTrue(dto.viewInputsScrubber.whitelistFields.count == 0,
+    XCTAssertTrue(dto.viewInputsScrubber.safeListFields.count == 0,
                   @"Proper view inputs scrubber white list fields count"
                   );
 

@@ -56,12 +56,15 @@ class RollbarTestUtil {
             }
             if fileManager.fileExists(atPath: itemsFilePath) {
                 try fileManager.removeItem(atPath: itemsFilePath);
+                fileManager.createFile(
+                    atPath: itemsFilePath,
+                    contents: nil,
+                    attributes: nil
+                );
             }
         } catch {
             print("Unexpected error: \(error).")
         }
-        //fileManager.createFile(atPath: itemsStateFilePath, contents: nil, attributes: nil);
-        //fileManager.createFile(atPath: itemsFilePath, contents: nil, attributes: nil);
     }
 
     public static func readFirstItemStringsFromLogFile() -> String? {
@@ -77,7 +80,7 @@ class RollbarTestUtil {
         let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileReader = RollbarFileReader(filePath: filePath, andOffset: 0);
         var items = [String]();
-        fileReader!.enumerateLines({ (line, nextOffset, stop) in
+        fileReader?.enumerateLines({ (line, nextOffset, stop) in
             if (line == nil) {
                 return;
             }

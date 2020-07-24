@@ -280,20 +280,20 @@ static NSString *configurationFilePath = nil;
     self->_configData.dataScrubber.scrubFields = mutableCopy.copy;
 }
 
-- (NSSet *)scrubWhitelistFields {
-    NSArray *fields = self->_configData.dataScrubber.whitelistFields;
+- (NSSet *)scrubSafeListFields {
+    NSArray *fields = self->_configData.dataScrubber.safeListFields;
     return [NSSet setWithArray:fields];
 }
 
-- (void)addScrubWhitelistField:(NSString *)field {
-    self->_configData.dataScrubber.whitelistFields =
-    [self->_configData.dataScrubber.whitelistFields arrayByAddingObject:field];
+- (void)addScrubSafeListField:(NSString *)field {
+    self->_configData.dataScrubber.safeListFields =
+    [self->_configData.dataScrubber.safeListFields arrayByAddingObject:field];
 }
 
-- (void)removeScrubWhitelistField:(NSString *)field {
-    NSMutableArray *mutableCopy = self->_configData.dataScrubber.whitelistFields.mutableCopy;
+- (void)removeScrubSafeListField:(NSString *)field {
+    NSMutableArray *mutableCopy = self->_configData.dataScrubber.safeListFields.mutableCopy;
     [mutableCopy removeObject:field];
-    self->_configData.dataScrubber.whitelistFields = mutableCopy.copy;
+    self->_configData.dataScrubber.safeListFields = mutableCopy.copy;
 }
 
 #pragma mark - Server

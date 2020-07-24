@@ -16,8 +16,8 @@ static BOOL const DEFAULT_ENABLED_FLAG = YES;
 #pragma mark - data field keys
 
 static NSString * const DFK_ENABLED = @"enabled";
-static NSString * const DFK_SCRUB_FIELDS = @"scrubFields";
-static NSString * const DFK_WHITELIST_FIELDS = @"whitelistFields";
+static NSString * const DFK_SCRUB_FIELDS = @"scrubFields";       // scrab these
+static NSString * const DFK_SAFELIST_FIELDS = @"safeListFields"; // do not scrub these
 
 #pragma mark - class implementation
 
@@ -27,34 +27,44 @@ static NSString * const DFK_WHITELIST_FIELDS = @"whitelistFields";
 
 - (instancetype)initWithEnabled:(BOOL)enabled
                     scrubFields:(NSArray *)scrubFields
-                whitelistFields:(NSArray *)whitelistFields {
+                 safeListFields:(NSArray *)safeListFields {
 
     self = [super initWithDictionary:@{
         DFK_ENABLED:[NSNumber numberWithBool:enabled],
         DFK_SCRUB_FIELDS:scrubFields,
-        DFK_WHITELIST_FIELDS:whitelistFields
+        DFK_SAFELIST_FIELDS:safeListFields
     }];
     return self;
 
 }
 
 - (instancetype)initWithScrubFields:(NSArray *)scrubFields
-                    whitelistFields:(NSArray *)whitelistFields {
+                    safeListFields:(NSArray *)safeListFields {
 
     return [self initWithEnabled:DEFAULT_ENABLED_FLAG
                      scrubFields:scrubFields
-                 whitelistFields:whitelistFields
+                  safeListFields:safeListFields
             ];
 }
 
 - (instancetype)initWithScrubFields:(NSArray *)scrubFields {
     
-    return [self initWithScrubFields:scrubFields whitelistFields:@[]];
+    return [self initWithScrubFields:scrubFields safeListFields:@[]];
 }
 
 - (instancetype)init {
 
-    return [self initWithScrubFields:@[]];
+    // init with the default set of scrub-fields:
+    return [self initWithScrubFields:@[
+        @"Password",
+        @"passwd",
+        @"confirm_password",
+        @"password_confirmation",
+        @"accessToken",
+        @"auth_token",
+        @"authentication",
+        @"secret",
+    ]];
 }
 
 #pragma mark - property accessors
@@ -77,13 +87,13 @@ static NSString * const DFK_WHITELIST_FIELDS = @"whitelistFields";
     [self setArray:scrubFields forKey:DFK_SCRUB_FIELDS];
 }
 
-- (NSArray *)whitelistFields {
-    NSArray *result = [self safelyGetArrayByKey:DFK_WHITELIST_FIELDS];
+- (NSArray *)safeListFields {
+    NSArray *result = [self safelyGetArrayByKey:DFK_SAFELIST_FIELDS];
     return result;
 }
 
-- (void)setWhitelistFields:(NSArray *)whitelistFields {
-    [self setArray:whitelistFields forKey:DFK_WHITELIST_FIELDS];
+- (void)setSafeListFields:(NSArray *)whitelistFields {
+    [self setArray:whitelistFields forKey:DFK_SAFELIST_FIELDS];
 }
 
 @end

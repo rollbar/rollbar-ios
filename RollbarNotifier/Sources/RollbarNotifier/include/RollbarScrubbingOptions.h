@@ -18,15 +18,15 @@ NS_ASSUME_NONNULL_BEGIN
 // Fields to scrub from the payload
 @property (nonatomic, strong) NSArray *scrubFields;
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (nonatomic, strong) NSArray *whitelistFields;
+@property (nonatomic, strong) NSArray *safeListFields;
 
 #pragma mark - initializers
 
 - (instancetype)initWithEnabled:(BOOL)enabled
                     scrubFields:(NSArray *)scrubFields
-                whitelistFields:(NSArray *)whitelistFields;
+                 safeListFields:(NSArray *)safeListFields;
 - (instancetype)initWithScrubFields:(NSArray *)scrubFields
-                    whitelistFields:(NSArray *)whitelistFields;
+                     safeListFields:(NSArray *)safeListFields;
 - (instancetype)initWithScrubFields:(NSArray *)scrubFields;
 
 @end
