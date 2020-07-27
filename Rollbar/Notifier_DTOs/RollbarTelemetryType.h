@@ -5,13 +5,13 @@
 #pragma mark - RollbarTelemetryType
 
 typedef NS_ENUM(NSUInteger, RollbarTelemetryType) {
-    RollbarTelemetryLog,
-    RollbarTelemetryView,
-    RollbarTelemetryError,
-    RollbarTelemetryNavigation,
-    RollbarTelemetryNetwork,
-    RollbarTelemetryConnectivity,
-    RollbarTelemetryManual
+    RollbarTelemetryLog DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTelemetryType_Log instead."),
+    RollbarTelemetryView DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTelemetryType_View instead."),
+    RollbarTelemetryError DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTelemetryType_Error instead."),
+    RollbarTelemetryNavigation DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTelemetryType_Navigation instead."),
+    RollbarTelemetryNetwork DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTelemetryType_Network instead."),
+    RollbarTelemetryConnectivity DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTelemetryType_Connectivity instead."),
+    RollbarTelemetryManual DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTelemetryType_Manual instead.")
 };
 
 
@@ -37,5 +37,5 @@ NS_ASSUME_NONNULL_END
 #pragma mark - deprecated
 
 NSString* _Nonnull RollbarStringFromTelemetryType(RollbarTelemetryType type)
-DEPRECATED_MSG_ATTRIBUTE("Use [RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:...] methods instead.");
+DEPRECATED_MSG_ATTRIBUTE("In v2, use [RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:...] methods instead.");
 

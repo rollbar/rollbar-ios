@@ -4,6 +4,7 @@
 #import "DataTransferObject.h"
 
 /// Models a Deployment
+DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeployment instead.")
 @interface Deployment : DataTransferObject
 
 #pragma mark - properties

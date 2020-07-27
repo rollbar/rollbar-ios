@@ -8,14 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeployApiCallOutcome instead.")
 typedef NS_ENUM(NSInteger, DeployApiCallOutcome) {
-    DeployApiCallSuccess,
-    DeployApiCallError,
+    DeployApiCallSuccess DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeployApiCall_Success instead."),
+    DeployApiCallError DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeployApiCall_Error instead."),
 };
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Enum to/from NSString conversion utility
+ DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeployApiCallOutcomeUtil instead.")
 @interface DeployApiCallOutcomeUtil : NSObject
 
 /// Converts DeployApiCallOutcome value into a NSString

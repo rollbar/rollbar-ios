@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// A protocol adding support for file-persistence
+DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarPersistent instead.")
 @protocol Persistent <NSObject>
 
 /// Save to a file

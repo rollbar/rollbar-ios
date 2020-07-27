@@ -11,8 +11,9 @@
 #pragma mark - RollbarSource enum
 
 typedef NS_ENUM(NSUInteger, RollbarSource) {
-    Client,
-    Server,
+    
+    Client DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarSource_Client instead."),
+    Server DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarSource_Server instead."),
 };
 
 #pragma mark - RollbarSourceUtil

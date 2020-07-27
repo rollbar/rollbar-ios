@@ -34,16 +34,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Fields to not scrub from the payload even if they mention among scrubFields:
 @property (nonatomic, strong) NSArray *whitelistFields
-DEPRECATED_MSG_ATTRIBUTE("Use safeListFields property instead.");
+DEPRECATED_MSG_ATTRIBUTE("In v2, use safeListFields property instead.");
 
 - (instancetype)initWithEnabled:(BOOL)enabled
                     scrubFields:(NSArray *)scrubFields
                 whitelistFields:(NSArray *)whitelistFields
-DEPRECATED_MSG_ATTRIBUTE("Use initWithEnabled:scrubFields:safeListFields: method instead.");
+DEPRECATED_MSG_ATTRIBUTE("In v2, use initWithEnabled:scrubFields:safeListFields: method instead.");
 
 - (instancetype)initWithScrubFields:(NSArray *)scrubFields
                     whitelistFields:(NSArray *)whitelistFields
-DEPRECATED_MSG_ATTRIBUTE("Use initWithEnabled:safeListFields: method instead.");
+DEPRECATED_MSG_ATTRIBUTE("In v2, use initWithEnabled:safeListFields: method instead.");
 
 @end
 
