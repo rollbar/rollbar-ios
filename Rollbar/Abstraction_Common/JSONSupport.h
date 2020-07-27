@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// JSON de/serialization protocol
+DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarJSONSupport instead.")
 @protocol JSONSupport <NSObject>
 
 /// Internal JSON serializable "data store"

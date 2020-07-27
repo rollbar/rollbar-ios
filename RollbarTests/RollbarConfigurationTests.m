@@ -29,7 +29,7 @@
     NSLog(@"%@", rc);
 }
 
-- (void)testScrubWhitelistFields {
+- (void)testScrubSafeListFields {
     NSString *scrubedContent = @"*****";
     NSArray *keys = @[@"client.ios.app_name", @"client.ios.os_version", @"body.message.body"];
     
@@ -54,9 +54,9 @@
     
     RollbarClearLogFile();
     
-    // define scrub whitelist fields (the same as the scrub fields - to counterbalance them):
+    // define scrub safelist fields (the same as the scrub fields - to counterbalance them):
     for (NSString *key in keys) {
-        [Rollbar.currentConfiguration addScrubWhitelistField:key];
+        [Rollbar.currentConfiguration addScrubSafeListField:key];
     }
     [Rollbar debug:@"test"];
     RollbarFlushFileThread(Rollbar.currentNotifier);

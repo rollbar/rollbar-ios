@@ -10,10 +10,11 @@
 
 #pragma mark - CaptureIpType enum
 
+DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarCaptureIpType enum instead.")
 typedef NS_ENUM(NSUInteger, CaptureIpType) {
-    CaptureIpFull,
-    CaptureIpAnonymize,
-    CaptureIpNone
+    CaptureIpFull DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarCaptureIpType_Full instead."),
+    CaptureIpAnonymize DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarCaptureIpType_Anonymize instead."),
+    CaptureIpNone DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarCaptureIpType_None instead.")
 };
 
 #pragma mark - CaptureIpTypeUtil
@@ -21,6 +22,7 @@ typedef NS_ENUM(NSUInteger, CaptureIpType) {
 NS_ASSUME_NONNULL_BEGIN
 
 /// Utility class aiding with CaptureIpType conversions
+DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarCaptureIpTypeUtil class instead.")
 @interface CaptureIpTypeUtil : NSObject
 
 /// Convert CaptureIpType to a string
