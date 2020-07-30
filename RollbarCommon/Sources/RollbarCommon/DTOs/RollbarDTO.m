@@ -169,11 +169,15 @@
         return NO;
     }
     
-    NSError *error;
+    NSError *error = nil;
     self->_data =
     [NSJSONSerialization JSONObjectWithData:jsonData
                                     options:(NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves)
                                       error:&error];
+    if (error) {
+        RollbarSdkLog(@"Error deserializing JSON NSData as a DTO: %@", [error localizedDescription]);
+        return NO;
+    }
     if (self->_data) {
         
         if ([self->_data isKindOfClass:[NSDictionary class]]) {

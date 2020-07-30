@@ -34,11 +34,11 @@ static NSString * const OPERATING_SYSTEM = @"macos";
 static NSString * const NOTIFIER_NAME = @"rollbar-macos";
 #endif
 
-static NSString * const CONFIGURATION_FILENAME = @"rollbar.config";
+//static NSString * const CONFIGURATION_FILENAME = @"rollbar.config";
 
 #pragma mark - static data
 
-static NSString *configurationFilePath = nil;
+//static NSString *configurationFilePath = nil;
 
 #pragma mark - data fields
 
@@ -61,10 +61,10 @@ static NSString * const DFK_CUSTOM = @"custom";
 #pragma mark - initializers
 
 - (instancetype)init {
-    if (!configurationFilePath) {
-        NSString *cachesDirectory = [RollbarCachesDirectory directory];
-        configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
-    }
+//    if (!configurationFilePath) {
+//        NSString *cachesDirectory = [RollbarCachesDirectory directory];
+//        configurationFilePath = [cachesDirectory stringByAppendingPathComponent:CONFIGURATION_FILENAME];
+//    }
 
     self = [super initWithDictionary:@{
         DFK_DESTINATION:[RollbarDestination new].jsonFriendlyData,
@@ -231,5 +231,13 @@ static NSString * const DFK_CUSTOM = @"custom";
 - (void)setCustomData:(NSDictionary *)value {
     [self setDictionary:value forKey:DFK_CUSTOM];
 }
+
+//#pragma mark - RollbarPersistent protocol
+//
+//- (BOOL)loadFromFile:(nonnull NSString *)filePath {
+//}
+//
+//- (BOOL)saveToFile:(nonnull NSString *)filePath {
+//}
 
 @end
