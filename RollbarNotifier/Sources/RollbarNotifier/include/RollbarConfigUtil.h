@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)saveRollbarConfig:(RollbarConfig *)rollbarConfig
                    toFile:(nonnull NSString *)filePath
                     error:(NSError * _Nullable *)error;
-+ (BOOL)saveToDefaultFile:(RollbarConfig *)rollbarConfig
++ (BOOL)saveRollbarConfig:(RollbarConfig *)rollbarConfig
                     error:(NSError * _Nullable *)error;
 
 + (BOOL)deleteFile:(nonnull NSString *)filePath

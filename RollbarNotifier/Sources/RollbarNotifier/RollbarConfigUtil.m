@@ -70,7 +70,7 @@ static NSString *configurationFilePath = nil;
     NSData *configData = [NSData dataWithContentsOfFile:filePath
                                                 options:nil
                                                   error:error];
-    if (!error && configData) {
+    if (configData) {
         RollbarConfig *config = [[RollbarConfig alloc] initWithJSONData:configData];
         return config;
     }
@@ -108,7 +108,7 @@ static NSString *configurationFilePath = nil;
     return success;
 }
 
-+ (BOOL)saveToDefaultFile:(RollbarConfig *)rollbarConfig
++ (BOOL)saveRollbarConfig:(RollbarConfig *)rollbarConfig
                     error:(NSError * _Nullable *)error {
     return [RollbarConfigUtil saveRollbarConfig:rollbarConfig
                                          toFile:configurationFilePath
