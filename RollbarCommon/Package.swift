@@ -49,5 +49,10 @@ let package = Package(
         .testTarget(
             name: "RollbarCommonTests",
             dependencies: ["RollbarCommon"]),
+    ],
+    swiftLanguageVersions: [
+        SwiftVersion.v4,
+        SwiftVersion.v4_2,
+        SwiftVersion.v5,
     ]
 )
