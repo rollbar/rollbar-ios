@@ -16,20 +16,21 @@
     RollbarClearLogFile();
     if (!Rollbar.currentConfiguration) {
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
-        Rollbar.currentConfiguration.environment = @"unit-tests";
+        Rollbar.currentConfiguration.destination.environment = @"unit-tests";
     }
 
 }
 
 - (void)tearDown {
-    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
+    [Rollbar updateConfiguration:[RollbarConfig new]];
     [super tearDown];
 }
 
 - (void)doNothing {}
 
 - (void)testTelemetryCapture {
-    Rollbar.currentConfiguration.telemetryEnabled = YES;
+    Rollbar.currentConfiguration.telemetry.enabled = YES;
+    [Rollbar reapplyConfiguration];
     
     [Rollbar recordNavigationEventForLevel:RollbarLevel_Info from:@"from" to:@"to"];
     [Rollbar recordConnectivityEventForLevel:RollbarLevel_Info status:@"status"];
@@ -73,7 +74,7 @@
 }
 
 - (void)testErrorReportingWithTelemetry {
-    Rollbar.currentConfiguration.telemetryEnabled = YES;
+    Rollbar.currentConfiguration.telemetry.enabled = YES;
 
     [Rollbar recordNavigationEventForLevel:RollbarLevel_Info from:@"SomeNavigationSource" to:@"SomeNavigationDestination"];
     [Rollbar recordConnectivityEventForLevel:RollbarLevel_Info status:@"SomeConnectivityStatus"];
@@ -123,11 +124,12 @@
 }
 
 - (void)testTelemetryViewEventScrubbing {
-    Rollbar.currentConfiguration.telemetryEnabled = YES;
-    Rollbar.currentConfiguration.scrubViewInputsTelemetry = YES;
-    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:@"password"];
-    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:@"pin"];
-    
+    Rollbar.currentConfiguration.telemetry.enabled = YES;
+    Rollbar.currentConfiguration.telemetry.viewInputsScrubber.enabled = YES;
+    [Rollbar.currentConfiguration.telemetry.viewInputsScrubber addScrubField:@"password"];
+    [Rollbar.currentConfiguration.telemetry.viewInputsScrubber addScrubField:@"pin"];
+    [Rollbar reapplyConfiguration];
+
     [Rollbar recordViewEventForLevel:RollbarLevel_Debug
                              element:@"password"
                            extraData:@{@"content" : @"My Password"}];
@@ -145,9 +147,10 @@
 }
 
 - (void)testRollbarLog {
-    Rollbar.currentConfiguration.telemetryEnabled = YES;
-    Rollbar.currentConfiguration.captureLogAsTelemetryEvents = YES;
-    
+    Rollbar.currentConfiguration.telemetry.enabled = YES;
+    Rollbar.currentConfiguration.telemetry.captureLog = YES;
+    [Rollbar reapplyConfiguration];
+
     [RollbarTelemetry.sharedInstance clearAllData];
     NSNumber *counter = [NSNumber numberWithInt:123];
     RollbarLog(@"Logging with telemetry %@", counter);

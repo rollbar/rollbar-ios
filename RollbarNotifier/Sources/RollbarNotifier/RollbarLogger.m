@@ -12,7 +12,7 @@
 //#import "KSCrash.h"
 #import "RollbarTelemetry.h"
 #import "RollbarPayloadTruncator.h"
-#import "RollbarConfiguration.h"
+#import "RollbarConfig.h"
 
 #import "RollbarPayloadDTOs.h"
 
@@ -60,117 +60,223 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *m_osData;
 }
 
-- (instancetype)initWithAccessToken:(NSString*)accessToken
-                      configuration:(RollbarConfiguration*)configuration
-                             isRoot:(BOOL)isRoot {
++ (void)initialize {
     
-    if ((self = [super init])) {
-        [self updateAccessToken:accessToken
-                  configuration:configuration
-                         isRoot:isRoot];
+    if (self == [RollbarLogger class]) {
         
-        if (isRoot) {
-            
-            // make sure we have all the expected data directories/folder set:
-            
-            NSString *cachesDirectory = [RollbarCachesDirectory directory];
-            if (nil != self.configuration.logPayloadFile
-                && self.configuration.logPayloadFile.length > 0) {
-                
-                payloadsFilePath =
-                [cachesDirectory stringByAppendingPathComponent:self.configuration.logPayloadFile];
-            }
-            else {
-                
-                payloadsFilePath =
-                [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
-            }
-            
-            // create working cache directory:
-            if (![[NSFileManager defaultManager] fileExistsAtPath:cachesDirectory]) {
-                NSError *error;
-                BOOL result =
-                [[NSFileManager defaultManager] createDirectoryAtPath:cachesDirectory
-                                          withIntermediateDirectories:YES
-                                                           attributes:nil
-                                                                error:&error
-                 ];
-                NSLog(@"result %@", result);
-            }
-            
-            // make sure we have all the data files set:
-            
-            queuedItemsFilePath =
-            [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
-            stateFilePath =
-            [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
-            
-            // either create or overwrite the payloads log file:
-            [[NSFileManager defaultManager] createFileAtPath:payloadsFilePath
+        // create working cache directory:
+        NSString *cachesDirectory = [RollbarCachesDirectory directory];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:cachesDirectory]) {
+            NSError *error;
+            BOOL result =
+            [[NSFileManager defaultManager] createDirectoryAtPath:cachesDirectory
+                                      withIntermediateDirectories:YES
+                                                       attributes:nil
+                                                            error:&error
+             ];
+            NSLog(@"result %@", result);
+        }
+        
+        // make sure we have all the data files set:
+        queuedItemsFilePath =
+        [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
+        stateFilePath =
+        [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
+        
+        // either create or overwrite the payloads log file:
+        [[NSFileManager defaultManager] createFileAtPath:payloadsFilePath
+                                                contents:nil
+                                              attributes:nil];
+        
+        // create the queued items file if does not exist already:
+        if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
+            [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath
                                                     contents:nil
                                                   attributes:nil];
-            
-            // create the queued items file if does not exist already:
-            if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
-                [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath
-                                                        contents:nil
-                                                      attributes:nil];
+        }
+        
+        // create state tracking file if does not exist already:
+        if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
+            NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
+            if (stateData) {
+                NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData
+                                                                      options:0
+                                                                        error:nil];
+                queueState = [state mutableCopy];
+            } else {
+                RollbarSdkLog(@"There was an error restoring saved queue state");
             }
+        }
+        if (!queueState) {
+            queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
+                            @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
+            [self saveQueueState];
+        }
+
+        // Setup the worker thread that sends the items that have been queued up in the item file set above:
+        // TODO: !!! this needs to be redesigned taking in account multiple access tokens and endpoints !!!
+        RollbarConfig *config = [RollbarConfig new];
+        RollbarLogger *logger = [[RollbarLogger alloc] initWithConfiguration:config];
+        rollbarThread =
+        [[RollbarThread alloc] initWithNotifier:logger
+                                  reportingRate:config.loggingOptions.maximumReportsPerMinute];
+        [rollbarThread start];
+        
+        // Listen for reachability status so that the items are only sent when the internet is available:
+        reachability = [RollbarReachability reachabilityForInternetConnection];
+        isNetworkReachable = [reachability isReachable];
+        reachability.reachableBlock = ^(RollbarReachability*reach) {
+            [logger captureTelemetryDataForNetwork:true];
+            isNetworkReachable = YES;
+        };
+        reachability.unreachableBlock = ^(RollbarReachability*reach) {
+            [logger captureTelemetryDataForNetwork:false];
+            isNetworkReachable = NO;
+        };
+        
+        [reachability startNotifier];
+    }
+}
+
+/// Designated notifier initializer
+/// @param accessToken the access token
+- (instancetype)initWithAccessToken:(NSString *)accessToken {
+    RollbarConfig *config = [RollbarConfig new];
+    config.destination.accessToken = accessToken;
+    return [self initWithConfiguration:config];
+}
+
+//- (instancetype)initWithAccessToken:(NSString *)accessToken
+//                      configuration:(RollbarConfig *)configuration
+//                             isRoot:(BOOL)isRoot {
+/// Designated notifier initializer
+/// @param configuration the config object
+- (instancetype)initWithConfiguration:(RollbarConfig *)configuration {
+
+    if ((self = [super init])) {
+        [self updateConfiguration:configuration];
+
+//    if ((self = [super init])) {
+//        [self updateAccessToken:accessToken
+//                  configuration:configuration];
+//                         isRoot:isRoot];
+        
+        NSString *cachesDirectory = [RollbarCachesDirectory directory];
+        if (nil != self.configuration.developerOptions.payloadLogFile
+            && self.configuration.developerOptions.payloadLogFile.length > 0) {
             
-            // create state tracking file if does not exist already:
-            if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
-                NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
-                if (stateData) {
-                    NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData
-                                                                          options:0
-                                                                            error:nil];
-                    queueState = [state mutableCopy];
-                } else {
-                    RollbarSdkLog(@"There was an error restoring saved queue state");
-                }
-            }
-            if (!queueState) {
-                queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
-                                @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
-                [self saveQueueState];
-            }
+            payloadsFilePath =
+            [cachesDirectory stringByAppendingPathComponent:self.configuration.developerOptions.payloadLogFile];
+        }
+        else {
             
-            // Setup the worker thread
-            // that sends the items that have been queued up in the item file set above:
+            payloadsFilePath =
+            [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
+        }
+
+//        if (isRoot) {
+//
+//            // make sure we have all the expected data directories/folder set:
+//
+//            NSString *cachesDirectory = [RollbarCachesDirectory directory];
+//            if (nil != self.configuration.developerOptions.payloadLogFile
+//                && self.configuration.developerOptions.payloadLogFile.length > 0) {
+//
+//                payloadsFilePath =
+//                [cachesDirectory stringByAppendingPathComponent:self.configuration.developerOptions.payloadLogFile];
+//            }
+//            else {
+//
+//                payloadsFilePath =
+//                [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
+//            }
+//
+//            // create working cache directory:
+//            if (![[NSFileManager defaultManager] fileExistsAtPath:cachesDirectory]) {
+//                NSError *error;
+//                BOOL result =
+//                [[NSFileManager defaultManager] createDirectoryAtPath:cachesDirectory
+//                                          withIntermediateDirectories:YES
+//                                                           attributes:nil
+//                                                                error:&error
+//                 ];
+//                NSLog(@"result %@", result);
+//            }
+//
+//            // make sure we have all the data files set:
+//
+//            queuedItemsFilePath =
+//            [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
+//            stateFilePath =
+//            [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
+//
+//            // either create or overwrite the payloads log file:
+//            [[NSFileManager defaultManager] createFileAtPath:payloadsFilePath
+//                                                    contents:nil
+//                                                  attributes:nil];
+//
+//            // create the queued items file if does not exist already:
+//            if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
+//                [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath
+//                                                        contents:nil
+//                                                      attributes:nil];
+//            }
+//
+//            // create state tracking file if does not exist already:
+//            if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
+//                NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
+//                if (stateData) {
+//                    NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData
+//                                                                          options:0
+//                                                                            error:nil];
+//                    queueState = [state mutableCopy];
+//                } else {
+//                    RollbarSdkLog(@"There was an error restoring saved queue state");
+//                }
+//            }
+//            if (!queueState) {
+//                queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
+//                                @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
+//                [self saveQueueState];
+//            }
             
-            rollbarThread = [[RollbarThread alloc] initWithNotifier:self
-                                                      reportingRate:configuration.maximumReportsPerMinute];
-            [rollbarThread start];
-            
-            // Listen for reachability status
-            // so that the items are only sent when the internet is available
-            
-            reachability = [RollbarReachability reachabilityForInternetConnection];
-            
-            isNetworkReachable = [reachability isReachable];
-            
-            reachability.reachableBlock = ^(RollbarReachability*reach) {
-                [self captureTelemetryDataForNetwork:true];
-                isNetworkReachable = YES;
-            };
-            
-            reachability.unreachableBlock = ^(RollbarReachability*reach) {
-                [self captureTelemetryDataForNetwork:false];
-                isNetworkReachable = NO;
-            };
-            
-            [reachability startNotifier];
+//            // Setup the worker thread
+//            // that sends the items that have been queued up in the item file set above:
+//
+//            rollbarThread =
+//            [[RollbarThread alloc] initWithNotifier:self
+//                                      reportingRate:configuration.loggingOptions.maximumReportsPerMinute];
+//            [rollbarThread start];
+//
+//            // Listen for reachability status
+//            // so that the items are only sent when the internet is available
+//
+//            reachability = [RollbarReachability reachabilityForInternetConnection];
+//
+//            isNetworkReachable = [reachability isReachable];
+//
+//            reachability.reachableBlock = ^(RollbarReachability*reach) {
+//                [self captureTelemetryDataForNetwork:true];
+//                isNetworkReachable = YES;
+//            };
+//
+//            reachability.unreachableBlock = ^(RollbarReachability*reach) {
+//                [self captureTelemetryDataForNetwork:false];
+//                isNetworkReachable = NO;
+//            };
+//
+//            [reachability startNotifier];
         }
 
         self->nextSendTime = [[NSDate alloc] init];
-    }
+//    }
 
     return self;
 }
 
-- (void)logCrashReport:(NSString*)crashReport {
+- (void)logCrashReport:(NSString *)crashReport {
 
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     RollbarPayload *payload = [self buildRollbarPayloadWithLevel:config.loggingOptions.crashLevel
                                                          message:nil
                                                        exception:nil
@@ -183,17 +289,17 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (void)log:(NSString*)level
-    message:(NSString*)message
-  exception:(NSException*)exception
-       data:(NSDictionary*)data
-    context:(NSString*) context {
+- (void)log:(NSString *)level
+    message:(NSString *)message
+  exception:(NSException *)exception
+       data:(NSDictionary *)data
+    context:(NSString *)context {
     
-    if (!self.configuration.enabled) {
+    if (!self.configuration.developerOptions.enabled) {
         return;
     }
     
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     
     RollbarLevel rollbarLevel = [RollbarLevelUtil RollbarLevelFromString:level];
     if (rollbarLevel < config.loggingOptions.logLevel) {
@@ -213,7 +319,7 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (void)saveQueueState {
++ (void)saveQueueState {
     NSError *error;
     NSData *data = [NSJSONSerialization rollbar_dataWithJSONObject:queueState
                                                    options:0
@@ -255,7 +361,7 @@ static BOOL isNetworkReachable = YES;
 
         queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:0];
         queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
-        [self saveQueueState];
+        [RollbarLogger saveQueueState];
         RollbarSdkLog(@"Processing saved items: emptied the queued items file.");
 
         return;
@@ -306,7 +412,7 @@ static BOOL isNetworkReachable = YES;
 
 -(RollbarPerson *)buildRollbarPerson {
     
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     if (config && config.person && config.person.ID) {
         return config.person;
     }
@@ -317,7 +423,7 @@ static BOOL isNetworkReachable = YES;
 
 -(RollbarServer *)buildRollbarServer {
     
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     if (config && config.server && !config.server.isEmpty) {
         return [[RollbarServer alloc] initWithCpu:nil
                                      serverConfig:config.server];
@@ -336,7 +442,7 @@ static BOOL isNetworkReachable = YES;
     NSBundle *mainBundle = [NSBundle mainBundle];
     
     NSString *version = nil;
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     if (config
         && config.loggingOptions
         && config.loggingOptions.codeVersion
@@ -391,7 +497,7 @@ static BOOL isNetworkReachable = YES;
     
     NSNumber *timestamp = [NSNumber numberWithInteger:[[NSDate date] timeIntervalSince1970]];
 
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     if (config && config.loggingOptions) {
         switch(config.loggingOptions.captureIp) {
             case RollbarCaptureIpType_Full:
@@ -420,7 +526,7 @@ static BOOL isNetworkReachable = YES;
 
 -(RollbarModule *)buildRollbarNotifierModule {
 
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     if (config && config.notifier && !config.notifier.isEmpty) {
         
         RollbarModule *notifierModule =
@@ -433,15 +539,15 @@ static BOOL isNetworkReachable = YES;
 }
 
 -(RollbarPayload *)buildRollbarPayloadWithLevel:(RollbarLevel)level
-                                 message:(NSString*)message
-                               exception:(NSException*)exception
+                                 message:(NSString *)message
+                               exception:(NSException *)exception
                                    error:(NSError *)error
-                                   extra:(NSDictionary*)extra
-                             crashReport:(NSString*)crashReport
-                                 context:(NSString*)context {
+                                   extra:(NSDictionary *)extra
+                             crashReport:(NSString *)crashReport
+                                 context:(NSString *)context {
 
     // check critical config settings:
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     if (!config
         || !config.destination
         || !config.destination.environment
@@ -538,18 +644,18 @@ static BOOL isNetworkReachable = YES;
     BOOL shouldIgnore = NO;
 
     // This block of code is using deprecated legacy implementation of payload check-ignore:
-    if (self.configuration.checkIgnore) {
-        @try {
-            shouldIgnore = self.configuration.checkIgnore(incomingData.jsonFriendlyData);
-            return shouldIgnore;
-        } @catch(NSException *e) {
-            RollbarSdkLog(@"checkIgnore error: %@", e.reason);
-
-            // Remove checkIgnore to prevent future exceptions
-            [self.configuration setCheckIgnoreBlock:nil];
-            return NO;
-        }
-    }
+//    if (self.configuration.checkIgnore) {
+//        @try {
+//            shouldIgnore = self.configuration.checkIgnore(incomingData);
+//            return shouldIgnore;
+//        } @catch(NSException *e) {
+//            RollbarSdkLog(@"checkIgnore error: %@", e.reason);
+//
+//            // Remove checkIgnore to prevent future exceptions
+//            [self.configuration setCheckIgnoreBlock:nil];
+//            return NO;
+//        }
+//    }
 
     if (self.configuration.checkIgnoreRollbarData) {
         @try {
@@ -570,12 +676,12 @@ static BOOL isNetworkReachable = YES;
 -(RollbarData *)modifyRollbarData:(nonnull RollbarData *)incomingData {
 
     // This block of code is using deprecated legacy implementation of payload modification:
-    if (self.configuration.payloadModification) {
-        NSMutableDictionary * jsonFriendlyMutableData = incomingData.jsonFriendlyData;
-        self.configuration.payloadModification(jsonFriendlyMutableData);
-        RollbarData *modifiedRollbarData = [[RollbarData alloc] initWithDictionary:jsonFriendlyMutableData];
-        return modifiedRollbarData;
-    }
+//    if (self.configuration.payloadModification) {
+//        NSMutableDictionary * jsonFriendlyMutableData = incomingData.jsonFriendlyData;
+//        self.configuration.payloadModification(jsonFriendlyMutableData);
+//        RollbarData *modifiedRollbarData = [[RollbarData alloc] initWithDictionary:jsonFriendlyMutableData];
+//        return modifiedRollbarData;
+//    }
 
     if (self.configuration.modifyRollbarData) {
         return self.configuration.modifyRollbarData(incomingData);
@@ -603,7 +709,7 @@ static BOOL isNetworkReachable = YES;
 
 -(NSSet *)getScrubFields {
     
-    RollbarConfig *config = self.configuration.asRollbarConfig;
+    RollbarConfig *config = self.configuration;
     if (!config
         || !config.dataScrubber
         || config.dataScrubber.isEmpty
@@ -638,7 +744,7 @@ static BOOL isNetworkReachable = YES;
 
 #pragma mark - LEGACY payload data builders
 
-- (void)queuePayload:(NSDictionary*)payload {
+- (void)queuePayload:(NSDictionary *)payload {
     [self performSelector:@selector(queuePayload_OnlyCallOnThread:)
                  onThread:rollbarThread
                withObject:payload
@@ -646,24 +752,24 @@ static BOOL isNetworkReachable = YES;
      ];
 }
 
-//- (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
-//    NSFileHandle *fileHandle =
-//    [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
-//    [fileHandle seekToEndOfFile];
-//    NSError *error = nil;
-//    [fileHandle writeData:[NSJSONSerialization rollbar_dataWithJSONObject:payload
-//                                                          options:0
-//                                                            error:&error
-//                                                             safe:true]];
-//    if (error) {
-//        RollbarSdkLog(@"Error: %@", [error localizedDescription]);
-//    }
-//    [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-//    [fileHandle closeFile];
-//    [[RollbarTelemetry sharedInstance] clearAllData];
-//}
+- (void)queuePayload_OnlyCallOnThread:(NSDictionary *)payload {
+    NSFileHandle *fileHandle =
+    [NSFileHandle fileHandleForWritingAtPath:queuedItemsFilePath];
+    [fileHandle seekToEndOfFile];
+    NSError *error = nil;
+    [fileHandle writeData:[NSJSONSerialization rollbar_dataWithJSONObject:payload
+                                                          options:0
+                                                            error:&error
+                                                             safe:true]];
+    if (error) {
+        RollbarSdkLog(@"Error: %@", [error localizedDescription]);
+    }
+    [fileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [fileHandle closeFile];
+    [[RollbarTelemetry sharedInstance] clearAllData];
+}
 
-- (BOOL)sendItem:(NSDictionary*)payload
+- (BOOL)sendItem:(NSDictionary *)payload
        nextOffset:(NSUInteger)nextOffset {
     
     RollbarPayload *rollbarPayload =
@@ -683,7 +789,7 @@ static BOOL isNetworkReachable = YES;
         NSUInteger retryCount =
         [queueState[@"retry_count"] unsignedIntegerValue];
 
-        if (0 == retryCount && YES == self.configuration.logPayload) {
+        if (0 == retryCount && YES == self.configuration.developerOptions.logPayload) {
             RollbarSdkLog(@"About to send payload: %@",
                        [[NSString alloc] initWithData:jsonPayload
                                              encoding:NSUTF8StringEncoding]
@@ -711,7 +817,7 @@ static BOOL isNetworkReachable = YES;
                 queueState[@"retry_count"] =
                 [NSNumber numberWithUnsignedInteger:retryCount + 1];
                 
-                [self saveQueueState];
+                [RollbarLogger saveQueueState];
                 
                 // Return NO so that the current batch will be retried next time
                 return NO;
@@ -727,13 +833,13 @@ static BOOL isNetworkReachable = YES;
     
     queueState[@"offset"] = [NSNumber numberWithUnsignedInteger:nextOffset];
     queueState[@"retry_count"] = [NSNumber numberWithUnsignedInteger:0];
-    [self saveQueueState];
+    [RollbarLogger saveQueueState];
     
     return YES;
 }
 
-- (BOOL)sendPayload:(nonnull NSData*)payload
-        usingConfig:(nonnull RollbarConfig*)config {
+- (BOOL)sendPayload:(nonnull NSData *)payload
+        usingConfig:(nonnull RollbarConfig  *)config {
     
     NSURL *url = [NSURL URLWithString:config.destination.endpoint];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -752,7 +858,7 @@ static BOOL isNetworkReachable = YES;
     }
 
     if (NO == config.developerOptions.transmit) {
-        return YES; // we just successfully shortcircuit here...
+        return YES; // we just successfully short-circuit here...
     }
 
     __block BOOL result = NO;
@@ -820,17 +926,17 @@ static BOOL isNetworkReachable = YES;
 
 /// This is a DEPRECATED method left for some backward compatibility for very old clients eventually moving to this more recent implementation.
 /// Use/maintain sendPayload:usingConfig: instead!
-- (BOOL)sendPayload:(NSData*)payload {
-    
-    NSURL *url = [NSURL URLWithString:self.configuration.endpoint];
+- (BOOL)sendPayload:(NSData *)payload {
+
+    NSURL *url = [NSURL URLWithString:self.configuration.destination.endpoint];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:self.configuration.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
+    [request setValue:self.configuration.destination.accessToken forHTTPHeaderField:@"X-Rollbar-Access-Token"];
     [request setHTTPBody:payload];
 
-    if (YES == self.configuration.logPayload) {
+    if (YES == self.configuration.developerOptions.logPayload) {
         NSString *payloadString = [[NSString alloc]initWithData:payload
                                                        encoding:NSUTF8StringEncoding
                                    ];
@@ -838,7 +944,7 @@ static BOOL isNetworkReachable = YES;
         //TODO: if self.configuration.logPayloadFile is defined, save the payload into the file...
     }
 
-    if (NO == self.configuration.transmit) {
+    if (NO == self.configuration.developerOptions.transmit) {
         return YES; // we just successfully shortcircuit here...
     }
 
@@ -853,17 +959,17 @@ static BOOL isNetworkReachable = YES;
 
         NSURLSession *session = [NSURLSession sharedSession];
 
-        if (self.configuration.httpProxyEnabled
-            || self.configuration.httpsProxyEnabled) {
+        if (self.configuration.httpProxy.enabled
+            || self.configuration.httpsProxy.enabled) {
 
             NSDictionary *connectionProxyDictionary =
             @{
-              @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxyEnabled],
-              @"HTTPProxy"    : self.configuration.httpProxy,
-              @"HTTPPort"     : self.configuration.httpProxyPort,
-              @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxyEnabled],
-              @"HTTPSProxy"   : self.configuration.httpsProxy,
-              @"HTTPSPort"    : self.configuration.httpsProxyPort
+                @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxy.enabled],
+                @"HTTPProxy"    : self.configuration.httpProxy.proxyUrl,
+                @"HTTPPort"     : @(self.configuration.httpProxy.proxyPort),
+                @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxy.enabled],
+                @"HTTPSProxy"   : self.configuration.httpsProxy.proxyUrl,
+                @"HTTPSPort"    : @(self.configuration.httpsProxy.proxyPort)
               };
 
             NSURLSessionConfiguration *sessionConfig =
@@ -905,9 +1011,9 @@ static BOOL isNetworkReachable = YES;
     return result;
 }
 
-- (BOOL)checkPayloadResponse:(NSURLResponse*)response
-                       error:(NSError*)error
-                        data:(NSData*)data {
+- (BOOL)checkPayloadResponse:(NSURLResponse *)response
+                       error:(NSError *)error
+                        data:(NSData *)data {
 
     // Lookup rate limiting headers and afjust reporting rate accordingly:
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -1041,37 +1147,38 @@ static BOOL isNetworkReachable = YES;
 
 #pragma mark - Update configuration methods
 
-- (void)updateAccessToken:(NSString*)accessToken
-            configuration:(RollbarConfiguration *)configuration
-                   isRoot:(BOOL)isRoot {
-    if (configuration) {
-        self.configuration = configuration;
-    } else {
-        self.configuration = [RollbarConfiguration configuration];
-    }
+//- (void)updateAccessToken:(NSString *)accessToken
+//            configuration:(RollbarConfig *)configuration
+//                   isRoot:(BOOL)isRoot {
+//    if (configuration) {
+//        self.configuration = configuration;
+//    } else {
+//        self.configuration = [RollbarConfig configuration];
+//    }
+//
+//    [self updateAccessToken:accessToken];
+//
+//    if (isRoot) {
+//        [self.configuration _setRoot];
+//    }
+//}
 
-    [self updateAccessToken:accessToken];
-
-    if (isRoot) {
-        [self.configuration _setRoot];
-    }
+- (void)updateConfiguration:(RollbarConfig *)configuration {
+//                     isRoot:(BOOL)isRoot {
+//    NSString *currentAccessToken = self.configuration.accessToken;
+    self.configuration = configuration;
+//    [self updateAccessToken:configuration.destination.accessToken];
+//              configuration:configuration
+//                     isRoot:isRoot];
 }
 
-- (void)updateConfiguration:(RollbarConfiguration *)configuration
-                     isRoot:(BOOL)isRoot {
-    NSString *currentAccessToken = self.configuration.accessToken;
-    [self updateAccessToken:currentAccessToken
-              configuration:configuration
-                     isRoot:isRoot];
-}
-
-- (void)updateAccessToken:(NSString*)accessToken {
-    self.configuration.accessToken = accessToken;
+- (void)updateAccessToken:(NSString *)accessToken {
+    self.configuration.destination.accessToken = accessToken;
 }
 
 - (void)updateReportingRate:(NSUInteger)maximumReportsPerMinute {
     if (nil != self.configuration) {
-        self.configuration.maximumReportsPerMinute = maximumReportsPerMinute;
+        self.configuration.loggingOptions.maximumReportsPerMinute = maximumReportsPerMinute;
     }
     if (nil != rollbarThread) {
         [rollbarThread cancel];
@@ -1085,7 +1192,7 @@ static BOOL isNetworkReachable = YES;
 #pragma mark - Network telemetry data
 
 - (void)captureTelemetryDataForNetwork:(BOOL)reachable {
-    if (self.configuration.shouldCaptureConnectivity
+    if (self.configuration.telemetry.captureConnectivity
         && isNetworkReachable != reachable) {
         NSString *status = reachable ? @"Connected" : @"Disconnected";
         NSString *networkType = @"Unknown";

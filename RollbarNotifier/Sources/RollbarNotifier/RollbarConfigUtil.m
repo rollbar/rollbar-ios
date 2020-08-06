@@ -10,19 +10,6 @@
 
 #import "RollbarConfigUtil.h"
 #import "RollbarConfig.h"
-////#import "DataTransferObject+Protected.h"
-//#import "RollbarCachesDirectory.h"
-//#import "RollbarDestination.h"
-//#import "RollbarDeveloperOptions.h"
-//#import "RollbarProxy.h"
-//#import "RollbarScrubbingOptions.h"
-//#import "RollbarServerConfig.h"
-//#import "RollbarPerson.h"
-//#import "RollbarModule.h"
-//#import "RollbarTelemetryOptions.h"
-//#import "RollbarTelemetryOptions.h"
-//#import "RollbarLoggingOptions.h"
-//#import <Foundation/Foundation.h>
 
 #pragma mark - constants
 
@@ -81,7 +68,8 @@ static NSString *configurationFilePath = nil;
 }
 
 + (nullable RollbarConfig *)createRollbarConfigFromDefaultFile:(NSError * _Nullable *)error {
-    return [RollbarConfigUtil createRollbarConfigFromFile:configurationFilePath error:error];
+    return [RollbarConfigUtil createRollbarConfigFromFile:configurationFilePath
+                                                    error:error];
 }
 
 + (BOOL)saveRollbarConfig:(RollbarConfig *)rollbarConfig
@@ -136,7 +124,8 @@ static NSString *configurationFilePath = nil;
 }
 
 + (BOOL)deleteDefaultRollbarConfigFile:(NSError * _Nullable *)error {
-    return [RollbarConfigUtil deleteFile:configurationFilePath error:error];
+    return [RollbarConfigUtil deleteFile:configurationFilePath
+                                   error:error];
 }
 
 @end

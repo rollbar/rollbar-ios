@@ -26,7 +26,8 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
 
 #pragma mark - class implementation
 
-@implementation RollbarTelemetryOptions
+@implementation RollbarTelemetryOptions {
+}
 
 #pragma mark - initializers
 
@@ -71,15 +72,37 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
 
 #pragma mark - property accessors
 
+//- (void)setNilValueForKey:(NSString *)key
+//{
+//    if ([key isEqualToString:@"enabled"]) {
+//        [self setValue:@(NO) forKey:@"enabled"];
+//    } else if ([key isEqualToString:@"captureLog"]) {
+//        [self setValue:@(NO) forKey:@"captureLog"];
+//    }
+//    else {
+//        [super setNilValueForKey:key];
+//    }
+//}
+
 - (BOOL)enabled {
     NSNumber *result = [self safelyGetNumberByKey:DFK_ENABLED_FLAG];
     return result.boolValue;
 }
 
 - (void)setEnabled:(BOOL)value {
+    
     [self setNumber:[NSNumber numberWithBool:value]
              forKey:DFK_ENABLED_FLAG
      ];
+    
+//    if (value != self.enabled) {
+//        NSString *propertyName = NSStringFromSelector(@selector(enabled));
+//        [self willChangeValueForKey:propertyName];
+//        [self setNumber:[NSNumber numberWithBool:value]
+//                 forKey:DFK_ENABLED_FLAG
+//         ];
+//        [self didChangeValueForKey:propertyName];
+//    }
 }
 
 - (BOOL)captureLog {

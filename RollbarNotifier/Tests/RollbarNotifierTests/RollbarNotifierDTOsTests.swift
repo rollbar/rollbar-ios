@@ -262,7 +262,7 @@ final class RollbarNotifierDTOsTests: XCTestCase {
         XCTAssertTrue(dto.viewInputsScrubber.enabled,
                       "Proper view inputs scrubber enabled"
                       );
-        XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count == 0,
+        XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count > 0,
                       "Proper view inputs scrubber scrub fields count"
                       );
         XCTAssertTrue(dto.viewInputsScrubber.safeListFields.count == 0,

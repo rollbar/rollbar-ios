@@ -135,7 +135,7 @@
                        message:(nonnull NSString *)message
                      extraData:(nullable NSDictionary *)extraData;
 
-#pragma mark - Tlemetry cache access methods
+#pragma mark - Telemetry cache access methods
 
 -(nonnull NSArray<RollbarTelemetryEvent*> *)getAllEvents;
 

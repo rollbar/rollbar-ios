@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param otherDTO the other DTO to compare with
 - (BOOL)hasSameDefinedPropertiesAs:(RollbarDTO *)otherDTO;
 
-/// Signifies that this DTO doesn't carry any useful data and is just an empty transpot "shell"
+/// Signifies that this DTO doesn't carry any useful data and is just an empty transport "shell"
 @property (nonatomic, readonly) BOOL isEmpty;
 
 #pragma mark - Initializers

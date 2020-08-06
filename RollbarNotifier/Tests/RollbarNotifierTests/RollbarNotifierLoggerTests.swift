@@ -15,13 +15,13 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         
         
         //if Rollbar.currentConfiguration() != nil {
-            Rollbar.initWithAccessToken("2ffc7997ed864dda94f63e7b7daae0f3");
-            Rollbar.currentConfiguration().accessToken = "2ffc7997ed864dda94f63e7b7daae0f3";
-            Rollbar.currentConfiguration().environment = "unit-tests";
-            Rollbar.currentConfiguration().transmit = true;
-            Rollbar.currentConfiguration().logPayload = true;
-            Rollbar.currentConfiguration().maximumReportsPerMinute = 5000;
-            Rollbar.currentConfiguration()?.asRollbarConfig()?.customData = ["someKey": "someValue", ];
+        Rollbar.initWithAccessToken("2ffc7997ed864dda94f63e7b7daae0f3");
+        Rollbar.currentConfiguration()?.destination.accessToken = "2ffc7997ed864dda94f63e7b7daae0f3";
+        Rollbar.currentConfiguration()?.destination.environment = "unit-tests";
+        Rollbar.currentConfiguration()?.developerOptions.transmit = true;
+        Rollbar.currentConfiguration()?.developerOptions.logPayload = true;
+        Rollbar.currentConfiguration()?.loggingOptions.maximumReportsPerMinute = 5000;
+        Rollbar.currentConfiguration()?.customData = ["someKey": "someValue", ];
         //}
     }
     
@@ -29,7 +29,7 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         
         RollbarTestUtil.waitForPesistenceToComplete(waitTimeInSeconds: 2.0);
 
-        Rollbar.update(RollbarConfiguration(), isRoot: true);
+        Rollbar.updateConfiguration(RollbarConfig());
         super.tearDown();
     }
     
@@ -42,38 +42,38 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         //RollbarTestUtil.clearLogFile();
         //RollbarTestUtil.clearTelemetryFile();
 
-        Rollbar.currentConfiguration().transmit = false;
-        Rollbar.currentConfiguration().logPayload = true;
+        Rollbar.currentConfiguration()?.developerOptions.transmit = false;
+        Rollbar.currentConfiguration()?.developerOptions.logPayload = true;
 
         // configure the root notifier:
-        Rollbar.currentConfiguration().accessToken = "AT_0";
-        Rollbar.currentConfiguration().environment = "ENV_0";
+        Rollbar.currentConfiguration()?.destination.accessToken = "AT_0";
+        Rollbar.currentConfiguration()?.destination.environment = "ENV_0";
         
-        XCTAssertEqual(Rollbar.currentLogger().configuration.accessToken,
-                       Rollbar.currentConfiguration().accessToken);
-        XCTAssertEqual(Rollbar.currentLogger().configuration.environment,
-                       Rollbar.currentConfiguration().environment);
+        XCTAssertEqual(Rollbar.currentLogger().configuration.destination.accessToken,
+                       Rollbar.currentConfiguration().destination.accessToken);
+        XCTAssertEqual(Rollbar.currentLogger().configuration.destination.environment,
+                       Rollbar.currentConfiguration()?.destination.environment);
         
-        XCTAssertEqual(Rollbar.currentLogger().configuration.asRollbarConfig().destination.accessToken,
-                       Rollbar.currentConfiguration().accessToken);
-        XCTAssertEqual(Rollbar.currentLogger().configuration.asRollbarConfig().destination.environment,
-                       Rollbar.currentConfiguration().environment);
+        XCTAssertEqual(Rollbar.currentLogger().configuration.destination.accessToken,
+                       Rollbar.currentConfiguration()?.destination.accessToken);
+        XCTAssertEqual(Rollbar.currentLogger().configuration?.destination.environment,
+                       Rollbar.currentConfiguration()?.destination.environment);
         
         // create and configure another notifier:
-        let notifier = RollbarLogger(accessToken: "AT_1", configuration: nil, isRoot: false)!;
-        notifier.configuration.environment = "ENV_1";
-        XCTAssertTrue(notifier.configuration.asRollbarConfig().destination.accessToken.compare("AT_1") == .orderedSame);
-        XCTAssertTrue(notifier.configuration.asRollbarConfig().destination.environment.compare("ENV_1") == .orderedSame);
+        let notifier = RollbarLogger(accessToken: "AT_1")!;
+        notifier.configuration.destination.environment = "ENV_1";
+        XCTAssertTrue(notifier.configuration.destination.accessToken.compare("AT_1") == .orderedSame);
+        XCTAssertTrue(notifier.configuration.destination.environment.compare("ENV_1") == .orderedSame);
 
         // reconfigure the root notifier:
-        Rollbar.currentConfiguration().accessToken = "AT_N";
-        Rollbar.currentConfiguration().environment = "ENV_N";
-        XCTAssertTrue(Rollbar.currentLogger().configuration.asRollbarConfig().destination.accessToken.compare("AT_N") == .orderedSame);
-        XCTAssertTrue(Rollbar.currentLogger().configuration.asRollbarConfig().destination.environment.compare("ENV_N") == .orderedSame);
+        Rollbar.currentConfiguration()?.destination.accessToken = "AT_N";
+        Rollbar.currentConfiguration()?.destination.environment = "ENV_N";
+        XCTAssertTrue(Rollbar.currentLogger().configuration.destination.accessToken.compare("AT_N") == .orderedSame);
+        XCTAssertTrue(Rollbar.currentLogger().configuration.destination.environment.compare("ENV_N") == .orderedSame);
 
         // make sure the other notifier is still has its original configuration:
-        XCTAssertTrue(notifier.configuration.asRollbarConfig().destination.accessToken.compare("AT_1") == .orderedSame);
-        XCTAssertTrue(notifier.configuration.asRollbarConfig().destination.environment.compare("ENV_1") == .orderedSame);
+        XCTAssertTrue(notifier.configuration.destination.accessToken.compare("AT_1") == .orderedSame);
+        XCTAssertTrue(notifier.configuration.destination.environment.compare("ENV_1") == .orderedSame);
 
         //TODO: to make this test even more valuable we need to make sure the other notifier's payloads
         //      are actually sent to its intended destination. But that is something we will be able to do
@@ -85,19 +85,19 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         //RollbarTestUtil.clearLogFile();
         //RollbarTestUtil.clearTelemetryFile();
 
-        Rollbar.currentConfiguration().accessToken = "2ffc7997ed864dda94f63e7b7daae0f3";
-        Rollbar.currentConfiguration().environment = "unit-tests";
-        Rollbar.currentConfiguration().transmit = true;
+        Rollbar.currentConfiguration()?.destination.accessToken = "2ffc7997ed864dda94f63e7b7daae0f3";
+        Rollbar.currentConfiguration()?.destination.environment = "unit-tests";
+        Rollbar.currentConfiguration()?.developerOptions.transmit = true;
 
-        Rollbar.currentConfiguration().transmit = true;
+        Rollbar.currentConfiguration()?.developerOptions.transmit = true;
         Rollbar.critical("Transmission test YES");
         RollbarTestUtil.waitForPesistenceToComplete();
 
-        Rollbar.currentConfiguration().transmit = false;
+        Rollbar.currentConfiguration()?.developerOptions.transmit = false;
         Rollbar.critical("Transmission test NO");
         RollbarTestUtil.waitForPesistenceToComplete();
 
-        Rollbar.currentConfiguration().transmit = true;
+        Rollbar.currentConfiguration()?.developerOptions.transmit = true;
         //Rollbar.currentConfiguration.enabled = NO;
         Rollbar.critical("Transmission test YES2");
         RollbarTestUtil.waitForPesistenceToComplete();
