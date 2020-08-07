@@ -14,12 +14,12 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
         }
         else {
             Rollbar.initWithAccessToken("2ffc7997ed864dda94f63e7b7daae0f3");
-            Rollbar.currentConfiguration().environment = "unit-tests";
+            Rollbar.currentConfiguration()?.destination.environment = "unit-tests";
         }
     }
     
     override func tearDown() {
-        Rollbar.update(RollbarConfiguration(), isRoot: true);
+        Rollbar.updateConfiguration(RollbarConfig());
         super.tearDown();
     }
     
@@ -28,7 +28,9 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
         RollbarTestUtil.clearLogFile();
         RollbarTestUtil.clearTelemetryFile();
 
-        Rollbar.currentConfiguration().telemetryEnabled = true;
+        Rollbar.currentConfiguration()?.telemetry.enabled = true;
+        
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
         
         Rollbar.recordNavigationEvent(
             for: .info,
@@ -116,7 +118,7 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
         RollbarTestUtil.clearLogFile();
         RollbarTestUtil.clearTelemetryFile();
 
-        Rollbar.currentConfiguration().telemetryEnabled = true;
+        Rollbar.currentConfiguration().telemetry.enabled = true;
 
         Rollbar.recordNavigationEvent(
             for: .info,
@@ -205,10 +207,12 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
 
     func testTelemetryViewEventScrubbing() {
         
-        Rollbar.currentConfiguration().telemetryEnabled = true;
-        Rollbar.currentConfiguration().scrubViewInputsTelemetry = true;
-        Rollbar.currentConfiguration().addTelemetryViewInput(toScrub: "password");
-        Rollbar.currentConfiguration().addTelemetryViewInput(toScrub: "pin");
+        Rollbar.currentConfiguration()?.telemetry.enabled = true;
+        Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.enabled = true;
+        Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.scrubFields.append("password");
+        Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.scrubFields.append("pin");
+        
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
         
         Rollbar.recordViewEvent(
             for: .debug,

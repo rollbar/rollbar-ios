@@ -20,34 +20,36 @@
 @class RollbarModule;
 @class RollbarTelemetryOptions;
 @class RollbarLoggingOptions;
+@class RollbarData;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RollbarConfig : RollbarDTO
+@interface RollbarConfig : RollbarDTO {
+    BOOL _isRootConfiguration;
+}
 
 #pragma mark - properties
-@property (nonatomic, strong) RollbarDestination *destination;
-@property (nonatomic, strong) RollbarDeveloperOptions *developerOptions;
-@property (nonatomic, strong) RollbarLoggingOptions *loggingOptions;
-@property (nonatomic, strong) RollbarProxy *httpProxy;
-@property (nonatomic, strong) RollbarProxy *httpsProxy;
-@property (nonatomic, strong) RollbarScrubbingOptions *dataScrubber;
-@property (nonatomic, strong) RollbarServerConfig *server;
-@property (nonatomic, strong) RollbarPerson *person;
-@property (nonatomic, strong) RollbarModule *notifier;
-@property (nonatomic, strong) RollbarTelemetryOptions *telemetry;
+@property (nonnull, nonatomic, strong) RollbarDestination *destination;
+@property (nonnull, nonatomic, strong) RollbarDeveloperOptions *developerOptions;
+@property (nonnull, nonatomic, strong) RollbarLoggingOptions *loggingOptions;
+@property (nonnull, nonatomic, strong) RollbarProxy *httpProxy;
+@property (nonnull, nonatomic, strong) RollbarProxy *httpsProxy;
+@property (nonnull, nonatomic, strong) RollbarScrubbingOptions *dataScrubber;
+@property (nonnull, nonatomic, strong) RollbarServerConfig *server;
+@property (nonnull, nonatomic, strong) RollbarPerson *person;
+@property (nonnull, nonatomic, strong) RollbarModule *notifier;
+@property (nonnull, nonatomic, strong) RollbarTelemetryOptions *telemetry;
 
 #pragma mark - Custom data
-@property (nonatomic, strong) NSDictionary *customData;
+@property (nonatomic, strong) NSDictionary<NSString *, id> *customData;
 
 
 #pragma mark - Payload Content Related
-// Payload content related:
-// ========================
-// Decides whether or not to send payload. Returns true to ignore, false to send
-//@property (nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
-// Modify payload
-//@property (nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
+// Decides whether or not to send provided payload data. Returns true to ignore, false to send
+@property (nullable, nonatomic, copy) BOOL (^checkIgnoreRollbarData)(RollbarData *rollbarData);
+// Modify payload data
+@property (nullable, nonatomic, copy) RollbarData *(^modifyRollbarData)(RollbarData *rollbarData);
+
 
 #pragma mark - Convenience Methods (remove from here and only keep them within RollbarConfiguration)
 - (void)setPersonId:(NSString*)personId

@@ -20,12 +20,12 @@
 }
 
 - (void)tearDown {
-    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
+    [Rollbar updateConfiguration:[RollbarConfig new]];
     [super tearDown];
 }
 
 - (void)testDefaultRollbarConfiguration {
-    RollbarConfiguration *rc = [[RollbarConfiguration alloc] init];
+    RollbarConfig *rc = [RollbarConfig new];
     NSLog(@"%@", rc);
 }
 
@@ -35,7 +35,7 @@
     
     // define scrub fields:
     for (NSString *key in keys) {
-        [Rollbar.currentConfiguration addScrubField:key];
+        [Rollbar.currentConfiguration.dataScrubber addScrubField:key];
     }
     [Rollbar debug:@"test"];
     RollbarFlushFileThread(Rollbar.currentLogger);
@@ -56,7 +56,7 @@
     
     // define scrub whitelist fields (the same as the scrub fields - to counterbalance them):
     for (NSString *key in keys) {
-        [Rollbar.currentConfiguration addScrubSafeListField:key];
+        [Rollbar.currentConfiguration.dataScrubber addScrubSafeListField:key];
     }
     [Rollbar debug:@"test"];
     RollbarFlushFileThread(Rollbar.currentLogger);
@@ -78,7 +78,9 @@
     RollbarClearLogFile();
     
     BOOL expectedFlag = NO;
-    Rollbar.currentConfiguration.telemetryEnabled = expectedFlag;
+    Rollbar.currentConfiguration.telemetry.enabled = expectedFlag;
+    [Rollbar reapplyConfiguration];
+
     XCTAssertTrue(RollbarTelemetry.sharedInstance.enabled == expectedFlag,
                   @"RollbarTelemetry.sharedInstance.enabled is expected to be NO."
                   );
@@ -87,7 +89,8 @@
     for (int i=0; i<testCount; i++) {
         [Rollbar recordErrorEventForLevel:RollbarLevel_Debug message:@"test"];
     }
-    Rollbar.currentConfiguration.maximumReportsPerMinute = max;
+
+    Rollbar.currentConfiguration.loggingOptions.maximumReportsPerMinute = max;
     NSArray *telemetryCollection = [[RollbarTelemetry sharedInstance] getAllData];
     XCTAssertTrue(telemetryCollection.count == 0,
                   @"Telemetry count is expected to be %i. Actual is %lu",
@@ -96,14 +99,16 @@
                   );
 
     expectedFlag = YES;
-    Rollbar.currentConfiguration.telemetryEnabled = expectedFlag;
+    Rollbar.currentConfiguration.telemetry.enabled = expectedFlag;
+    [Rollbar reapplyConfiguration];
+
     XCTAssertTrue(RollbarTelemetry.sharedInstance.enabled == expectedFlag,
                   @"RollbarTelemetry.sharedInstance.enabled is expected to be YES."
                   );
     for (int i=0; i<testCount; i++) {
         [Rollbar recordErrorEventForLevel:RollbarLevel_Debug message:@"test"];
     }
-    Rollbar.currentConfiguration.maximumReportsPerMinute = max;
+    Rollbar.currentConfiguration.loggingOptions.maximumReportsPerMinute = max;
     telemetryCollection = [[RollbarTelemetry sharedInstance] getAllData];
     XCTAssertTrue(telemetryCollection.count == max,
                   @"Telemetry count is expected to be %i. Actual is %lu",
@@ -117,12 +122,17 @@
 - (void)testScrubViewInputsTelemetryConfig {
 
     BOOL expectedFlag = NO;
-    Rollbar.currentConfiguration.scrubViewInputsTelemetry = expectedFlag;
+    Rollbar.currentConfiguration.telemetry.viewInputsScrubber.enabled = expectedFlag;
+    [Rollbar reapplyConfiguration];
+
     XCTAssertTrue(RollbarTelemetry.sharedInstance.scrubViewInputs == expectedFlag,
                   @"RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be NO."
                   );
+
     expectedFlag = YES;
-    Rollbar.currentConfiguration.scrubViewInputsTelemetry = expectedFlag;
+    Rollbar.currentConfiguration.telemetry.viewInputsScrubber.enabled = expectedFlag;
+    [Rollbar reapplyConfiguration];
+
     XCTAssertTrue(RollbarTelemetry.sharedInstance.scrubViewInputs == expectedFlag,
                   @"RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be YES."
                   );
@@ -133,27 +143,33 @@
     NSString *element1 = @"password";
     NSString *element2 = @"pin";
     
-    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:element1];
-    [Rollbar.currentConfiguration addTelemetryViewInputToScrub:element2];
+    [Rollbar.currentConfiguration.telemetry.viewInputsScrubber addScrubField:element1];
+    [Rollbar.currentConfiguration.telemetry.viewInputsScrubber addScrubField:element2];
+    [Rollbar reapplyConfiguration];
 
-    XCTAssertTrue(RollbarTelemetry.sharedInstance.viewInputsToScrub.count == 2,
-                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 2"
-                  );
-    XCTAssertTrue([RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element1],
-                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
-                  element1
-                  );
-    XCTAssertTrue([RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element2],
-                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
-                  element2
-                  );
+    XCTAssertTrue(
+        RollbarTelemetry.sharedInstance.viewInputsToScrub.count == [RollbarScrubbingOptions new].scrubFields.count + 2,
+        @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 2"
+        );
+    XCTAssertTrue(
+        [RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element1],
+        @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
+        element1
+        );
+    XCTAssertTrue(
+        [RollbarTelemetry.sharedInstance.viewInputsToScrub containsObject:element2],
+        @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to conatin @%@",
+        element2
+        );
     
-    [Rollbar.currentConfiguration removeTelemetryViewInputToScrub:element1];
-    [Rollbar.currentConfiguration removeTelemetryViewInputToScrub:element2];
-    
-    XCTAssertTrue(RollbarTelemetry.sharedInstance.viewInputsToScrub.count == 0,
-                  @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 0"
-                  );
+    [Rollbar.currentConfiguration.telemetry.viewInputsScrubber removeScrubField:element1];
+    [Rollbar.currentConfiguration.telemetry.viewInputsScrubber removeScrubField:element2];
+    [Rollbar reapplyConfiguration];
+
+    XCTAssertTrue(
+        RollbarTelemetry.sharedInstance.viewInputsToScrub.count == [RollbarScrubbingOptions new].scrubFields.count,
+        @"RollbarTelemetry.sharedInstance.viewInputsToScrub is expected to count = 0"
+        );
 }
 
 - (void)testEnabled {
@@ -166,8 +182,8 @@
                   );
 
 
-    Rollbar.currentConfiguration.enabled = NO;
-    Rollbar.currentLogger.configuration.enabled = NO;
+    Rollbar.currentConfiguration.developerOptions.enabled = NO;
+    Rollbar.currentLogger.configuration.developerOptions.enabled = NO;
     [Rollbar debug:@"Test1"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     logItems = RollbarReadLogItemFromFile();
@@ -176,7 +192,7 @@
                   (unsigned long) logItems.count
                   );
 
-    Rollbar.currentConfiguration.enabled = YES;
+    Rollbar.currentConfiguration.developerOptions.enabled = YES;
     [Rollbar debug:@"Test2"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     logItems = RollbarReadLogItemFromFile();
@@ -185,7 +201,7 @@
                   (unsigned long) logItems.count
                   );
 
-    Rollbar.currentConfiguration.enabled = NO;
+    Rollbar.currentConfiguration.developerOptions.enabled = NO;
     [Rollbar debug:@"Test3"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     logItems = RollbarReadLogItemFromFile();
@@ -199,14 +215,18 @@
 
 - (void)testMaximumTelemetryEvents {
     
-    Rollbar.currentConfiguration.telemetryEnabled = YES;
+    Rollbar.currentConfiguration.telemetry.enabled = YES;
+    [Rollbar reapplyConfiguration];
 
     int testCount = 10;
     int max = 5;
     for (int i=0; i<testCount; i++) {
         [Rollbar recordErrorEventForLevel:RollbarLevel_Debug message:@"test"];
     }
-    Rollbar.currentConfiguration.maximumTelemetryEvents = max;
+
+    Rollbar.currentConfiguration.telemetry.maximumTelemetryData = max;
+    [Rollbar reapplyConfiguration];
+    
     [Rollbar debug:@"Test"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     NSArray *logItems = RollbarReadLogItemFromFile();
@@ -225,9 +245,9 @@
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 
-    [Rollbar.currentConfiguration setCheckIgnoreBlock:^BOOL(NSDictionary *payload) {
+    Rollbar.currentConfiguration.checkIgnoreRollbarData = ^BOOL(RollbarData *payloadData) {
         return true;
-    }];
+    };
     [Rollbar debug:@"Ignore this"];
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
@@ -275,10 +295,13 @@
 
 - (void)testPayloadModification {
     NSString *newMsg = @"Modified message";
-    [Rollbar.currentConfiguration setPayloadModificationBlock:^(NSMutableDictionary *payload) {
-        [payload setValue:newMsg forKeyPath:@"body.message.body"];
-        [payload setValue:newMsg forKeyPath:@"body.message.body2"];
-    }];
+    Rollbar.currentConfiguration.modifyRollbarData = ^RollbarData *(RollbarData *payloadData) {
+//        [payloadData setValue:newMsg forKeyPath:@"body.message.body"];
+//        [payloadData setValue:newMsg forKeyPath:@"body.message.body2"];
+        payloadData.body.message.body = newMsg;
+        [payloadData.body.message addKeyed:@"body2" String:newMsg];
+        return payloadData;
+    };
     [Rollbar debug:@"test"];
 
     RollbarFlushFileThread(Rollbar.currentLogger);
@@ -304,7 +327,7 @@
     NSArray *keys = @[@"client.ios.app_name", @"client.ios.os_version", @"body.message.body"];
 
     for (NSString *key in keys) {
-        [Rollbar.currentConfiguration addScrubField:key];
+        [Rollbar.currentConfiguration.dataScrubber addScrubField:key];
     }
     [Rollbar debug:@"test"];
 
@@ -326,8 +349,9 @@
     NSString *logMsg = @"log-message-testing";
     [[RollbarTelemetry sharedInstance] clearAllData];
     //Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
-    Rollbar.currentConfiguration.telemetryEnabled = YES;
-    Rollbar.currentConfiguration.captureLogAsTelemetryEvents = YES;
+    Rollbar.currentConfiguration.telemetry.enabled = YES;
+    Rollbar.currentConfiguration.telemetry.captureLog = YES;
+    [Rollbar reapplyConfiguration];
     // The following line ensures the captureLogAsTelemetryData setting is flushed through the internal queue
     [[RollbarTelemetry sharedInstance] getAllData];
     NSLog(logMsg);

@@ -17,55 +17,53 @@
     if (!Rollbar.currentConfiguration) {
         //[Rollbar initWithAccessToken:@""];
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
-        Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
-        Rollbar.currentConfiguration.environment = @"unit-tests";
-        Rollbar.currentConfiguration.transmit = YES;
-        Rollbar.currentConfiguration.logPayload = YES;
-        Rollbar.currentConfiguration.maximumReportsPerMinute = 5000;
+        Rollbar.currentConfiguration.destination.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
+        Rollbar.currentConfiguration.destination.environment = @"unit-tests";
+        Rollbar.currentConfiguration.developerOptions.transmit = YES;
+        Rollbar.currentConfiguration.developerOptions.logPayload = YES;
+        Rollbar.currentConfiguration.loggingOptions.maximumReportsPerMinute = 5000;
     }
 }
 
 - (void)tearDown {
-    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
+    [Rollbar updateConfiguration:[RollbarConfig new]];
     [super tearDown];
 }
 
 - (void)testRollbarNotifiersIndependentConfiguration {
 
-    Rollbar.currentConfiguration.transmit = NO;
-    Rollbar.currentConfiguration.logPayload = YES;
+    Rollbar.currentConfiguration.developerOptions.transmit = NO;
+    Rollbar.currentConfiguration.developerOptions.logPayload = YES;
 
     // configure the root notifier:
-    Rollbar.currentConfiguration.accessToken = @"AT_0";
-    Rollbar.currentConfiguration.environment = @"ENV_0";
+    Rollbar.currentConfiguration.destination.accessToken = @"AT_0";
+    Rollbar.currentConfiguration.destination.environment = @"ENV_0";
     
-    XCTAssertEqual(Rollbar.currentLogger.configuration.accessToken,
-                   Rollbar.currentConfiguration.accessToken);
-    XCTAssertEqual(Rollbar.currentLogger.configuration.environment,
-                   Rollbar.currentConfiguration.environment);
+    XCTAssertEqual(Rollbar.currentLogger.configuration.destination.accessToken,
+                   Rollbar.currentConfiguration.destination.accessToken);
+    XCTAssertEqual(Rollbar.currentLogger.configuration.destination.environment,
+                   Rollbar.currentConfiguration.destination.environment);
     
-    XCTAssertEqual(Rollbar.currentLogger.configuration.asRollbarConfig.destination.accessToken,
-                   Rollbar.currentConfiguration.accessToken);
-    XCTAssertEqual(Rollbar.currentLogger.configuration.asRollbarConfig.destination.environment,
-                   Rollbar.currentConfiguration.environment);
+    XCTAssertEqual(Rollbar.currentLogger.configuration.destination.accessToken,
+                   Rollbar.currentConfiguration.destination.accessToken);
+    XCTAssertEqual(Rollbar.currentLogger.configuration.destination.environment,
+                   Rollbar.currentConfiguration.destination.environment);
     
     // create and configure another notifier:
-    RollbarLogger *notifier = [[RollbarLogger alloc] initWithAccessToken:@"AT_1"
-                                                               configuration:nil
-                                                                      isRoot:NO];
-    notifier.configuration.environment = @"ENV_1";
-    XCTAssertTrue([notifier.configuration.asRollbarConfig.destination.accessToken compare:@"AT_1"] == NSOrderedSame);
-    XCTAssertTrue([notifier.configuration.asRollbarConfig.destination.environment compare:@"ENV_1"] == NSOrderedSame);
+    RollbarLogger *notifier = [[RollbarLogger alloc] initWithAccessToken:@"AT_1"];
+    notifier.configuration.destination.environment = @"ENV_1";
+    XCTAssertTrue([notifier.configuration.destination.accessToken compare:@"AT_1"] == NSOrderedSame);
+    XCTAssertTrue([notifier.configuration.destination.environment compare:@"ENV_1"] == NSOrderedSame);
 
     // reconfigure the root notifier:
-    Rollbar.currentConfiguration.accessToken = @"AT_N";
-    Rollbar.currentConfiguration.environment = @"ENV_N";
-    XCTAssertTrue([Rollbar.currentLogger.configuration.asRollbarConfig.destination.accessToken compare:@"AT_N"] == NSOrderedSame);
-    XCTAssertTrue([Rollbar.currentLogger.configuration.asRollbarConfig.destination.environment compare:@"ENV_N"] == NSOrderedSame);
+    Rollbar.currentConfiguration.destination.accessToken = @"AT_N";
+    Rollbar.currentConfiguration.destination.environment = @"ENV_N";
+    XCTAssertTrue([Rollbar.currentLogger.configuration.destination.accessToken compare:@"AT_N"] == NSOrderedSame);
+    XCTAssertTrue([Rollbar.currentLogger.configuration.destination.environment compare:@"ENV_N"] == NSOrderedSame);
 
     // make sure the other notifier is still has its original configuration:
-    XCTAssertTrue([notifier.configuration.asRollbarConfig.destination.accessToken compare:@"AT_1"] == NSOrderedSame);
-    XCTAssertTrue([notifier.configuration.asRollbarConfig.destination.environment compare:@"ENV_1"] == NSOrderedSame);
+    XCTAssertTrue([notifier.configuration.destination.accessToken compare:@"AT_1"] == NSOrderedSame);
+    XCTAssertTrue([notifier.configuration.destination.environment compare:@"ENV_1"] == NSOrderedSame);
 
     //TODO: to make this test even more valuable we need to make sure the other notifier's payloads
     //      are actually sent to its intended destination. But that is something we will be able to do
@@ -74,19 +72,19 @@
 
 - (void)testRollbarTransmit {
 
-    Rollbar.currentConfiguration.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
-    Rollbar.currentConfiguration.environment = @"unit-tests";
-    Rollbar.currentConfiguration.transmit = YES;
+    Rollbar.currentConfiguration.destination.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
+    Rollbar.currentConfiguration.destination.environment = @"unit-tests";
+    Rollbar.currentConfiguration.developerOptions.transmit = YES;
 
-    Rollbar.currentConfiguration.transmit = YES;
+    Rollbar.currentConfiguration.developerOptions.transmit = YES;
     [Rollbar critical:@"Transmission test YES"];
     [NSThread sleepForTimeInterval:2.0f];
 
-    Rollbar.currentConfiguration.transmit = NO;
+    Rollbar.currentConfiguration.developerOptions.transmit = NO;
     [Rollbar critical:@"Transmission test NO"];
     [NSThread sleepForTimeInterval:2.0f];
 
-    Rollbar.currentConfiguration.transmit = YES;
+    Rollbar.currentConfiguration.developerOptions.transmit = YES;
     //Rollbar.currentConfiguration.enabled = NO;
     [Rollbar critical:@"Transmission test YES2"];
     [NSThread sleepForTimeInterval:2.0f];

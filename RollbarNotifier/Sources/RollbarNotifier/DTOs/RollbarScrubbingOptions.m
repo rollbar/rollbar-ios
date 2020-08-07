@@ -26,8 +26,8 @@ static NSString * const DFK_SAFELIST_FIELDS = @"safeListFields"; // do not scrub
 #pragma mark - initializers
 
 - (instancetype)initWithEnabled:(BOOL)enabled
-                    scrubFields:(NSArray *)scrubFields
-                 safeListFields:(NSArray *)safeListFields {
+                    scrubFields:(NSArray<NSString *> *)scrubFields
+                 safeListFields:(NSArray<NSString *> *)safeListFields {
 
     self = [super initWithDictionary:@{
         DFK_ENABLED:[NSNumber numberWithBool:enabled],
@@ -38,8 +38,8 @@ static NSString * const DFK_SAFELIST_FIELDS = @"safeListFields"; // do not scrub
 
 }
 
-- (instancetype)initWithScrubFields:(NSArray *)scrubFields
-                    safeListFields:(NSArray *)safeListFields {
+- (instancetype)initWithScrubFields:(NSArray<NSString *> *)scrubFields
+                    safeListFields:(NSArray<NSString *> *)safeListFields {
 
     return [self initWithEnabled:DEFAULT_ENABLED_FLAG
                      scrubFields:scrubFields
@@ -47,7 +47,7 @@ static NSString * const DFK_SAFELIST_FIELDS = @"safeListFields"; // do not scrub
             ];
 }
 
-- (instancetype)initWithScrubFields:(NSArray *)scrubFields {
+- (instancetype)initWithScrubFields:(NSArray<NSString *> *)scrubFields {
     
     return [self initWithScrubFields:scrubFields safeListFields:@[]];
 }
@@ -78,22 +78,42 @@ static NSString * const DFK_SAFELIST_FIELDS = @"safeListFields"; // do not scrub
     [self setNumber:[[NSNumber alloc] initWithBool:value] forKey:DFK_ENABLED];
 }
 
-- (NSArray *)scrubFields {
+- (NSArray<NSString *> *)scrubFields {
     NSArray *result = [self safelyGetArrayByKey:DFK_SCRUB_FIELDS];
     return result;
 }
 
-- (void)setScrubFields:(NSArray *)scrubFields {
+- (void)setScrubFields:(NSArray<NSString *> *)scrubFields {
     [self setArray:scrubFields forKey:DFK_SCRUB_FIELDS];
 }
 
-- (NSArray *)safeListFields {
-    NSArray *result = [self safelyGetArrayByKey:DFK_SAFELIST_FIELDS];
+- (void)addScrubField:(NSString *)field {
+    self.scrubFields =
+    [self.scrubFields arrayByAddingObject:field];
+}
+
+- (void)removeScrubField:(NSString *)field {
+    NSMutableArray *mutableCopy = self.scrubFields.mutableCopy;
+    [mutableCopy removeObject:field];
+    self.scrubFields = mutableCopy.copy;
+}
+- (NSArray<NSString *> *)safeListFields {
+    NSArray<NSString *> *result = [self safelyGetArrayByKey:DFK_SAFELIST_FIELDS];
     return result;
 }
 
-- (void)setSafeListFields:(NSArray *)whitelistFields {
+- (void)setSafeListFields:(NSArray<NSString *> *)whitelistFields {
     [self setArray:whitelistFields forKey:DFK_SAFELIST_FIELDS];
+}
+
+- (void)addScrubSafeListField:(NSString *)field {
+    self.safeListFields = [self.safeListFields arrayByAddingObject:field];
+}
+
+- (void)removeScrubSafeListField:(NSString *)field {
+    NSMutableArray *mutableCopy = self.safeListFields.mutableCopy;
+    [mutableCopy removeObject:field];
+    self.safeListFields = mutableCopy.copy;
 }
 
 @end

@@ -287,10 +287,10 @@
     XCTAssertTrue(dto.viewInputsScrubber.enabled,
                   @"Proper view inputs scrubber enabled"
                   );
-    XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count == 0,
+    XCTAssertTrue(dto.viewInputsScrubber.scrubFields.count == [RollbarScrubbingOptions new].scrubFields.count,
                   @"Proper view inputs scrubber scrub fields count"
                   );
-    XCTAssertTrue(dto.viewInputsScrubber.safeListFields.count == 0,
+    XCTAssertTrue(dto.viewInputsScrubber.safeListFields.count == [RollbarScrubbingOptions new].safeListFields.count,
                   @"Proper view inputs scrubber white list fields count"
                   );
 

@@ -34,8 +34,3 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-//#pragma mark - deprecated
-//
-//NSString* _Nonnull RollbarStringFromTelemetryType(RollbarTelemetryType type)
-//DEPRECATED_MSG_ATTRIBUTE("Use [RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:...] methods instead.");
-

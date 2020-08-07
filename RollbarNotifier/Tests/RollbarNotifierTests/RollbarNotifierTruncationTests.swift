@@ -14,12 +14,12 @@ final class RollbarNotifierTruncationTests: XCTestCase {
         
         //if Rollbar.currentConfiguration() != nil {
             Rollbar.initWithAccessToken("2ffc7997ed864dda94f63e7b7daae0f3");
-            Rollbar.currentConfiguration().environment = "unit-tests";
+        Rollbar.currentConfiguration()?.destination.environment = "unit-tests";
         //}
     }
     
     override func tearDown() {
-        Rollbar.update(RollbarConfiguration(), isRoot: true);
+        Rollbar.updateConfiguration(RollbarConfig());
         super.tearDown();
     }
     

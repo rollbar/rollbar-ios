@@ -5,11 +5,22 @@
 #import "Rollbar.h"
 //#import "RollbarKSCrashInstallation.h"
 #import "RollbarLogger.h"
-#import "RollbarConfiguration.h"
+#import "RollbarConfig.h"
+#import "RollbarDestination.h"
+#import "RollbarTelemetryOptions.h"
+#import "RollbarTelemetryOptionsObserver.h"
+#import "RollbarScrubbingOptions.h"
 
 @implementation Rollbar
 
 static RollbarLogger *logger = nil;
+static RollbarTelemetryOptionsObserver *telemetryOptionsObserver = nil;
+
++ (void)initialize {
+    if (self == [Rollbar class]) {
+        telemetryOptionsObserver = [RollbarTelemetryOptionsObserver new];
+    }
+}
 
 //+ (void)enableCrashReporter {
 //    
@@ -30,25 +41,26 @@ static RollbarLogger *logger = nil;
                    configuration:nil];
 }
 
-+ (void)initWithAccessToken:(NSString *)accessToken
-              configuration:(RollbarConfiguration*)configuration {
++ (void)initWithConfiguration:(RollbarConfig *)configuration {
 
-    [Rollbar initWithAccessToken:accessToken
-                   configuration:configuration
-             enableCrashReporter:YES];
+    [Rollbar initWithAccessToken:nil
+                   configuration:configuration];
+//             enableCrashReporter:YES];
 }
 
 + (void)initWithAccessToken:(NSString *)accessToken
-              configuration:(RollbarConfiguration*)configuration
-        enableCrashReporter:(BOOL)enable {
+              configuration:(RollbarConfig *)configuration {
+//        enableCrashReporter:(BOOL)enable {
 
     [RollbarTelemetry sharedInstance]; // Load saved data, if any
     if (logger) {
         RollbarSdkLog(@"Rollbar has already been initialized.");
     } else {
-        logger = [[RollbarLogger alloc] initWithAccessToken:accessToken
-                                                  configuration:configuration
-                                                         isRoot:YES];
+        RollbarConfig *config = configuration ? configuration : [RollbarConfig new];
+        if (accessToken && accessToken.length > 0) {
+            config.destination.accessToken = accessToken;
+        }
+        [Rollbar updateConfiguration:config];
 //        if (enable) {
 //            [Rollbar enableCrashReporter];
 //        }
@@ -56,51 +68,75 @@ static RollbarLogger *logger = nil;
     }
 }
 
-+ (RollbarConfiguration*)currentConfiguration {
++ (RollbarConfig *)currentConfiguration {
     
     return logger.configuration;
 }
 
-+ (RollbarLogger*)currentLogger {
++ (RollbarLogger *)currentLogger {
     
     return logger;
 }
 
-+ (void)updateConfiguration:(RollbarConfiguration*)configuration
-                     isRoot:(BOOL)isRoot {
++ (void)updateConfiguration:(RollbarConfig *)configuration {
     
-    [logger updateConfiguration:configuration
-                           isRoot:isRoot];
+//    if (logger && logger.configuration && logger.configuration.telemetry) {
+//        [telemetryOptionsObserver unregisterAsObserverForTelemetryOptions:logger.configuration.telemetry];
+//    }
+
+    if (logger) {
+        [logger updateConfiguration:configuration];
+    }
+    else {
+        logger = [[RollbarLogger alloc] initWithConfiguration:configuration];
+    }
+    
+//    if (logger && logger.configuration && logger.configuration.telemetry) {
+//        [telemetryOptionsObserver registerAsObserverForTelemetryOptions:logger.configuration.telemetry];
+//    }
+    
+    if (configuration && configuration.telemetry) {
+        [RollbarTelemetry sharedInstance].enabled = configuration.telemetry.enabled;
+        [RollbarTelemetry sharedInstance].scrubViewInputs = configuration.telemetry.viewInputsScrubber.enabled;
+        [RollbarTelemetry sharedInstance].viewInputsToScrub =
+            [NSSet setWithArray:configuration.telemetry.viewInputsScrubber.scrubFields].mutableCopy;
+        [[RollbarTelemetry sharedInstance] setCaptureLog:configuration.telemetry.captureLog];
+        [[RollbarTelemetry sharedInstance] setDataLimit:configuration.telemetry.maximumTelemetryData];
+    }
+}
+
++ (void)reapplyConfiguration {
+    [Rollbar updateConfiguration:Rollbar.currentConfiguration];
 }
 
 #pragma mark - Logging methods
 
 + (void)log:(RollbarLevel)level
-    message:(NSString*)message {
+    message:(NSString *)message {
 
     [Rollbar log:level message:message exception:nil];
 }
 
 + (void)log:(RollbarLevel)level
-    message:(NSString*)message
-  exception:(NSException*)exception {
+    message:(NSString *)message
+  exception:(NSException *)exception {
 
     [Rollbar log:level message:message exception:exception data:nil];
 }
 
 + (void)log:(RollbarLevel)level
-    message:(NSString*)message
-  exception:(NSException*)exception
-       data:(NSDictionary*)data {
+    message:(NSString *)message
+  exception:(NSException *)exception
+       data:(NSDictionary<NSString *, NSObject *> *)data {
 
     [Rollbar log:level message:message exception:exception data:data context:nil];
 }
 
 + (void)log:(RollbarLevel)level
-    message:(NSString*)message
-  exception:(NSException*)exception
-       data:(NSDictionary*)data
-    context:(NSString*)context {
+    message:(NSString *)message
+  exception:(NSException *)exception
+       data:(NSDictionary<NSString *, NSObject *> *)data
+    context:(NSString *)context {
 
     [logger log:[RollbarLevelUtil RollbarLevelToString:level]
           message:message
@@ -111,22 +147,22 @@ static RollbarLogger *logger = nil;
 
 // Debug
 
-+ (void)debug:(NSString*)message {
++ (void)debug:(NSString *)message {
 
     [Rollbar debug:message exception:nil];
 }
 
-+ (void)debug:(NSString*)message
-    exception:(NSException*)exception {
++ (void)debug:(NSString *)message
+    exception:(NSException *)exception {
 
     [Rollbar debug:message
          exception:exception
               data:nil];
 }
 
-+ (void)debug:(NSString*)message
-    exception:(NSException*)exception
-         data:(NSDictionary*)data {
++ (void)debug:(NSString *)message
+    exception:(NSException *)exception
+         data:(NSDictionary<NSString *, NSObject *> *)data {
 
     [Rollbar debug:message
          exception:exception
@@ -134,10 +170,10 @@ static RollbarLogger *logger = nil;
            context:nil];
 }
 
-+ (void)debug:(NSString*)message
-    exception:(NSException*)exception
-         data:(NSDictionary*)data
-      context:(NSString*)context {
++ (void)debug:(NSString *)message
+    exception:(NSException *)exception
+         data:(NSDictionary<NSString *, NSObject *> *)data
+      context:(NSString *)context {
 
     [Rollbar log:RollbarLevel_Debug
          message:message
@@ -148,22 +184,22 @@ static RollbarLogger *logger = nil;
 
 // Info
 
-+ (void)info:(NSString*)message {
++ (void)info:(NSString *)message {
 
     [Rollbar info:message exception:nil];
 }
 
-+ (void)info:(NSString*)message
-   exception:(NSException*)exception {
++ (void)info:(NSString *)message
+   exception:(NSException *)exception {
 
     [Rollbar info:message
         exception:exception
              data:nil];
 }
 
-+ (void)info:(NSString*)message
-   exception:(NSException*)exception
-        data:(NSDictionary*)data {
++ (void)info:(NSString *)message
+   exception:(NSException *)exception
+        data:(NSDictionary<NSString *, NSObject *> *)data {
 
     [Rollbar info:message
         exception:exception
@@ -171,10 +207,10 @@ static RollbarLogger *logger = nil;
           context:nil];
 }
 
-+ (void)info:(NSString*)message
-   exception:(NSException*)exception
-        data:(NSDictionary*)data
-     context:(NSString*)context {
++ (void)info:(NSString *)message
+   exception:(NSException *)exception
+        data:(NSDictionary<NSString *, NSObject *> *)data
+     context:(NSString *)context {
 
     [Rollbar log:RollbarLevel_Info
          message:message
@@ -185,23 +221,23 @@ static RollbarLogger *logger = nil;
 
 // Warning
 
-+ (void)warning:(NSString*)message {
++ (void)warning:(NSString *)message {
 
     [Rollbar warning:message
         exception:nil];
 }
 
-+ (void)warning:(NSString*)message
-      exception:(NSException*)exception {
++ (void)warning:(NSString *)message
+      exception:(NSException *)exception {
 
     [Rollbar warning:message
         exception:exception
              data:nil];
 }
 
-+ (void)warning:(NSString*)message
-      exception:(NSException*)exception
-           data:(NSDictionary*)data {
++ (void)warning:(NSString *)message
+      exception:(NSException *)exception
+           data:(NSDictionary<NSString *, NSObject *> *)data {
 
     [Rollbar warning:message
         exception:exception
@@ -209,10 +245,10 @@ static RollbarLogger *logger = nil;
           context:nil];
 }
 
-+ (void)warning:(NSString*)message
-      exception:(NSException*)exception
-           data:(NSDictionary*)data
-        context:(NSString*)context {
++ (void)warning:(NSString *)message
+      exception:(NSException *)exception
+           data:(NSDictionary<NSString *, NSObject *> *)data
+        context:(NSString *)context {
 
     [Rollbar log:RollbarLevel_Warning
          message:message
@@ -223,23 +259,23 @@ static RollbarLogger *logger = nil;
 
 // Error
 
-+ (void)error:(NSString*)message {
++ (void)error:(NSString *)message {
 
     [Rollbar error:message
          exception:nil];
 }
 
-+ (void)error:(NSString*)message
-    exception:(NSException*)exception {
++ (void)error:(NSString *)message
+    exception:(NSException *)exception {
 
     [Rollbar error:message
          exception:exception
               data:nil];
 }
 
-+ (void)error:(NSString*)message
-    exception:(NSException*)exception
-         data:(NSDictionary*)data {
++ (void)error:(NSString *)message
+    exception:(NSException *)exception
+         data:(NSDictionary<NSString *, NSObject *> *)data {
 
     [Rollbar error:message
          exception:exception
@@ -247,10 +283,10 @@ static RollbarLogger *logger = nil;
            context:nil];
 }
 
-+ (void)error:(NSString*)message
-    exception:(NSException*)exception
-         data:(NSDictionary*)data
-      context:(NSString*)context {
++ (void)error:(NSString *)message
+    exception:(NSException *)exception
+         data:(NSDictionary<NSString *, NSObject *> *)data
+      context:(NSString *)context {
 
     [Rollbar log:RollbarLevel_Error
          message:message
@@ -261,21 +297,21 @@ static RollbarLogger *logger = nil;
 
 // Critical
 
-+ (void)critical:(NSString*)message {
++ (void)critical:(NSString *)message {
     [Rollbar critical:message exception:nil];
 }
 
-+ (void)critical:(NSString*)message
-       exception:(NSException*)exception {
++ (void)critical:(NSString *)message
+       exception:(NSException *)exception {
 
     [Rollbar critical:message
             exception:exception
                  data:nil];
 }
 
-+ (void)critical:(NSString*)message
-       exception:(NSException*)exception
-            data:(NSDictionary*)data {
++ (void)critical:(NSString *)message
+       exception:(NSException *)exception
+            data:(NSDictionary<NSString *, NSObject *> *)data {
 
     [Rollbar critical:message
             exception:exception
@@ -283,10 +319,10 @@ static RollbarLogger *logger = nil;
               context:nil];
 }
 
-+ (void)critical:(NSString*)message
-       exception:(NSException*)exception
-            data:(NSDictionary*)data
-         context:(NSString*)context {
++ (void)critical:(NSString *)message
+       exception:(NSException *)exception
+            data:(NSDictionary<NSString *, NSObject *> *)data
+         context:(NSString *)context {
 
     [Rollbar log:RollbarLevel_Critical
          message:message
@@ -295,7 +331,7 @@ static RollbarLogger *logger = nil;
          context:context];
 }
 
-+ (void)sendJsonPayload:(NSData*)payload {
++ (void)sendJsonPayload:(NSData *)payload {
 
     [logger sendPayload:payload];
 }
@@ -303,7 +339,7 @@ static RollbarLogger *logger = nil;
 
 // Crash Report
 
-+ (void)logCrashReport:(NSString*)crashReport {
++ (void)logCrashReport:(NSString *)crashReport {
 
     [logger logCrashReport:crashReport];
 }
@@ -321,7 +357,7 @@ static RollbarLogger *logger = nil;
 
 + (void)recordViewEventForLevel:(RollbarLevel)level
                         element:(NSString *)element
-                      extraData:(NSDictionary *)extraData {
+                      extraData:(NSDictionary<NSString *, NSObject *> *)extraData {
     [[RollbarTelemetry sharedInstance] recordViewEventForLevel:level
                                                        element:element
                                                      extraData:extraData];
@@ -344,7 +380,7 @@ static RollbarLogger *logger = nil;
                             method:(NSString *)method
                                url:(NSString *)url
                         statusCode:(NSString *)statusCode
-                         extraData:(NSDictionary *)extraData {
+                         extraData:(NSDictionary<NSString *, NSObject *> *)extraData {
     [[RollbarTelemetry sharedInstance] recordNetworkEventForLevel:level
                                                            method:method
                                                               url:url
@@ -389,7 +425,7 @@ static RollbarLogger *logger = nil;
 
 + (void)recordErrorEventForLevel:(RollbarLevel)level
                          message:(NSString *)message
-                       extraData:(NSDictionary *)extraData {
+                       extraData:(NSDictionary<NSString *, NSObject *> *)extraData {
     [[RollbarTelemetry sharedInstance] recordErrorEventForLevel:level
                                                         message:message
                                                       extraData:extraData];
@@ -409,7 +445,7 @@ static RollbarLogger *logger = nil;
 + (void)recordNavigationEventForLevel:(RollbarLevel)level
                                  from:(NSString *)from
                                    to:(NSString *)to
-                            extraData:(NSDictionary *)extraData {
+                            extraData:(NSDictionary<NSString *, NSObject *> *)extraData {
     [[RollbarTelemetry sharedInstance] recordNavigationEventForLevel:level
                                                                 from:from
                                                                   to:to
@@ -419,7 +455,7 @@ static RollbarLogger *logger = nil;
 #pragma mark - Manual
 
 + (void)recordManualEventForLevel:(RollbarLevel)level
-                         withData:(NSDictionary *)extraData {
+                         withData:(NSDictionary<NSString *, NSObject *> *)extraData {
     [[RollbarTelemetry sharedInstance] recordManualEventForLevel:level
                                                         withData:extraData];
 }
@@ -435,132 +471,10 @@ static RollbarLogger *logger = nil;
 
 + (void)recordLogEventForLevel:(RollbarLevel)level
                        message:(NSString *)message
-                     extraData:(NSDictionary *)extraData {
+                     extraData:(NSDictionary<NSString *, NSObject *> *)extraData {
     [[RollbarTelemetry sharedInstance] recordLogEventForLevel:level
                                                       message:message
                                                     extraData:extraData];
 }
-
-#pragma mark - Deprecated logging methods
-
-// Log
-
-+ (void)logWithLevel:(NSString*)level
-             message:(NSString*)message {
-
-    [logger log:level message:message exception:nil data:nil context:nil];
-}
-
-+ (void)logWithLevel:(NSString*)level
-             message:(NSString*)message
-                data:(NSDictionary*)data {
-
-    [logger log:level message:message exception:nil data:data context:nil];
-}
-
-+ (void)logWithLevel:(NSString*)level
-             message:(NSString*)message
-                data:(NSDictionary*)data
-             context:(NSString*)context {
-
-    [logger log:level message:message exception:nil data:data context:context];
-}
-
-+ (void)logWithLevel:(NSString*)level
-                data:(NSDictionary*)data {
-
-    [logger log:level message:nil exception:nil data:data context:nil];
-}
-
-// Debug
-
-+ (void)debugWithMessage:(NSString*)message {
-
-    [logger log:@"debug" message:message exception:nil data:nil context:nil];
-}
-
-+ (void)debugWithMessage:(NSString*)message
-                    data:(NSDictionary*)data {
-
-    [logger log:@"debug" message:message exception:nil data:data context:nil];
-}
-
-+ (void)debugWithData:(NSDictionary*)data {
-
-    [logger log:@"debug" message:nil exception:nil data:data context:nil];
-}
-
-// Info
-
-+ (void)infoWithMessage:(NSString*)message {
-
-    [logger log:@"info" message:message exception:nil data:nil context:nil];
-}
-
-+ (void)infoWithMessage:(NSString*)message
-                   data:(NSDictionary*)data {
-
-    [logger log:@"info" message:message exception:nil data:data context:nil];
-}
-
-+ (void)infoWithData:(NSDictionary*)data {
-
-    [logger log:@"info" message:nil exception:nil data:data context:nil];
-}
-
-// Warning
-
-+ (void)warningWithMessage:(NSString*)message {
-
-    [logger log:@"warning" message:message exception:nil data:nil context:nil];
-}
-
-+ (void)warningWithMessage:(NSString*)message
-                      data:(NSDictionary*)data {
-
-    [logger log:@"warning" message:message exception:nil data:data context:nil];
-}
-
-+ (void)warningWithData:(NSDictionary*)data {
-
-    [logger log:@"warning" message:nil exception:nil data:data context:nil];
-}
-
-// Error
-
-+ (void)errorWithMessage:(NSString*)message {
-
-    [logger log:@"error" message:message exception:nil data:nil context:nil];
-}
-
-+ (void)errorWithMessage:(NSString*)message
-                    data:(NSDictionary*)data {
-
-    [logger log:@"error" message:message exception:nil data:data context:nil];
-}
-
-+ (void)errorWithData:(NSDictionary*)data {
-
-    [logger log:@"error" message:nil exception:nil data:data context:nil];
-}
-
-// Critical
-
-+ (void)criticalWithMessage:(NSString*)message {
-
-    [logger log:@"critical" message:message exception:nil data:nil context:nil];
-}
-
-+ (void)criticalWithMessage:(NSString*)message
-                       data:(NSDictionary*)data {
-
-    [logger log:@"critical" message:message exception:nil data:data context:nil];
-}
-
-+ (void)criticalWithData:(NSDictionary*)data {
-
-    [logger log:@"critical" message:nil exception:nil data:data context:nil];
-}
-
 
 @end

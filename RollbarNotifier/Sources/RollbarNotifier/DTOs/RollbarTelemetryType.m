@@ -50,9 +50,3 @@
 
 @end
 
-//#pragma mark - deprecated
-//
-//NSString* _Nonnull RollbarStringFromTelemetryType(RollbarTelemetryType type) {
-//    return [RollbarTelemetryTypeUtil RollbarTelemetryTypeToString:type];
-//}
-

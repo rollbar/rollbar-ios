@@ -17,12 +17,12 @@
     RollbarClearLogFile();
     if (!Rollbar.currentConfiguration) {
         [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3"];
-        Rollbar.currentConfiguration.environment = @"unit-tests";
+        Rollbar.currentConfiguration.destination.environment = @"unit-tests";
     }
 }
 
 - (void)tearDown {
-    [Rollbar updateConfiguration:[RollbarConfiguration configuration] isRoot:true];
+    [Rollbar updateConfiguration:[RollbarConfig new]];
     [super tearDown];
 }
 

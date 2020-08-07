@@ -54,5 +54,10 @@ let package = Package(
 //                .define("DEFINES_MODULE"),
             ]
         ),
+    ],
+    swiftLanguageVersions: [
+        SwiftVersion.v4,
+        SwiftVersion.v4_2,
+        SwiftVersion.v5,
     ]
 )
