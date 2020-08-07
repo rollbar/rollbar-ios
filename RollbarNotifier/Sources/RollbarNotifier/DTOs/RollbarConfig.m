@@ -23,7 +23,7 @@
 
 #pragma mark - constants
 
-static NSString * const NOTIFIER_VERSION = @"2.0.0-alpha11";
+static NSString * const NOTIFIER_VERSION = @"2.0.0-alpha12";
 
 #define NOTIFIER_NAME_PREFIX = @"rollbar-";
 #if TARGET_OS_IPHONE
