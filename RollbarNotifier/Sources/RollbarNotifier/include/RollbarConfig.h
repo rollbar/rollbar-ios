@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonnull, nonatomic, strong) RollbarTelemetryOptions *telemetry;
 
 #pragma mark - Custom data
-@property (nonatomic, strong) NSDictionary *customData;
+@property (nonatomic, strong) NSDictionary<NSString *, id> *customData;
 
 
 #pragma mark - Payload Content Related

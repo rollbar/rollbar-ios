@@ -30,12 +30,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-//#pragma mark - deprecated
-//
-//NSString* _Nonnull RollbarStringFromLevel(RollbarLevel level)
-//DEPRECATED_MSG_ATTRIBUTE("Use [RollbarLevelUtil RollbarLevelToString:...] methods instead.");
-//
-//RollbarLevel RollbarLevelFromString(NSString * _Nonnull levelString)
-//DEPRECATED_MSG_ATTRIBUTE("Use [RollbarLevelUtil RollbarLevelFromString:...] methods instead.");
-

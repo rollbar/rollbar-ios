@@ -40,15 +40,3 @@
 
 @end
 
-//#pragma mark - deprecated
-//
-//NSString* _Nonnull RollbarStringFromLevel(RollbarLevel level) {
-//
-//    return [RollbarLevelUtil RollbarLevelToString:level];
-//}
-//
-//RollbarLevel RollbarLevelFromString(NSString* _Nonnull levelString) {
-//
-//    return [RollbarLevelUtil RollbarLevelFromString:levelString];
-//}
-

@@ -223,12 +223,12 @@ static NSString * const DFK_CUSTOM = @"custom";
 
 #pragma mark - Custom data
 
-- (NSDictionary *)customData {
+- (NSDictionary<NSString *, id> *)customData {
     NSMutableDictionary *result = [self safelyGetDictionaryByKey:DFK_CUSTOM];
     return result;
 }
 
-- (void)setCustomData:(NSDictionary *)value {
+- (void)setCustomData:(NSDictionary<NSString *, id> *)value {
     [self setDictionary:value forKey:DFK_CUSTOM];
 }
 

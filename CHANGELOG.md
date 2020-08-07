@@ -28,6 +28,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 **2.0.0** Preliminary Notes
 - refactor: removed RollbarConfiguration and replaced it with RollbarConfig
 - refactor: changed WhitelistFileds into SafeListFields when it comes to the RollbarScrubbingOptions
+- refactor: removed all the deprecated API 
 - feat: defined default scrub fields
 
 **1.12.8**

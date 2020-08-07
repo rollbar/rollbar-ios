@@ -60,6 +60,7 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *m_osData;
 }
 
+/// This is essentially a static constructor for the type.
 + (void)initialize {
     
     if (self == [RollbarLogger class]) {
@@ -146,9 +147,6 @@ static BOOL isNetworkReachable = YES;
     return [self initWithConfiguration:config];
 }
 
-//- (instancetype)initWithAccessToken:(NSString *)accessToken
-//                      configuration:(RollbarConfig *)configuration
-//                             isRoot:(BOOL)isRoot {
 /// Designated notifier initializer
 /// @param configuration the config object
 - (instancetype)initWithConfiguration:(RollbarConfig *)configuration {
@@ -156,11 +154,6 @@ static BOOL isNetworkReachable = YES;
     if ((self = [super init])) {
         [self updateConfiguration:configuration];
 
-//    if ((self = [super init])) {
-//        [self updateAccessToken:accessToken
-//                  configuration:configuration];
-//                         isRoot:isRoot];
-        
         NSString *cachesDirectory = [RollbarCachesDirectory directory];
         if (nil != self.configuration.developerOptions.payloadLogFile
             && self.configuration.developerOptions.payloadLogFile.length > 0) {
@@ -173,103 +166,9 @@ static BOOL isNetworkReachable = YES;
             payloadsFilePath =
             [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
         }
+    }
 
-//        if (isRoot) {
-//
-//            // make sure we have all the expected data directories/folder set:
-//
-//            NSString *cachesDirectory = [RollbarCachesDirectory directory];
-//            if (nil != self.configuration.developerOptions.payloadLogFile
-//                && self.configuration.developerOptions.payloadLogFile.length > 0) {
-//
-//                payloadsFilePath =
-//                [cachesDirectory stringByAppendingPathComponent:self.configuration.developerOptions.payloadLogFile];
-//            }
-//            else {
-//
-//                payloadsFilePath =
-//                [cachesDirectory stringByAppendingPathComponent:PAYLOADS_FILE_NAME];
-//            }
-//
-//            // create working cache directory:
-//            if (![[NSFileManager defaultManager] fileExistsAtPath:cachesDirectory]) {
-//                NSError *error;
-//                BOOL result =
-//                [[NSFileManager defaultManager] createDirectoryAtPath:cachesDirectory
-//                                          withIntermediateDirectories:YES
-//                                                           attributes:nil
-//                                                                error:&error
-//                 ];
-//                NSLog(@"result %@", result);
-//            }
-//
-//            // make sure we have all the data files set:
-//
-//            queuedItemsFilePath =
-//            [cachesDirectory stringByAppendingPathComponent:QUEUED_ITEMS_FILE_NAME];
-//            stateFilePath =
-//            [cachesDirectory stringByAppendingPathComponent:STATE_FILE_NAME];
-//
-//            // either create or overwrite the payloads log file:
-//            [[NSFileManager defaultManager] createFileAtPath:payloadsFilePath
-//                                                    contents:nil
-//                                                  attributes:nil];
-//
-//            // create the queued items file if does not exist already:
-//            if (![[NSFileManager defaultManager] fileExistsAtPath:queuedItemsFilePath]) {
-//                [[NSFileManager defaultManager] createFileAtPath:queuedItemsFilePath
-//                                                        contents:nil
-//                                                      attributes:nil];
-//            }
-//
-//            // create state tracking file if does not exist already:
-//            if ([[NSFileManager defaultManager] fileExistsAtPath:stateFilePath]) {
-//                NSData *stateData = [NSData dataWithContentsOfFile:stateFilePath];
-//                if (stateData) {
-//                    NSDictionary *state = [NSJSONSerialization JSONObjectWithData:stateData
-//                                                                          options:0
-//                                                                            error:nil];
-//                    queueState = [state mutableCopy];
-//                } else {
-//                    RollbarSdkLog(@"There was an error restoring saved queue state");
-//                }
-//            }
-//            if (!queueState) {
-//                queueState = [@{@"offset": [NSNumber numberWithUnsignedInt:0],
-//                                @"retry_count": [NSNumber numberWithUnsignedInt:0]} mutableCopy];
-//                [self saveQueueState];
-//            }
-            
-//            // Setup the worker thread
-//            // that sends the items that have been queued up in the item file set above:
-//
-//            rollbarThread =
-//            [[RollbarThread alloc] initWithNotifier:self
-//                                      reportingRate:configuration.loggingOptions.maximumReportsPerMinute];
-//            [rollbarThread start];
-//
-//            // Listen for reachability status
-//            // so that the items are only sent when the internet is available
-//
-//            reachability = [RollbarReachability reachabilityForInternetConnection];
-//
-//            isNetworkReachable = [reachability isReachable];
-//
-//            reachability.reachableBlock = ^(RollbarReachability*reach) {
-//                [self captureTelemetryDataForNetwork:true];
-//                isNetworkReachable = YES;
-//            };
-//
-//            reachability.unreachableBlock = ^(RollbarReachability*reach) {
-//                [self captureTelemetryDataForNetwork:false];
-//                isNetworkReachable = NO;
-//            };
-//
-//            [reachability startNotifier];
-        }
-
-        self->nextSendTime = [[NSDate alloc] init];
-//    }
+    self->nextSendTime = [[NSDate alloc] init];
 
     return self;
 }
@@ -292,7 +191,7 @@ static BOOL isNetworkReachable = YES;
 - (void)log:(NSString *)level
     message:(NSString *)message
   exception:(NSException *)exception
-       data:(NSDictionary *)data
+       data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context {
     
     if (!self.configuration.developerOptions.enabled) {
@@ -578,13 +477,12 @@ static BOOL isNetworkReachable = YES;
         return nil;
     }
     
-    // this is done only for backward campatibility for customers that used to rely on this undocumented
+    // this is done only for backward compatibility for customers that used to rely on this undocumented
     // extra data with a message:
     if (message && extra) {
         [body.message setData:extra byKey:@"extra"];
     }
     
-
     // compile payload data:
     RollbarData *data = [[RollbarData alloc] initWithEnvironment:config.destination.environment
                                                             body:body];
@@ -642,21 +540,6 @@ static BOOL isNetworkReachable = YES;
 -(BOOL)shouldIgnoreRollbarData:(nonnull RollbarData *)incomingData {
 
     BOOL shouldIgnore = NO;
-
-    // This block of code is using deprecated legacy implementation of payload check-ignore:
-//    if (self.configuration.checkIgnore) {
-//        @try {
-//            shouldIgnore = self.configuration.checkIgnore(incomingData);
-//            return shouldIgnore;
-//        } @catch(NSException *e) {
-//            RollbarSdkLog(@"checkIgnore error: %@", e.reason);
-//
-//            // Remove checkIgnore to prevent future exceptions
-//            [self.configuration setCheckIgnoreBlock:nil];
-//            return NO;
-//        }
-//    }
-
     if (self.configuration.checkIgnoreRollbarData) {
         @try {
             shouldIgnore = self.configuration.checkIgnoreRollbarData(incomingData);
@@ -674,14 +557,6 @@ static BOOL isNetworkReachable = YES;
 }
 
 -(RollbarData *)modifyRollbarData:(nonnull RollbarData *)incomingData {
-
-    // This block of code is using deprecated legacy implementation of payload modification:
-//    if (self.configuration.payloadModification) {
-//        NSMutableDictionary * jsonFriendlyMutableData = incomingData.jsonFriendlyData;
-//        self.configuration.payloadModification(jsonFriendlyMutableData);
-//        RollbarData *modifiedRollbarData = [[RollbarData alloc] initWithDictionary:jsonFriendlyMutableData];
-//        return modifiedRollbarData;
-//    }
 
     if (self.configuration.modifyRollbarData) {
         return self.configuration.modifyRollbarData(incomingData);
@@ -945,7 +820,7 @@ static BOOL isNetworkReachable = YES;
     }
 
     if (NO == self.configuration.developerOptions.transmit) {
-        return YES; // we just successfully shortcircuit here...
+        return YES; // we just successfully short-circuit here...
     }
 
     __block BOOL result = NO;
@@ -1015,7 +890,7 @@ static BOOL isNetworkReachable = YES;
                        error:(NSError *)error
                         data:(NSData *)data {
 
-    // Lookup rate limiting headers and afjust reporting rate accordingly:
+    // Lookup rate limiting headers and adjust reporting rate accordingly:
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     NSDictionary *httpHeaders = [httpResponse allHeaderFields];
     //int rateLimit = [[httpHeaders valueForKey:RESPONSE_HEADER_RATE_LIMIT] intValue];
@@ -1082,94 +957,11 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-#pragma mark - Payload transformations
-
-//// Run data through custom payload modification method if available
-//- (void)modifyPayload:(NSMutableDictionary *)data {
-//
-//    if (self.configuration.payloadModification) {
-//        self.configuration.payloadModification(data);
-//    }
-//}
-
-//// Determine if this payload should be ignored
-//- (BOOL)shouldIgnorePayload:(NSDictionary*)data {
-//
-//    BOOL shouldIgnore = false;
-//
-//    if (self.configuration.checkIgnore) {
-//        @try {
-//            shouldIgnore = self.configuration.checkIgnore(data);
-//        } @catch(NSException *e) {
-//            RollbarSdkLog(@"checkIgnore error: %@", e.reason);
-//
-//            // Remove checkIgnore to prevent future exceptions
-//            [self.configuration setCheckIgnoreBlock:nil];
-//        }
-//    }
-//
-//    return shouldIgnore;
-//}
-
-//// Scrub specified fields from payload
-//- (void)scrubPayload:(NSMutableDictionary*)data {
-//
-//    if (self.configuration.scrubFields.count == 0) {
-//        return;
-//    }
-//
-//    NSMutableSet *actualFieldsToScrub = self.configuration.scrubFields.mutableCopy;
-//    if (self.configuration.scrubSafeListFields.count > 0) {
-//        // actualFieldsToScrub =
-//        // self.configuration.scrubFields - self.configuration.scrubWhitelistFields
-//        // while using case insensitive field name comparison:
-//        actualFieldsToScrub = [NSMutableSet new];
-//        for(NSString *key in self.configuration.scrubFields) {
-//            BOOL isSafelisted = false;
-//            for (NSString *safeKey in self.configuration.scrubSafeListFields) {
-//                if (NSOrderedSame == [key caseInsensitiveCompare:safeKey]) {
-//                    isSafelisted = true;
-//                }
-//            }
-//            if (!isSafelisted) {
-//                [actualFieldsToScrub addObject:key];
-//            }
-//        }
-//    }
-//
-//    for (NSString *key in actualFieldsToScrub) {
-//        if ([data valueForKeyPath:key]) {
-//            [self createMutablePayloadWithData:data forPath:key];
-//            [data setValue:@"*****" forKeyPath:key];
-//        }
-//    }
-//}
-
 #pragma mark - Update configuration methods
 
-//- (void)updateAccessToken:(NSString *)accessToken
-//            configuration:(RollbarConfig *)configuration
-//                   isRoot:(BOOL)isRoot {
-//    if (configuration) {
-//        self.configuration = configuration;
-//    } else {
-//        self.configuration = [RollbarConfig configuration];
-//    }
-//
-//    [self updateAccessToken:accessToken];
-//
-//    if (isRoot) {
-//        [self.configuration _setRoot];
-//    }
-//}
-
 - (void)updateConfiguration:(RollbarConfig *)configuration {
-//                     isRoot:(BOOL)isRoot {
-//    NSString *currentAccessToken = self.configuration.accessToken;
+
     self.configuration = configuration;
-//    [self updateAccessToken:configuration.destination.accessToken];
-//              configuration:configuration
-//                     isRoot:isRoot];
 }
 
 - (void)updateAccessToken:(NSString *)accessToken {

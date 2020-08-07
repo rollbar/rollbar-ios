@@ -41,18 +41,18 @@
 - (void)initRollbar {
 
     // configure Rollbar:
-    RollbarConfiguration *config = [RollbarConfiguration configuration];
+    RollbarConfig *config = [RollbarConfig new];
     
-    //config.crashLevel = @"critical";
-    config.environment = @"samples";
-    config.asRollbarConfig.customData = @{ @"someKey": @"someValue", };
+    config.destination.accessToken = @"2ffc7997ed864dda94f63e7b7daae0f3";
+    config.destination.environment = @"samples";
+    config.customData = @{ @"someKey": @"someValue", };
     // init Rollbar shared instance:
-    [Rollbar initWithAccessToken:@"2ffc7997ed864dda94f63e7b7daae0f3" configuration:config];
+    [Rollbar initWithConfiguration:config];
     
     [Rollbar info:@"Rollbar is up and running! Enjoy your remote error and log monitoring..."];
 }
 
-- (void)demonstrateDeployApiUasege {
+- (void)demonstrateDeployApiUsage {
     
     RollbarDeploysDemoClient * rollbarDeploysIntro = [[RollbarDeploysDemoClient new] init];
     [rollbarDeploysIntro demoDeploymentRegistration];

@@ -22,15 +22,6 @@ NS_UNAVAILABLE;
 - (instancetype)initWithConfiguration:(RollbarConfig *)configuration
 NS_DESIGNATED_INITIALIZER;
 
-/// Designated notifier initializer
-/// @param accessToken the access token
-/// @param configuration the config object
-/// @param isRoot the root notifier flag
-//- (instancetype)initWithAccessToken:(NSString *)accessToken
-//                      configuration:(RollbarConfig *)configuration
-//                             isRoot:(BOOL)isRoot
-//NS_DESIGNATED_INITIALIZER;
-
 /// Processes persisted payloads
 - (void)processSavedItems;
 
@@ -47,7 +38,7 @@ NS_DESIGNATED_INITIALIZER;
 - (void)log:(NSString *)level
     message:(NSString *)message
   exception:(NSException *)exception
-       data:(NSDictionary *)data
+       data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context;
 
 /// Sends an item batch in a blocking manner.
