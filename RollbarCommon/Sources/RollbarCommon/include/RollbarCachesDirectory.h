@@ -17,7 +17,7 @@
 
 #pragma mark - Initializers
 
-- (instancetype) init
+- (instancetype)init
 NS_UNAVAILABLE;
 
 @end

@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
     s.osx.deployment_target = '10.10'
     s.tvos.deployment_target = '11.0'
     s.watchos.deployment_target = '4.0'
-    # Any platform, if ommited:
+    # Any platform, if omitted:
     # s.platform     = :ios
     # s.platform     = :ios, "5.0"
 

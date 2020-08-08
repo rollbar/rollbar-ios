@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Initialize this DTO instance with valid JSON NSDictionary seed
 /// @param data valid JSON NSDictionary seed
-- (instancetype)initWithDictionary:(NSDictionary *)data;
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data;
 
 /// Initialize this DTO instance with valid JSON NSArray seed
 /// @param data valid JSON NSArray seed

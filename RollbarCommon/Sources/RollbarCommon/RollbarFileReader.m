@@ -6,11 +6,12 @@
 
 @synthesize lineDelimiter, chunkSize;
 
-+ (NSRange)findData:(NSData *)dataToFind inData:(NSData*)data {
-    const void * bytes = [data bytes];
++ (NSRange)findData:(NSData *)dataToFind inData:(NSData *)data {
+    
+    const void *bytes = [data bytes];
     NSUInteger length = [data length];
     
-    const void * searchBytes = [dataToFind bytes];
+    const void *searchBytes = [dataToFind bytes];
     NSUInteger searchLength = [dataToFind length];
     NSUInteger searchIndex = 0;
     
@@ -31,9 +32,10 @@
     return foundRange;
 }
 
-- (instancetype) initWithFilePath:(NSString *)aPath andOffset:(NSUInteger)offset {
+- (instancetype)initWithFilePath:(NSString *)path andOffset:(NSUInteger)offset {
+    
     if (self = [super init]) {
-        fileHandle = [NSFileHandle fileHandleForReadingAtPath:aPath];
+        fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
         if (fileHandle == nil) {
             return nil;
         }
@@ -45,21 +47,23 @@
     return self;
 }
 
-- (void) dealloc {
+- (void)dealloc {
+    
     [fileHandle closeFile];
     currentOffset = 0ULL;
 }
 
-- (NSString *) readLine {
-    NSData * newLineData = [lineDelimiter dataUsingEncoding:NSUTF8StringEncoding];
+- (nullable NSString *)readLine {
+    
+    NSData *newLineData = [lineDelimiter dataUsingEncoding:NSUTF8StringEncoding];
     [fileHandle seekToFileOffset:currentOffset];
-    NSMutableData * currentData = [[NSMutableData alloc] init];
+    NSMutableData *currentData = [[NSMutableData alloc] init];
     BOOL shouldReadMore = YES;
     
     @autoreleasepool {
         
         while (shouldReadMore) {
-            NSData * chunk = [fileHandle readDataOfLength:chunkSize];
+            NSData *chunk = [fileHandle readDataOfLength:chunkSize];
             
             if ([chunk length] == 0) {
                 return nil;
@@ -81,12 +85,14 @@
     return line;
 }
 
-- (NSUInteger) getCurrentOffset {
+- (NSUInteger)getCurrentOffset {
+    
     return currentOffset;
 }
 
-- (void) enumerateLinesUsingBlock:(void(^)(NSString*, NSUInteger, BOOL*))block {
-    NSString * line = nil;
+- (void)enumerateLinesUsingBlock:(void(^)(NSString *, NSUInteger, BOOL*))block {
+    
+    NSString *line = nil;
     BOOL stop = NO;
     while (stop == NO && (line = [self readLine])) {
         block(line, currentOffset, &stop);
