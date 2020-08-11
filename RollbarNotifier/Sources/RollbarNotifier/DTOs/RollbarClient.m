@@ -17,7 +17,7 @@ static NSString *const DFK_JAVASCRIPT = @"javascript";
 
 @implementation RollbarClient
 
-#pragma mark - Properies
+#pragma mark - Properties
 
 -(nullable NSString *)cpu {
     return [self getDataByKey:DFK_CPU];

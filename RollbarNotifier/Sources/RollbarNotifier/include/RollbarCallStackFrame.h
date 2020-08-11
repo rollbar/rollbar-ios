@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Object of local variables for the method/function call.
 // The values of variables from argspec, vararspec and keywordspec
 // can be found in locals.
-@property (nonatomic, nullable) NSDictionary *locals;
+@property (nonatomic, nullable) NSDictionary<NSString *, id> *locals;
 
 #pragma mark - Initializers
 

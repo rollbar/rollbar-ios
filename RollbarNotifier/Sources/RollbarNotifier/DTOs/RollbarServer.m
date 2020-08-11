@@ -13,7 +13,7 @@ static NSString *const DFK_CPU = @"cpu";
 
 @implementation RollbarServer
 
-#pragma mark - Properies
+#pragma mark - Properties
 
 -(nullable NSString *)cpu {
     return [self getDataByKey:DFK_CPU];

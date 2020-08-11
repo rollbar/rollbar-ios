@@ -24,7 +24,7 @@ static NSString * const DFK_TO = @"to";
 
 -(instancetype)initWithFromLocation:(nonnull NSString *)from
                          toLocation:(nonnull NSString *)to
-                          extraData:(nullable NSDictionary *)extraData {
+                          extraData:(nullable NSDictionary<NSString *, id> *)extraData {
 
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
@@ -48,7 +48,7 @@ static NSString * const DFK_TO = @"to";
     return [super initWithArray:data];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)data {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data {
 
     return [super initWithDictionary:data];
 }

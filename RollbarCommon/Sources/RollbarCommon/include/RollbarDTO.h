@@ -59,14 +59,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Initialize this DTO instance with valid JSON NSDictionary seed
 /// @param data valid JSON NSDictionary seed
-- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data
+NS_DESIGNATED_INITIALIZER;
 
 /// Initialize this DTO instance with valid JSON NSArray seed
 /// @param data valid JSON NSArray seed
-- (instancetype)initWithArray:(NSArray *)data NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithArray:(NSArray *)data
+NS_DESIGNATED_INITIALIZER;
 
 /// Initialize empty DTO
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)init
+NS_DESIGNATED_INITIALIZER;
 
 
 /// @abstract use any of initWith... initializers instead of this one

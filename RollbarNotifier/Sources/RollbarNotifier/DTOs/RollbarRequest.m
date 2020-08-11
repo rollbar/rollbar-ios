@@ -39,27 +39,27 @@ static NSString * const DFK_USER_IP = @"user_ip";
     [self setData:[RollbarHttpMethodUtil HttpMethodToString:method] byKey:DFK_METHOD];
 }
 
-- (nullable NSDictionary *)headers {
+- (nullable NSDictionary<NSString *, NSString *> *)headers {
     return [self getDataByKey:DFK_HEADERS];
 }
 
-- (void)setHeaders:(nullable NSDictionary *)headers {
+- (void)setHeaders:(nullable NSDictionary<NSString *, NSString *> *)headers {
     [self setData:headers byKey:DFK_HEADERS];
 }
 
-- (nullable NSDictionary *)params {
+- (nullable NSDictionary<NSString *, NSString *> *)params {
     return [self getDataByKey:DFK_PARAMS];
 }
 
-- (void)setParams:(nullable NSDictionary *)params {
+- (void)setParams:(nullable NSDictionary<NSString *, NSString *> *)params {
     [self setData:params byKey:DFK_PARAMS];
 }
 
-- (nullable NSDictionary *)getParams {
+- (nullable NSDictionary<NSString *, NSString *> *)getParams {
     return [self getDataByKey:DFK_GET_PARAMS];
 }
 
-- (void)setGetParams:(nullable NSDictionary *)getParams {
+- (void)setGetParams:(nullable NSDictionary<NSString *, NSString *> *)getParams {
     [self setData:getParams byKey:DFK_GET_PARAMS];
 }
 
@@ -71,11 +71,11 @@ static NSString * const DFK_USER_IP = @"user_ip";
     [self setData:queryString byKey:DFK_QUERY_STRING];
 }
 
-- (nullable NSDictionary *)postParams {
+- (nullable NSDictionary<NSString *, NSString *> *)postParams {
     return [self getDataByKey:DFK_POST_PARAMS];
 }
 
-- (void)setPostParams:(nullable NSDictionary *)postParams {
+- (void)setPostParams:(nullable NSDictionary<NSString *, NSString *> *)postParams {
     [self setData:postParams byKey:DFK_POST_PARAMS];
 }
 
@@ -99,11 +99,11 @@ static NSString * const DFK_USER_IP = @"user_ip";
 
 - (instancetype)initWithHttpMethod:(RollbarHttpMethod)httpMethod
                                url:(nullable NSString *)url
-                           headers:(nullable NSDictionary *)headers
-                            params:(nullable NSDictionary *)params
+                           headers:(nullable NSDictionary<NSString *, NSString *> *)headers
+                            params:(nullable NSDictionary<NSString *, NSString *> *)params
                        queryString:(nullable NSString *)queryString
-                         getParams:(nullable NSDictionary *)getParams
-                        postParams:(nullable NSDictionary *)postParams
+                         getParams:(nullable NSDictionary<NSString *, NSString *> *)getParams
+                        postParams:(nullable NSDictionary<NSString *, NSString *> *)postParams
                           postBody:(nullable NSString *)postBody
                             userIP:(nullable NSString *)userIP {
     

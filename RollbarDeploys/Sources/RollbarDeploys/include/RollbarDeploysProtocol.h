@@ -9,6 +9,8 @@
 @class RollbarDeploymentDetailsResult;
 @class RollbarDeploymentDetailsPageResult;
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark - Deploys API Service Response Observer Protocols
 
 /// Deployment reqistration observer protocol
@@ -60,3 +62,5 @@
 
 @optional
 @end
+
+NS_ASSUME_NONNULL_END

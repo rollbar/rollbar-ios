@@ -22,7 +22,7 @@ static NSString * const DFK_ELEMENT = @"element";
 #pragma mark - initializers
 
 -(instancetype)initWithElement:(nonnull NSString *)element
-                     extraData:(nullable NSDictionary *)extraData {
+                     extraData:(nullable NSDictionary<NSString *, id> *)extraData {
     
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
@@ -42,7 +42,7 @@ static NSString * const DFK_ELEMENT = @"element";
     return [super initWithArray:data];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)data {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data {
 
     return [super initWithDictionary:data];
 }

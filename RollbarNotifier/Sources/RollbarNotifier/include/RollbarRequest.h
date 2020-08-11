@@ -25,19 +25,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 // headers: object containing the request headers.
 // Header names should be formatted like they are in HTTP.
-@property (nonatomic, strong, nullable) NSDictionary *headers;
+@property (nonatomic, strong, nullable) NSDictionary<NSString *, NSString *> *headers;
 
 // params: any routing parameters (i.e. for use with Rails Routes)
-@property (nonatomic, strong, nullable) NSDictionary *params;
+@property (nonatomic, strong, nullable) NSDictionary<NSString *, NSString *> *params;
 
 // GET: query string params
-@property (nonatomic, strong, nullable) NSDictionary *getParams;
+@property (nonatomic, strong, nullable) NSDictionary<NSString *, NSString *> *getParams;
 
 // query_string: the raw query string
 @property (nonatomic, copy, nullable) NSString *queryString;
 
 // POST: POST params
-@property (nonatomic, strong, nullable) NSDictionary *postParams;
+@property (nonatomic, strong, nullable) NSDictionary<NSString *, NSString *> *postParams;
 
 // body: the raw POST body
 @property (nonatomic, copy, nullable) NSString *postBody;
@@ -51,11 +51,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithHttpMethod:(RollbarHttpMethod)httpMethod
                                url:(nullable NSString *)url
-                           headers:(nullable NSDictionary *)headers
-                            params:(nullable NSDictionary *)params
+                           headers:(nullable NSDictionary<NSString *, NSString *> *)headers
+                            params:(nullable NSDictionary<NSString *, NSString *> *)params
                        queryString:(nullable NSString *)queryString
-                         getParams:(nullable NSDictionary *)getParams
-                        postParams:(nullable NSDictionary *)postParams
+                         getParams:(nullable NSDictionary<NSString *, NSString *> *)getParams
+                        postParams:(nullable NSDictionary<NSString *, NSString *> *)postParams
                           postBody:(nullable NSString *)postBody
                             userIP:(nullable NSString *)userIP;
 

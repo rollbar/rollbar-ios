@@ -539,10 +539,10 @@ final class RollbarNotifierDTOsTests: XCTestCase {
         XCTAssertNotNil(dto.userIP);
 
         XCTAssertEqual(dto.method, method);
-        XCTAssertEqual(dto.headers as! [String: String], headers);
-        XCTAssertEqual(dto.params as! [String: String], params);
-        XCTAssertEqual(dto.getParams as! [String: String], getParams);
-        XCTAssertEqual(dto.postParams as? [String: String], nil);
+        XCTAssertEqual(dto.headers!, headers);
+        XCTAssertEqual(dto.params!, params);
+        XCTAssertEqual(dto.getParams!, getParams);
+        XCTAssertEqual(dto.postParams, nil);
         XCTAssertEqual(dto.url, url);
         XCTAssertEqual(dto.queryString, queryString);
         XCTAssertEqual(dto.postBody, nil);

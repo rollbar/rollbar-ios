@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarClient : RollbarDTO
 
-#pragma mark - Properies
+#pragma mark - Properties
 // Can contain any arbitrary keys. Rollbar understands the following:
 
 // Optional: cpu

@@ -71,7 +71,7 @@ static NSString * const DFK_BODY = @"body";
 //    return [super initWithArray:data];
 //}
 
-- (instancetype)initWithDictionary:(NSDictionary *)data {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data {
 
     return [super initWithDictionary:data];
 }
@@ -142,7 +142,7 @@ static NSString * const DFK_BODY = @"body";
 //}
 
 + (nullable RollbarTelemetryBody *)createTelemetryBodyWithType:(RollbarTelemetryType)type
-                                                          data:(NSDictionary *)data {
+                                                          data:(NSDictionary<NSString *, id> *)data {
     RollbarTelemetryBody *body = nil;
     switch(type) {
         case RollbarTelemetryType_View:

@@ -24,8 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Serialize into JSON-friendly NSData instance
 - (NSData *)serializeToJSONData;
 
-/// Desrialize from JSON-friendlt NSData instance
-/// @param jsonData JSON-friendlt NSData instance
+/// Desrialize from JSON-friendly NSData instance
+/// @param jsonData JSON-friendly NSData instance
 - (BOOL)deserializeFromJSONData:(NSData *)jsonData;
 
 #pragma mark - via JSON string

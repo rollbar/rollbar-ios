@@ -110,11 +110,11 @@ static NSString * const DFK_LOCALS = @"locals";
     [self setData:value byKey:DFK_KEYWORDSPEC];
 }
 
--(nullable NSDictionary *)locals {
+-(nullable NSDictionary<NSString *, id> *)locals {
     return [self getDataByKey:DFK_LOCALS];
 }
 
--(void)setLocals:(nullable NSDictionary *)value {
+-(void)setLocals:(nullable NSDictionary<NSString *, id> *)value {
     [self setData:value byKey:DFK_LOCALS];
 }
 

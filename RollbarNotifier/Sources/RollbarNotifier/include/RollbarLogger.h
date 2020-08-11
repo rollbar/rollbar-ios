@@ -27,7 +27,7 @@ NS_DESIGNATED_INITIALIZER;
 
 /// Captures a crash report
 /// @param crashReport the crash report
-- (void)logCrashReport:(NSString*)crashReport;
+- (void)logCrashReport:(NSString *)crashReport;
 
 /// Captures a log entry
 /// @param level Rollbar error/log level
