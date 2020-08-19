@@ -4,19 +4,19 @@
 
 @interface RollbarPayloadTruncator : NSObject
 
-+(void)truncatePayload:(NSMutableDictionary*)payload;
++(void)truncatePayload:(NSMutableDictionary *)payload;
 
-+(void)truncatePayloads:(NSArray*)payloads
++(void)truncatePayloads:(NSArray *)payloads
           toMaxByteSize:(unsigned long)maxByteSize;
 
-+(void)truncatePayload:(NSMutableDictionary*)payload
++(void)truncatePayload:(NSMutableDictionary *)payload
           toTotalBytes:(unsigned long) limit;
 
-+(unsigned long)measureTotalEncodingBytes:(NSString*)string
++(unsigned long)measureTotalEncodingBytes:(NSString *)string
                             usingEncoding:(NSStringEncoding)encoding;
-+(unsigned long)measureTotalEncodingBytes:(NSString*)string;
++(unsigned long)measureTotalEncodingBytes:(NSString *)string;
 
-+(NSString*)truncateString:(NSString*)inputString
++(NSString*)truncateString:(NSString *)inputString
               toTotalBytes:(unsigned long)totalBytesLimit;
 
 @end

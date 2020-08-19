@@ -25,7 +25,11 @@
  POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 @import Foundation;
+
+#if !TARGET_OS_WATCH
+
 @import SystemConfiguration;
 
 /**
@@ -103,3 +107,5 @@ typedef void (^NetworkUnreachable)(RollbarReachability * reachability);
 -(NSString*)currentReachabilityFlags;
 
 @end
+
+#endif // !TARGET_OS_WATCH

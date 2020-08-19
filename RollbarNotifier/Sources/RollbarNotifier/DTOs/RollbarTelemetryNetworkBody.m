@@ -26,7 +26,7 @@ static NSString * const DFK_STATUS_CODE = @"status_code";
 -(instancetype)initWithMethod:(RollbarHttpMethod)method
                           url:(nonnull NSString *)url
                    statusCode:(nonnull NSString *)statusCode
-                    extraData:(nullable NSDictionary *)extraData {
+                    extraData:(nullable NSDictionary<NSString *, id> *)extraData {
 
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
@@ -53,7 +53,7 @@ static NSString * const DFK_STATUS_CODE = @"status_code";
     return [super initWithArray:data];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)data {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data {
 
     return [super initWithDictionary:data];
 }

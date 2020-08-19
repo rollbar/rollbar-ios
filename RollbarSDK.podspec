@@ -44,7 +44,7 @@ Pod::Spec.new do |sdk|
     sdk.subspec 'RollbarCommon' do |common|
       common.name         = "RollbarCommon"
 
-      # Any platform, if ommited:
+      # Any platform, if omitted:
       # common.platform     = :ios
       # common.platform     = :ios, "5.0"
 
@@ -79,7 +79,7 @@ Pod::Spec.new do |sdk|
     sdk.subspec 'RollbarDeploys' do |deploys|
         deploys.name         = "RollbarDeploys"
 
-        # Any platform, if ommited:
+        # Any platform, if omitted:
         # deploys.platform     = :ios
         # deploys.platform     = :ios, "5.0"
 
@@ -115,7 +115,7 @@ Pod::Spec.new do |sdk|
     sdk.subspec 'RollbarNotifier' do |notifier|
         notifier.name         = "RollbarNotifier"
 
-        # Any platform, if ommited:
+        # Any platform, if omitted:
         # notifier.platform     = :ios
         # notifier.platform     = :ios, "5.0"
 

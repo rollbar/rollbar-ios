@@ -64,7 +64,7 @@ final class RollbarDeploysTests: XCTestCase {
             deploymentDetailsPageObserver:observer
         )
         
-        deploysManager?.register(deployment!)
+        deploysManager.register(deployment!)
 
     }
 
@@ -82,7 +82,7 @@ final class RollbarDeploysTests: XCTestCase {
             deploymentDetailsPageObserver:observer
         )
 
-        deploysManager?.getDeploymentWithDeployId(testDeploymentId)
+        deploysManager.getDeploymentWithDeployId(testDeploymentId)
     }
 
     func testGetDeploymentsPage() {
@@ -97,7 +97,7 @@ final class RollbarDeploysTests: XCTestCase {
             deploymentDetailsPageObserver:observer
         )
 
-        deploysManager?.getDeploymentsPageNumber(1)
+        deploysManager.getDeploymentsPageNumber(1)
     }
 
     func testExample() {

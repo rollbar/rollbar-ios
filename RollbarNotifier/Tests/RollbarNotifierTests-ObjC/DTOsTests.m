@@ -6,6 +6,9 @@
 //  Copyright © 2019 Rollbar. All rights reserved.
 //
 
+@import Foundation;
+
+#if !TARGET_OS_WATCH
 #import <XCTest/XCTest.h>
 
 @import RollbarNotifier;
@@ -1012,3 +1015,4 @@
 }
 
 @end
+#endif

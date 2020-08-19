@@ -51,14 +51,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) RollbarData *(^modifyRollbarData)(RollbarData *rollbarData);
 
 
-#pragma mark - Convenience Methods (remove from here and only keep them within RollbarConfiguration)
-- (void)setPersonId:(NSString*)personId
-           username:(NSString*)username
-              email:(NSString*)email;
+#pragma mark - Convenience Methods
+- (void)setPersonId:(NSString *)personId
+           username:(NSString *)username
+              email:(NSString *)email;
 - (void)setServerHost:(NSString *)host
-                 root:(NSString*)root
-               branch:(NSString*)branch
-          codeVersion:(NSString*)codeVersion;
+                 root:(NSString *)root
+               branch:(NSString *)branch
+          codeVersion:(NSString *)codeVersion;
 - (void)setNotifierName:(NSString *)name
                 version:(NSString *)version;
 

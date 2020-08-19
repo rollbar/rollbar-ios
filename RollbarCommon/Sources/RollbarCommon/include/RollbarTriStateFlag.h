@@ -28,11 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Convert TriStateFlag to a string
 /// @param value TriStateFlag value
-+ (NSString *) TriStateFlagToString:(RollbarTriStateFlag)value;
++ (NSString *)TriStateFlagToString:(RollbarTriStateFlag)value;
 
 /// Convert TriStateFlag value from a string
 /// @param value string representation of a TriStateFlag value
-+ (RollbarTriStateFlag) TriStateFlagFromString:(NSString *)value;
++ (RollbarTriStateFlag)TriStateFlagFromString:(NSString *)value;
 
 @end
 

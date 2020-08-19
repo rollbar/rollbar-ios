@@ -1,3 +1,4 @@
+#if !os(watchOS)
 import XCTest
 import Foundation
 import os.log
@@ -360,3 +361,4 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
 //        ("testLogTelemetryAutoCapture", testLogTelemetryAutoCapture),
     ]
 }
+#endif

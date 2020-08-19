@@ -22,7 +22,7 @@ static NSString * const DFK_STATUS = @"change";
 #pragma mark - initializers
 
 -(instancetype)initWithStatus:(nonnull NSString *)status
-                    extraData:(nullable NSDictionary *)extraData {
+                    extraData:(nullable NSDictionary<NSString *, id> *)extraData {
     
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     if (extraData) {
@@ -42,7 +42,7 @@ static NSString * const DFK_STATUS = @"change";
     return [super initWithArray:data];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)data {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data {
 
     return [super initWithDictionary:data];
 }

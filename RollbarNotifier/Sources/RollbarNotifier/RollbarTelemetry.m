@@ -182,7 +182,7 @@ static dispatch_queue_t fileQueue = nil;
 
 - (void)recordEventForLevel:(RollbarLevel)level
                        type:(RollbarTelemetryType)type
-                       data:(NSDictionary *)data {
+                       data:(NSDictionary<NSString *, id> *)data {
     
     if (!self->_enabled) {
         return;
@@ -203,7 +203,7 @@ static dispatch_queue_t fileQueue = nil;
 
 - (void)recordViewEventForLevel:(RollbarLevel)level
                         element:(NSString *)element
-                      extraData:(NSDictionary *)extraData {
+                      extraData:(NSDictionary<NSString *, id> *)extraData {
     
     RollbarTelemetryBody *body = [[RollbarTelemetryViewBody alloc] initWithElement:element
                                                                          extraData:extraData];
@@ -239,7 +239,7 @@ static dispatch_queue_t fileQueue = nil;
                             method:(NSString *)method
                                url:(NSString *)url
                         statusCode:(NSString *)statusCode
-                         extraData:(NSDictionary *)extraData {
+                         extraData:(NSDictionary<NSString *, id> *)extraData {
 
     RollbarHttpMethod httpMethod = [RollbarHttpMethodUtil HttpMethodFromString:method];
     RollbarTelemetryNetworkBody *body = [[RollbarTelemetryNetworkBody alloc] initWithMethod:httpMethod
@@ -266,7 +266,7 @@ static dispatch_queue_t fileQueue = nil;
 
 - (void)recordConnectivityEventForLevel:(RollbarLevel)level
                                  status:(NSString *)status
-                              extraData:(NSDictionary *)extraData {
+                              extraData:(NSDictionary<NSString *, id> *)extraData {
     
     if (!self->_enabled) {
         return;
@@ -288,7 +288,7 @@ static dispatch_queue_t fileQueue = nil;
 
 - (void)recordErrorEventForLevel:(RollbarLevel)level
                          message:(NSString *)message
-                       extraData:(NSDictionary *)extraData {
+                       extraData:(NSDictionary<NSString *, id> *)extraData {
     
     if (!self->_enabled) {
         return;
@@ -311,7 +311,7 @@ static dispatch_queue_t fileQueue = nil;
 - (void)recordNavigationEventForLevel:(RollbarLevel)level
                                  from:(NSString *)from
                                    to:(NSString *)to
-                            extraData:(NSDictionary *)extraData {
+                            extraData:(NSDictionary<NSString *, id> *)extraData {
     
     if (!self->_enabled) {
         return;
@@ -334,7 +334,7 @@ static dispatch_queue_t fileQueue = nil;
 }
 
 - (void)recordManualEventForLevel:(RollbarLevel)level
-                         withData:(NSDictionary *)extraData {
+                         withData:(NSDictionary<NSString *, id> *)extraData {
     
     if (!self->_enabled) {
         return;
@@ -353,7 +353,7 @@ static dispatch_queue_t fileQueue = nil;
 
 - (void)recordLogEventForLevel:(RollbarLevel)level
                        message:(NSString *)message
-                     extraData:(NSDictionary *)extraData {
+                     extraData:(NSDictionary<NSString *, id> *)extraData {
     
     if (!self->_enabled) {
         return;

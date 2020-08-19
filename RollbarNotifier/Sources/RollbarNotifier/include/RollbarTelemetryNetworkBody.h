@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(instancetype)initWithMethod:(RollbarHttpMethod)method
                           url:(nonnull NSString *)url
                    statusCode:(nonnull NSString *)statusCode
-                    extraData:(nullable NSDictionary *)extraData
+                    extraData:(nullable NSDictionary<NSString *, id> *)extraData
 NS_DESIGNATED_INITIALIZER;
 
 -(instancetype)initWithMethod:(RollbarHttpMethod)method
@@ -34,7 +34,7 @@ NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithArray:(NSArray *)data
 NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithDictionary:(NSDictionary *)data
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data
 NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init

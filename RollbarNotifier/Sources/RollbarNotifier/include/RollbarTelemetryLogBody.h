@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Initializers
 
 -(instancetype)initWithMessage:(nonnull NSString *)message
-                     extraData:(nullable NSDictionary *)extraData
+                     extraData:(nullable NSDictionary<NSString *, id> *)extraData
 NS_DESIGNATED_INITIALIZER;
 
 -(instancetype)initWithMessage:(nonnull NSString *)message;
@@ -27,7 +27,7 @@ NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithArray:(NSArray *)data
 NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithDictionary:(NSDictionary *)data
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data
 NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init

@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(instancetype)initWithFromLocation:(nonnull NSString *)from
                          toLocation:(nonnull NSString *)to
-                          extraData:(nullable NSDictionary *)extraData
+                          extraData:(nullable NSDictionary<NSString *, id> *)extraData
 NS_DESIGNATED_INITIALIZER;
 
 -(instancetype)initWithFromLocation:(nonnull NSString *)from
@@ -30,7 +30,7 @@ NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithArray:(NSArray *)data
 NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithDictionary:(NSDictionary *)data
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data
 NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init

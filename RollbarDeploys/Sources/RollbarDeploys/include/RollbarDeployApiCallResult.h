@@ -22,14 +22,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Initialize this DTO instance with valid JSON NSDictionary seed
 /// @param data valid JSON NSDictionary seed
-- (instancetype)initWithDictionary:(NSDictionary *)data NS_UNAVAILABLE;
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data
+NS_UNAVAILABLE;
 
 /// Initialize this DTO instance with valid JSON NSArray seed
 /// @param data valid JSON NSArray seed
-- (instancetype)initWithArray:(NSArray *)data NS_UNAVAILABLE;
+- (instancetype)initWithArray:(NSArray *)data
+NS_UNAVAILABLE;
 
 /// Initialize empty DTO
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init
+NS_UNAVAILABLE;
 
 /// Designated initializer
 /// @param httpResponse HTTP response object

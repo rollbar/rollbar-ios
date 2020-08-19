@@ -71,7 +71,7 @@ class RollbarTestUtil {
         
         let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileReader = RollbarFileReader(filePath: filePath, andOffset: 0);
-        let item = fileReader?.readLine();
+        let item = fileReader.readLine();
         return item;
     }
 
@@ -80,7 +80,7 @@ class RollbarTestUtil {
         let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileReader = RollbarFileReader(filePath: filePath, andOffset: 0);
         var items = [String]();
-        fileReader?.enumerateLines({ (line, nextOffset, stop) in
+        fileReader.enumerateLines({ (line, nextOffset, stop) in
             if (line == nil) {
                 return;
             }
@@ -93,7 +93,7 @@ class RollbarTestUtil {
         let filePath = RollbarTestUtil.getQueuedItemsFilePath();
         let fileReader = RollbarFileReader(filePath: filePath, andOffset: 0);
         var items = [NSMutableDictionary] ();
-        fileReader!.enumerateLines({ (line, nextOffset, stop) in
+        fileReader.enumerateLines({ (line, nextOffset, stop) in
             if (line == nil) {
                 return;
             }

@@ -5,39 +5,43 @@
 
 @import Foundation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RollbarFileReader : NSObject {
     
-    NSString * filePath;
+    NSString *filePath;
     
-    NSFileHandle * fileHandle;
+    NSFileHandle *fileHandle;
     NSUInteger currentOffset;
     
-    NSString * lineDelimiter;
+    NSString *lineDelimiter;
     NSUInteger chunkSize;
 }
 
 #pragma mark - Properties
 
-@property (nonatomic, copy) NSString * lineDelimiter;
+@property (nonatomic, copy) NSString *lineDelimiter;
 
 @property (nonatomic) NSUInteger chunkSize;
 
 #pragma mark - Methods
 
-- (NSString *) readLine;
+- (nullable NSString *)readLine;
 
-- (NSUInteger) getCurrentOffset;
+- (NSUInteger)getCurrentOffset;
 
-- (void) enumerateLinesUsingBlock:(void(^)(NSString*, NSUInteger, BOOL*))block;
+- (void)enumerateLinesUsingBlock:(void(^)(NSString *_Nullable, NSUInteger, BOOL *))block;
 
 #pragma mark - Initializers
 
-- (instancetype) init
+- (instancetype)init
 NS_UNAVAILABLE;
 
-- (instancetype) initWithFilePath:(NSString *)aPath andOffset:(NSUInteger)offset
+- (instancetype)initWithFilePath:(NSString *)path andOffset:(NSUInteger)offset
 NS_DESIGNATED_INITIALIZER;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif //RollbarFileReader_h

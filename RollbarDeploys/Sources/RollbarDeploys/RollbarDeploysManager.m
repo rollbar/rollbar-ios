@@ -27,6 +27,7 @@
 deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*)deploymentRegistrationObserver
      deploymentDetailsObserver:(NSObject<RollbarDeploymentDetailsObserver>*)deploymentDetailsObserver
  deploymentDetailsPageObserver:(NSObject<RollbarDeploymentDetailsPageObserver>*)deploymentDetailsPageObserver {
+    
     self = [super init];
     if (nil != self) {
         self.writeAccessToken = writeAccessToken;
@@ -39,6 +40,7 @@ deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*
 }
 
 - (id)init {
+    
     return [self initWithWriteAccessToken:nil
                           readAccessToken:nil
            deploymentRegistrationObserver:nil
@@ -48,6 +50,7 @@ deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*
 }
 
 - (void)getDeploymentWithDeployId:(nonnull NSString *)deployId {
+    
     NSString * const url =
         @"https://api.rollbar.com/api/1/deploy/";
     NSString * const getUrl =
@@ -64,6 +67,7 @@ deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*
 }
 
 - (void)registerDeployment:(nonnull RollbarDeployment *)deployment {
+    
     NSString * const url =
         @"https://api.rollbar.com/api/1/deploy/";
     NSMutableDictionary *params =
@@ -77,51 +81,32 @@ deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*
 }
 
 -(BOOL)sendGetRequestToUrl:(NSString *)urlString {
+    
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
     __block BOOL result = NO;
-#if TARGET_OS_IPHONE
-    if (IS_IOS7_OR_HIGHER) {
-#else
-    if (IS_MACOS10_10_OR_HIGHER) {
-#endif
-        // This requires iOS 7.0+
-        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        
-        NSURLSession *session = [NSURLSession sharedSession];
-        
-        NSURLSessionDataTask *dataTask =
-        [session dataTaskWithRequest:request
-                   completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                       result = [self checkResponse:response
-                                              error:error
-                                               data:data
-                                         forRequest:request];
-                       dispatch_semaphore_signal(sem);
-                   }];
-        [dataTask resume];
-        
-        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    } else {
-        // Using method sendSynchronousRequest, deprecated since iOS 9.0
-        NSError *error;
-        NSHTTPURLResponse *response;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                             returningResponse:&response
-                                                         error:&error];
-#pragma clang diagnostic pop
 
-        result = [self checkResponse:response
-                               error:error
-                                data:data
-                          forRequest:request];
-    }
+    // This requires iOS 7.0+
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
     
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask =
+    [session dataTaskWithRequest:request
+               completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                   result = [self checkResponse:response
+                                          error:error
+                                           data:data
+                                     forRequest:request];
+                   dispatch_semaphore_signal(sem);
+               }];
+    [dataTask resume];
+    
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+
     return result;
 }
 
@@ -141,40 +126,21 @@ deploymentRegistrationObserver:(NSObject<RollbarDeploymentRegistrationObserver>*
     [request setHTTPBody:jsonPayload];
     
     __block BOOL result = NO;
-#if TARGET_OS_IPHONE
-    if (IS_IOS7_OR_HIGHER) {
-#else
-        if (IS_MACOS10_10_OR_HIGHER) {
-#endif
-        // This requires iOS 7.0+
-        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        
-        NSURLSession *session = [NSURLSession sharedSession];
-        
-        NSURLSessionDataTask *dataTask =
-        [session dataTaskWithRequest:request
-                   completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                       result = [self checkResponse:response error:error data:data forRequest:request];
-                       dispatch_semaphore_signal(sem);
-                   }];
-        [dataTask resume];
-        
-        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    } else {
-        // Using method sendSynchronousRequest, deprecated since iOS 9.0
-        NSError *error;
-        NSHTTPURLResponse *response;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                             returningResponse:&response
-                                                         error:&error];
-#pragma clang diagnostic pop
-        result = [self checkResponse:response
-                               error:error
-                                data:data
-                          forRequest:request];
-    }
+
+    // This requires iOS 7.0+
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask =
+    [session dataTaskWithRequest:request
+               completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                   result = [self checkResponse:response error:error data:data forRequest:request];
+                   dispatch_semaphore_signal(sem);
+               }];
+    [dataTask resume];
+    
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     
     return result;
 }

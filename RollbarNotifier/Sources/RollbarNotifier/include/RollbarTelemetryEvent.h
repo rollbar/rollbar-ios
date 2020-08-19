@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RollbarTelemetryEvent : RollbarDTO
 
-#pragma mark - Properies
+#pragma mark - Properties
 // Can contain any arbitrary keys. Rollbar understands the following:
 
 // Required: level
@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithArray:(NSArray *)data
 NS_UNAVAILABLE;
 
-- (instancetype)initWithDictionary:(NSDictionary *)data
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data
 NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init
@@ -71,7 +71,7 @@ NS_UNAVAILABLE;
 #pragma mark - Class utility
 
 + (nullable RollbarTelemetryBody *)createTelemetryBodyWithType:(RollbarTelemetryType)type
-                                                          data:(nullable NSDictionary *)data;
+                                                          data:(nullable NSDictionary<NSString *, id> *)data;
 
 @end
 

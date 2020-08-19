@@ -1,3 +1,4 @@
+#if !os(watchOS)
 import XCTest
 import Foundation
 import os.log
@@ -171,3 +172,4 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         ("testNotification", testNotification),
     ]
 }
+#endif
