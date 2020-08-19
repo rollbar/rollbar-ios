@@ -25,13 +25,24 @@
 
 static NSString * const NOTIFIER_VERSION = @"2.0.0-alpha12";
 
+static NSString * const NOTIFIER_NAME = @"rollbar-*os";
+
 #define NOTIFIER_NAME_PREFIX = @"rollbar-";
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE | TARGET_OS_IOS
 static NSString * const OPERATING_SYSTEM = @"ios";
-static NSString * const NOTIFIER_NAME = @"rollbar-ios";
-#else
+//static NSString * const NOTIFIER_NAME = @"rollbar-ios";
+#elseif TARGET_OS_OSX
 static NSString * const OPERATING_SYSTEM = @"macos";
-static NSString * const NOTIFIER_NAME = @"rollbar-macos";
+//static NSString * const NOTIFIER_NAME = @"rollbar-macos";
+#elseif TARGET_OS_TV
+static NSString * const OPERATING_SYSTEM = @"tvos";
+//static NSString * const NOTIFIER_NAME = @"rollbar-tvos";
+#elseif TARGET_OS_WATCH
+static NSString * const OPERATING_SYSTEM = @"watchos";
+//static NSString * const NOTIFIER_NAME = @"rollbar-watchos";
+#else
+static NSString * const OPERATING_SYSTEM = @"*os";
+//static NSString * const NOTIFIER_NAME = @"rollbar-*os";
 #endif
 
 //static NSString * const CONFIGURATION_FILENAME = @"rollbar.config";

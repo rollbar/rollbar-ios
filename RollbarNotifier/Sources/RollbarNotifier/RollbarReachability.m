@@ -27,6 +27,8 @@
 
 #import "RollbarReachability.h"
 
+#if !TARGET_OS_WATCH
+
 #import <sys/socket.h>
 #import <netinet/in.h>
 #import <netinet6/in6.h>
@@ -531,3 +533,5 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 }
 
 @end
+
+#endif // !TARGET_OS_WATCH

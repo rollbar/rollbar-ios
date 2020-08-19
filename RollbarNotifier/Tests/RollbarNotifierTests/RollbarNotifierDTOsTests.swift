@@ -1,3 +1,4 @@
+#if !os(watchOS)
 import XCTest
 import Foundation
 @testable import RollbarNotifier
@@ -1101,3 +1102,4 @@ final class RollbarNotifierDTOsTests: XCTestCase {
         ("testRollbarTelemetryEventDTO_Manual", testRollbarTelemetryEventDTO_Manual),
     ]
 }
+#endif

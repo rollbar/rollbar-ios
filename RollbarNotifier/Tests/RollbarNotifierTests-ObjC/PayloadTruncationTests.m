@@ -1,5 +1,8 @@
 //  Copyright (c) 2018 Rollbar, Inc. All rights reserved.
 
+@import Foundation;
+
+#if !TARGET_OS_WATCH
 #import <XCTest/XCTest.h>
 #import "RollbarTestUtil.h"
 //#import "../Rollbar/Notifier/RollbarPayloadTruncator.h"
@@ -248,3 +251,4 @@
 }
 
 @end
+#endif

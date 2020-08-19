@@ -2,12 +2,13 @@
 
 @import RollbarCommon;
 
+#if TARGET_OS_IOS | TARGET_OS_TV | TARGET_OS_MACCATALYST
+@import UIKit;
+#endif
+
 #import "RollbarLogger.h"
 #import "RollbarThread.h"
 #import "RollbarReachability.h"
-#if TARGET_OS_IPHONE
-    #import <UIKit/UIKit.h>
-#endif
 #import <sys/utsname.h>
 //#import "KSCrash.h"
 #import "RollbarTelemetry.h"
@@ -39,8 +40,11 @@ static NSMutableDictionary *queueState = nil;
 static NSString *payloadsFilePath = nil;
 
 static RollbarThread *rollbarThread = nil;
+
+#if !TARGET_OS_WATCH
 static RollbarReachability *reachability = nil;
 static BOOL isNetworkReachable = YES;
+#endif
 
 @interface RollbarLogger ()
 
@@ -50,8 +54,8 @@ static BOOL isNetworkReachable = YES;
 
 @end
 
-#define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
-#define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
+//#define IS_IOS7_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+//#define IS_MACOS10_10_OR_HIGHER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_10)
 
 @implementation RollbarLogger {
     NSDate *nextSendTime;
@@ -123,6 +127,7 @@ static BOOL isNetworkReachable = YES;
                                   reportingRate:config.loggingOptions.maximumReportsPerMinute];
         [rollbarThread start];
         
+#if !TARGET_OS_WATCH
         // Listen for reachability status so that the items are only sent when the internet is available:
         reachability = [RollbarReachability reachabilityForInternetConnection];
         isNetworkReachable = [reachability isReachable];
@@ -136,6 +141,7 @@ static BOOL isNetworkReachable = YES;
         };
         
         [reachability startNotifier];
+#endif
     }
 }
 
@@ -231,13 +237,15 @@ static BOOL isNetworkReachable = YES;
 }
 
 - (void)processSavedItems {
-    
+
+#if !TARGET_OS_WATCH
     if (!isNetworkReachable) {
         RollbarSdkLog(@"Processing saved items: no network!");
         // Don't attempt sending if the network is known to be not reachable
         return;
     }
-
+#endif
+    
     NSUInteger startOffset = [queueState[@"offset"] unsignedIntegerValue];
 
     NSFileHandle *fileHandle =
@@ -362,7 +370,7 @@ static BOOL isNetworkReachable = YES;
     NSString *deviceCode = [NSString stringWithCString:systemInfo.machine
                                               encoding:NSUTF8StringEncoding];
     
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS | TARGET_OS_TV | TARGET_OS_MACCATALYST
     self->m_osData = @{
         @"os": @"iOS",
         @"os_version": [[UIDevice currentDevice] systemVersion],
@@ -737,64 +745,45 @@ static BOOL isNetworkReachable = YES;
     }
 
     __block BOOL result = NO;
-#if TARGET_OS_IPHONE
-    if (IS_IOS7_OR_HIGHER) {
-#else
-    if (IS_MACOS10_10_OR_HIGHER) {
-#endif
-        // This requires iOS 7.0+
-        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 
-        NSURLSession *session = [NSURLSession sharedSession];
+    // This requires iOS 7.0+
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 
-        if (config.httpProxy.enabled
-            || config.httpsProxy.enabled) {
+    NSURLSession *session = [NSURLSession sharedSession];
 
-            NSDictionary *connectionProxyDictionary =
-            @{
-              @"HTTPEnable"   : [NSNumber numberWithBool:config.httpProxy.enabled],
-              @"HTTPProxy"    : config.httpProxy.proxyUrl,
-              @"HTTPPort"     : [NSNumber numberWithUnsignedInteger:config.httpProxy.proxyPort],
-              @"HTTPSEnable"  : [NSNumber numberWithBool:config.httpsProxy.enabled],
-              @"HTTPSProxy"   : config.httpsProxy.proxyUrl,
-              @"HTTPSPort"    : [NSNumber numberWithUnsignedInteger:config.httpsProxy.proxyPort]
-              };
+    if (config.httpProxy.enabled
+        || config.httpsProxy.enabled) {
 
-            NSURLSessionConfiguration *sessionConfig =
-            [NSURLSessionConfiguration ephemeralSessionConfiguration];
-            sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
-            session = [NSURLSession sessionWithConfiguration:sessionConfig];
-        }
+        NSDictionary *connectionProxyDictionary =
+        @{
+          @"HTTPEnable"   : [NSNumber numberWithBool:config.httpProxy.enabled],
+          @"HTTPProxy"    : config.httpProxy.proxyUrl,
+          @"HTTPPort"     : [NSNumber numberWithUnsignedInteger:config.httpProxy.proxyPort],
+          @"HTTPSEnable"  : [NSNumber numberWithBool:config.httpsProxy.enabled],
+          @"HTTPSProxy"   : config.httpsProxy.proxyUrl,
+          @"HTTPSPort"    : [NSNumber numberWithUnsignedInteger:config.httpsProxy.proxyPort]
+          };
 
-        NSURLSessionDataTask *dataTask =
-            [session dataTaskWithRequest:request
-                       completionHandler:^(
-                                           NSData * _Nullable data,
-                                           NSURLResponse * _Nullable response,
-                                           NSError * _Nullable error) {
-                result = [self checkPayloadResponse:response
-                                              error:error
-                                               data:data];
-                dispatch_semaphore_signal(sem);
-            }];
-        [dataTask resume];
-
-        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    } else {
-        // Using method sendSynchronousRequest, deprecated since iOS 9.0
-        NSError *error;
-        NSHTTPURLResponse *response;
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                             returningResponse:&response
-                                                         error:&error];
-#pragma clang diagnostic pop
-        result = [self checkPayloadResponse:response
-                                      error:error
-                                       data:data];
+        NSURLSessionConfiguration *sessionConfig =
+        [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
+        session = [NSURLSession sessionWithConfiguration:sessionConfig];
     }
+
+    NSURLSessionDataTask *dataTask =
+        [session dataTaskWithRequest:request
+                   completionHandler:^(
+                                       NSData * _Nullable data,
+                                       NSURLResponse * _Nullable response,
+                                       NSError * _Nullable error) {
+            result = [self checkPayloadResponse:response
+                                          error:error
+                                           data:data];
+            dispatch_semaphore_signal(sem);
+        }];
+    [dataTask resume];
+
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
 
     return result;
 }
@@ -824,64 +813,45 @@ static BOOL isNetworkReachable = YES;
     }
 
     __block BOOL result = NO;
-#if TARGET_OS_IPHONE
-    if (IS_IOS7_OR_HIGHER) {
-#else
-    if (IS_MACOS10_10_OR_HIGHER) {
-#endif
-        // This requires iOS 7.0+
-        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 
-        NSURLSession *session = [NSURLSession sharedSession];
+    // This requires iOS 7.0+
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 
-        if (self.configuration.httpProxy.enabled
-            || self.configuration.httpsProxy.enabled) {
+    NSURLSession *session = [NSURLSession sharedSession];
 
-            NSDictionary *connectionProxyDictionary =
-            @{
-                @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxy.enabled],
-                @"HTTPProxy"    : self.configuration.httpProxy.proxyUrl,
-                @"HTTPPort"     : @(self.configuration.httpProxy.proxyPort),
-                @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxy.enabled],
-                @"HTTPSProxy"   : self.configuration.httpsProxy.proxyUrl,
-                @"HTTPSPort"    : @(self.configuration.httpsProxy.proxyPort)
-              };
+    if (self.configuration.httpProxy.enabled
+        || self.configuration.httpsProxy.enabled) {
 
-            NSURLSessionConfiguration *sessionConfig =
-            [NSURLSessionConfiguration ephemeralSessionConfiguration];
-            sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
-            session = [NSURLSession sessionWithConfiguration:sessionConfig];
-        }
+        NSDictionary *connectionProxyDictionary =
+        @{
+            @"HTTPEnable"   : [NSNumber numberWithInt:self.configuration.httpProxy.enabled],
+            @"HTTPProxy"    : self.configuration.httpProxy.proxyUrl,
+            @"HTTPPort"     : @(self.configuration.httpProxy.proxyPort),
+            @"HTTPSEnable"  : [NSNumber numberWithInt:self.configuration.httpsProxy.enabled],
+            @"HTTPSProxy"   : self.configuration.httpsProxy.proxyUrl,
+            @"HTTPSPort"    : @(self.configuration.httpsProxy.proxyPort)
+          };
 
-        NSURLSessionDataTask *dataTask =
-            [session dataTaskWithRequest:request
-                       completionHandler:^(
-                                           NSData * _Nullable data,
-                                           NSURLResponse * _Nullable response,
-                                           NSError * _Nullable error) {
-                result = [self checkPayloadResponse:response
-                                              error:error
-                                               data:data];
-                dispatch_semaphore_signal(sem);
-            }];
-        [dataTask resume];
-
-        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    } else {
-        // Using method sendSynchronousRequest, deprecated since iOS 9.0
-        NSError *error;
-        NSHTTPURLResponse *response;
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                             returningResponse:&response
-                                                         error:&error];
-#pragma clang diagnostic pop
-        result = [self checkPayloadResponse:response
-                                      error:error
-                                       data:data];
+        NSURLSessionConfiguration *sessionConfig =
+        [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        sessionConfig.connectionProxyDictionary = connectionProxyDictionary;
+        session = [NSURLSession sessionWithConfiguration:sessionConfig];
     }
+
+    NSURLSessionDataTask *dataTask =
+        [session dataTaskWithRequest:request
+                   completionHandler:^(
+                                       NSData * _Nullable data,
+                                       NSURLResponse * _Nullable response,
+                                       NSError * _Nullable error) {
+            result = [self checkPayloadResponse:response
+                                          error:error
+                                           data:data];
+            dispatch_semaphore_signal(sem);
+        }];
+    [dataTask resume];
+
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
 
     return result;
 }
@@ -984,6 +954,7 @@ static BOOL isNetworkReachable = YES;
 #pragma mark - Network telemetry data
 
 - (void)captureTelemetryDataForNetwork:(BOOL)reachable {
+#if !TARGET_OS_WATCH
     if (self.configuration.telemetry.captureConnectivity
         && isNetworkReachable != reachable) {
         NSString *status = reachable ? @"Connected" : @"Disconnected";
@@ -1000,6 +971,7 @@ static BOOL isNetworkReachable = YES;
                                   status:status
                                extraData:@{@"network": networkType}];
     }
+#endif
 }
 
 // THIS IS ONLY FOR TESTS, DO NOT ACTUALLY USE THIS METHOD, HENCE BEING "PRIVATE"

@@ -29,7 +29,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 - refactor: added use of lightweight generics
 - refactor: added use nullability attributes
 - refactor: removed RollbarConfiguration and replaced it with RollbarConfig
-- refactor: changed WhitelistFileds into SafeListFields when it comes to the RollbarScrubbingOptions
+- refactor: changed WhitelistFields into SafeListFields when it comes to the RollbarScrubbingOptions
 - refactor: removed all the deprecated API 
 - feat: defined default scrub fields
 

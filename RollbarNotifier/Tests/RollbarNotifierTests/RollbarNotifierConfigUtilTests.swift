@@ -5,6 +5,7 @@
 //  Created by Andrey Kornich on 2020-07-29.
 //
 
+#if !os(watchOS)
 import XCTest
 import Foundation
 @testable import RollbarNotifier
@@ -98,3 +99,4 @@ final class RolllbarNotifierConfigUtilTests: XCTestCase {
         ("testWithConfigFile", testWithConfigFile),
     ]
 }
+#endif
