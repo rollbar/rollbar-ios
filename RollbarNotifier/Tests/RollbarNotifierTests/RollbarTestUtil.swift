@@ -119,6 +119,30 @@ class RollbarTestUtil {
         Thread.sleep(forTimeInterval: waitTimeInSeconds);
     }
 
+    public static func simulateError(callDepth: inout uint) throws {
+        callDepth = callDepth - 1;
+        if (callDepth > 0) {
+            try RollbarTestUtil.simulateError(callDepth: &callDepth);
+        }
+        else {
+            throw RollbarTestUtilError.simulatedException(errorDescription: "An error was just simulated!");
+        }
+    }
+    
+    public static func makeTroubledCall() throws {
+        try makeInnerTroubledCall();
+    }
+
+    private static func makeInnerTroubledCall() throws {
+        try makeMostInnerTroubledCall();
+    }
+
+    private static func makeMostInnerTroubledCall() throws {
+        //throw RollbarTestUtilError.simulatedException(errorDescription: "ENUM ERROR: Trouble at its source!");
+        //throw CustomError(errorDescription: "CUSTOM BACKTRACED ERROR: Trouble at its source!");
+        //throw CustomError();
+        throw BackTracedError(errorDescription: "BACKTRACED ERROR: Trouble at its source!");
+    }
 
 //    public static func flushFileThread(logger: RollbarLogger) {
 //        logger.perform(
@@ -131,5 +155,61 @@ class RollbarTestUtil {
 ////        [notifier performSelector:@selector(_test_doNothing)
 ////                         onThread:[notifier _rollbarThread] withObject:nil waitUntilDone:YES];
 //    }
+    
+}
+
+enum RollbarTestUtilError: Error {
+    case simulatedError(errorDescription: String)
+    case simulatedException(errorDescription: String, errorCallStack: [String] = Thread.callStackSymbols)
+    //case nullReferenceException = RollbarErrorBase("Null reference!")
+    
+}
+
+protocol BackTracedErrorProtocol : Error {
+    var errorDescription: String { get }
+    var errorCallStack: [String] { get }
+}
+
+struct BackTracedError : BackTracedErrorProtocol {
+    private var _errorDescription: String = "";
+    private var _errorCallStack: [String] = [];
+    
+    init(errorDescription: String, errorCallStack: [String] = Thread.callStackSymbols) {
+        self._errorDescription = errorDescription;
+        self._errorCallStack = errorCallStack;
+    }
+    
+    var errorDescription: String {
+        return self._errorDescription;
+    }
+    
+    var errorCallStack: [String] {
+        return self._errorCallStack;
+    }
+}
+
+class BackTracedErrorBase: BackTracedErrorProtocol/*, Error, Equatable, _ErrorCodeProtocol */ {
+    
+    private var _errorDescription: String = "";
+    private var _errorCallStack: [String] = [];
+    
+    init(errorDescription: String, errorCallStack: [String] = Thread.callStackSymbols) {
+        self._errorDescription = errorDescription;
+        self._errorCallStack = errorCallStack;
+    }
+    
+    var errorDescription: String {
+        return self._errorDescription;
+    }
+
+    var errorCallStack: [String] {
+        return self._errorCallStack;
+    }
+}
+
+class CustomError: BackTracedErrorBase {
+    init() {
+        super.init(errorDescription: "Default backtraced error!");
+    }
     
 }

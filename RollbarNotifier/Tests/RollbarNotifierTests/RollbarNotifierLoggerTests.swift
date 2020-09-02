@@ -165,11 +165,35 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         }
     }
     
+    func testNSErrorReporting() {
+        do {
+            try RollbarTestUtil.makeTroubledCall();
+            //var expectedErrorCallDepth: uint = 5;
+            //try RollbarTestUtil.simulateError(callDepth: &expectedErrorCallDepth);
+        }
+        catch RollbarTestUtilError.simulatedException(let errorDescription, let errorCallStack) {
+            print("Caught an error: \(errorDescription)");
+            print("Caught error's call stack:");
+            errorCallStack.forEach({print($0)});
+        }
+        catch let e as BackTracedErrorProtocol {
+            print("Caught an error: \(e.errorDescription)");
+            print("Caught error's call stack:");
+            e.errorCallStack.forEach({print($0)});
+        }
+        catch {
+            print("Caught an error: \(error)");
+            print("Corresponding call stack trace at the catch point:");
+            Thread.callStackSymbols.forEach{print($0)}
+        }
+    }
+    
     static var allTests = [
         ("testRollbarConfiguration", testRollbarConfiguration),
         ("testRollbarNotifiersIndependentConfiguration", testRollbarNotifiersIndependentConfiguration),
         ("testRollbarTransmit", testRollbarTransmit),
         ("testNotification", testNotification),
+        ("testNSErrorReporting", testNSErrorReporting),
     ]
 }
 #endif
