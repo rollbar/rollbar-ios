@@ -44,6 +44,10 @@
   exception:(NSException *)exception
        data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context;
++ (void)log:(RollbarLevel)level
+      error:(NSError *)error
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context;
 
 + (void)debug:(NSString *)message;
 + (void)debug:(NSString *)message

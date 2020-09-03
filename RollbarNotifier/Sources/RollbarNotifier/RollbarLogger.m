@@ -224,6 +224,35 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
+- (void)log:(NSString *)level
+      error:(NSError *)error
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context {
+
+    if (!self.configuration.developerOptions.enabled) {
+        return;
+    }
+    
+    RollbarConfig *config = self.configuration;
+    
+    RollbarLevel rollbarLevel = [RollbarLevelUtil RollbarLevelFromString:level];
+    if (rollbarLevel < config.loggingOptions.logLevel) {
+        return;
+    }
+    
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:rollbarLevel
+                                                         message:nil
+                                                       exception:nil
+                                                           error:error
+                                                           extra:data
+                                                     crashReport:nil
+                                                         context:context
+                               ];
+    if (payload) {
+        [self queuePayload:payload.jsonFriendlyData];
+    }
+}
+
 + (void)saveQueueState {
     NSError *error;
     NSData *data = [NSJSONSerialization rollbar_dataWithJSONObject:queueState

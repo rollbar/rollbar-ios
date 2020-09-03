@@ -145,6 +145,17 @@ static RollbarTelemetryOptionsObserver *telemetryOptionsObserver = nil;
           context:context];
 }
 
++ (void)log:(RollbarLevel)level
+      error:(NSError *)error
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context {
+    
+    [logger log:[RollbarLevelUtil RollbarLevelToString:level]
+          error:error
+           data:data
+        context:context];
+}
+
 // Debug
 
 + (void)debug:(NSString *)message {

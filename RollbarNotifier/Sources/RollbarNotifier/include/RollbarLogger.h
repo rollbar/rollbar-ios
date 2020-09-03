@@ -41,6 +41,16 @@ NS_DESIGNATED_INITIALIZER;
        data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context;
 
+    /// Capture a log entry based on an NSError
+    /// @param level Rollbar error/log level
+    /// @param error an NSError
+    /// @param data extra data
+    /// @param context extra context
+- (void)log:(NSString *)level
+      error:(NSError *)error
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context;
+
 /// Sends an item batch in a blocking manner.
 /// @param payload an item to send
 /// @param nextOffset the offset in the item queue file of the item immediately after this batch.
