@@ -138,10 +138,11 @@ class RollbarTestUtil {
     }
 
     private static func makeMostInnerTroubledCall() throws {
-        //throw RollbarTestUtilError.simulatedException(errorDescription: "ENUM ERROR: Trouble at its source!");
+        //throw RollbarTestUtilError.basicError;
+        throw RollbarTestUtilError.simulatedException(errorDescription: "ENUM ERROR: Trouble at its source!");
+        //throw BackTracedError(errorDescription: "BACKTRACED ERROR: Trouble at its source!");
         //throw CustomError(errorDescription: "CUSTOM BACKTRACED ERROR: Trouble at its source!");
         //throw CustomError();
-        throw BackTracedError(errorDescription: "BACKTRACED ERROR: Trouble at its source!");
     }
 
 //    public static func flushFileThread(logger: RollbarLogger) {
@@ -159,6 +160,7 @@ class RollbarTestUtil {
 }
 
 enum RollbarTestUtilError: Error {
+    case basicError
     case simulatedError(errorDescription: String)
     case simulatedException(errorDescription: String, errorCallStack: [String] = Thread.callStackSymbols)
     //case nullReferenceException = RollbarErrorBase("Null reference!")
@@ -208,8 +210,10 @@ class BackTracedErrorBase: BackTracedErrorProtocol/*, Error, Equatable, _ErrorCo
 }
 
 class CustomError: BackTracedErrorBase {
-    init() {
-        super.init(errorDescription: "Default backtraced error!");
+    convenience init() {
+        self.init(errorDescription: "Default backtraced error!");
     }
-    
+    init(errorDescription: String) {
+        super.init(errorDescription: errorDescription);
+    }
 }

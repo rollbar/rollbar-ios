@@ -177,13 +177,15 @@ final class RollbarNotifierLoggerTests: XCTestCase {
             errorCallStack.forEach({print($0)});
         }
         catch let e as BackTracedErrorProtocol {
+            //print("Caught an error: \(e.localizedDescription)");
             print("Caught an error: \(e.errorDescription)");
             print("Caught error's call stack:");
             e.errorCallStack.forEach({print($0)});
         }
         catch {
             print("Caught an error: \(error)");
-            print("Corresponding call stack trace at the catch point:");
+            //print("Caught an error: \(error.localizedDescription)");
+            //print("Corresponding call stack trace at the catch point:");
             Thread.callStackSymbols.forEach{print($0)}
         }
     }
