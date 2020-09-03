@@ -194,7 +194,7 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (void)log:(NSString *)level
+- (void)log:(RollbarLevel)level
     message:(NSString *)message
   exception:(NSException *)exception
        data:(NSDictionary<NSString *, id> *)data
@@ -206,12 +206,11 @@ static BOOL isNetworkReachable = YES;
     
     RollbarConfig *config = self.configuration;
     
-    RollbarLevel rollbarLevel = [RollbarLevelUtil RollbarLevelFromString:level];
-    if (rollbarLevel < config.loggingOptions.logLevel) {
+    if (level < config.loggingOptions.logLevel) {
         return;
     }
 
-    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:rollbarLevel
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:level
                                                          message:message
                                                        exception:exception
                                                            error:nil
@@ -224,7 +223,7 @@ static BOOL isNetworkReachable = YES;
     }
 }
 
-- (void)log:(NSString *)level
+- (void)log:(RollbarLevel)level
       error:(NSError *)error
        data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context {
@@ -235,12 +234,11 @@ static BOOL isNetworkReachable = YES;
     
     RollbarConfig *config = self.configuration;
     
-    RollbarLevel rollbarLevel = [RollbarLevelUtil RollbarLevelFromString:level];
-    if (rollbarLevel < config.loggingOptions.logLevel) {
+    if (level < config.loggingOptions.logLevel) {
         return;
     }
     
-    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:rollbarLevel
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:level
                                                          message:nil
                                                        exception:nil
                                                            error:error

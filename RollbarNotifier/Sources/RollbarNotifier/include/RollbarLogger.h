@@ -4,6 +4,8 @@
 
 @class RollbarConfig;
 
+#import "RollbarLevel.h"
+
 @interface RollbarLogger : NSObject 
 
 /// Notifier's config object
@@ -35,7 +37,7 @@ NS_DESIGNATED_INITIALIZER;
 /// @param exception exception
 /// @param data extra data
 /// @param context extra context
-- (void)log:(NSString *)level
+- (void)log:(RollbarLevel)level
     message:(NSString *)message
   exception:(NSException *)exception
        data:(NSDictionary<NSString *, id> *)data
@@ -46,7 +48,7 @@ NS_DESIGNATED_INITIALIZER;
     /// @param error an NSError
     /// @param data extra data
     /// @param context extra context
-- (void)log:(NSString *)level
+- (void)log:(RollbarLevel)level
       error:(NSError *)error
        data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context;

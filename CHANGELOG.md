@@ -31,6 +31,7 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 - refactor: removed RollbarConfiguration and replaced it with RollbarConfig
 - refactor: changed WhitelistFields into SafeListFields when it comes to the RollbarScrubbingOptions
 - refactor: removed all the deprecated API 
+- refactor: replace NSString-like log level parameters in RollbarLogger interface with RollbarLevel enum
 - feat: defined default scrub fields
 - feat: explicit reporting of NSErrors 
 
