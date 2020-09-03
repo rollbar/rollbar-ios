@@ -22,6 +22,21 @@
     // Insert code here to initialize your application
     [self initRollbar];
     
+    NSData *data = [[NSData alloc] init];
+    NSError *error;
+    NSJSONReadingOptions serializationOptions = (NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves);
+    NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:serializationOptions
+                                                              error:&error];
+    if (!payload && error) {
+        [Rollbar log:RollbarLevel_Error
+               error:error
+                data:nil
+             context:nil
+         ];
+    }
+
+    
     @try {
         [self callTroublemaker];
     } @catch (NSException *exception) {

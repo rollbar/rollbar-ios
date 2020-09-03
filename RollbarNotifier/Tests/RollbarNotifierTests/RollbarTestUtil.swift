@@ -139,9 +139,9 @@ class RollbarTestUtil {
 
     private static func makeMostInnerTroubledCall() throws {
         //throw RollbarTestUtilError.basicError;
-        throw RollbarTestUtilError.simulatedException(errorDescription: "ENUM ERROR: Trouble at its source!");
+        //throw RollbarTestUtilError.simulatedException(errorDescription: "ENUM ERROR: Trouble at its source!");
         //throw BackTracedError(errorDescription: "BACKTRACED ERROR: Trouble at its source!");
-        //throw CustomError(errorDescription: "CUSTOM BACKTRACED ERROR: Trouble at its source!");
+        throw CustomError(errorDescription: "CUSTOM BACKTRACED ERROR: Trouble at its source!");
         //throw CustomError();
     }
 
@@ -167,14 +167,15 @@ enum RollbarTestUtilError: Error {
     
 }
 
-protocol BackTracedErrorProtocol : Error {
+protocol BackTracedErrorProtocol : Error /*OR LocalizedError OR CustomNSError*/ {
     var errorDescription: String { get }
     var errorCallStack: [String] { get }
 }
 
 struct BackTracedError : BackTracedErrorProtocol {
-    private var _errorDescription: String = "";
-    private var _errorCallStack: [String] = [];
+    
+    private let _errorDescription: String;
+    private let _errorCallStack: [String];
     
     init(errorDescription: String, errorCallStack: [String] = Thread.callStackSymbols) {
         self._errorDescription = errorDescription;
@@ -190,10 +191,10 @@ struct BackTracedError : BackTracedErrorProtocol {
     }
 }
 
-class BackTracedErrorBase: BackTracedErrorProtocol/*, Error, Equatable, _ErrorCodeProtocol */ {
+class BackTracedErrorBase: BackTracedErrorProtocol {
     
-    private var _errorDescription: String = "";
-    private var _errorCallStack: [String] = [];
+    private let _errorDescription: String;
+    private let _errorCallStack: [String];
     
     init(errorDescription: String, errorCallStack: [String] = Thread.callStackSymbols) {
         self._errorDescription = errorDescription;
@@ -210,9 +211,11 @@ class BackTracedErrorBase: BackTracedErrorProtocol/*, Error, Equatable, _ErrorCo
 }
 
 class CustomError: BackTracedErrorBase {
+    
     convenience init() {
-        self.init(errorDescription: "Default backtraced error!");
+        self.init(errorDescription: "Default back-traced error!");
     }
+    
     init(errorDescription: String) {
         super.init(errorDescription: errorDescription);
     }
