@@ -34,11 +34,19 @@ NS_DESIGNATED_INITIALIZER;
 /// Captures a log entry
 /// @param level Rollbar error/log level
 /// @param message message
-/// @param exception exception
 /// @param data extra data
 /// @param context extra context
 - (void)log:(RollbarLevel)level
     message:(NSString *)message
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context;
+
+/// Captures a log entry
+/// @param level Rollbar error/log level
+/// @param exception exception
+/// @param data extra data
+/// @param context extra context
+- (void)log:(RollbarLevel)level
   exception:(NSException *)exception
        data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context;

@@ -91,21 +91,21 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         Rollbar.currentConfiguration()?.developerOptions.transmit = true;
 
         Rollbar.currentConfiguration()?.developerOptions.transmit = true;
-        Rollbar.critical("Transmission test YES");
+        Rollbar.criticalMessage("Transmission test YES");
         RollbarTestUtil.waitForPesistenceToComplete();
 
         Rollbar.currentConfiguration()?.developerOptions.transmit = false;
-        Rollbar.critical("Transmission test NO");
+        Rollbar.criticalMessage("Transmission test NO");
         RollbarTestUtil.waitForPesistenceToComplete();
 
         Rollbar.currentConfiguration()?.developerOptions.transmit = true;
         //Rollbar.currentConfiguration.enabled = NO;
-        Rollbar.critical("Transmission test YES2");
+        Rollbar.criticalMessage("Transmission test YES2");
         RollbarTestUtil.waitForPesistenceToComplete();
 
         var count = 50;
         while (count > 0) {
-            Rollbar.critical("Rate Limit Test \(count)");
+            Rollbar.criticalMessage("Rate Limit Test \(count)");
             RollbarTestUtil.waitForPesistenceToComplete();
             count -= 1;
         }
@@ -117,7 +117,7 @@ final class RollbarNotifierLoggerTests: XCTestCase {
 //        RollbarTestUtil.clearTelemetryFile();
 
         let notificationText = [
-            "error": ["testing-error-with-message", NSException(name: NSExceptionName("testing-error"), reason: "testing-error-2", userInfo: nil)],
+            "error": ["testing-error"],
             "debug": ["testing-debug"],
             "warning": ["testing-warning"],
             "info": ["testing-info"],
@@ -127,15 +127,15 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         for type in notificationText.keys {
             let params = notificationText[type]!;
             if (type.compare("error") == .orderedSame) {
-                Rollbar.error(params[0] as? String, exception: params[1] as? NSException);
+                Rollbar.errorMessage(params[0] as String);
             } else if (type.compare("warning") == .orderedSame) {
-                Rollbar.warning(params[0] as? String);
+                Rollbar.warningMessage(params[0] as String);
             } else if (type.compare("debug") == .orderedSame) {
-                Rollbar.debug(params[0] as? String);
+                Rollbar.debugMessage(params[0] as String);
             } else if (type.compare("info") == .orderedSame) {
-                Rollbar.info(params[0] as? String);
+                Rollbar.infoMessage(params[0] as String);
             } else if (type.compare("critical") == .orderedSame) {
-                Rollbar.critical(params[0] as? String);
+                Rollbar.criticalMessage(params[0] as String);
             }
         }
 
@@ -147,21 +147,7 @@ final class RollbarNotifierLoggerTests: XCTestCase {
             let level = payload.data.level;
             let message: String? = payload.data.body.message?.body;
             let params = notificationText[RollbarLevelUtil.rollbarLevel(toString: level)]!;
-            switch level {
-            case .debug:
-                XCTAssertTrue(message!.compare(params[0] as! String) == .orderedSame, "Expects '\(params[0])', got '\(message ?? "")'.");
-            case .error:
-                let exception = params[1] as! NSException;
-                XCTAssertNotNil(exception);
-            case .info:
-                XCTAssertTrue(message!.compare(params[0] as! String) == .orderedSame, "Expects '\(params[0])', got '\(message ?? "")'.");
-            case .critical:
-                XCTAssertTrue(message!.compare(params[0] as! String) == .orderedSame, "Expects '\(params[0])', got '\(message ?? "")'.");
-            case .warning:
-                XCTAssertTrue(message!.compare(params[0] as! String) == .orderedSame, "Expects '\(params[0])', got '\(message ?? "")'.");
-            @unknown default:
-                break;
-            }
+            XCTAssertTrue(message!.compare(params[0] as String) == .orderedSame, "Expects '\(params[0])', got '\(message ?? "")'.");
         }
     }
     
