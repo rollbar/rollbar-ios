@@ -33,7 +33,7 @@ Pod::Spec.new do |sdk|
                               :tag => "v#{sdk.version}",
                               :submodules => true }
     sdk.resource = 'rollbar-logo.png'
-    sdk.ios.deployment_target = '8.0'
+    sdk.ios.deployment_target = '9.0'
     sdk.osx.deployment_target = '10.10'
     sdk.tvos.deployment_target = '11.0'
     sdk.watchos.deployment_target = '4.0'
@@ -49,7 +49,7 @@ Pod::Spec.new do |sdk|
       # common.platform     = :ios, "5.0"
 
       #  When using multiple platforms:
-      # common.ios.deployment_target = "8.0"
+      # common.ios.deployment_target = "9.0"
       # common.osx.deployment_target = "10.10"
       # common.tvos.deployment_target = "11.0"
       # common.watchos.deployment_target = "4.0"
@@ -84,7 +84,7 @@ Pod::Spec.new do |sdk|
         # deploys.platform     = :ios, "5.0"
 
         #  When using multiple platforms:
-        # deploys.ios.deployment_target = "8.0"
+        # deploys.ios.deployment_target = "9.0"
         # deploys.osx.deployment_target = "10.10"
         # deploys.tvos.deployment_target = "11.0"
         # deploys.watchos.deployment_target = "4.0"
@@ -120,7 +120,7 @@ Pod::Spec.new do |sdk|
         # notifier.platform     = :ios, "5.0"
 
         #  When using multiple platforms:
-        # notifier.ios.deployment_target = "8.0"
+        # notifier.ios.deployment_target = "9.0"
         # notifier.osx.deployment_target = "10.10"
         # notifier.tvos.deployment_target = "11.0"
         # notifier.watchos.deployment_target = "4.0"
