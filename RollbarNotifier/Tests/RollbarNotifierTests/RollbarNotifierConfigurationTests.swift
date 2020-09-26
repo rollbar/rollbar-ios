@@ -141,7 +141,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
 
         Rollbar.currentConfiguration()?.developerOptions.enabled = false;
         Rollbar.currentLogger().configuration.developerOptions.enabled = false;
-        Rollbar.debug("Test1");
+        Rollbar.debugMessage("Test1");
         RollbarTestUtil.waitForPesistenceToComplete();
         logItems = RollbarTestUtil.readItemStringsFromLogFile();
         XCTAssertTrue(logItems.count == 0,
@@ -149,7 +149,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
                       );
 
         Rollbar.currentConfiguration()?.developerOptions.enabled = true;
-        Rollbar.debug("Test2");
+        Rollbar.debugMessage("Test2");
         RollbarTestUtil.waitForPesistenceToComplete();
         logItems = RollbarTestUtil.readItemStringsFromLogFile();
         XCTAssertTrue(logItems.count == 1,
@@ -157,7 +157,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
                       );
 
         Rollbar.currentConfiguration()?.developerOptions.enabled = false;
-        Rollbar.debug("Test3");
+        Rollbar.debugMessage("Test3");
         RollbarTestUtil.waitForPesistenceToComplete();
         logItems = RollbarTestUtil.readItemStringsFromLogFile();
         XCTAssertTrue(logItems.count == 1,
@@ -182,7 +182,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
         Rollbar.currentConfiguration()?.telemetry.maximumTelemetryData = max;
         Rollbar.updateConfiguration(Rollbar.currentConfiguration());
 
-        Rollbar.debug("Test");
+        Rollbar.debugMessage("Test");
         RollbarTestUtil.waitForPesistenceToComplete();
         RollbarTestUtil.waitForPesistenceToComplete();
         RollbarTestUtil.waitForPesistenceToComplete();
@@ -199,13 +199,13 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
 
         RollbarTestUtil.clearLogFile();
 
-        Rollbar.debug("Don't ignore this");
+        Rollbar.debugMessage("Don't ignore this");
         RollbarTestUtil.waitForPesistenceToComplete();
         var logItems = RollbarTestUtil.readItemStringsFromLogFile();
         XCTAssertTrue(logItems.count == 1, "Log item count should be 1");
 
         Rollbar.currentConfiguration().checkIgnoreRollbarData = { rollbarData in return true; };
-        Rollbar.debug("Ignore this");
+        Rollbar.debugMessage("Ignore this");
         logItems = RollbarTestUtil.readItemStringsFromLogFile();
         XCTAssertTrue(logItems.count == 1, "Log item count should be 1");
     }
@@ -220,7 +220,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
         let codeVersion = "testCodeVersion";
         Rollbar.currentConfiguration()?.setServerHost(host, root: root, branch: branch, codeVersion: codeVersion);
         
-        Rollbar.debug("test");
+        Rollbar.debugMessage("test");
 
         RollbarTestUtil.waitForPesistenceToComplete();
 
@@ -252,7 +252,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
             rollbarData.body.message?.addKeyed("body2", string: newMsg)
             return rollbarData;
         };
-        Rollbar.debug("test");
+        Rollbar.debugMessage("test");
 
         RollbarTestUtil.waitForPesistenceToComplete();
 
@@ -281,7 +281,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
             Rollbar.currentConfiguration()?.dataScrubber.addScrubField(key);
         }
         
-        Rollbar.debug("test");
+        Rollbar.debugMessage("test");
         RollbarTestUtil.waitForPesistenceToComplete();
         
         // verify the fields were scrubbed:
@@ -301,7 +301,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
             Rollbar.currentConfiguration()?.dataScrubber.addScrubSafeListField(key);
         }
 
-        Rollbar.debug("test");
+        Rollbar.debugMessage("test");
         RollbarTestUtil.waitForPesistenceToComplete();
 
         // verify the fields were not scrubbed:

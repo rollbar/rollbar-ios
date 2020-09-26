@@ -7,7 +7,6 @@
 //
 
 #import "RollbarConfig.h"
-//#import "DataTransferObject+Protected.h"
 #import "RollbarCachesDirectory.h"
 #import "RollbarDestination.h"
 #import "RollbarDeveloperOptions.h"
@@ -23,7 +22,7 @@
 
 #pragma mark - constants
 
-static NSString * const NOTIFIER_VERSION = @"2.0.0-alpha12";
+static NSString * const NOTIFIER_VERSION = @"2.0.0-alpha13";
 
 static NSString * const NOTIFIER_NAME = @"rollbar-*os";
 
@@ -31,13 +30,13 @@ static NSString * const NOTIFIER_NAME = @"rollbar-*os";
 #if TARGET_OS_IPHONE | TARGET_OS_IOS
 static NSString * const OPERATING_SYSTEM = @"ios";
 //static NSString * const NOTIFIER_NAME = @"rollbar-ios";
-#elseif TARGET_OS_OSX
+#elif TARGET_OS_OSX
 static NSString * const OPERATING_SYSTEM = @"macos";
 //static NSString * const NOTIFIER_NAME = @"rollbar-macos";
-#elseif TARGET_OS_TV
+#elif TARGET_OS_TV
 static NSString * const OPERATING_SYSTEM = @"tvos";
 //static NSString * const NOTIFIER_NAME = @"rollbar-tvos";
-#elseif TARGET_OS_WATCH
+#elif TARGET_OS_WATCH
 static NSString * const OPERATING_SYSTEM = @"watchos";
 //static NSString * const NOTIFIER_NAME = @"rollbar-watchos";
 #else

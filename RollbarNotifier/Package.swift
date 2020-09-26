@@ -8,7 +8,7 @@ let package = Package(
     platforms: [
         // Oldest targeted platform versions that are supported by this product.
         .macOS(.v10_10),
-        .iOS(.v8),
+        .iOS(.v9),
         .tvOS(.v11),
         .watchOS(.v4),
     ],

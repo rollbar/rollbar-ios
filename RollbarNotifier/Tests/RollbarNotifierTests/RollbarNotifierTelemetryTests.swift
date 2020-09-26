@@ -64,7 +64,7 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
 
         //RollbarTestUtil.waitForPesistenceToComplete();
         
-        Rollbar.debug("Test");
+        Rollbar.debugMessage("Test");
 
         RollbarTestUtil.waitForPesistenceToComplete();
 
@@ -156,9 +156,9 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
 
         //RollbarTestUtil.waitForPesistenceToComplete();
 
-        Rollbar.debug("Demonstrate Telemetry capture");
-        Rollbar.debug("Demonstrate Telemetry capture once more...");
-        Rollbar.debug("DO Demonstrate Telemetry capture once more...");
+        Rollbar.debugMessage("Demonstrate Telemetry capture");
+        Rollbar.debugMessage("Demonstrate Telemetry capture once more...");
+        Rollbar.debugMessage("DO Demonstrate Telemetry capture once more...");
 
         RollbarTestUtil.waitForPesistenceToComplete();
         

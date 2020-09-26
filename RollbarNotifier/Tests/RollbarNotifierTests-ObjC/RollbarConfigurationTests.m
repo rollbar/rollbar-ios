@@ -40,7 +40,7 @@
     for (NSString *key in keys) {
         [Rollbar.currentConfiguration.dataScrubber addScrubField:key];
     }
-    [Rollbar debug:@"test"];
+    [Rollbar debugMessage:@"test"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     
     // verify the fields were scrubbed:
@@ -61,7 +61,7 @@
     for (NSString *key in keys) {
         [Rollbar.currentConfiguration.dataScrubber addScrubSafeListField:key];
     }
-    [Rollbar debug:@"test"];
+    [Rollbar debugMessage:@"test"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     
     // verify the fields were not scrubbed:
@@ -187,7 +187,7 @@
 
     Rollbar.currentConfiguration.developerOptions.enabled = NO;
     Rollbar.currentLogger.configuration.developerOptions.enabled = NO;
-    [Rollbar debug:@"Test1"];
+    [Rollbar debugMessage:@"Test1"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 0,
@@ -196,7 +196,7 @@
                   );
 
     Rollbar.currentConfiguration.developerOptions.enabled = YES;
-    [Rollbar debug:@"Test2"];
+    [Rollbar debugMessage:@"Test2"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1,
@@ -205,7 +205,7 @@
                   );
 
     Rollbar.currentConfiguration.developerOptions.enabled = NO;
-    [Rollbar debug:@"Test3"];
+    [Rollbar debugMessage:@"Test3"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1,
@@ -230,7 +230,7 @@
     Rollbar.currentConfiguration.telemetry.maximumTelemetryData = max;
     [Rollbar reapplyConfiguration];
     
-    [Rollbar debug:@"Test"];
+    [Rollbar debugMessage:@"Test"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     NSArray *logItems = RollbarReadLogItemFromFile();
     NSDictionary *item = logItems[0];
@@ -243,7 +243,7 @@
 }
 
 - (void)testCheckIgnore {
-    [Rollbar debug:@"Don't ignore this"];
+    [Rollbar debugMessage:@"Don't ignore this"];
     RollbarFlushFileThread(Rollbar.currentLogger);
     NSArray *logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
@@ -251,7 +251,7 @@
     Rollbar.currentConfiguration.checkIgnoreRollbarData = ^BOOL(RollbarData *payloadData) {
         return true;
     };
-    [Rollbar debug:@"Ignore this"];
+    [Rollbar debugMessage:@"Ignore this"];
     logItems = RollbarReadLogItemFromFile();
     XCTAssertTrue(logItems.count == 1, @"Log item count should be 1");
 }
@@ -266,7 +266,7 @@
                                          branch:branch
                                     codeVersion:codeVersion
      ];
-    [Rollbar debug:@"test"];
+    [Rollbar debugMessage:@"test"];
 
     RollbarFlushFileThread(Rollbar.currentLogger);
 
@@ -305,7 +305,7 @@
         [payloadData.body.message addKeyed:@"body2" String:newMsg];
         return payloadData;
     };
-    [Rollbar debug:@"test"];
+    [Rollbar debugMessage:@"test"];
 
     RollbarFlushFileThread(Rollbar.currentLogger);
 
@@ -332,7 +332,7 @@
     for (NSString *key in keys) {
         [Rollbar.currentConfiguration.dataScrubber addScrubField:key];
     }
-    [Rollbar debug:@"test"];
+    [Rollbar debugMessage:@"test"];
 
     RollbarFlushFileThread(Rollbar.currentLogger);
 
@@ -358,7 +358,7 @@
     // The following line ensures the captureLogAsTelemetryData setting is flushed through the internal queue
     [[RollbarTelemetry sharedInstance] getAllData];
     NSLog(logMsg);
-    [Rollbar debug:@"test"];
+    [Rollbar debugMessage:@"test"];
     
     RollbarFlushFileThread(Rollbar.currentLogger);
 

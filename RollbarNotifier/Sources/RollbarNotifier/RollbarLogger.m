@@ -182,6 +182,11 @@ static BOOL isNetworkReachable = YES;
 - (void)logCrashReport:(NSString *)crashReport {
 
     RollbarConfig *config = self.configuration;
+    
+    if (YES == [self shouldSkipReporting:config.loggingOptions.crashLevel]) {
+        return;
+    }
+    
     RollbarPayload *payload = [self buildRollbarPayloadWithLevel:config.loggingOptions.crashLevel
                                                          message:nil
                                                        exception:nil
@@ -189,36 +194,91 @@ static BOOL isNetworkReachable = YES;
                                                            extra:nil
                                                      crashReport:crashReport
                                                          context:nil];
-    if (payload) {
-        [self queuePayload:payload.jsonFriendlyData];
-    }
+    [self report:payload];
 }
 
-- (void)log:(NSString *)level
+- (void)log:(RollbarLevel)level
     message:(NSString *)message
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context {
+    
+    if (YES == [self shouldSkipReporting:level]) {
+        return;
+    }
+
+    RollbarConfig *config = self.configuration;
+    
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:level
+                                                         message:message
+                                                       exception:nil
+                                                           error:nil
+                                                           extra:data
+                                                     crashReport:nil
+                                                         context:context
+                               ];
+    [self report:payload];
+}
+
+- (void)log:(RollbarLevel)level
   exception:(NSException *)exception
        data:(NSDictionary<NSString *, id> *)data
     context:(NSString *)context {
     
-    if (!self.configuration.developerOptions.enabled) {
+    if (YES == [self shouldSkipReporting:level]) {
         return;
     }
     
     RollbarConfig *config = self.configuration;
     
-    RollbarLevel rollbarLevel = [RollbarLevelUtil RollbarLevelFromString:level];
-    if (rollbarLevel < config.loggingOptions.logLevel) {
-        return;
-    }
-
-    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:rollbarLevel
-                                                         message:message
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:level
+                                                         message:nil
                                                        exception:exception
                                                            error:nil
                                                            extra:data
                                                      crashReport:nil
                                                          context:context
                                ];
+    [self report:payload];
+}
+
+- (void)log:(RollbarLevel)level
+      error:(NSError *)error
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context {
+
+    if (YES == [self shouldSkipReporting:level]) {
+        return;
+    }
+    
+    RollbarConfig *config = self.configuration;
+    
+    RollbarPayload *payload = [self buildRollbarPayloadWithLevel:level
+                                                         message:nil
+                                                       exception:nil
+                                                           error:error
+                                                           extra:data
+                                                     crashReport:nil
+                                                         context:context
+                               ];
+    [self report:payload];
+}
+
+- (BOOL)shouldSkipReporting:(RollbarLevel)level {
+    
+    RollbarConfig *config = self.configuration;
+    
+    if (!config.developerOptions.enabled) {
+        return YES;
+    }
+    
+    if (level < config.loggingOptions.logLevel) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)report:(RollbarPayload *)payload {
     if (payload) {
         [self queuePayload:payload.jsonFriendlyData];
     }
@@ -294,6 +354,14 @@ static BOOL isNetworkReachable = YES;
         if (!payload) {
             // Ignore this line if it isn't valid json and proceed to the next line
             RollbarSdkLog(@"Error restoring data from file to JSON: %@", lineData);
+            RollbarSdkLog(@"Possible cause is: %@", error);
+            RollbarSdkLog(@"   error code: %@", error.code);
+            RollbarSdkLog(@"   error domain: %@", error.domain);
+            RollbarSdkLog(@"   error description: %@", error.description);
+            RollbarSdkLog(@"   error localized description: %@", error.localizedDescription);
+            RollbarSdkLog(@"   error failure reason: %@", error.localizedFailureReason);
+            RollbarSdkLog(@"   error recovery option: %@", error.localizedRecoveryOptions);
+            RollbarSdkLog(@"   error recovery suggestion: %@", error.localizedRecoverySuggestion);
             return;
         }
 

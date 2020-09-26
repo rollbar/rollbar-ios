@@ -41,7 +41,7 @@
     [Rollbar recordErrorEventForLevel:RollbarLevel_Debug message:@"test"];
     [Rollbar recordErrorEventForLevel:RollbarLevel_Error exception:[NSException exceptionWithName:@"name" reason:@"reason" userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarLevel_Debug withData:@{@"data": @"content"}];
-    [Rollbar debug:@"Test"];
+    [Rollbar debugMessage:@"Test"];
 
     RollbarFlushFileThread(Rollbar.currentLogger);
 
@@ -88,9 +88,9 @@
                                                                                    userInfo:nil]];
     [Rollbar recordManualEventForLevel:RollbarLevel_Debug withData:@{@"myTelemetryParameter": @"itsValue"}];
     
-    [Rollbar debug:@"Demonstrate Telemetry capture"];
-    [Rollbar debug:@"Demonstrate Telemetry capture once more..."];
-    [Rollbar debug:@"DO Demonstrate Telemetry capture once more..."];
+    [Rollbar debugMessage:@"Demonstrate Telemetry capture"];
+    [Rollbar debugMessage:@"Demonstrate Telemetry capture once more..."];
+    [Rollbar debugMessage:@"DO Demonstrate Telemetry capture once more..."];
 
     //[NSThread sleepForTimeInterval:8.0f];
     

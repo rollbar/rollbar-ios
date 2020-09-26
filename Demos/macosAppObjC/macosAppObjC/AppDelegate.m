@@ -22,12 +22,27 @@
     // Insert code here to initialize your application
     [self initRollbar];
     
+    NSData *data = [[NSData alloc] init];
+    NSError *error;
+    NSJSONReadingOptions serializationOptions = (NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves);
+    NSDictionary *payload = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:serializationOptions
+                                                              error:&error];
+    if (!payload && error) {
+        [Rollbar log:RollbarLevel_Error
+               error:error
+                data:nil
+             context:nil
+         ];
+    }
+
+    
     @try {
         [self callTroublemaker];
     } @catch (NSException *exception) {
-        [Rollbar error:@"Got an exception!" exception:exception];
+        [Rollbar errorException:exception];
     } @finally {
-        [Rollbar info:@"Post-trouble notification!"];
+        [Rollbar infoMessage:@"Post-trouble notification!"];
     }
 }
 
@@ -35,7 +50,7 @@
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 
-    [Rollbar info:@"The hosting application is terminating..."];
+    [Rollbar infoMessage:@"The hosting application is terminating..."];
 }
 
 - (void)initRollbar {
@@ -49,7 +64,7 @@
     // init Rollbar shared instance:
     [Rollbar initWithConfiguration:config];
     
-    [Rollbar info:@"Rollbar is up and running! Enjoy your remote error and log monitoring..."];
+    [Rollbar infoMessage:@"Rollbar is up and running! Enjoy your remote error and log monitoring..."];
 }
 
 - (void)demonstrateDeployApiUsage {

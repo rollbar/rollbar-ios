@@ -189,7 +189,7 @@
         NSLog(@"%@", [crew objectAtIndex:10]);
     }
     @catch (NSException *exception) {
-        [Rollbar error:nil exception:exception];
+        [Rollbar errorException:exception];
     }
     
     RollbarFlushFileThread(Rollbar.currentLogger);
@@ -220,9 +220,8 @@
         [simulatedLongString appendString:@"1234567890_"];
     }
 
-    [Rollbar critical:@"Message with long extra data"
-            exception:nil
-                 data:@{@"extra_truncatable_data": simulatedLongString}
+    [Rollbar criticalMessage:@"Message with long extra data"
+                        data:@{@"extra_truncatable_data": simulatedLongString}
      ];
 
     @try {
@@ -235,9 +234,8 @@
     }
     @catch (NSException *exception) {
 
-        [Rollbar critical:simulatedLongString
-                exception:exception
-                     data:@{@"extra_truncatable_data": simulatedLongString}
+        [Rollbar criticalMessage:simulatedLongString
+                            data:@{@"extra_truncatable_data": simulatedLongString}
          ];
 
         [NSThread sleepForTimeInterval:1.0f];

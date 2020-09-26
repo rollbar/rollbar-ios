@@ -70,7 +70,7 @@ class RollbarDeploysDemoClient {
             deploymentRegistrationObserver: (observer as! NSObjectProtocol & RollbarDeploymentRegistrationObserver),
             deploymentDetailsObserver: (observer as! NSObjectProtocol & RollbarDeploymentDetailsObserver),
             deploymentDetailsPageObserver: (observer as! NSObjectProtocol & RollbarDeploymentDetailsPageObserver));
-        deploysManager!.register(deployment!)
+        deploysManager.register(deployment!)
     }
 
     func demoGetDeploymentDetailsById() {
@@ -83,7 +83,7 @@ class RollbarDeploysDemoClient {
             deploymentRegistrationObserver: (observer as! NSObjectProtocol & RollbarDeploymentRegistrationObserver),
             deploymentDetailsObserver: (observer as! NSObjectProtocol & RollbarDeploymentDetailsObserver),
             deploymentDetailsPageObserver: (observer as! NSObjectProtocol & RollbarDeploymentDetailsPageObserver));
-        deploysManager!.getDeploymentWithDeployId(testDeploymentId);
+        deploysManager.getDeploymentWithDeployId(testDeploymentId);
     }
 
     func demoGetDeploymentsPage() {
@@ -95,7 +95,7 @@ class RollbarDeploysDemoClient {
             deploymentRegistrationObserver: (observer as! NSObjectProtocol & RollbarDeploymentRegistrationObserver),
             deploymentDetailsObserver: (observer as! NSObjectProtocol & RollbarDeploymentDetailsObserver),
             deploymentDetailsPageObserver: (observer as! NSObjectProtocol & RollbarDeploymentDetailsPageObserver));
-        deploysManager!.getDeploymentsPageNumber(1);
+        deploysManager.getDeploymentsPageNumber(1);
     }
 }
 

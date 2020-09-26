@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        self.demonstrateDeployApiUasege();
+        self.demonstrateDeployApiUsage();
         self.initRollbar();
         
 //        SwiftTryCatch.tryRun({
@@ -39,17 +39,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func initRollbar() {
 
         // configure Rollbar:
-        let config = RollbarConfiguration.init();
+        let config = RollbarConfig.init();
         
         //config.crashLevel = @"critical";
-        config.environment = "samples";
-        config.asRollbarConfig().customData = [ "someKey": "someValue", ];
+        config.destination.accessToken = "2ffc7997ed864dda94f63e7b7daae0f3";
+        config.destination.environment = "samples";
+        config.customData = [ "someKey": "someValue", ];
         // init Rollbar shared instance:
-        Rollbar.initWithAccessToken("2ffc7997ed864dda94f63e7b7daae0f3", configuration: config);
+        Rollbar.initWithConfiguration(config);
         Rollbar.info("Rollbar is up and running! Enjoy your remote error and log monitoring...");
     }
 
-    func demonstrateDeployApiUasege() {
+    func demonstrateDeployApiUsage() {
         
         let rollbarDeploysIntro = RollbarDeploysDemoClient();
         rollbarDeploysIntro.demoDeploymentRegistration();

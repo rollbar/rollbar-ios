@@ -111,240 +111,269 @@ static RollbarTelemetryOptionsObserver *telemetryOptionsObserver = nil;
 
 #pragma mark - Logging methods
 
++ (void)logCrashReport:(NSString *)crashReport {
+    
+    [logger logCrashReport:crashReport];
+}
+
 + (void)log:(RollbarLevel)level
     message:(NSString *)message {
 
-    [Rollbar log:level message:message exception:nil];
+    [logger log:level
+        message:message
+           data:nil
+        context:nil];
 }
 
 + (void)log:(RollbarLevel)level
-    message:(NSString *)message
   exception:(NSException *)exception {
 
-    [Rollbar log:level message:message exception:exception data:nil];
+    [logger log:level
+      exception:exception
+           data:nil
+        context:nil];
+}
+
++ (void)log:(RollbarLevel)level
+      error:(NSError *)error {
+    
+    [logger log:level
+          error:error
+           data:nil
+        context:nil];
 }
 
 + (void)log:(RollbarLevel)level
     message:(NSString *)message
+       data:(NSDictionary<NSString *, NSObject *> *)data {
+    
+    [logger log:level
+        message:message
+           data:data
+        context:nil];
+}
+
++ (void)log:(RollbarLevel)level
   exception:(NSException *)exception
        data:(NSDictionary<NSString *, NSObject *> *)data {
+    
+    [logger log:level
+      exception:exception
+           data:data
+        context:nil];
+}
 
-    [Rollbar log:level message:message exception:exception data:data context:nil];
++ (void)log:(RollbarLevel)level
+      error:(NSError *)error
+       data:(NSDictionary<NSString *, id> *)data {
+    
+    [logger log:level
+          error:error
+           data:data
+        context:nil];
 }
 
 + (void)log:(RollbarLevel)level
     message:(NSString *)message
+       data:(NSDictionary<NSString *, NSObject *> *)data
+    context:(NSString *)context {
+
+    [logger log:level
+        message:message
+           data:data
+        context:context];
+}
+
++ (void)log:(RollbarLevel)level
   exception:(NSException *)exception
        data:(NSDictionary<NSString *, NSObject *> *)data
     context:(NSString *)context {
 
-    [logger log:[RollbarLevelUtil RollbarLevelToString:level]
-          message:message
-        exception:exception
-             data:data
-          context:context];
+    [logger log:level
+      exception:exception
+           data:data
+        context:context];
 }
 
-// Debug
-
-+ (void)debug:(NSString *)message {
-
-    [Rollbar debug:message exception:nil];
++ (void)log:(RollbarLevel)level
+      error:(NSError *)error
+       data:(NSDictionary<NSString *, id> *)data
+    context:(NSString *)context {
+    
+    [logger log:level
+          error:error
+           data:data
+        context:context];
 }
 
-+ (void)debug:(NSString *)message
-    exception:(NSException *)exception {
+#pragma mark - Convenience logging methods
 
-    [Rollbar debug:message
-         exception:exception
-              data:nil];
++ (void)debugMessage:(NSString *)message {
+    [Rollbar log:RollbarLevel_Debug message:message data:nil context:nil];
+}
++ (void)debugException:(NSException *)exception {
+    [Rollbar log:RollbarLevel_Debug exception:exception data:nil context:nil];
+}
++ (void)debugError:(NSError *)error {
+    [Rollbar log:RollbarLevel_Debug error:error data:nil context:nil];
 }
 
-+ (void)debug:(NSString *)message
-    exception:(NSException *)exception
-         data:(NSDictionary<NSString *, NSObject *> *)data {
-
-    [Rollbar debug:message
-         exception:exception
-              data:data
-           context:nil];
++ (void)debugMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Debug message:message data:data context:nil];
+}
++ (void)debugException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Debug exception:exception data:data context:nil];
+}
++ (void)debugError:(NSError *)error data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Debug error:error data:data context:nil];
 }
 
-+ (void)debug:(NSString *)message
-    exception:(NSException *)exception
-         data:(NSDictionary<NSString *, NSObject *> *)data
-      context:(NSString *)context {
-
-    [Rollbar log:RollbarLevel_Debug
-         message:message
-       exception:exception
-            data:data
-         context:context];
++ (void)debugMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Debug message:message data:data context:context];
+}
++ (void)debugException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Debug exception:exception data:data context:context];
+}
++ (void)debugError:(NSError *)error data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Debug error:error data:data context:context];
 }
 
-// Info
 
-+ (void)info:(NSString *)message {
 
-    [Rollbar info:message exception:nil];
++ (void)infoMessage:(NSString *)message {
+    [Rollbar log:RollbarLevel_Info message:message data:nil context:nil];
+}
++ (void)infoException:(NSException *)exception {
+    [Rollbar log:RollbarLevel_Info exception:exception data:nil context:nil];
+}
++ (void)infoError:(NSError *)error {
+    [Rollbar log:RollbarLevel_Info error:error data:nil context:nil];
 }
 
-+ (void)info:(NSString *)message
-   exception:(NSException *)exception {
-
-    [Rollbar info:message
-        exception:exception
-             data:nil];
++ (void)infoMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Info message:message data:data context:nil];
+}
++ (void)infoException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Info exception:exception data:data context:nil];
+}
++ (void)infoError:(NSError *)error data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Info error:error data:data context:nil];
 }
 
-+ (void)info:(NSString *)message
-   exception:(NSException *)exception
-        data:(NSDictionary<NSString *, NSObject *> *)data {
-
-    [Rollbar info:message
-        exception:exception
-             data:data
-          context:nil];
++ (void)infoMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Info message:message data:data context:context];
+}
++ (void)infoException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Info exception:exception data:data context:context];
+}
++ (void)infoError:(NSError *)error data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Info error:error data:data context:context];
 }
 
-+ (void)info:(NSString *)message
-   exception:(NSException *)exception
-        data:(NSDictionary<NSString *, NSObject *> *)data
-     context:(NSString *)context {
 
-    [Rollbar log:RollbarLevel_Info
-         message:message
-       exception:exception
-            data:data
-         context:context];
+
++ (void)warningMessage:(NSString *)message {
+    [Rollbar log:RollbarLevel_Warning message:message data:nil context:nil];
+}
++ (void)warningException:(NSException *)exception {
+    [Rollbar log:RollbarLevel_Warning exception:exception data:nil context:nil];
+}
++ (void)warningError:(NSError *)error {
+    [Rollbar log:RollbarLevel_Warning error:error data:nil context:nil];
 }
 
-// Warning
-
-+ (void)warning:(NSString *)message {
-
-    [Rollbar warning:message
-        exception:nil];
++ (void)warningMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Warning message:message data:data context:nil];
+}
++ (void)warningException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Warning exception:exception data:data context:nil];
+}
++ (void)warningError:(NSError *)error data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Warning error:error data:data context:nil];
 }
 
-+ (void)warning:(NSString *)message
-      exception:(NSException *)exception {
-
-    [Rollbar warning:message
-        exception:exception
-             data:nil];
++ (void)warningMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Warning message:message data:data context:context];
+}
++ (void)warningException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Warning exception:exception data:data context:context];
+}
++ (void)warningError:(NSError *)error data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Warning error:error data:data context:context];
 }
 
-+ (void)warning:(NSString *)message
-      exception:(NSException *)exception
-           data:(NSDictionary<NSString *, NSObject *> *)data {
 
-    [Rollbar warning:message
-        exception:exception
-             data:data
-          context:nil];
+
++ (void)errorMessage:(NSString *)message {
+    [Rollbar log:RollbarLevel_Error message:message data:nil context:nil];
+}
++ (void)errorException:(NSException *)exception {
+    [Rollbar log:RollbarLevel_Error exception:exception data:nil context:nil];
+}
++ (void)errorError:(NSError *)error {
+    [Rollbar log:RollbarLevel_Error error:error data:nil context:nil];
 }
 
-+ (void)warning:(NSString *)message
-      exception:(NSException *)exception
-           data:(NSDictionary<NSString *, NSObject *> *)data
-        context:(NSString *)context {
-
-    [Rollbar log:RollbarLevel_Warning
-         message:message
-       exception:exception
-            data:data
-         context:context];
++ (void)errorMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Error message:message data:data context:nil];
+}
++ (void)errorException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Error exception:exception data:data context:nil];
+}
++ (void)errorError:(NSError *)error data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Error error:error data:data context:nil];
 }
 
-// Error
-
-+ (void)error:(NSString *)message {
-
-    [Rollbar error:message
-         exception:nil];
++ (void)errorMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Error message:message data:data context:context];
+}
++ (void)errorException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Error exception:exception data:data context:context];
+}
++ (void)errorError:(NSError *)error data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Error error:error data:data context:context];
 }
 
-+ (void)error:(NSString *)message
-    exception:(NSException *)exception {
 
-    [Rollbar error:message
-         exception:exception
-              data:nil];
+
++ (void)criticalMessage:(NSString *)message {
+    [Rollbar log:RollbarLevel_Critical message:message data:nil context:nil];
+}
++ (void)criticalException:(NSException *)exception {
+    [Rollbar log:RollbarLevel_Critical exception:exception data:nil context:nil];
+}
++ (void)criticalError:(NSError *)error {
+    [Rollbar log:RollbarLevel_Critical error:error data:nil context:nil];
 }
 
-+ (void)error:(NSString *)message
-    exception:(NSException *)exception
-         data:(NSDictionary<NSString *, NSObject *> *)data {
-
-    [Rollbar error:message
-         exception:exception
-              data:data
-           context:nil];
++ (void)criticalMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Critical message:message data:data context:nil];
+}
++ (void)criticalException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Critical exception:exception data:data context:nil];
+}
++ (void)criticalError:(NSError *)error data:(NSDictionary<NSString *, id> *)data {
+    [Rollbar log:RollbarLevel_Critical error:error data:data context:nil];
 }
 
-+ (void)error:(NSString *)message
-    exception:(NSException *)exception
-         data:(NSDictionary<NSString *, NSObject *> *)data
-      context:(NSString *)context {
-
-    [Rollbar log:RollbarLevel_Error
-         message:message
-       exception:exception
-            data:data
-         context:context];
++ (void)criticalMessage:(NSString *)message data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Critical message:message data:data context:context];
+}
++ (void)criticalException:(NSException *)exception data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Critical exception:exception data:data context:context];
+}
++ (void)criticalError:(NSError *)error data:(NSDictionary<NSString *, id> *)data context:(NSString *)context {
+    [Rollbar log:RollbarLevel_Critical error:error data:data context:context];
 }
 
-// Critical
-
-+ (void)critical:(NSString *)message {
-    [Rollbar critical:message exception:nil];
-}
-
-+ (void)critical:(NSString *)message
-       exception:(NSException *)exception {
-
-    [Rollbar critical:message
-            exception:exception
-                 data:nil];
-}
-
-+ (void)critical:(NSString *)message
-       exception:(NSException *)exception
-            data:(NSDictionary<NSString *, NSObject *> *)data {
-
-    [Rollbar critical:message
-            exception:exception
-                 data:data
-              context:nil];
-}
-
-+ (void)critical:(NSString *)message
-       exception:(NSException *)exception
-            data:(NSDictionary<NSString *, NSObject *> *)data
-         context:(NSString *)context {
-
-    [Rollbar log:RollbarLevel_Critical
-         message:message
-       exception:exception
-            data:data
-         context:context];
-}
+#pragma mark - Send manually constructed JSON payload
 
 + (void)sendJsonPayload:(NSData *)payload {
 
     [logger sendPayload:payload];
 }
 
-
-// Crash Report
-
-+ (void)logCrashReport:(NSString *)crashReport {
-
-    [logger logCrashReport:crashReport];
-}
-
-#pragma mark - Telemetry logging methods
+#pragma mark - Telemetry API
 
 #pragma mark - Dom
 
