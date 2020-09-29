@@ -33,17 +33,17 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - DEPRECATED
 
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (nonatomic, strong) NSArray *whitelistFields
-DEPRECATED_MSG_ATTRIBUTE("In v2, use safeListFields property instead.");
+@property (nonatomic, strong) NSArray *whitelistFields;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use safeListFields property instead.");
 
 - (instancetype)initWithEnabled:(BOOL)enabled
                     scrubFields:(NSArray *)scrubFields
-                whitelistFields:(NSArray *)whitelistFields
-DEPRECATED_MSG_ATTRIBUTE("In v2, use initWithEnabled:scrubFields:safeListFields: method instead.");
+                whitelistFields:(NSArray *)whitelistFields;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use initWithEnabled:scrubFields:safeListFields: method instead.");
 
 - (instancetype)initWithScrubFields:(NSArray *)scrubFields
-                    whitelistFields:(NSArray *)whitelistFields
-DEPRECATED_MSG_ATTRIBUTE("In v2, use initWithEnabled:safeListFields: method instead.");
+                    whitelistFields:(NSArray *)whitelistFields;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use initWithEnabled:safeListFields: method instead.");
 
 @end
 

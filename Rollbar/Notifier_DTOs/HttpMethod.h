@@ -10,24 +10,24 @@
 
 #pragma mark - HttpMethod enum
 
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod enum instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod enum instead.")
 typedef NS_ENUM(NSUInteger, HttpMethod) {
-    Head DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Head instead."),
-    Get DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Get instead."),
-    Post DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Post instead."),
-    Put DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Put instead."),
-    Patch DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Patch instead."),
-    Delete DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Delete instead."),
-    Connect DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Connect instead."),
-    Options DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Options instead."),
-    Trace DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Trace instead."),
+    Head,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Head instead."),
+    Get,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Get instead."),
+    Post,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Post instead."),
+    Put,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Put instead."),
+    Patch,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Patch instead."),
+    Delete,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Delete instead."),
+    Connect,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Connect instead."),
+    Options,// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Options instead."),
+    Trace// DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethod_Trace instead."),
 };
 
 #pragma mark - CaptureIpTypeUtil
 
 NS_ASSUME_NONNULL_BEGIN
 
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethodUtil class instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarHttpMethodUtil class instead.")
 @interface HttpMethodUtil : NSObject
 
 /// Convert HttpMethod to a string
