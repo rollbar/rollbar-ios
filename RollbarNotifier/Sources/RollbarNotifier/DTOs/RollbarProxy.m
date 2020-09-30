@@ -70,7 +70,8 @@ static NSString * const DFK_PROXY_PORT = @"proxyPort";
 }
 
 - (NSUInteger)proxyPort {
-    NSUInteger result = [self safelyGetUIntegerByKey:DFK_PROXY_PORT];
+    NSUInteger result = [self safelyGetUIntegerByKey:DFK_PROXY_PORT
+                                         withDefault:DEFAULT_PROXY_PORT];
     return result;
 }
 

@@ -128,7 +128,8 @@ static NSString *const DFK_VIEW_INPUTS_SCRUBBER = @"vewInputsScrubber";
 }
 
 - (NSUInteger)maximumTelemetryData {
-    NSUInteger result = [self safelyGetUIntegerByKey:DFK_MAX_TELEMETRY_DATA];
+    NSUInteger result = [self safelyGetUIntegerByKey:DFK_MAX_TELEMETRY_DATA
+                                         withDefault:DEFAULT_MAX_TELEMETRY_DATA];
     return result;
 }
 

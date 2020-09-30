@@ -6,6 +6,7 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(RollbarCommonTests.allTests),
         testCase(RollbarTriStateFlagTests.allTests),
         testCase(NSJSONSerializationRollbarTests.allTests),
+        testCase(NSDictionaryRollbarTests.allTests),
     ]
 }
 #endif

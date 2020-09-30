@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
         //...
 
     @private
-    NSMutableDictionary *_dataDictionary;
+    NSMutableDictionary<NSString *, id> *_dataDictionary;
     NSMutableArray *_dataArray;
 }
 

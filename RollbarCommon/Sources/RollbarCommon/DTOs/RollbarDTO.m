@@ -310,7 +310,7 @@
     return self;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)data;  {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data;  {
     
     self = [super init];
     if (!self) {
@@ -336,9 +336,9 @@
         self->_data = data.mutableCopy;
     }
     self->_dataArray = nil;
-    self->_dataDictionary = (NSMutableDictionary *) self->_data;
+    self->_dataDictionary = (NSMutableDictionary<NSString *, id> *) self->_data;
     for (NSString *key in self->_dataDictionary.allKeys) {
-        if (self->_dataDictionary[key] == [NSNull null]) {
+        if (self->_dataDictionary[key] == (id)[NSNull null]) {
             [self->_dataDictionary removeObjectForKey:key];
         }
     }

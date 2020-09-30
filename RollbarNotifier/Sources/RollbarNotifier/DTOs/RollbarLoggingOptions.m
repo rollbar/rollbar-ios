@@ -159,7 +159,8 @@ static NSString * const DFK_REQUEST_ID = @"requestId";
 }
 
 - (NSUInteger)maximumReportsPerMinute {
-    return [self safelyGetUIntegerByKey:DFK_MAX_REPORTS_PER_MINUTE];
+    return [self safelyGetUIntegerByKey:DFK_MAX_REPORTS_PER_MINUTE
+                            withDefault:DEFAULT_MAX_REPORTS_PER_MINUTE];
 }
 
 - (void)setMaximumReportsPerMinute:(NSUInteger)value {

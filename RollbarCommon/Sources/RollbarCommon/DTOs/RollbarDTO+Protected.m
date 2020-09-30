@@ -52,7 +52,10 @@
 
 - (nullable id)getDataByKey:(nonnull NSString *)key {
     id result = [self->_data objectForKey:key];
-    if (result == [NSNull null]) {
+    if (nil == result) {
+        return nil;
+    }
+    else if (result == [NSNull null]) {
         return nil;
     }
     return result;
@@ -174,18 +177,30 @@
     }
 }
 
-- (BOOL)safelyGetBoolByKey:(NSString *)key {
-    NSNumber *number = [self safelyGetNumberByKey:key];
-    return number.boolValue;
+- (BOOL)safelyGetBoolByKey:(NSString *)key
+               withDefault:(BOOL)defaultValue {
+    NSNumber *value = [self safelyGetNumberByKey:key];
+    if (value) {
+        return value.boolValue;
+    }
+    else {
+        return defaultValue;
+    }
 }
 - (void)setBool:(BOOL)data forKey:(NSString *)key {
     NSNumber *number = [NSNumber numberWithBool:data];
     [self setNumber:number forKey:key];
 }
 
-- (NSUInteger)safelyGetUIntegerByKey:(NSString *)key {
+- (NSUInteger)safelyGetUIntegerByKey:(NSString *)key
+                         withDefault:(NSUInteger)defaultValue{
     NSNumber *value = [self safelyGetNumberByKey:key];
-    return value.unsignedIntegerValue;
+    if (value) {
+        return value.unsignedIntegerValue;
+    }
+    else {
+        return defaultValue;
+    }
 }
 
 - (void)setUInteger:(NSUInteger)data forKey:(NSString *)key {
@@ -193,12 +208,20 @@
     [self setNumber:number forKey:key];
 }
 
-- (NSInteger)safelyGetIntegerByKey:(NSString *)key {
+- (NSInteger)safelyGetIntegerByKey:(NSString *)key
+                       withDefault:(NSInteger)defaultValue {
+
     NSNumber *value = [self safelyGetNumberByKey:key];
-    return value.integerValue;
+    if (value) {
+        return value.integerValue;
+    }
+    else {
+        return defaultValue;
+    }
 }
 
 - (void)setInteger:(NSInteger)data forKey:(NSString *)key {
+
     NSNumber *number = @(data);
     [self setNumber:number forKey:key];
 }
