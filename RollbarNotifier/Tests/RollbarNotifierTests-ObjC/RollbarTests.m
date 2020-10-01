@@ -25,12 +25,38 @@
         Rollbar.currentConfiguration.developerOptions.transmit = YES;
         Rollbar.currentConfiguration.developerOptions.logPayload = YES;
         Rollbar.currentConfiguration.loggingOptions.maximumReportsPerMinute = 5000;
+        // for the stress test specifically:
+        Rollbar.currentConfiguration.telemetry.enabled = YES;
+        Rollbar.currentConfiguration.loggingOptions.captureIp = RollbarCaptureIpType_Full;
+        
+        id config = Rollbar.currentConfiguration;
+        NSLog(@"%@", config)
     }
 }
 
 - (void)tearDown {
     [Rollbar updateConfiguration:[RollbarConfig new]];
     [super tearDown];
+}
+
+- (void)testMultithreadedStressCase {
+    
+    for( int i = 0; i < 20; i++) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY,0), ^(){
+            RollbarLogger *logger = [[RollbarLogger alloc] initWithAccessToken:Rollbar.currentConfiguration.destination.accessToken];
+            for (int j = 0; j < 20; j++) {
+                [logger log:RollbarLevel_Error
+                    message:@"error"
+                       data:nil
+                    context:[NSString stringWithFormat:@"%d-%d", i, j]
+                 ];
+                //[Rollbar errorMessage:@"error"];
+            }
+        });
+    }
+    
+    [NSThread sleepForTimeInterval:40.0f];
+    XCTAssertTrue(YES);
 }
 
 - (void)testRollbarNotifiersIndependentConfiguration {
