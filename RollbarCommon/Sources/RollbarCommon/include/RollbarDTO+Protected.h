@@ -38,7 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Core API: safe data getters by key
 
-- (RollbarDTO *)safelyGetDataTransferObjectByKey:(NSString *)key;
 - (NSMutableDictionary *)safelyGetDictionaryByKey:(NSString *)key;
 - (NSMutableArray *)safelyGetArrayByKey:(NSString *)key;
 - (NSMutableString *)safelyGetStringByKey:(NSString *)key;
@@ -46,13 +45,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Core API: data setters by key
 
-- (void)setDataTransferObject:(RollbarDTO *)data forKey:(NSString *)key;
 - (void)setDictionary:(NSDictionary *)data forKey:(NSString *)key;
 - (void)setArray:(NSArray *)data forKey:(NSString *)key;
 - (void)setString:(NSString *)data forKey:(NSString *)key;
 - (void)setNumber:(NSNumber *)data forKey:(NSString *)key;
 
 #pragma mark - Convenience API
+
+- (RollbarDTO *)safelyGetDataTransferObjectByKey:(NSString *)key;
+- (void)setDataTransferObject:(RollbarDTO *)data forKey:(NSString *)key;
 
 - (RollbarTriStateFlag)safelyGetTriStateFlagByKey:(NSString *)key;
 - (void)setTriStateFlag:(RollbarTriStateFlag)data forKey:(NSString *)key;

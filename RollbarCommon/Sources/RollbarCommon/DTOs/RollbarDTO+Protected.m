@@ -69,7 +69,6 @@
     }
     if ([RollbarDTO isTransferableDataValue:data]) {
         [self->_data setObject:data forKey:key];
-        //[self->_data setValue:data forKey:key];
     }
     else {
         @throw [NSException exceptionWithName:NSInvalidArgumentException
@@ -81,81 +80,76 @@
 - (void)mergeDataDictionary:(nonnull NSDictionary *)data {
     if (data) {
         [self->_data addEntriesFromDictionary:data];
+        
     }
 }
 
 #pragma mark - safe data getters by key
 
-- (RollbarDTO *)safelyGetDataTransferObjectByKey:(NSString *)key {
-//    RollbarDTO *result = [self->_data objectForKey:key];
-//    if (nil == result) {
-//        result = [[RollbarDTO alloc] initWi];
-//        [self->_data setObject:result forKey:key];
-//    }
-    RollbarDTO *result = [[RollbarDTO alloc] initWithDictionary:[self->_data objectForKey:key]];
-
-    return result;
-}
-
 - (NSMutableDictionary *)safelyGetDictionaryByKey:(NSString *)key {
-    NSMutableDictionary *result = [self->_dataDictionary objectForKey:key];
+
+    NSMutableDictionary *result = [self getDataByKey:key];
     if (!result) {
         result = [[NSMutableDictionary alloc] initWithCapacity:5];
-        [self->_data setObject:result forKey:key];
+        [self setData:result byKey:key];
     }
     return result;
 }
 
 - (NSMutableArray *)safelyGetArrayByKey:(NSString *)key {
-    NSMutableArray *result = [self->_data objectForKey:key];
+
+    NSMutableArray *result = [self getDataByKey:key];
     if (nil == result) {
         result = [[NSMutableArray alloc] initWithCapacity:5];
-        [self->_data setObject:result forKey:key];
+        [self setData:result byKey:key];
     }
     return result;
 }
 
 - (NSMutableString *)safelyGetStringByKey:(NSString *)key {
-    NSMutableString *result = [self->_data objectForKey:key];
+
+    NSMutableString *result = [self getDataByKey:key];
     if (nil == result) {
-        result = [[NSMutableString alloc] initWithCapacity:5];
-        [self->_data setObject:result forKey:key];
+        result = [[NSMutableString alloc] initWithCapacity:10];
+        [self setData:result byKey:key];
     }
     return result;
 }
 
 - (NSNumber *)safelyGetNumberByKey:(NSString *)key {
-    NSNumber *result = [self->_data objectForKey:key];
-//    if (nil == result) {
-//        result = [[NSNumber alloc] init];
-//        [self->_data setObject:result forKey:key];
-//    }
+    NSNumber *result = [self getDataByKey:key];
     return result;
 }
 
 #pragma mark - data setters by key
 
-- (void)setDataTransferObject:(RollbarDTO *)data forKey:(NSString *)key {
-    [self->_data setObject:(data->_data) forKey:key];
-}
-
 - (void)setDictionary:(NSDictionary *)data forKey:(NSString *)key {
-    [self->_data setObject:data.mutableCopy forKey:key];
+    [self setData:data.mutableCopy byKey:key];
 }
 
 - (void)setArray:(NSArray *)data forKey:(NSString *)key {
-    [self->_data setObject:data.mutableCopy forKey:key];
+    [self setData:data.mutableCopy byKey:key];
 }
 
 - (void)setString:(NSString *)data forKey:(NSString *)key {
-    [self->_data setObject:data.mutableCopy forKey:key];
+    [self setData:data.mutableCopy byKey:key];
 }
 
 - (void)setNumber:(NSNumber *)data forKey:(NSString *)key {
-    [self->_data setObject:data forKey:key];
+    [self setData:data byKey:key];
 }
 
 #pragma mark - Convenience API
+
+- (RollbarDTO *)safelyGetDataTransferObjectByKey:(NSString *)key {
+    
+    RollbarDTO *result = [[RollbarDTO alloc] initWithDictionary:[self getDataByKey:key]];
+    return result;
+}
+
+- (void)setDataTransferObject:(RollbarDTO *)data forKey:(NSString *)key {
+    [self setData:(data->_data) byKey:key];
+}
 
 - (RollbarTriStateFlag)safelyGetTriStateFlagByKey:(NSString *)key {
     NSString *result = [self->_data objectForKey:key];
@@ -172,8 +166,7 @@
         [self->_data removeObjectForKey:key];
     }
     else {
-        [self->_data setObject:[RollbarTriStateFlagUtil TriStateFlagToString:data].mutableCopy
-                        forKey:key];
+        [self setData:[RollbarTriStateFlagUtil TriStateFlagToString:data].mutableCopy byKey:key];
     }
 }
 

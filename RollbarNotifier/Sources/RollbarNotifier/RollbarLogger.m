@@ -353,15 +353,16 @@ static BOOL isNetworkReachable = YES;
 
         if (!payload) {
             // Ignore this line if it isn't valid json and proceed to the next line
-            RollbarSdkLog(@"Error restoring data from file to JSON: %@", lineData);
-            RollbarSdkLog(@"Possible cause is: %@", error);
-            RollbarSdkLog(@"   error code: %@", error.code);
-            RollbarSdkLog(@"   error domain: %@", error.domain);
-            RollbarSdkLog(@"   error description: %@", error.description);
-            RollbarSdkLog(@"   error localized description: %@", error.localizedDescription);
-            RollbarSdkLog(@"   error failure reason: %@", error.localizedFailureReason);
-            RollbarSdkLog(@"   error recovery option: %@", error.localizedRecoveryOptions);
-            RollbarSdkLog(@"   error recovery suggestion: %@", error.localizedRecoverySuggestion);
+            RollbarSdkLog(@"Error restoring data from file to JSON: %@", error);
+            RollbarSdkLog(@"Raw data from file failed conversion to JSON:");
+            RollbarSdkLog(@"%@", lineData);
+//            RollbarSdkLog(@"   error code: %@", error.code);
+//            RollbarSdkLog(@"   error domain: %@", error.domain);
+//            RollbarSdkLog(@"   error description: %@", error.description);
+//            RollbarSdkLog(@"   error localized description: %@", error.localizedDescription);
+//            RollbarSdkLog(@"   error failure reason: %@", error.localizedFailureReason);
+//            RollbarSdkLog(@"   error recovery option: %@", error.localizedRecoveryOptions);
+//            RollbarSdkLog(@"   error recovery suggestion: %@", error.localizedRecoverySuggestion);
             return;
         }
 

@@ -35,7 +35,7 @@
         return YES;
     }
     else {
-        return [RollbarDTO isTransferableObject:obj];
+        return NO;
     }
 }
 
