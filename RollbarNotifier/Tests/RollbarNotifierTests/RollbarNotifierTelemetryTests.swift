@@ -31,7 +31,7 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
 
         Rollbar.currentConfiguration()?.telemetry.enabled = true;
         
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
         
         Rollbar.recordNavigationEvent(
             for: .info,
@@ -119,7 +119,7 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
         RollbarTestUtil.clearLogFile();
         RollbarTestUtil.clearTelemetryFile();
 
-        Rollbar.currentConfiguration().telemetry.enabled = true;
+        Rollbar.currentConfiguration()!.telemetry.enabled = true;
 
         Rollbar.recordNavigationEvent(
             for: .info,
@@ -213,7 +213,7 @@ final class RollbarNotifierTelemetryTests: XCTestCase {
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.scrubFields.append("password");
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.scrubFields.append("pin");
         
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
         
         Rollbar.recordViewEvent(
             for: .debug,

@@ -35,7 +35,7 @@ final class RollbarNotifierLoggerTests: XCTestCase {
     }
     
     func testRollbarConfiguration() {
-        NSLog("%@", Rollbar.currentConfiguration());
+        NSLog("%@", Rollbar.currentConfiguration()!);
     }
 
     func testRollbarNotifiersIndependentConfiguration() {
@@ -50,31 +50,31 @@ final class RollbarNotifierLoggerTests: XCTestCase {
         Rollbar.currentConfiguration()?.destination.accessToken = "AT_0";
         Rollbar.currentConfiguration()?.destination.environment = "ENV_0";
         
-        XCTAssertEqual(Rollbar.currentLogger().configuration.destination.accessToken,
-                       Rollbar.currentConfiguration().destination.accessToken);
-        XCTAssertEqual(Rollbar.currentLogger().configuration.destination.environment,
+        XCTAssertEqual(Rollbar.currentLogger().configuration!.destination.accessToken,
+                       Rollbar.currentConfiguration()!.destination.accessToken);
+        XCTAssertEqual(Rollbar.currentLogger().configuration!.destination.environment,
                        Rollbar.currentConfiguration()?.destination.environment);
         
-        XCTAssertEqual(Rollbar.currentLogger().configuration.destination.accessToken,
+        XCTAssertEqual(Rollbar.currentLogger().configuration!.destination.accessToken,
                        Rollbar.currentConfiguration()?.destination.accessToken);
         XCTAssertEqual(Rollbar.currentLogger().configuration?.destination.environment,
                        Rollbar.currentConfiguration()?.destination.environment);
         
         // create and configure another notifier:
-        let notifier = RollbarLogger(accessToken: "AT_1")!;
-        notifier.configuration.destination.environment = "ENV_1";
-        XCTAssertTrue(notifier.configuration.destination.accessToken.compare("AT_1") == .orderedSame);
-        XCTAssertTrue(notifier.configuration.destination.environment.compare("ENV_1") == .orderedSame);
+        let notifier = RollbarLogger(accessToken: "AT_1");
+        notifier.configuration!.destination.environment = "ENV_1";
+        XCTAssertTrue(notifier.configuration!.destination.accessToken.compare("AT_1") == .orderedSame);
+        XCTAssertTrue(notifier.configuration!.destination.environment.compare("ENV_1") == .orderedSame);
 
         // reconfigure the root notifier:
         Rollbar.currentConfiguration()?.destination.accessToken = "AT_N";
         Rollbar.currentConfiguration()?.destination.environment = "ENV_N";
-        XCTAssertTrue(Rollbar.currentLogger().configuration.destination.accessToken.compare("AT_N") == .orderedSame);
-        XCTAssertTrue(Rollbar.currentLogger().configuration.destination.environment.compare("ENV_N") == .orderedSame);
+        XCTAssertTrue(Rollbar.currentLogger().configuration!.destination.accessToken.compare("AT_N") == .orderedSame);
+        XCTAssertTrue(Rollbar.currentLogger().configuration!.destination.environment.compare("ENV_N") == .orderedSame);
 
         // make sure the other notifier is still has its original configuration:
-        XCTAssertTrue(notifier.configuration.destination.accessToken.compare("AT_1") == .orderedSame);
-        XCTAssertTrue(notifier.configuration.destination.environment.compare("ENV_1") == .orderedSame);
+        XCTAssertTrue(notifier.configuration!.destination.accessToken.compare("AT_1") == .orderedSame);
+        XCTAssertTrue(notifier.configuration!.destination.environment.compare("ENV_1") == .orderedSame);
 
         //TODO: to make this test even more valuable we need to make sure the other notifier's payloads
         //      are actually sent to its intended destination. But that is something we will be able to do

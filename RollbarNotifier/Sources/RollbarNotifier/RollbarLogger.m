@@ -64,6 +64,8 @@ static BOOL isNetworkReachable = YES;
     NSDictionary *m_osData;
 }
 
+static RollbarLogger *sharedSingleton = nil;
+
 /// This is essentially a static constructor for the type.
 + (void)initialize {
     
@@ -143,6 +145,19 @@ static BOOL isNetworkReachable = YES;
         [reachability startNotifier];
 #endif
     }
+}
+
++ (nonnull RollbarLogger *)sharedInstance {
+    @synchronized (self) {
+        if (sharedSingleton == nil) {
+            sharedSingleton = [[self alloc] init];
+        }
+        return sharedSingleton;
+    }
+}
+
++ (nonnull RollbarLogger *)createLoggerWithConfig:(nonnull RollbarConfig *)config {
+    return [[self alloc] initWithConfiguration:config];
 }
 
 /// Designated notifier initializer

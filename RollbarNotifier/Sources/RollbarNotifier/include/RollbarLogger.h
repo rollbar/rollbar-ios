@@ -6,10 +6,19 @@
 
 #import "RollbarLevel.h"
 
-@interface RollbarLogger : NSObject 
+NS_ASSUME_NONNULL_BEGIN
+
+@interface RollbarLogger : NSObject
+
+/// The shared instance of the logger
++ (nonnull RollbarLogger *)sharedInstance;
+
+/// Creates new instance of the logger using provided configuration instance
+/// @param config configuration to be used by the new instance of the logger
++ (nonnull RollbarLogger *)createLoggerWithConfig:(nonnull RollbarConfig *)config;
 
 /// Notifier's config object
-@property (atomic, strong) RollbarConfig *configuration;
+@property (nullable, atomic, strong) RollbarConfig *configuration;
 
 /// Disallowed initializer
 - (instancetype)init
@@ -17,11 +26,11 @@ NS_UNAVAILABLE;
 
 /// Designated notifier initializer
 /// @param accessToken the access token
-- (instancetype)initWithAccessToken:(NSString *)accessToken;
+- (instancetype)initWithAccessToken:(nonnull NSString *)accessToken;
 
 /// Designated notifier initializer
 /// @param configuration the config object
-- (instancetype)initWithConfiguration:(RollbarConfig *)configuration
+- (instancetype)initWithConfiguration:(nonnull RollbarConfig *)configuration
 NS_DESIGNATED_INITIALIZER;
 
 /// Processes persisted payloads
@@ -29,7 +38,7 @@ NS_DESIGNATED_INITIALIZER;
 
 /// Captures a crash report
 /// @param crashReport the crash report
-- (void)logCrashReport:(NSString *)crashReport;
+- (void)logCrashReport:(nonnull NSString *)crashReport;
 
 /// Captures a log entry
 /// @param level Rollbar error/log level
@@ -37,9 +46,9 @@ NS_DESIGNATED_INITIALIZER;
 /// @param data extra data
 /// @param context extra context
 - (void)log:(RollbarLevel)level
-    message:(NSString *)message
-       data:(NSDictionary<NSString *, id> *)data
-    context:(NSString *)context;
+    message:(nonnull NSString *)message
+       data:(nullable NSDictionary<NSString *, id> *)data
+    context:(nullable NSString *)context;
 
 /// Captures a log entry
 /// @param level Rollbar error/log level
@@ -47,9 +56,9 @@ NS_DESIGNATED_INITIALIZER;
 /// @param data extra data
 /// @param context extra context
 - (void)log:(RollbarLevel)level
-  exception:(NSException *)exception
-       data:(NSDictionary<NSString *, id> *)data
-    context:(NSString *)context;
+  exception:(nonnull NSException *)exception
+       data:(nullable NSDictionary<NSString *, id> *)data
+    context:(nullable NSString *)context;
 
     /// Capture a log entry based on an NSError
     /// @param level Rollbar error/log level
@@ -57,23 +66,23 @@ NS_DESIGNATED_INITIALIZER;
     /// @param data extra data
     /// @param context extra context
 - (void)log:(RollbarLevel)level
-      error:(NSError *)error
-       data:(NSDictionary<NSString *, id> *)data
-    context:(NSString *)context;
+      error:(nonnull NSError *)error
+       data:(nullable NSDictionary<NSString *, id> *)data
+    context:(nullable NSString *)context;
 
 /// Sends an item batch in a blocking manner.
 /// @param payload an item to send
 /// @param nextOffset the offset in the item queue file of the item immediately after this batch.
 /// If the send is successful or the retry limit is hit, nextOffset will be saved to the queueState as the offset to use for the next batch
 /// @return YES if this batch should be discarded if it was successful or a retry limit was hit. Otherwise NO is returned if this batch should be retried.
-- (BOOL)sendItem:(NSDictionary *)payload
+- (BOOL)sendItem:(nonnull NSDictionary *)payload
       nextOffset:(NSUInteger)nextOffset;
 
 
 /// Sends a fully composed JSON payload.
 /// @param payload complete Rollbar payload as JSON string
 /// @return YES if successful. NO if not.
-- (BOOL)sendPayload:(NSData *)payload;
+- (BOOL)sendPayload:(nonnull NSData *)payload;
 
 /// Updates key configuration elements
 /// @param accessToken the Rollbar project access token
@@ -84,15 +93,17 @@ NS_DESIGNATED_INITIALIZER;
 
 /// Updates key configuration elements
 /// @param configuration the Rollbar configuration object
-- (void)updateConfiguration:(RollbarConfig *)configuration;
+- (void)updateConfiguration:(nonnull RollbarConfig *)configuration;
 //                     isRoot:(BOOL)isRoot;
 
 /// Updates the Rollbar project access token
 /// @param accessToken the Rollbar project access token
-- (void)updateAccessToken:(NSString *)accessToken;
+- (void)updateAccessToken:(nonnull NSString *)accessToken;
 
 /// Updates allowed reporting rate
 /// @param maximumReportsPerMinute the maximum allowed reports transmission rate
 - (void)updateReportingRate:(NSUInteger)maximumReportsPerMinute;
 
 @end
+
+NS_ASSUME_NONNULL_END

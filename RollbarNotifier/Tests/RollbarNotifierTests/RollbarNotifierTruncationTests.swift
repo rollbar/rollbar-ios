@@ -25,7 +25,7 @@ final class RollbarNotifierTruncationTests: XCTestCase {
     }
     
     func testDefaultRollbarConfiguration() {
-        NSLog("%@", Rollbar.currentConfiguration());
+        NSLog("%@", Rollbar.currentConfiguration()!);
     }
 
     func testMeasureTotalEncodingBytes() {
