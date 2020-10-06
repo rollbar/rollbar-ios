@@ -40,7 +40,6 @@
 }
 
 - (void)testMultithreadedStressCase {
-    
     for( int i = 0; i < 20; i++) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY,0), ^(){
             RollbarLogger *logger = [[RollbarLogger alloc] initWithAccessToken:Rollbar.currentConfiguration.destination.accessToken];
@@ -50,6 +49,7 @@
                        data:nil
                     context:[NSString stringWithFormat:@"%d-%d", i, j]
                  ];
+                //DO NOT CALL THE SHARED INSTANCE ON EXTRA THREADS:
                 //[Rollbar errorMessage:@"error"];
             }
         });

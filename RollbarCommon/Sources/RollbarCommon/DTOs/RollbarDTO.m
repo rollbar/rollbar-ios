@@ -316,11 +316,11 @@
     if (!self) {
         return self;
     }
-            
+    
     self->_data = nil;
     self->_dataArray = nil;
     self->_dataDictionary = nil;
-
+    
     if (!data) {
         data = [NSMutableDictionary dictionary];
     }
@@ -328,7 +328,7 @@
     if (![RollbarDTO isTransferableObject:data]) {
         return self;
     }
-
+    
     if ([data isKindOfClass:[NSMutableDictionary class]]) {
         self->_data = (NSMutableDictionary *) data;
     }
@@ -342,7 +342,7 @@
             [self->_dataDictionary removeObjectForKey:key];
         }
     }
-
+    
     return self;
 }
 
