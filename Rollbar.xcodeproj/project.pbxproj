@@ -669,7 +669,6 @@
 		55454C8322C6AE6E00D4A414 /* KSCrashReportWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F199D1FDA6CA600A6AB0C /* KSCrashReportWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55454C8422C6AE7400D4A414 /* KSCrashC.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19D81FDA6CA600A6AB0C /* KSCrashC.h */; };
 		55454C8522C6AE7400D4A414 /* KSCrashCachedData.c in Sources */ = {isa = PBXBuildFile; fileRef = B54F19D91FDA6CA600A6AB0C /* KSCrashCachedData.c */; };
-		55454C8622C6AE7400D4A414 /* KSSystemCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DA1FDA6CA600A6AB0C /* KSSystemCapabilities.h */; };
 		55454C8722C6AE7400D4A414 /* KSCrashReportVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DB1FDA6CA600A6AB0C /* KSCrashReportVersion.h */; };
 		55454C8822C6AE7400D4A414 /* KSCrashReportFixer.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DC1FDA6CA600A6AB0C /* KSCrashReportFixer.h */; };
 		55454C8922C6AE7400D4A414 /* KSCrashDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = B54F19DD1FDA6CA600A6AB0C /* KSCrashDoctor.m */; };
@@ -682,7 +681,6 @@
 		55454C9122C6AE7400D4A414 /* KSCrashReportFixer.c in Sources */ = {isa = PBXBuildFile; fileRef = B54F19E51FDA6CA600A6AB0C /* KSCrashReportFixer.c */; };
 		55454C9222C6AE7500D4A414 /* KSCrashC.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19D81FDA6CA600A6AB0C /* KSCrashC.h */; };
 		55454C9322C6AE7500D4A414 /* KSCrashCachedData.c in Sources */ = {isa = PBXBuildFile; fileRef = B54F19D91FDA6CA600A6AB0C /* KSCrashCachedData.c */; };
-		55454C9422C6AE7500D4A414 /* KSSystemCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DA1FDA6CA600A6AB0C /* KSSystemCapabilities.h */; };
 		55454C9522C6AE7500D4A414 /* KSCrashReportVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DB1FDA6CA600A6AB0C /* KSCrashReportVersion.h */; };
 		55454C9622C6AE7500D4A414 /* KSCrashReportFixer.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DC1FDA6CA600A6AB0C /* KSCrashReportFixer.h */; };
 		55454C9722C6AE7500D4A414 /* KSCrashDoctor.m in Sources */ = {isa = PBXBuildFile; fileRef = B54F19DD1FDA6CA600A6AB0C /* KSCrashDoctor.m */; };
@@ -982,6 +980,8 @@
 		554B97CD238FA0C1003DC4ED /* RollbarCallStackFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 554B97C7238FA0C1003DC4ED /* RollbarCallStackFrame.m */; };
 		554B97CE238FA0C1003DC4ED /* RollbarCallStackFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 554B97C7238FA0C1003DC4ED /* RollbarCallStackFrame.m */; };
 		554B97CF238FA0C1003DC4ED /* RollbarCallStackFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 554B97C7238FA0C1003DC4ED /* RollbarCallStackFrame.m */; };
+		554F125C252D33BD00AFC162 /* KSSystemCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DA1FDA6CA600A6AB0C /* KSSystemCapabilities.h */; };
+		554F126F252D33BF00AFC162 /* KSSystemCapabilities.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DA1FDA6CA600A6AB0C /* KSSystemCapabilities.h */; };
 		556FF135242D6BFF00925DD1 /* KSCrash.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DF1FDA6CA600A6AB0C /* KSCrash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		556FF136242D6C0000925DD1 /* KSCrash.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DF1FDA6CA600A6AB0C /* KSCrash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		556FF137242D6C0400925DD1 /* KSCrash.h in Headers */ = {isa = PBXBuildFile; fileRef = B54F19DF1FDA6CA600A6AB0C /* KSCrash.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2709,6 +2709,7 @@
 				554B9798238F3AB5003DC4ED /* RollbarBody.h in Headers */,
 				5592708C234EEA8B0087E01F /* Persistent.h in Headers */,
 				55454C5122C6AE4F00D4A414 /* NSMutableData+AppendUTF8.h in Headers */,
+				554F126F252D33BF00AFC162 /* KSSystemCapabilities.h in Headers */,
 				55454D7722C6AEE400D4A414 /* Punycode.h in Headers */,
 				55454C8F22C6AE7400D4A414 /* KSCrashReportFields.h in Headers */,
 				554B97A2238F970C003DC4ED /* RollbarMessage.h in Headers */,
@@ -2738,7 +2739,6 @@
 				558AFFF82409F8B70015E13E /* RollbarTelemetryLogBody.h in Headers */,
 				55454CE322C6AE8C00D4A414 /* KSMach.h in Headers */,
 				55454BF222C6AC3C00D4A414 /* RollbarCachesDirectory.h in Headers */,
-				55454C8622C6AE7400D4A414 /* KSSystemCapabilities.h in Headers */,
 				55454BD822C6AB6200D4A414 /* DeployApiCallResult.h in Headers */,
 				55454CD622C6AE8C00D4A414 /* KSSignalInfo.h in Headers */,
 				55454C4822C6AE4100D4A414 /* Container+DeepSearch.h in Headers */,
@@ -2881,6 +2881,7 @@
 				55454C0C22C6ACC400D4A414 /* SdkLog.h in Headers */,
 				5592708D234EEA8B0087E01F /* Persistent.h in Headers */,
 				55454C5D22C6AE5000D4A414 /* NSMutableData+AppendUTF8.h in Headers */,
+				554F125C252D33BD00AFC162 /* KSSystemCapabilities.h in Headers */,
 				55454D7F22C6AEE500D4A414 /* Punycode.h in Headers */,
 				554B97A3238F970C003DC4ED /* RollbarMessage.h in Headers */,
 				55454C9D22C6AE7500D4A414 /* KSCrashReportFields.h in Headers */,
@@ -2910,7 +2911,6 @@
 				558AFFF92409F8B70015E13E /* RollbarTelemetryLogBody.h in Headers */,
 				55454D1C22C6AE8D00D4A414 /* KSMach.h in Headers */,
 				55454BF322C6AC3D00D4A414 /* RollbarCachesDirectory.h in Headers */,
-				55454C9422C6AE7500D4A414 /* KSSystemCapabilities.h in Headers */,
 				55454BD922C6AB6300D4A414 /* DeployApiCallResult.h in Headers */,
 				55454D0F22C6AE8D00D4A414 /* KSSignalInfo.h in Headers */,
 				55454C4D22C6AE4200D4A414 /* Container+DeepSearch.h in Headers */,
@@ -3268,7 +3268,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# define build configuration for this target\nCONFIGURATION=Release\n\n# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-universal\n\n# build Simulator versions\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS -configuration ${CONFIGURATION} -sdk iphonesimulator -arch x86_64 -arch i386 -arch armv7 -arch armv7s -arch arm64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# build Device version\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# create universal binary file using lipo\nlipo -create \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphonesimulator/lib${PROJECT_NAME}.a\" -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \n\n# Last touch. copy the header files. Just for convenience\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/usr/local/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n";
+			shellScript = "# define build configuration for this target\nCONFIGURATION=Release\n\n# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-universal\n\n# build Simulator versions\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS -configuration ${CONFIGURATION} -sdk iphonesimulator -arch x86_64 -arch armv7 -arch armv7s -arch arm64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# build Device version\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# create universal binary file using lipo\nlipo -create \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphonesimulator/lib${PROJECT_NAME}.a\" -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \n\n# Last touch. copy the header files. Just for convenience\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/usr/local/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n";
 		};
 		55C8E6FB22DCFBC200A4ACAF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4371,6 +4371,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -4380,6 +4381,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -4452,7 +4454,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.12.9;
+				CURRENT_PROJECT_VERSION = 1.12.10;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
@@ -4518,7 +4520,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.12.9;
+				CURRENT_PROJECT_VERSION = 1.12.10;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
