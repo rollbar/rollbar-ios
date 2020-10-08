@@ -13,7 +13,9 @@ static NSString * const DFK_OUTCOME = @"outcome";
 static NSString * const DFK_DESCRIPTION = @"description";
 
 - (RollbarDeployApiCallOutcome)outcome {
-    return [self safelyGetIntegerByKey:DFK_OUTCOME];
+    return [self safelyGetIntegerByKey:DFK_OUTCOME
+                           withDefault:RollbarDeployApiCall_Error
+            ];
 }
 
 - (NSString *)description {
@@ -170,7 +172,7 @@ static NSString * const DFK_PAGE_NUMBER = @"page";
 }
 
 - (NSUInteger)pageNumber {
-    return [self safelyGetUIntegerByKey:DFK_PAGE_NUMBER];
+    return [self safelyGetUIntegerByKey:DFK_PAGE_NUMBER withDefault:0];
 }
 
 - (instancetype)initWithResponse:(NSHTTPURLResponse*)httpResponse
