@@ -158,73 +158,73 @@
 #pragma mark - DEPRECATED old logging methods, for backward compatibility
 
 + (void)logWithLevel:(NSString*)level
+             message:(NSString*)message;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message: method instead.");
+
++ (void)logWithLevel:(NSString*)level
              message:(NSString*)message
-DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message: method instead.");
+                data:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message:exception: method instead.");
 
 + (void)logWithLevel:(NSString*)level
              message:(NSString*)message
                 data:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message:exception: method instead.");
+             context:(NSString*)context;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message:exception:data:context: method instead.");
 
 + (void)logWithLevel:(NSString*)level
-             message:(NSString*)message
-                data:(NSDictionary*)data
-             context:(NSString*)context
-DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message:exception:data:context: method instead.");
+                data:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message:exception:data: method instead.");
 
-+ (void)logWithLevel:(NSString*)level
-                data:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use log:message:exception:data: method instead.");
++ (void)debugWithMessage:(NSString*)message;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use debug:... methods instead.");
 
 + (void)debugWithMessage:(NSString*)message
-DEPRECATED_MSG_ATTRIBUTE("In v2, use debug:... methods instead.");
+                    data:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use debug:... methods instead.");
 
-+ (void)debugWithMessage:(NSString*)message
-                    data:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use debug:... methods instead.");
-
-+ (void)debugWithData:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use debug:... methods instead.");
++ (void)debugWithData:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use debug:... methods instead.");
 
 
-+ (void)infoWithMessage:(NSString*)message
-DEPRECATED_MSG_ATTRIBUTE("In v2, use info:... methods instead.");
++ (void)infoWithMessage:(NSString*)message;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use info:... methods instead.");
 
 + (void)infoWithMessage:(NSString*)message
-                   data:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use info:... methods instead.");
+                   data:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use info:... methods instead.");
 
-+ (void)infoWithData:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use info:... methods instead.");
++ (void)infoWithData:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use info:... methods instead.");
+
++ (void)warningWithMessage:(NSString*)message;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use warning:... methods instead.");
 
 + (void)warningWithMessage:(NSString*)message
-DEPRECATED_MSG_ATTRIBUTE("In v2, use warning:... methods instead.");
+                      data:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use warning:... methods instead.");
 
-+ (void)warningWithMessage:(NSString*)message
-                      data:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use warning:... methods instead.");
++ (void)warningWithData:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use warning:... methods instead.");
 
-+ (void)warningWithData:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use warning:... methods instead.");
-
-+ (void)errorWithMessage:(NSString*)message
-DEPRECATED_MSG_ATTRIBUTE("In v2, use error:... methods instead.");
++ (void)errorWithMessage:(NSString*)message;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use error:... methods instead.");
 
 + (void)errorWithMessage:(NSString*)message
-                    data:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use error:... methods instead.");
+                    data:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use error:... methods instead.");
 
-+ (void)errorWithData:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use error:... methods instead.");
++ (void)errorWithData:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use error:... methods instead.");
+
++ (void)criticalWithMessage:(NSString*)message;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use critical:... methods instead.");
 
 + (void)criticalWithMessage:(NSString*)message
-DEPRECATED_MSG_ATTRIBUTE("In v2, use critical:... methods instead.");
+                       data:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use critical:... methods instead.");
 
-+ (void)criticalWithMessage:(NSString*)message
-                       data:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use critical:... methods instead.");
-
-+ (void)criticalWithData:(NSDictionary*)data
-DEPRECATED_MSG_ATTRIBUTE("In v2, use critical:... methods instead.");
++ (void)criticalWithData:(NSDictionary*)data;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use critical:... methods instead.");
 
 @end

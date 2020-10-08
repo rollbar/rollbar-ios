@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.10**
+- chore: resolve #314: Deprecation warnings break app builds when "treat warnings as errors" is enabled
+
 **1.12.9**
 - feat: resolve #306: Define default scrub fields
 - refactor: resolve #309: Make sure all the public APIs that are to be removed in vNext-2.0.0 are marked for deprecation

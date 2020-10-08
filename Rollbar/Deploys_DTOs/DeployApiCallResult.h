@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - DeployApiCallResult
 
 /// Models result of Deploy API call/request
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeployApiCallResult instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeployApiCallResult instead.")
 @interface DeployApiCallResult : DataTransferObject
 
 /// API call's outcome

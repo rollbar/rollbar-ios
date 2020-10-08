@@ -7,7 +7,7 @@
 @class RollbarConfig;
 @class RollbarData;
 
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarConfig class instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarConfig class instead.")
 @interface RollbarConfiguration : NSObject
 
 + (RollbarConfiguration*)configuration;
@@ -118,62 +118,62 @@ DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarConfig class instead.")
 #pragma mark - DEPRECATED
 
 // Fields to not scrub from the payload even if they mention among scrubFields:
-@property (readonly, nonatomic, strong) NSSet *scrubWhitelistFields
-DEPRECATED_MSG_ATTRIBUTE("In v2, use scrubSafeListFields property instead.");
+@property (readonly, nonatomic, strong) NSSet *scrubWhitelistFields;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use scrubSafeListFields property instead.");
 
-- (void)addScrubWhitelistField:(NSString *)field
-DEPRECATED_MSG_ATTRIBUTE("In v2, use addScrubSafeListField method instead.");
+- (void)addScrubWhitelistField:(NSString *)field;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use addScrubSafeListField method instead.");
 
-- (void)removeScrubWhitelistField:(NSString *)field
-DEPRECATED_MSG_ATTRIBUTE("In v2, use removeScrubSafeListField method instead.");
+- (void)removeScrubWhitelistField:(NSString *)field;
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use removeScrubSafeListField method instead.");
 
 // Decides whether or not to send payload. Returns true to ignore, false to send
-@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload)
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^checkIgnoreRollbarData property instead.");
+@property (readonly, nonatomic, copy) BOOL (^checkIgnore)(NSDictionary *payload);
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^checkIgnoreRollbarData property instead.");
 
-- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^checkIgnoreRollbarData property instead.");
+- (void)setCheckIgnoreBlock:(BOOL (^)(NSDictionary*))checkIgnoreBlock;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^checkIgnoreRollbarData property instead.");
 
 // Modify payload
-@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload)
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^modifyRollbarData property instead.");
+@property (readonly, nonatomic, copy) void (^payloadModification)(NSMutableDictionary *payload);
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^modifyRollbarData property instead.");
 
-- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^modifyRollbarData property instead.");
+- (void)setPayloadModificationBlock:(void (^)(NSMutableDictionary*))payloadModificationBlock;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use ^modifyRollbarData property instead.");
 
-@property (nonatomic, copy) NSString *crashLevel
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarCrashLevel property instead.");
-@property (nonatomic, copy) NSString *logLevel
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarLogLevel property instead.");
+@property (nonatomic, copy) NSString *crashLevel;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarCrashLevel property instead.");
+@property (nonatomic, copy) NSString *logLevel;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarLogLevel property instead.");
 
-- (void)setRollbarLevel:(RollbarLevel)level
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarLogLevel property instead.");
-- (RollbarLevel)getRollbarLevel
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarLogLevel property instead.");
+- (void)setRollbarLevel:(RollbarLevel)level;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarLogLevel property instead.");
+- (RollbarLevel)getRollbarLevel;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use rollbarLogLevel property instead.");
 
-- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use maximumReportsPerMinute property instead.");
+- (void)setReportingRate:(NSUInteger)maximumReportsPerMinute;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use maximumReportsPerMinute property instead.");
 
-- (void)setCodeFramework:(NSString *)framework
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use framework property instead.");
+- (void)setCodeFramework:(NSString *)framework;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use framework property instead.");
 
-- (void)setCodeVersion:(NSString *)codeVersion
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use codeVersion property instead.");
+- (void)setCodeVersion:(NSString *)codeVersion;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use codeVersion property instead.");
 
-- (void)setRequestId:(NSString*)requestId
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use requestId property instead.");
+- (void)setRequestId:(NSString*)requestId;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use requestId property instead.");
 
-- (void)setCaptureIpType:(CaptureIpType)captureIp
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use captureIp property instead.");
+- (void)setCaptureIpType:(CaptureIpType)captureIp;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use captureIp property instead.");
 
-- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use maximumTelemetryEvents property instead.");
+- (void)setMaximumTelemetryData:(NSInteger)maximumTelemetryData;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use maximumTelemetryEvents property instead.");
 
-- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use captureLogAsTelemetryEvents property instead.");
+- (void)setCaptureLogAsTelemetryData:(BOOL)captureLog;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use captureLogAsTelemetryEvents property instead.");
 
-- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity
-    DEPRECATED_MSG_ATTRIBUTE("In v2, use shouldCaptureConnectivity property instead.");
+- (void)setCaptureConnectivityAsTelemetryData:(BOOL)captureConnectivity;
+//    DEPRECATED_MSG_ATTRIBUTE("In v2, use shouldCaptureConnectivity property instead.");
 
 
 @end

@@ -4,7 +4,7 @@
 #import "Deployment.h"
 
 /// Models Deployment details
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeploymentDetails instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDeploymentDetails instead.")
 @interface DeploymentDetails : Deployment
 
 /// Deployment ID

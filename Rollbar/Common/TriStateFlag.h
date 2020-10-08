@@ -10,11 +10,11 @@
 
 #pragma mark - TriStateFlag enum
 
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag enum instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag enum instead.")
 typedef NS_ENUM(NSUInteger, TriStateFlag) {
-    None DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag_None instead."),
-    On DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag_On instead."),
-    Off DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag_Off instead.")
+    None, //DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag_None instead."),
+    On, //DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag_On instead."),
+    Off //DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlag_Off instead.")
 };
 
 #pragma mark - TriStateFlagUtil
@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, TriStateFlag) {
 NS_ASSUME_NONNULL_BEGIN
 
 /// Utility class aiding with TriStateFlag conversions
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlagUtil class instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarTriStateFlagUtil class instead.")
 @interface TriStateFlagUtil : NSObject
 
 /// Convert TriStateFlag to a string

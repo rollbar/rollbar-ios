@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDTO instead.")
+//DEPRECATED_MSG_ATTRIBUTE("In v2, use RollbarDTO instead.")
 @interface DataTransferObject : NSObject <JSONSupport> {
     @private
     id _data;
