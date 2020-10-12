@@ -48,7 +48,20 @@ let package = Package(
         ),
         .testTarget(
             name: "RollbarCommonTests",
-            dependencies: ["RollbarCommon"]),
+            dependencies: ["RollbarCommon"]
+        ),
+        .testTarget(
+            name: "RollbarCommonTests-ObjC",
+            dependencies: ["RollbarCommon"],
+            cSettings: [
+                .headerSearchPath("Tests/RollbarCommonTests-ObjC/**"),
+                //                .headerSearchPath("Sources/RollbarCommon"),
+                //                .headerSearchPath("Sources/RollbarCommon/include"),
+                //                .headerSearchPath("Sources/RollbarCommon/DTOs"),
+                
+                //                .define("DEFINES_MODULE"),
+            ]
+        ),
     ],
     swiftLanguageVersions: [
         SwiftVersion.v4,
