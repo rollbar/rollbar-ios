@@ -35,7 +35,7 @@
         return YES;
     }
     else {
-        return [RollbarDTO isTransferableObject:obj];
+        return NO;
     }
 }
 
@@ -310,17 +310,17 @@
     return self;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)data;  {
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)data;  {
     
     self = [super init];
     if (!self) {
         return self;
     }
-            
+    
     self->_data = nil;
     self->_dataArray = nil;
     self->_dataDictionary = nil;
-
+    
     if (!data) {
         data = [NSMutableDictionary dictionary];
     }
@@ -328,7 +328,7 @@
     if (![RollbarDTO isTransferableObject:data]) {
         return self;
     }
-
+    
     if ([data isKindOfClass:[NSMutableDictionary class]]) {
         self->_data = (NSMutableDictionary *) data;
     }
@@ -336,13 +336,13 @@
         self->_data = data.mutableCopy;
     }
     self->_dataArray = nil;
-    self->_dataDictionary = (NSMutableDictionary *) self->_data;
+    self->_dataDictionary = (NSMutableDictionary<NSString *, id> *) self->_data;
     for (NSString *key in self->_dataDictionary.allKeys) {
-        if (self->_dataDictionary[key] == [NSNull null]) {
+        if (self->_dataDictionary[key] == (id)[NSNull null]) {
             [self->_dataDictionary removeObjectForKey:key];
         }
     }
-
+    
     return self;
 }
 

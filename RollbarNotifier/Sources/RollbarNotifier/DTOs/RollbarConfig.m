@@ -84,10 +84,10 @@ static NSString * const DFK_CUSTOM = @"custom";
         DFK_HTTPS_PROXY:[RollbarProxy new].jsonFriendlyData,
         DFK_DATA_SCRUBBER:[RollbarScrubbingOptions new].jsonFriendlyData,
         DFK_TELEMETRY:[RollbarTelemetryOptions new].jsonFriendlyData,
-        DFK_NOTIFIER:[[RollbarModule alloc] initWithName:NOTIFIER_NAME version:NOTIFIER_VERSION].jsonFriendlyData
-        //DFK_SERVER: ,
-        //DFK_PERSON: ,
-        //DFK_CUSTOM: ,
+        DFK_NOTIFIER:[[RollbarModule alloc] initWithName:NOTIFIER_NAME version:NOTIFIER_VERSION].jsonFriendlyData,
+        DFK_SERVER:[RollbarServerConfig new].jsonFriendlyData,
+        DFK_PERSON: [NSDictionary<NSString *, id> new],
+        DFK_CUSTOM: [NSDictionary<NSString *, id> new]
     }];
     //[self save];
     return self;

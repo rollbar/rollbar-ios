@@ -32,13 +32,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param key the data key
 - (void)setData:(nullable id)data byKey:(nonnull NSString *)key;
 
-/// Merges given data dictionary into the underlaying data dictioanry
+/// Merges given data dictionary into the underlaying data dictionary
 /// @param data data dictionary to append
 - (void)mergeDataDictionary:(nonnull NSDictionary *)data;
 
 #pragma mark - Core API: safe data getters by key
 
-- (RollbarDTO *)safelyGetDataTransferObjectByKey:(NSString *)key;
 - (NSMutableDictionary *)safelyGetDictionaryByKey:(NSString *)key;
 - (NSMutableArray *)safelyGetArrayByKey:(NSString *)key;
 - (NSMutableString *)safelyGetStringByKey:(NSString *)key;
@@ -46,7 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Core API: data setters by key
 
-- (void)setDataTransferObject:(RollbarDTO *)data forKey:(NSString *)key;
 - (void)setDictionary:(NSDictionary *)data forKey:(NSString *)key;
 - (void)setArray:(NSArray *)data forKey:(NSString *)key;
 - (void)setString:(NSString *)data forKey:(NSString *)key;
@@ -54,16 +52,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Convenience API
 
+- (RollbarDTO *)safelyGetDataTransferObjectByKey:(NSString *)key;
+- (void)setDataTransferObject:(RollbarDTO *)data forKey:(NSString *)key;
+
 - (RollbarTriStateFlag)safelyGetTriStateFlagByKey:(NSString *)key;
 - (void)setTriStateFlag:(RollbarTriStateFlag)data forKey:(NSString *)key;
 
-- (BOOL)safelyGetBoolByKey:(NSString *)key;
+- (BOOL)safelyGetBoolByKey:(NSString *)key withDefault:(BOOL)defaultValue;
 - (void)setBool:(BOOL)data forKey:(NSString *)key;
 
-- (NSUInteger)safelyGetUIntegerByKey:(NSString *)key;
+- (NSUInteger)safelyGetUIntegerByKey:(NSString *)key withDefault:(NSUInteger)defaultValue;
 - (void)setUInteger:(NSUInteger)data forKey:(NSString *)key;
 
-- (NSInteger)safelyGetIntegerByKey:(NSString *)key;
+- (NSInteger)safelyGetIntegerByKey:(NSString *)key withDefault:(NSInteger)defaultValue;
 - (void)setInteger:(NSInteger)data forKey:(NSString *)key;
 
 @end

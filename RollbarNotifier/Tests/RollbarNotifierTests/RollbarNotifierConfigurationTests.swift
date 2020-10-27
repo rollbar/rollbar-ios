@@ -80,14 +80,14 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
 
         var expectedFlag = false;
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.enabled = expectedFlag;
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
         XCTAssertTrue(RollbarTelemetry.sharedInstance().scrubViewInputs == expectedFlag,
                       "RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be NO."
                       );
         
         expectedFlag = true;
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.enabled = expectedFlag;
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
         XCTAssertTrue(RollbarTelemetry.sharedInstance().scrubViewInputs == expectedFlag,
                       "RollbarTelemetry.sharedInstance.scrubViewInputs is expected to be YES."
                       );
@@ -103,7 +103,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.scrubFields.append(element1);
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.scrubFields.append(element2);
         
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
 
         XCTAssertTrue(
             RollbarTelemetry.sharedInstance().viewInputsToScrub!.count == (RollbarScrubbingOptions().scrubFields.count + 2),
@@ -121,7 +121,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.removeScrubField(element1);
         Rollbar.currentConfiguration()?.telemetry.viewInputsScrubber.removeScrubField(element2);
         
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
 
         XCTAssertTrue(
             RollbarTelemetry.sharedInstance().viewInputsToScrub!.count == RollbarScrubbingOptions().scrubFields.count,
@@ -140,7 +140,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
 
 
         Rollbar.currentConfiguration()?.developerOptions.enabled = false;
-        Rollbar.currentLogger().configuration.developerOptions.enabled = false;
+        Rollbar.currentLogger().configuration!.developerOptions.enabled = false;
         Rollbar.debugMessage("Test1");
         RollbarTestUtil.waitForPesistenceToComplete();
         logItems = RollbarTestUtil.readItemStringsFromLogFile();
@@ -172,7 +172,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
         RollbarTestUtil.clearLogFile();
 
         Rollbar.currentConfiguration()?.telemetry.enabled = true;
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
 
         let testCount = 10;
         let max:UInt = 5;
@@ -180,7 +180,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
             Rollbar.recordErrorEvent(for: .debug, message: "test");
         }
         Rollbar.currentConfiguration()?.telemetry.maximumTelemetryData = max;
-        Rollbar.updateConfiguration(Rollbar.currentConfiguration());
+        Rollbar.updateConfiguration(Rollbar.currentConfiguration()!);
 
         Rollbar.debugMessage("Test");
         RollbarTestUtil.waitForPesistenceToComplete();
@@ -204,7 +204,7 @@ final class RollbarNotifierConfigurationTests: XCTestCase {
         var logItems = RollbarTestUtil.readItemStringsFromLogFile();
         XCTAssertTrue(logItems.count == 1, "Log item count should be 1");
 
-        Rollbar.currentConfiguration().checkIgnoreRollbarData = { rollbarData in return true; };
+        Rollbar.currentConfiguration()!.checkIgnoreRollbarData = { rollbarData in return true; };
         Rollbar.debugMessage("Ignore this");
         logItems = RollbarTestUtil.readItemStringsFromLogFile();
         XCTAssertTrue(logItems.count == 1, "Log item count should be 1");

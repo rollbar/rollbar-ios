@@ -42,6 +42,13 @@ static NSString * const DFK_CODE_VERSION = @"code_version";
     return self;
 }
 
+- (instancetype)init {
+    return [self initWithHost:nil
+                         root:nil
+                       branch:nil
+                  codeVersion:nil];
+}
+
 #pragma mark - property accessors
 
 - (nullable NSString *)host {
