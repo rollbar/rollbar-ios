@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "Rollbar",
-        "repositoryURL": "https://github.com/WideSpectrumComputing/rollbar-ios",
+        "package": "RollbarSDK",
+        "repositoryURL": "https://github.com/rollbar/rollbar-ios.git",
         "state": {
-          "branch": null,
-          "revision": "9a4c6370fe5146c10365fa425bf324736a3ed143",
-          "version": "1.12.38"
+          "branch": "vNext-2.0.0",
+          "revision": "e6a090c60b2fd3d0eaaccce2e085f9017c702f7b",
+          "version": null
         }
       }
     ]

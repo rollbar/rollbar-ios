@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import Rollbar
+import RollbarNotifier
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -16,11 +16,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        let config: RollbarConfiguration = RollbarConfiguration()
-        config.environment = "samples"
+        let config: RollbarConfig = RollbarConfig();
+        config.destination.accessToken = "2ffc7997ed864dda94f63e7b7daae0f3";
+        config.destination.environment = "samples";
 
-        Rollbar.initWithAccessToken("2d6e0add5d9b403d9126b4bcea7e0199", configuration: config)
-        Rollbar.info("SwiftPM Test");
+        Rollbar.initWithConfiguration(config);
+        Rollbar.infoMessage("SwiftPM Test");
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
