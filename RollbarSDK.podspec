@@ -7,7 +7,6 @@
 
 Pod::Spec.new do |sdk|
 
-  
     # Rollbar SDK:
     # ============
     sdk.version      = '2.0.0-alpha13'
@@ -38,7 +37,6 @@ Pod::Spec.new do |sdk|
     sdk.tvos.deployment_target = '11.0'
     sdk.watchos.deployment_target = '4.0'
 
-  
     # RollbarCommon module:
     # =====================
     sdk.subspec 'RollbarCommon' do |common|
@@ -129,6 +127,42 @@ Pod::Spec.new do |sdk|
         # notifier.exclude_files = "Classes/Exclude"
         notifier.public_header_files = 'RollbarNotifier/Sources/RollbarNotifier/include/*.h'
         # notifier.module_map = "RollbarNotifier/Sources/RollbarNotifier/include/module.modulemap"
+        # notifier.resource = "../rollbar-logo.png"
+        # notifier.resources = "Resources/*.png"
+        # notifier.preserve_paths = "FilesToSave", "MoreFilesToSave"
+
+        notifier.dependency 'RollbarSDK/RollbarCommon'
+        notifier.framework = "Foundation"
+        # notifier.frameworks = "SomeFramework", "AnotherFramework"
+        # notifier.library   = "iconv"
+        # notifier.libraries = "iconv", "xml2"
+        # notifier.dependency "JSONKit", "~> 1.4"
+        notifier.requires_arc = true
+        # notifier.xcconfig = {
+        #   "USE_HEADERMAP" => "NO",
+        #   "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/Sources/RollbarNotifier/**"
+        # }
+    end
+
+    # RollbarKSCrash module:
+    # =====================
+    sdk.subspec 'RollbarKSCrash' do |kscrash|
+        notifier.name         = "RollbarKSCrash"
+
+        # Any platform, if omitted:
+        # notifier.platform     = :ios
+        # notifier.platform     = :ios, "5.0"
+
+        #  When using multiple platforms:
+        # notifier.ios.deployment_target = "9.0"
+        # notifier.osx.deployment_target = "10.10"
+        # notifier.tvos.deployment_target = "11.0"
+        # notifier.watchos.deployment_target = "4.0"
+
+        notifier.source_files  = 'RollbarNotifier/Sources/RollbarKSCrash/**/*.{h,m}'
+        # notifier.exclude_files = "Classes/Exclude"
+        notifier.public_header_files = 'RollbarNotifier/Sources/RollbarKSCrash/include/*.h'
+        # notifier.module_map = "RollbarNotifier/Sources/RollbarKSCrash/include/module.modulemap"
         # notifier.resource = "../rollbar-logo.png"
         # notifier.resources = "Resources/*.png"
         # notifier.preserve_paths = "FilesToSave", "MoreFilesToSave"
