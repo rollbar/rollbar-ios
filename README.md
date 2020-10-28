@@ -2,7 +2,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-brightgreen.svg)](https://cocoapods.org/)
 
-[comment]: <> [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
+[//]: # [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
 
 [![CocoaPods](https://img.shields.io/cocoapods/v/RollbarNotifier.svg)](https://cocoapods.org/pods/RollbarNotifier)
 [![CocoaPods](https://img.shields.io/cocoapods/v/RollbarDeploys.svg)](https://cocoapods.org/pods/RollbarDeploys)
