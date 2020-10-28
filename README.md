@@ -6,10 +6,10 @@
 [//]: # [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
 -->
 
-[![CocoaPods](https://img.shields.io/cocoapods/RollbarNotifier.svg)](https://cocoapods.org/pods/RollbarNotifier)
-[![CocoaPods](https://img.shields.io/cocoapods/RollbarDeploys.svg)](https://cocoapods.org/pods/RollbarDeploys)
-[![CocoaPods](https://img.shields.io/cocoapods/RollbarCommon.svg)](https://cocoapods.org/pods/RollbarCommon)
-[![CocoaPods](https://img.shields.io/cocoapods/RollbarKSCrash.svg)](https://cocoapods.org/pods/RollbarKSCrash)
+[![CocoaPods](https://img.shields.io/badge/RollbarNotifier-pod.svg)](https://cocoapods.org/pods/RollbarNotifier)
+[![CocoaPods](https://img.shields.io/badge/RollbarDeploys-pod.svg)](https://cocoapods.org/pods/RollbarDeploys)
+[![CocoaPods](https://img.shields.io/badge/RollbarCommon-pod.svg)](https://cocoapods.org/pods/RollbarCommon)
+[![CocoaPods](https://img.shields.io/badge/RollbarKSCrash-pod.svg)](https://cocoapods.org/pods/RollbarKSCrash)
 
 [![CocoaPods](https://img.shields.io/cocoapods/v/RollbarNotifier.svg)](https://cocoapods.org/pods/RollbarNotifier)
 [![CocoaPods](https://img.shields.io/cocoapods/v/RollbarDeploys.svg)](https://cocoapods.org/pods/RollbarDeploys)
