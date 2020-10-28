@@ -2,7 +2,14 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-brightgreen.svg)](https://cocoapods.org/)
 
+<!--
 [//]: # [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
+-->
+
+[![CocoaPods](https://img.shields.io/cocoapods/RollbarNotifier.svg)](https://cocoapods.org/pods/RollbarNotifier)
+[![CocoaPods](https://img.shields.io/cocoapods/RollbarDeploys.svg)](https://cocoapods.org/pods/RollbarDeploys)
+[![CocoaPods](https://img.shields.io/cocoapods/RollbarCommon.svg)](https://cocoapods.org/pods/RollbarCommon)
+[![CocoaPods](https://img.shields.io/cocoapods/RollbarKSCrash.svg)](https://cocoapods.org/pods/RollbarKSCrash)
 
 [![CocoaPods](https://img.shields.io/cocoapods/v/RollbarNotifier.svg)](https://cocoapods.org/pods/RollbarNotifier)
 [![CocoaPods](https://img.shields.io/cocoapods/v/RollbarDeploys.svg)](https://cocoapods.org/pods/RollbarDeploys)
