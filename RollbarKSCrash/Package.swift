@@ -21,7 +21,9 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(path: "../RollbarCommon"),
+        .package(name:"RollbarCommon",
+                 path: "../RollbarCommon"
+        ),
         .package(name:"KSCrash",
                  url: "https://github.com/kstenerud/KSCrash.git",
                  Package.Dependency.Requirement.branch("master")

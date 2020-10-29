@@ -9,8 +9,9 @@
 #define RollbarCrashCollector_h
 
 @class RollbarCrashReportData;
+//#import "RollbarCrashReportData.h"
 
-@protocol RollbarCrashCollector
+@protocol RollbarCrashCollector <NSObject>
 
 @required
 -(nullable RollbarCrashReportData *)collectCrashReport;
