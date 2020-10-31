@@ -1,15 +1,16 @@
 //
-//  MyClass.h
+//  RollbarKSCrashCollector.h
 //  
 //
 //  Created by Andrey Kornich on 2020-10-28.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+@import RollbarCommon;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MyClass : NSObject
+@interface RollbarKSCrashCollector : NSObject<RollbarCrashCollector>
 
 @end
 
