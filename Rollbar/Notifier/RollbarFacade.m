@@ -168,20 +168,20 @@ static RollbarNotifier *notifier = nil;
 
 + (void)warning:(NSString*)message {
 
-    [Rollbar info:message exception:nil];
+    [Rollbar warning:message exception:nil];
 }
 
 + (void)warning:(NSString*)message
       exception:(NSException*)exception {
 
-    [Rollbar info:message exception:exception data:nil];
+    [Rollbar warning:message exception:exception data:nil];
 }
 
 + (void)warning:(NSString*)message
       exception:(NSException*)exception
            data:(NSDictionary*)data {
 
-    [Rollbar info:message exception:exception data:data context:nil];
+    [Rollbar warning:message exception:exception data:data context:nil];
 }
 
 + (void)warning:(NSString*)message
