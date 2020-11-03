@@ -1,41 +1,35 @@
 //
-//  RollbarCrashCollector.h
+//  RollbarCrashCollectorProtocol.h
 //  
 //
 //  Created by Andrey Kornich on 2020-10-27.
 //
 
-#ifndef RollbarCrashCollector_h
-#define RollbarCrashCollector_h
+#ifndef RollbarCrashCollectorProtocol_h
+#define RollbarCrashCollectorProtocol_h
 
 @import Foundation;
 
 @class RollbarCrashReportData;
 
-typedef void(^RollbarCrashCollectionCompletion)(
-                                                NSArray<RollbarCrashReportData *> *filteredReports,
-                                                BOOL completed,
-                                                NSError *error
-                                                );
-
-@protocol RollbarCrashCollector <NSObject>
+@protocol RollbarCrashCollectorObserver
 
 @required
--(void)collectCrashReportsWithCompletion:(RollbarCrashCollectionCompletion)onCompletion;
+-(void)onCrashReportsCollectionCompletion:(NSArray<RollbarCrashReportData *> *)crashReports;
 
 @optional
 //...
 
 @end
 
-@protocol RollbarCrashCollectorObserver <NSObject>
+@protocol RollbarCrashCollector
 
 @required
--(void)onCrashReportsCollectionCompletion:(NSArray<RollbarCrashReportData *> *)crashReports;
+-(void)collectCrashReportsWithObserver:(id<RollbarCrashCollectorObserver>)observer;
 
 @optional
-    //...
+-(void)collectCrashReports;
 
 @end
 
-#endif /* RollbarCrashCollector_h */
+#endif /* RollbarCrashCollectorProtocol_h */
