@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,10 @@
 		55684F7B2553B4C700F82F34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55684F7A2553B4C700F82F34 /* Assets.xcassets */; };
 		55684F7E2553B4C700F82F34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55684F7C2553B4C700F82F34 /* LaunchScreen.storyboard */; };
 		55684F812553B4C700F82F34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55684F802553B4C700F82F34 /* main.m */; };
+		55684F8D2553B7E100F82F34 /* RollbarDeploys in Frameworks */ = {isa = PBXBuildFile; productRef = 55684F8C2553B7E100F82F34 /* RollbarDeploys */; };
+		55684F8F2553B7E800F82F34 /* RollbarKSCrash in Frameworks */ = {isa = PBXBuildFile; productRef = 55684F8E2553B7E800F82F34 /* RollbarKSCrash */; };
+		55684F912553B7EE00F82F34 /* RollbarNotifier in Frameworks */ = {isa = PBXBuildFile; productRef = 55684F902553B7EE00F82F34 /* RollbarNotifier */; };
+		55684F9D2553BD1C00F82F34 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55684F9C2553BD1C00F82F34 /* NetworkExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,8 @@
 		55684F7D2553B4C700F82F34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		55684F7F2553B4C700F82F34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55684F802553B4C700F82F34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		55684F9B2553BD1B00F82F34 /* iosAppObjC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosAppObjC.entitlements; sourceTree = "<group>"; };
+		55684F9C2553BD1C00F82F34 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +42,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55684F912553B7EE00F82F34 /* RollbarNotifier in Frameworks */,
+				55684F9D2553BD1C00F82F34 /* NetworkExtension.framework in Frameworks */,
+				55684F8D2553B7E100F82F34 /* RollbarDeploys in Frameworks */,
+				55684F8F2553B7E800F82F34 /* RollbarKSCrash in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +57,7 @@
 			children = (
 				55684F6D2553B4C400F82F34 /* iosAppObjC */,
 				55684F6C2553B4C400F82F34 /* Products */,
+				55684F8B2553B7E100F82F34 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +72,7 @@
 		55684F6D2553B4C400F82F34 /* iosAppObjC */ = {
 			isa = PBXGroup;
 			children = (
+				55684F9B2553BD1B00F82F34 /* iosAppObjC.entitlements */,
 				55684F6E2553B4C400F82F34 /* AppDelegate.h */,
 				55684F6F2553B4C400F82F34 /* AppDelegate.m */,
 				55684F712553B4C400F82F34 /* SceneDelegate.h */,
@@ -74,6 +86,14 @@
 				55684F802553B4C700F82F34 /* main.m */,
 			);
 			path = iosAppObjC;
+			sourceTree = "<group>";
+		};
+		55684F8B2553B7E100F82F34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55684F9C2553BD1C00F82F34 /* NetworkExtension.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -92,6 +112,11 @@
 			dependencies = (
 			);
 			name = iosAppObjC;
+			packageProductDependencies = (
+				55684F8C2553B7E100F82F34 /* RollbarDeploys */,
+				55684F8E2553B7E800F82F34 /* RollbarKSCrash */,
+				55684F902553B7EE00F82F34 /* RollbarNotifier */,
+			);
 			productName = iosAppObjC;
 			productReference = 55684F6B2553B4C400F82F34 /* iosAppObjC.app */;
 			productType = "com.apple.product-type.application";
@@ -291,8 +316,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iosAppObjC/iosAppObjC.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iosAppObjC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,6 +327,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.iosAppObjC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -309,8 +337,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iosAppObjC/iosAppObjC.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iosAppObjC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -318,6 +348,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rollbar.iosAppObjC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -344,6 +375,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		55684F8C2553B7E100F82F34 /* RollbarDeploys */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RollbarDeploys;
+		};
+		55684F8E2553B7E800F82F34 /* RollbarKSCrash */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RollbarKSCrash;
+		};
+		55684F902553B7EE00F82F34 /* RollbarNotifier */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RollbarNotifier;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 55684F632553B4C400F82F34 /* Project object */;
 }
