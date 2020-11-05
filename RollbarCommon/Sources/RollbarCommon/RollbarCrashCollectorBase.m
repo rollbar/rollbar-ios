@@ -6,8 +6,14 @@
 //
 
 #import "RollbarCrashCollectorBase.h"
+#import "RollbarSdkLog.h"
 
 @implementation RollbarCrashCollectorBase
+
+- (instancetype)init {
+    
+    return [self initWithObserver:nil];
+}
 
 - (instancetype)initWithObserver:(id<RollbarCrashCollectorObserver>)observer {
     
@@ -24,7 +30,9 @@
 }
 
 - (void)collectCrashReports {
-    
+    if (nil == self->_observer) {
+        RollbarSdkLog(@"RollbarCrashCollectorBase was not initialized with a valid observer.");
+    }
     [self collectCrashReportsWithObserver:self->_observer];
 }
 

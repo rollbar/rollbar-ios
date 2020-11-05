@@ -3,18 +3,20 @@
 @import RollbarCommon;
 
 #import "Rollbar.h"
-//#import "RollbarKSCrashInstallation.h"
 #import "RollbarLogger.h"
 #import "RollbarConfig.h"
 #import "RollbarDestination.h"
 #import "RollbarTelemetryOptions.h"
 #import "RollbarTelemetryOptionsObserver.h"
 #import "RollbarScrubbingOptions.h"
+#import "RollbarCrashProcessor.h"
 
 @implementation Rollbar
 
 static RollbarLogger *logger = nil;
 static RollbarTelemetryOptionsObserver *telemetryOptionsObserver = nil;
+static id<RollbarCrashCollector> crashCollector = nil;
+static RollbarCrashProcessor *crashProcessor = nil;
 
 + (void)initialize {
     if (self == [Rollbar class]) {
@@ -22,35 +24,40 @@ static RollbarTelemetryOptionsObserver *telemetryOptionsObserver = nil;
     }
 }
 
-//+ (void)enableCrashReporter {
-//    
-//    RollbarKSCrashInstallation *installation = [RollbarKSCrashInstallation sharedInstance];
-//    [installation install];
-//    [installation sendAllReportsWithCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error) {
-//        if (error) {
-//            SdkLog(@"Could not enable crash reporter: %@", [error localizedDescription]);
-//        } else if (completed) {
-//            [loger processSavedItems];
-//        }
-//    }];
-//}
-
 + (void)initWithAccessToken:(NSString *)accessToken {
-
+    
     [Rollbar initWithAccessToken:accessToken
-                   configuration:nil];
+                   configuration:nil
+                  crashCollector:nil];
 }
 
 + (void)initWithConfiguration:(RollbarConfig *)configuration {
-
+    
     [Rollbar initWithAccessToken:nil
-                   configuration:configuration];
-//             enableCrashReporter:YES];
+                   configuration:configuration
+                  crashCollector:nil];
 }
 
+
 + (void)initWithAccessToken:(NSString *)accessToken
-              configuration:(RollbarConfig *)configuration {
-//        enableCrashReporter:(BOOL)enable {
+             crashCollector:(nullable id<RollbarCrashCollector>)crashCollector {
+
+    [Rollbar initWithAccessToken:accessToken
+                   configuration:nil
+                  crashCollector:crashCollector];
+}
+
++ (void)initWithConfiguration:(RollbarConfig *)configuration
+               crashCollector:(nullable id<RollbarCrashCollector>)crashCollector {
+
+    [Rollbar initWithAccessToken:nil
+                   configuration:configuration
+                  crashCollector:crashCollector];
+}
+
++ (void)initWithAccessToken:(nullable NSString *)accessToken
+              configuration:(nullable RollbarConfig *)configuration
+             crashCollector:(nullable id<RollbarCrashCollector>)crashCollector {
 
     [RollbarTelemetry sharedInstance]; // Load saved data, if any
     if (logger) {
@@ -61,10 +68,11 @@ static RollbarTelemetryOptionsObserver *telemetryOptionsObserver = nil;
             config.destination.accessToken = accessToken;
         }
         [Rollbar updateConfiguration:config];
-//        if (enable) {
-//            [Rollbar enableCrashReporter];
-//        }
-//        [logger.configuration save];
+
+        if (crashCollector) {
+            crashProcessor = [[RollbarCrashProcessor alloc] init];
+            [crashCollector collectCrashReportsWithObserver:crashProcessor];
+        }
     }
 }
 

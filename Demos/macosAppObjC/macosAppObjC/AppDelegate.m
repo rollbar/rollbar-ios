@@ -11,6 +11,7 @@
 #import "RollbarDeploysDemoClient.h"
 
 @import RollbarNotifier;
+@import RollbarKSCrash;
 
 @interface AppDelegate ()
 
@@ -40,10 +41,17 @@
     @try {
         [self callTroublemaker];
     } @catch (NSException *exception) {
-        [Rollbar errorException:exception];
+        [Rollbar errorException:exception data:nil context:@"from @try-@catch"];
     } @finally {
-        [Rollbar infoMessage:@"Post-trouble notification!"];
+        [Rollbar infoMessage:@"Post-trouble notification!"  data:nil context:@"from @try-@finally"];
     }
+    
+    // now, cause a crash:
+//    [self callTroublemaker];
+//    @throw NSInternalInconsistencyException;
+//    [self performSelector:@selector(die_die)];
+//    [self performSelector:NSSelectorFromString(@"crashme:") withObject:nil afterDelay:10];
+    
 }
 
 
@@ -62,7 +70,8 @@
     config.destination.environment = @"samples";
     config.customData = @{ @"someKey": @"someValue", };
     // init Rollbar shared instance:
-    [Rollbar initWithConfiguration:config];
+    id<RollbarCrashCollector> crashCollector = [[RollbarKSCrashCollector alloc] init];
+    [Rollbar initWithConfiguration:config crashCollector:crashCollector];
     
     [Rollbar infoMessage:@"Rollbar is up and running! Enjoy your remote error and log monitoring..."];
 }

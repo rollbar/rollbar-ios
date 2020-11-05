@@ -18,11 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
     id<RollbarCrashCollectorObserver> _observer;
 }
 
-- (instancetype)initWithObserver:(nonnull id<RollbarCrashCollectorObserver>)observer
+- (instancetype)initWithObserver:(nullable id<RollbarCrashCollectorObserver>)observer
 NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)init
-NS_UNAVAILABLE;
+- (instancetype)init;
 
 @end
 
