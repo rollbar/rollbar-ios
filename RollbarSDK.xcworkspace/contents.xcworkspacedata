@@ -56,6 +56,9 @@
       <Group
          location = "container:"
          name = "iOS">
+         <FileRef
+            location = "group:Demos/iosAppObjC/iosAppObjC.xcodeproj">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
