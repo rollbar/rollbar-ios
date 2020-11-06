@@ -17,7 +17,7 @@
         // Let's sleep this thread for a few seconds to give the items processing thread a chance
         // to send the payload logged above so that we can handle cases when the SDK is initialized
         // right/shortly before a persistent application crash (that we have no control over) if any:
-        [NSThread sleepForTimeInterval:3.0f]; // [sec]
+        [NSThread sleepForTimeInterval:5.0f]; // [sec]
     }
 }
 

@@ -51,6 +51,8 @@
 //    @throw NSInternalInconsistencyException;
 //    [self performSelector:@selector(die_die)];
 //    [self performSelector:NSSelectorFromString(@"crashme:") withObject:nil afterDelay:10];
+    assert(NO);
+    //exit(0);
     
 }
 
