@@ -7,7 +7,7 @@
 
 Pod::Spec.new do |s|
 
-    s.version      = '2.0.0-alpha13'
+    s.version      = '2.0.0-alpha14'
     s.name         = 'RollbarCommon'
     s.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     s.description  = <<-DESC

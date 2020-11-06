@@ -9,7 +9,7 @@ Pod::Spec.new do |sdk|
 
     # Rollbar SDK:
     # ============
-    sdk.version      = '2.0.0-alpha13'
+    sdk.version      = '2.0.0-alpha14'
     sdk.name         = 'RollbarSDK'
     sdk.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     sdk.description  = <<-DESC
