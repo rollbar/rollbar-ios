@@ -8,6 +8,7 @@
 
 @class RollbarConfig;
 @class RollbarLogger;
+@protocol RollbarCrashCollector;
 
 @interface Rollbar : NSObject
 
@@ -16,6 +17,12 @@
 + (void)initWithAccessToken:(nonnull NSString *)accessToken;
 
 + (void)initWithConfiguration:(nonnull RollbarConfig *)configuration;
+
++ (void)initWithAccessToken:(nonnull NSString *)accessToken
+             crashCollector:(nullable id<RollbarCrashCollector>)crashCollector;
+
++ (void)initWithConfiguration:(nonnull RollbarConfig *)configuration
+               crashCollector:(nullable id<RollbarCrashCollector>)crashCollector;
 
 #pragma mark - Shared/global notifier
 

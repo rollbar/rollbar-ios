@@ -1,9 +1,26 @@
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![GitHub all releases downloads total](https://img.shields.io/github/downloads/rollbar/rollbar-ios/total?logo=GitHub)]()
 
-# Rollbar for iOS and macOS
+[![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage)
+[![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-brightgreen.svg)](https://cocoapods.org/)
 
-Objective-C & Swift library for crash reporting and logging with [Rollbar](https://rollbar.com). It works on iOS and macOS.
+<!--
+[//]: # [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
+-->
+
+[![Platform](https://img.shields.io/cocoapods/p/RollbarNotifier.svg?label=RollbarNotifier)](https://docs.rollbar.com/docs/ios)
+[![Platform](https://img.shields.io/cocoapods/p/RollbarDeploys.svg?label=RollbarDeploys)](https://docs.rollbar.com/docs/ios)
+[![Platform](https://img.shields.io/cocoapods/p/RollbarCommon.svg?label=RollbarCommon)](https://docs.rollbar.com/docs/ios)
+[![Platform](https://img.shields.io/cocoapods/p/RollbarKSCrash.svg?label=RollbarKSCrash)](https://docs.rollbar.com/docs/ios)
+
+[![CocoaPods](https://img.shields.io/cocoapods/v/RollbarNotifier?label=RollbarNotifier)](https://cocoapods.org/pods/RollbarNotifier)
+[![CocoaPods](https://img.shields.io/cocoapods/v/RollbarDeploys?label=RollbarDeploys)](https://cocoapods.org/pods/RollbarDeploys)
+[![CocoaPods](https://img.shields.io/cocoapods/v/RollbarCommon?label=RollbarCommon)](https://cocoapods.org/pods/RollbarCommon)
+[![CocoaPods](https://img.shields.io/cocoapods/v/RollbarKSCrash?label=RollbarKSCrash)](https://cocoapods.org/pods/RollbarKSCrash)
+
+# Rollbar for any Apple *OS
+
+Objective-C & Swift library for crash reporting and logging with [Rollbar](https://rollbar.com). It works on macOS, iOS, tvOS, watchOS.
 
 ## Setup Instructions
 
