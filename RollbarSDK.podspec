@@ -9,7 +9,7 @@ Pod::Spec.new do |sdk|
 
     # Rollbar SDK:
     # ============
-    sdk.version      = '2.0.0-alpha20'
+    sdk.version      = '2.0.0-alpha21'
     sdk.name         = 'RollbarSDK'
     sdk.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     sdk.description  = <<-DESC
@@ -29,8 +29,8 @@ Pod::Spec.new do |sdk|
     # Or just: sdk.author    = "Andrey Kornich"
     sdk.social_media_url   = "http://twitter.com/rollbar"
     sdk.source             = { :git => "https://github.com/rollbar/rollbar-ios.git",
-                              :tag => "v#{sdk.version}",
-                              :submodules => true }
+                               :tag => "v#{sdk.version}"
+                               }
     sdk.resource = 'rollbar-logo.png'
     sdk.ios.deployment_target = '9.0'
     sdk.osx.deployment_target = '10.10'
