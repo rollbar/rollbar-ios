@@ -7,7 +7,7 @@
 
 Pod::Spec.new do |s|
 
-    s.version      = '2.0.0-alpha20'
+    s.version      = '2.0.0-alpha21'
     s.name         = 'RollbarCommon'
     s.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
     s.description  = <<-DESC
@@ -27,8 +27,8 @@ Pod::Spec.new do |s|
     # Or just: s.author    = "Andrey Kornich"
     s.social_media_url   = "http://twitter.com/rollbar"
     s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git",
-                              :tag => "v#{s.version}",
-                              :submodules => true }
+                             :tag => "v#{s.version}"
+                             }
     s.resource = 'rollbar-logo.png'
     # s.resources = "Resources/*.png"
 
