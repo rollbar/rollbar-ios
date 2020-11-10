@@ -9,7 +9,7 @@ Pod::Spec.new do |sdk|
 
     # Rollbar SDK:
     # ============
-    sdk.version      = "2.0.0-alpha22"
+    sdk.version      = "2.0.0-alpha23"
     sdk.name         = "RollbarSDK"
     sdk.summary      = "Application or client side SDK for accessing the Rollbar API Server."
     sdk.description  = <<-DESC
@@ -147,36 +147,35 @@ Pod::Spec.new do |sdk|
     # RollbarKSCrash module:
     # =====================
     sdk.subspec "RollbarKSCrash" do |kscrash|
-        notifier.name         = "RollbarKSCrash"
+        kscrash.name         = "RollbarKSCrash"
 
         # Any platform, if omitted:
-        # notifier.platform     = :ios
-        # notifier.platform     = :ios, "5.0"
+        # kscrash.platform     = :ios
+        # kscrash.platform     = :ios, "5.0"
 
         #  When using multiple platforms:
-        # notifier.ios.deployment_target = "9.0"
-        # notifier.osx.deployment_target = "10.10"
-        # notifier.tvos.deployment_target = "11.0"
-        # notifier.watchos.deployment_target = "4.0"
+        # kscrash.ios.deployment_target = "9.0"
+        # kscrash.osx.deployment_target = "10.10"
+        # kscrash.tvos.deployment_target = "11.0"
+        # kscrash.watchos.deployment_target = "4.0"
 
-        notifier.source_files  = "RollbarNotifier/Sources/RollbarKSCrash/**/*.{h,m}"
-        # notifier.exclude_files = "Classes/Exclude"
-        notifier.public_header_files = "RollbarNotifier/Sources/RollbarKSCrash/include/*.h"
-        # notifier.module_map = "RollbarNotifier/Sources/RollbarKSCrash/include/module.modulemap"
-        # notifier.resource = "../rollbar-logo.png"
-        # notifier.resources = "Resources/*.png"
-        # notifier.preserve_paths = "FilesToSave", "MoreFilesToSave"
+        kscrash.source_files  = "#{kscrash.name}/Sources/#{kscrash.name}/**/*.{h,m}"
+        # kscrash.exclude_files = "Classes/Exclude"
+        kscrash.public_header_files = "#{kscrash.name}/Sources/#{kscrash.name}/include/*.h"
+        # kscrash.module_map = "#{kscrash.name}/Sources/#{kscrash.name}/include/module.modulemap"
+        # kscrash.resource = "../rollbar-logo.png"
+        # kscrash.resources = "Resources/*.png"
+        # kscrash.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-        notifier.dependency "RollbarSDK/RollbarCommon"
-        notifier.framework = "Foundation"
-        # notifier.frameworks = "SomeFramework", "AnotherFramework"
-        # notifier.library   = "iconv"
-        # notifier.libraries = "iconv", "xml2"
-        # notifier.dependency "JSONKit", "~> 1.4"
-        notifier.requires_arc = true
-        # notifier.xcconfig = {
+        kscrash.dependency "RollbarSDK/RollbarCommon"
+        kscrash.framework = "Foundation"
+        # kscrash.frameworks = "SomeFramework", "AnotherFramework"
+        # kscrash.library   = "iconv"
+        # kscrash.dependency "JSONKit", "~> 1.4"
+        kscrash.requires_arc = true
+        # kscrash.xcconfig = {
         #   "USE_HEADERMAP" => "NO",
-        #   "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/Sources/RollbarNotifier/**"
+        #   "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/Sources/#{kscrash.name}/**"
         # }
     end
 
