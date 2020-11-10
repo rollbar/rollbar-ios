@@ -5,6 +5,9 @@
 //  Created by Andrey Kornich on 2020-10-08.
 //
 
+#ifndef RollbarReceptionist_h
+#define RollbarReceptionist_h
+
 @import Foundation;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -67,3 +70,5 @@ typedef void (^RollbarReceptionistTaskBlock)(NSString *keyPath, id object, NSDic
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif //RollbarReceptionist_h
