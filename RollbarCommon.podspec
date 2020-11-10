@@ -7,9 +7,9 @@
 
 Pod::Spec.new do |s|
 
-    s.version      = '2.0.0-alpha21'
-    s.name         = 'RollbarCommon'
-    s.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
+    s.version      = "2.0.0-alpha22"
+    s.name         = "RollbarCommon"
+    s.summary      = "Application or client side SDK for accessing the Rollbar API Server."
     s.description  = <<-DESC
                       Find, fix, and resolve errors with Rollbar.
                       Easily send error data using Rollbar API.
@@ -29,14 +29,14 @@ Pod::Spec.new do |s|
     s.source             = { :git => "https://github.com/rollbar/rollbar-ios.git",
                              :tag => "v#{s.version}"
                              }
-    s.resource = 'rollbar-logo.png'
+    s.resource = "rollbar-logo.png"
     # s.resources = "Resources/*.png"
 
     #  When using multiple platforms:
-    s.ios.deployment_target = '9.0'
-    s.osx.deployment_target = '10.10'
-    s.tvos.deployment_target = '11.0'
-    s.watchos.deployment_target = '4.0'
+    s.ios.deployment_target = "9.0"
+    s.osx.deployment_target = "10.10"
+    s.tvos.deployment_target = "11.0"
+    s.watchos.deployment_target = "4.0"
     # Any platform, if omitted:
     # s.platform     = :ios
     # s.platform     = :ios, "5.0"
@@ -56,7 +56,7 @@ Pod::Spec.new do |s|
     s.requires_arc = true
     # s.xcconfig = {
     #   "USE_HEADERMAP" => "NO",
-    #   "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/Sources/RollbarCommon/**"
+    #   "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/Sources/#{s.name}/**"
     # }
 
 end
