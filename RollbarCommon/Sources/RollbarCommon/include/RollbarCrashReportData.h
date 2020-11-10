@@ -5,6 +5,9 @@
 //  Created by Andrey Kornich on 2020-10-27.
 //
 
+#ifndef RollbarCrashReportData_h
+#define RollbarCrashReportData_h
+
 @import Foundation;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,3 +29,5 @@ NS_UNAVAILABLE;
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif //RollbarCrashReportData_h

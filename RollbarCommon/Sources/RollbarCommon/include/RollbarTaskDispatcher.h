@@ -5,7 +5,10 @@
 //  Created by Andrey Kornich on 2020-10-09.
 //
 
-#import <Foundation/Foundation.h>
+#ifndef RollbarTaskDispatcher_h
+#define RollbarTaskDispatcher_h
+
+@import Foundation;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -54,3 +57,5 @@ typedef void (^RollbarTaskBlock)(id taskInput);
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif //RollbarTaskDispatcher_h
