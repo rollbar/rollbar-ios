@@ -9,9 +9,9 @@ Pod::Spec.new do |sdk|
 
     # Rollbar SDK:
     # ============
-    sdk.version      = '2.0.0-alpha21'
-    sdk.name         = 'RollbarSDK'
-    sdk.summary      = 'Application/client side SDK for accessing the Rollbar API Server.'
+    sdk.version      = "2.0.0-alpha22"
+    sdk.name         = "RollbarSDK"
+    sdk.summary      = "Application or client side SDK for accessing the Rollbar API Server."
     sdk.description  = <<-DESC
                       Find, fix, and resolve errors with Rollbar.
                       Easily send error data using Rollbar API.
@@ -31,11 +31,11 @@ Pod::Spec.new do |sdk|
     sdk.source             = { :git => "https://github.com/rollbar/rollbar-ios.git",
                                :tag => "v#{sdk.version}"
                                }
-    sdk.resource = 'rollbar-logo.png'
-    sdk.ios.deployment_target = '9.0'
-    sdk.osx.deployment_target = '10.10'
-    sdk.tvos.deployment_target = '11.0'
-    sdk.watchos.deployment_target = '4.0'
+    sdk.resource = "rollbar-logo.png"
+    sdk.ios.deployment_target = "9.0"
+    sdk.osx.deployment_target = "10.10"
+    sdk.tvos.deployment_target = "11.0"
+    sdk.watchos.deployment_target = "4.0"
 
     # RollbarCommon module:
     # =====================
@@ -52,9 +52,9 @@ Pod::Spec.new do |sdk|
       # common.tvos.deployment_target = "11.0"
       # common.watchos.deployment_target = "4.0"
 
-      common.source_files  = 'RollbarCommon/Sources/RollbarCommon/**/*.{h,m}'
+      common.source_files  = "RollbarCommon/Sources/RollbarCommon/**/*.{h,m}"
       # common.exclude_files = "Classes/Exclude"
-      common.public_header_files = 'RollbarCommon/Sources/RollbarCommon/include/*.h'
+      common.public_header_files = "RollbarCommon/Sources/RollbarCommon/include/*.h"
       # common.module_map = "RollbarCommon/Sources/RollbarCommon/include/module.modulemap"
       # common.resource = "../rollbar-logo.png"
       # common.resources = "Resources/*.png"
@@ -74,7 +74,7 @@ Pod::Spec.new do |sdk|
 
     # RollbarDeploys module:
     # =====================
-    sdk.subspec 'RollbarDeploys' do |deploys|
+    sdk.subspec "RollbarDeploys" do |deploys|
         deploys.name         = "RollbarDeploys"
 
         # Any platform, if omitted:
@@ -87,15 +87,15 @@ Pod::Spec.new do |sdk|
         # deploys.tvos.deployment_target = "11.0"
         # deploys.watchos.deployment_target = "4.0"
 
-        deploys.source_files  = 'RollbarDeploys/Sources/RollbarDeploys/**/*.{h,m}'
+        deploys.source_files  = "RollbarDeploys/Sources/RollbarDeploys/**/*.{h,m}"
         # deploys.exclude_files = "Classes/Exclude"
-        deploys.public_header_files = 'RollbarDeploys/Sources/RollbarDeploys/include/*.h'
+        deploys.public_header_files = "RollbarDeploys/Sources/RollbarDeploys/include/*.h"
         # deploys.module_map = "RollbarDeploys/Sources/RollbarDeploys/include/module.modulemap"
         # deploys.resource = "../rollbar-logo.png"
         # deploys.resources = "Resources/*.png"
         # deploys.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-        deploys.dependency 'RollbarSDK/RollbarCommon'
+        deploys.dependency "RollbarSDK/RollbarCommon"
         deploys.framework = "Foundation"
         # deploys.frameworks = "SomeFramework", "AnotherFramework"
         # deploys.library   = "iconv"
@@ -110,7 +110,7 @@ Pod::Spec.new do |sdk|
 
     # RollbarNotifier module:
     # =====================
-    sdk.subspec 'RollbarNotifier' do |notifier|
+    sdk.subspec "RollbarNotifier" do |notifier|
         notifier.name         = "RollbarNotifier"
 
         # Any platform, if omitted:
@@ -123,15 +123,15 @@ Pod::Spec.new do |sdk|
         # notifier.tvos.deployment_target = "11.0"
         # notifier.watchos.deployment_target = "4.0"
 
-        notifier.source_files  = 'RollbarNotifier/Sources/RollbarNotifier/**/*.{h,m}'
+        notifier.source_files  = "RollbarNotifier/Sources/RollbarNotifier/**/*.{h,m}"
         # notifier.exclude_files = "Classes/Exclude"
-        notifier.public_header_files = 'RollbarNotifier/Sources/RollbarNotifier/include/*.h'
+        notifier.public_header_files = "RollbarNotifier/Sources/RollbarNotifier/include/*.h"
         # notifier.module_map = "RollbarNotifier/Sources/RollbarNotifier/include/module.modulemap"
         # notifier.resource = "../rollbar-logo.png"
         # notifier.resources = "Resources/*.png"
         # notifier.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-        notifier.dependency 'RollbarSDK/RollbarCommon'
+        notifier.dependency "RollbarSDK/RollbarCommon"
         notifier.framework = "Foundation"
         # notifier.frameworks = "SomeFramework", "AnotherFramework"
         # notifier.library   = "iconv"
@@ -146,7 +146,7 @@ Pod::Spec.new do |sdk|
 
     # RollbarKSCrash module:
     # =====================
-    sdk.subspec 'RollbarKSCrash' do |kscrash|
+    sdk.subspec "RollbarKSCrash" do |kscrash|
         notifier.name         = "RollbarKSCrash"
 
         # Any platform, if omitted:
@@ -159,15 +159,15 @@ Pod::Spec.new do |sdk|
         # notifier.tvos.deployment_target = "11.0"
         # notifier.watchos.deployment_target = "4.0"
 
-        notifier.source_files  = 'RollbarNotifier/Sources/RollbarKSCrash/**/*.{h,m}'
+        notifier.source_files  = "RollbarNotifier/Sources/RollbarKSCrash/**/*.{h,m}"
         # notifier.exclude_files = "Classes/Exclude"
-        notifier.public_header_files = 'RollbarNotifier/Sources/RollbarKSCrash/include/*.h'
+        notifier.public_header_files = "RollbarNotifier/Sources/RollbarKSCrash/include/*.h"
         # notifier.module_map = "RollbarNotifier/Sources/RollbarKSCrash/include/module.modulemap"
         # notifier.resource = "../rollbar-logo.png"
         # notifier.resources = "Resources/*.png"
         # notifier.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-        notifier.dependency 'RollbarSDK/RollbarCommon'
+        notifier.dependency "RollbarSDK/RollbarCommon"
         notifier.framework = "Foundation"
         # notifier.frameworks = "SomeFramework", "AnotherFramework"
         # notifier.library   = "iconv"
