@@ -7,7 +7,7 @@
 
 Pod::Spec.new do |s|
 
-    s.version      = "2.0.0-alpha25"
+    s.version      = "2.0.0-alpha26"
     s.name         = "RollbarKSCrash"
     s.summary      = "Application or client side SDK for accessing the Rollbar API Server."
     s.description  = <<-DESC
@@ -49,6 +49,7 @@ Pod::Spec.new do |s|
 
     s.framework = "Foundation"
     s.dependency "RollbarCommon", "~> #{s.version}"
+    s.dependency "KSCrash", "~> 1.15.21"
     # s.frameworks = "SomeFramework", "AnotherFramework"
     # s.library   = "iconv"
     # s.libraries = "iconv", "xml2"
