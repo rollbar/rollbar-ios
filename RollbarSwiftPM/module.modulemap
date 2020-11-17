@@ -1,8 +1,0 @@
-module Rollbar {
-	umbrella "."
-	
-	export *
-	module * { export * }
-
-    //requires objc
-}
