@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -1351,8 +1351,6 @@
 		5526B34B237B62B300242958 /* RollbarLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLog.h; sourceTree = "<group>"; };
 		5526B34C237B62B300242958 /* RollbarLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLog.m; sourceTree = "<group>"; };
 		55309F1F23D25DE900B94361 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		55413A9423F61CAE00F34CC2 /* Rollbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rollbar.h; sourceTree = "<group>"; };
-		55413A9523F61CAE00F34CC2 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		554549C322C68DBA00D4A414 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		554549DD22C68E8F00D4A414 /* libRollbar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRollbar.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55454B9F22C6A97600D4A414 /* Rollbar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rollbar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1442,7 +1440,6 @@
 		55C67FED23A03913000E4BBF /* RollbarCallStackFrameContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarCallStackFrameContext.m; sourceTree = "<group>"; };
 		55CB01DD23B2976300E455DE /* RollbarDeploysDTOs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeploysDTOs.h; sourceTree = "<group>"; };
 		55CB01E223B2978A00E455DE /* RollbarDeploys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDeploys.h; sourceTree = "<group>"; };
-		55CFDEB723E39B05007AD2D9 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		55E275A4236787A500BA9BDC /* RollbarLoggingOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarLoggingOptions.h; sourceTree = "<group>"; };
 		55E275A5236787A500BA9BDC /* RollbarLoggingOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RollbarLoggingOptions.m; sourceTree = "<group>"; };
 		55F10FDE236120190043ADC0 /* RollbarDestination.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RollbarDestination.h; sourceTree = "<group>"; };
@@ -1913,15 +1910,6 @@
 			path = Notifier;
 			sourceTree = "<group>";
 		};
-		55413A9323F61C4F00F34CC2 /* RollbarSwiftPM */ = {
-			isa = PBXGroup;
-			children = (
-				55413A9523F61CAE00F34CC2 /* module.modulemap */,
-				55413A9423F61CAE00F34CC2 /* Rollbar.h */,
-			);
-			path = RollbarSwiftPM;
-			sourceTree = "<group>";
-		};
 		55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1943,13 +1931,11 @@
 		96D2220118D8E40600933444 = {
 			isa = PBXGroup;
 			children = (
-				55CFDEB723E39B05007AD2D9 /* Package.swift */,
 				55250C012345686A0073ABB9 /* CHANGELOG.md */,
 				55250C022345686A0073ABB9 /* Rollbar.podspec */,
 				96D2220F18D8E40600933444 /* Rollbar */,
 				96D2222318D8E40600933444 /* RollbarTests */,
 				343AB4531CC9AAE600962943 /* RollbarFramework */,
-				55413A9323F61C4F00F34CC2 /* RollbarSwiftPM */,
 				55454BAB22C6A97700D4A414 /* RollbarKit-iOSTests */,
 				55454BC722C6A9CC00D4A414 /* RollbarKit-macOSTests */,
 				96D2220C18D8E40600933444 /* Frameworks */,
@@ -3143,7 +3129,7 @@
 		96D2220218D8E40600933444 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = Rollbar;
 				TargetAttributes = {
 					554549C222C68DBA00D4A414 = {
@@ -3176,7 +3162,7 @@
 				};
 			};
 			buildConfigurationList = 96D2220518D8E40600933444 /* Build configuration list for PBXProject "Rollbar" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -3268,7 +3254,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# define build configuration for this target\nCONFIGURATION=Release\n\n# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-universal\n\n# build Simulator versions\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS -configuration ${CONFIGURATION} -sdk iphonesimulator -arch x86_64 -arch armv7 -arch armv7s BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# build Device version\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# create universal binary file using lipo\nlipo -create \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphonesimulator/lib${PROJECT_NAME}.a\" -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \n\n# Last touch. copy the header files. Just for convenience\n#cp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/usr/local/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n";
+			shellScript = "# define build configuration for this target\nCONFIGURATION=Release\n\n# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-universal\n\n# build Simulator versions\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS -configuration ${CONFIGURATION} -sdk iphonesimulator -arch armv7 -arch x86_64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# build Device version\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-iOS ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# create universal binary file using lipo\nlipo -create \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphonesimulator/lib${PROJECT_NAME}.a\" -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \n\n# Last touch. copy the header files. Just for convenience\n#cp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/usr/local/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n";
 		};
 		55C8E6FB22DCFBC200A4ACAF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3285,7 +3271,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#PRODUCT_NAME = \"Rollbar\"\nPREBUILT_KIT_LAYOUT=\"${BUILD_ROOT}/Release-iOS-Kit-iphoneos/Rollbar.framework\"\nKIT_NAME=\"${PRODUCT_NAME}.framework\"\nLIB_NAME=\"lib${PRODUCT_NAME}.a\"\nDIST_DIR=\"${SRCROOT}/Dist/${PRODUCT_NAME}\"\nTARGET_BUILD_DIR=\"${BUILD_ROOT}/${TARGET_NAME}\"\n\n\n# define build configuration for this target\nCONFIGURATION=Release\n\n# define universal static lib output folder environment variable\nUNIVERSAL_LIB_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-universal\n\n# define universal kit output folder environment variable\nUNIVERSAL_KIT_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-Kit-universal\n\n# build Simulator version of the kit\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-iOS -configuration ${CONFIGURATION} -sdk iphonesimulator BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# build Device version of the kit\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-iOS -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# make sure the output directory exists\nrm -rf \"${UNIVERSAL_KIT_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_KIT_OUTPUTFOLDER}\"\n \n\n#rm -rf \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}/Versions/A/${PRODUCT_NAME}\"\n#mkdir -p \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}/Versions/A/${PRODUCT_NAME}\"\n\n# copy over over kit/framwork from a dependency kit debug build\n# while using proper kit name (product name based):\ncp -p -r \"${PREBUILT_KIT_LAYOUT}\" \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}\"\n\n# copy over prebuilt universal static library but properly named for the kit:\ncp -a \"${UNIVERSAL_LIB_OUTPUTFOLDER}/${LIB_NAME}\" \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}/${PRODUCT_NAME}\"\n\n# Last touch. copy the header files. Just for convenience\n#cp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n#cp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/usr/local/include\" \"${UNIVERSAL_OUTPUTFOLDER}/include/Rollbar/\"\n\n\n\n\n\n\n\n\n\n\n\n#set -e\n#set +u\n# Avoid recursively calling this script.\n#if [[ $SF_MASTER_SCRIPT_RUNNING ]]\n#then\n#exit 0\n#fi\n#set -u\n#export SF_MASTER_SCRIPT_RUNNING=1\n\n#SF_TARGET_NAME=${PROJECT_NAME}\n#SF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\n#SF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n#DIST_DIR=\"${SRCROOT}/Dist/${SF_TARGET_NAME}\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\n#if [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\n#then\n#SF_SDK_PLATFORM=${BASH_REMATCH[1]}\n#else\n#echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n#exit 1\n#fi\n\n#if [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\n#then\n#SF_SDK_VERSION=${BASH_REMATCH[1]}\n#else\n#echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n#exit 1\n#fi\n\n#if [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\n#then\n#SF_OTHER_PLATFORM=iphonesimulator\n#else\n#SF_OTHER_PLATFORM=iphoneos\n#fi\n\n#if [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\n#then\n#SF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\n#else\n#echo \"Could not find platform name from build products directory: #$BUILT_PRODUCTS_DIR\"\n#exit 1\n#fi\n\n# Build the other platform.\n#xcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\n#xcrun lipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\n#cp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n#DIST_DIR=\"${SRCROOT}/Dist/${PRODUCT_NAME}\"\n#rm -rf \"${DIST_DIR}\"\n#mkdir -p \"${DIST_DIR}\"\n\n#cp -R \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}\" \"${DIST_DIR}/\"\n# We no longer use PLCrashReporter\n#cp -R \"${SRCROOT}/Vendor/CrashReporter.framework\" \"${DIST_DIR}/\"\n\n#cd \"${SRCROOT}/Dist\"\n#zip -yr \"${SF_TARGET_NAME}.zip\" \"${SF_TARGET_NAME}/\"\n\n";
+			shellScript = "#PRODUCT_NAME = \"Rollbar\"\nPREBUILT_KIT_LAYOUT=\"${BUILD_ROOT}/Release-iOS-Kit-iphoneos/Rollbar.framework\"\nKIT_NAME=\"${PRODUCT_NAME}.framework\"\nLIB_NAME=\"lib${PRODUCT_NAME}.a\"\nDIST_DIR=\"${SRCROOT}/Dist/${PRODUCT_NAME}\"\nTARGET_BUILD_DIR=\"${BUILD_ROOT}/${TARGET_NAME}\"\n\n\n# define build configuration for this target\nCONFIGURATION=Release\n\n# define universal static lib output folder environment variable\nUNIVERSAL_LIB_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-universal\n\n# define universal kit output folder environment variable\nUNIVERSAL_KIT_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-iOS-Kit-universal\n\n# build Simulator version of the kit\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-iOS -configuration ${CONFIGURATION} -sdk iphonesimulator -arch armv7 -arch x86_64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# build Device version of the kit\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-iOS -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# make sure the output directory exists\nrm -rf \"${UNIVERSAL_KIT_OUTPUTFOLDER}\"\nmkdir -p \"${UNIVERSAL_KIT_OUTPUTFOLDER}\"\n \n\n#rm -rf \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}/Versions/A/${PRODUCT_NAME}\"\n#mkdir -p \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}/Versions/A/${PRODUCT_NAME}\"\n\n# copy over over kit/framwork from a dependency kit debug build\n# while using proper kit name (product name based):\ncp -p -r \"${PREBUILT_KIT_LAYOUT}\" \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}\"\n\n# copy over prebuilt universal static library but properly named for the kit:\ncp -a \"${UNIVERSAL_LIB_OUTPUTFOLDER}/${LIB_NAME}\" \"${UNIVERSAL_KIT_OUTPUTFOLDER}/${KIT_NAME}/${PRODUCT_NAME}\"\n\n# Last touch. copy the header files. Just for convenience\n#cp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n#cp -R \"${BUILD_DIR}/${CONFIGURATION}-iOS-iphoneos/usr/local/include\" \"${UNIVERSAL_OUTPUTFOLDER}/include/Rollbar/\"\n\n\n\n\n\n\n\n\n\n\n\n#set -e\n#set +u\n# Avoid recursively calling this script.\n#if [[ $SF_MASTER_SCRIPT_RUNNING ]]\n#then\n#exit 0\n#fi\n#set -u\n#export SF_MASTER_SCRIPT_RUNNING=1\n\n#SF_TARGET_NAME=${PROJECT_NAME}\n#SF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\n#SF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n#DIST_DIR=\"${SRCROOT}/Dist/${SF_TARGET_NAME}\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\n#if [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\n#then\n#SF_SDK_PLATFORM=${BASH_REMATCH[1]}\n#else\n#echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n#exit 1\n#fi\n\n#if [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\n#then\n#SF_SDK_VERSION=${BASH_REMATCH[1]}\n#else\n#echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n#exit 1\n#fi\n\n#if [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\n#then\n#SF_OTHER_PLATFORM=iphonesimulator\n#else\n#SF_OTHER_PLATFORM=iphoneos\n#fi\n\n#if [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\n#then\n#SF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\n#else\n#echo \"Could not find platform name from build products directory: #$BUILT_PRODUCTS_DIR\"\n#exit 1\n#fi\n\n# Build the other platform.\n#xcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}/DependentBuilds\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\n#xcrun lipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\n#cp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n#DIST_DIR=\"${SRCROOT}/Dist/${PRODUCT_NAME}\"\n#rm -rf \"${DIST_DIR}\"\n#mkdir -p \"${DIST_DIR}\"\n\n#cp -R \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}\" \"${DIST_DIR}/\"\n# We no longer use PLCrashReporter\n#cp -R \"${SRCROOT}/Vendor/CrashReporter.framework\" \"${DIST_DIR}/\"\n\n#cd \"${SRCROOT}/Dist\"\n#zip -yr \"${SF_TARGET_NAME}.zip\" \"${SF_TARGET_NAME}/\"\n\n";
 		};
 		55C8E70822DE361E00A4ACAF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3302,7 +3288,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# we are building for macOS only in this script:\nunset IPHONEOS_DEPLOYMENT_TARGET\nMACOSX_DEPLOYMENT_TARGET=10.10\n\n# define build configuration for this target\nCONFIGURATION=Release\n\n# build the macOS static lib:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-macOS -configuration ${CONFIGURATION} BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# build the macOS kit:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-macOS -configuration ${CONFIGURATION} BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# prepare Dist folder inside the ${SRCROOT}:\nDIST_DIR=\"${SRCROOT}/Dist\"\nrm -rf \"${DIST_DIR}\"\nmkdir -p \"${DIST_DIR}\"\n\nDIST_PRODUCT_DIR=\"${DIST_DIR}/${PRODUCT_NAME}\"\nmkdir -p \"${DIST_PRODUCT_DIR}\"\n\n# copy all the release build targets results intended for distribution: \n# 1. static libs for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 2. framework kits for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 3. static lib for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS\" \"${DIST_PRODUCT_DIR}/\"\n# 4. framework kit for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS-Kit\" \"${DIST_PRODUCT_DIR}/\"\n\n# Zip-up all the content of the ${DIST_PRODUCT_DIR}:\ncd \"${DIST_DIR}\"\nzip -yr \"${PRODUCT_NAME}.zip\" \"${PRODUCT_NAME}/\"\n";
+			shellScript = "# we are building for macOS only in this script:\nunset IPHONEOS_DEPLOYMENT_TARGET\nMACOSX_DEPLOYMENT_TARGET=10.10\n\n# define build configuration for this target\nCONFIGURATION=Release\n\n# build the macOS static lib:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target Rollbar-macOS -configuration ${CONFIGURATION} -arch x86_64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# build the macOS kit:\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target RollbarKit-macOS -configuration ${CONFIGURATION} -arch x86_64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" \n\n# prepare Dist folder inside the ${SRCROOT}:\nDIST_DIR=\"${SRCROOT}/Dist\"\nrm -rf \"${DIST_DIR}\"\nmkdir -p \"${DIST_DIR}\"\n\nDIST_PRODUCT_DIR=\"${DIST_DIR}/${PRODUCT_NAME}\"\nmkdir -p \"${DIST_PRODUCT_DIR}\"\n\n# copy all the release build targets results intended for distribution: \n# 1. static libs for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 2. framework kits for iOS\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphoneos\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-iphonesimulator\" \"${DIST_PRODUCT_DIR}/\"\ncp -R \"${BUILD_DIR}/Release-iOS-Kit-universal\" \"${DIST_PRODUCT_DIR}/\"\n# 3. static lib for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS\" \"${DIST_PRODUCT_DIR}/\"\n# 4. framework kit for macOS:\ncp -R \"${BUILD_DIR}/Release-macOS-Kit\" \"${DIST_PRODUCT_DIR}/\"\n\n# Zip-up all the content of the ${DIST_PRODUCT_DIR}:\ncd \"${DIST_DIR}\"\nzip -yr \"${PRODUCT_NAME}.zip\" \"${PRODUCT_NAME}/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3958,6 +3944,7 @@
 		554549C922C68DBA00D4A414 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3987,6 +3974,7 @@
 		554549CA22C68DBA00D4A414 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4016,6 +4004,7 @@
 		554549E422C68E8F00D4A414 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4042,6 +4031,7 @@
 		554549E522C68E8F00D4A414 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -4371,7 +4361,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -4381,7 +4372,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -4418,6 +4410,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
+				EXCLUDED_ARCHS = "";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 			};
 			name = Release;
@@ -4454,12 +4447,13 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1.12.11;
+				CURRENT_PROJECT_VERSION = 1.12.12;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4476,7 +4470,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RollbarFramework/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Rollbar;
@@ -4520,12 +4514,13 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.12.11;
+				CURRENT_PROJECT_VERSION = 1.12.12;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = LDX6L68VZJ;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -4535,7 +4530,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RollbarFramework/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = Rollbar;
