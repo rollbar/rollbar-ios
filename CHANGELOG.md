@@ -25,6 +25,9 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.12**
+- fix: resolve #334: Error if archiving Mac OS app (Xcode 12.2, Mac OS Big Sur) 
+
 **1.12.11**
 - fix: resolve #323: Warning payloads are reported as info payloads.
 
