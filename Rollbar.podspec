@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-  s.version                   = "1.12.12"
+  s.version                   = "1.12.13"
   s.name                      = "Rollbar"
   s.summary                   = "Objective-C library for crash reporting and logging with Rollbar. It works on iOS and macOS."
   s.description               = <<-DESC
@@ -19,6 +19,12 @@ Pod::Spec.new do |s|
                            :tag => "v#{s.version}",
                            :submodules => true
                            }
+  
+  s.pod_target_xcconfig       = {'ONLY_ACTIVE_ARCH'=>"YES"}
+  s.user_target_xcconfig      = {'ONLY_ACTIVE_ARCH'=>"YES"}
+
+  s.pod_target_xcconfig       = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.user_target_xcconfig      = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
   s.source_files        = 'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
 
