@@ -25,6 +25,10 @@ The change log has moved to this repo's [GitHub Releases Page](https://github.co
 
 ## Release Notes
 
+**1.12.14**
+- fix: resolve #340: Cocoapods build failing under Xcode 12.0
+- fix: resolve #338: Deployment target for Rollbar changed to iOS 12.0
+
 **1.12.13**
 - fix: resolve #334: Error if archiving Mac OS app (Xcode 12.2, Mac OS Big Sur) 
 
