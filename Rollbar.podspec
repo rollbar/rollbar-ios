@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-  s.version                   = "1.12.13"
+  s.version                   = "1.12.14"
   s.name                      = "Rollbar"
   s.summary                   = "Objective-C library for crash reporting and logging with Rollbar. It works on iOS and macOS."
   s.description               = <<-DESC
@@ -13,19 +13,13 @@ Pod::Spec.new do |s|
   s.license                   = { :type => "MIT", :file => "LICENSE" }
   s.author                    = { "Rollbar" => "support@rollbar.com" }
   s.social_media_url          = "http://twitter.com/rollbar"
-  s.ios.deployment_target     = '8.0'
+  s.ios.deployment_target     = '9.0'
   s.osx.deployment_target     = '10.12'
   s.source                    = { :git => "https://github.com/rollbar/rollbar-ios.git",
                            :tag => "v#{s.version}",
                            :submodules => true
                            }
   
-  s.pod_target_xcconfig       = {'ONLY_ACTIVE_ARCH'=>"YES"}
-  s.user_target_xcconfig      = {'ONLY_ACTIVE_ARCH'=>"YES"}
-
-  s.pod_target_xcconfig       = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  s.user_target_xcconfig      = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-
   s.source_files        = 'KSCrash/Source/KSCrash/**/*.{m,h,mm,c,cpp}',
 
                           'RollbarFramework/*.{h,m}',
@@ -142,6 +136,14 @@ Pod::Spec.new do |s|
 
   s.pod_target_xcconfig = {
     "USE_HEADERMAP" => "NO",
-    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/Rollbar/**\""
+    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/Rollbar/**\"",
+    "ONLY_ACTIVE_ARCH" => "YES",
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]" => "arm64"
   }
+  
+  s.user_target_xcconfig      = {
+    "ONLY_ACTIVE_ARCH" => "YES",
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]" => "arm64"
+  }
+
 end
