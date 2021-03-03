@@ -7,6 +7,12 @@ Objective-C & Swift library for crash reporting and logging with [Rollbar](https
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Rollbar.svg)](https://img.shields.io/cocoapods/v/Rollbar.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
+# Roadmap Note
+
+We are recommending all current users of the Rollbar-iOS SDK to start making plans for upgrading from this SDK by moving to its new reincarnation that is our new [Rollbar-Apple SDK](https://github.com/rollbar/rollbar-apple). 
+All new feature development will be happening only within the new SDK and this SDK will be retiring soon.
+All the new users that are looking into using Rollbar on any of the Apple platforms should start by using the new Rollbar-Apple SDK.
+
 
 ## Setup Instructions
 
