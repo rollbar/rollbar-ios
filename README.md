@@ -1,4 +1,4 @@
-![Rollbar Logo](https://github.com/rollbar/rollbar-ios/blob/master/rollbar-logo.png)
+# DEPRECATED: [Rollbar Apple SDK](https://github.com/rollbar/rollbar-apple) v3.0.0 deprecates this Rollbar iOS SDK. The Apple SDK is a modernized approach to collecting errors from Apple devices and fixes many iOS SDK pain points. Please, consider migrating over to the Apple SDK. You can find its documentation [here](https://docs.rollbar.com/docs/apple). Please open an [issue](https://github.com/rollbar/rollbar-apple/issues) or contact our support if you encounter problems.
 
 # Rollbar for iOS and macOS
 
